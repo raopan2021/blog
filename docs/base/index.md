@@ -1,20 +1,18 @@
 # 前端百宝箱
 
-
 ## 资讯
 
 <a :href="dailyNewsUrl" target="_blank"> 前端每日新闻 </a>
 
 [前端周刊](https://frontend-weekly.com/)
 
-
 ## 资源推荐
+
 <a v-for="item in links" target="_blank" :href="item.href">{{ item.label }}</a>
 
 - [免费 ChatGPT 合集](https://chat-shared.zhile.io/shared.html)
 
 - [lp-logger 库](https://github.com/lecepin/lp-logger)
-
 
 <script setup>
 const links = [
@@ -61,6 +59,6 @@ a{
 }
 
 p:has(a) {
-	margin: 0!important;
+    margin: 0!important;
 }
 </style>

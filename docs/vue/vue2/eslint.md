@@ -32,7 +32,6 @@ insert_final_newline = false
 ```
 
 > 很多 IDE 中会默认支持此配置，但是也有些不支持，如：VSCode、Atom、Sublime Text 等。
-> 
 > 具体列表可以参考官网，如果在 VSCode 中使用需要安装 `EditorConfig for VS Code` 插件。
 
 ## ESLint

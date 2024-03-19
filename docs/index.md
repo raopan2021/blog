@@ -57,6 +57,12 @@ features:
     link: /weekStudy/2024/2024年度目标
 
   - icon:
+      src: /markdown.svg
+    title: Markdown编写
+    details: 搭建 Markdown 强大写作环境（VSCode）
+    link: /other/markdown
+
+  - icon:
       src: /drag.svg
     title: 拖拽组件
     details: Vue.Draggable 拖拽插件

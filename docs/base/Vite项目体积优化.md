@@ -27,7 +27,6 @@ export default defineConfig({
 
 `npm run build` 后，在项目根目录生成 `stats.html` 文件。
 
-
 ## 打包文件拆分
 
 ```js
@@ -56,7 +55,6 @@ build: {
 }
 ```
 
-
 ## `Gzip` 压缩
 
 `Gzip` 压缩使用 `vite-plugin-compression` 插件， 压缩后减小代码体积，提升加载性能
@@ -82,11 +80,13 @@ viteCompression({
   // compressionOptions	-	对应压缩算法的参数
 })
 ```
+
 :::
 
 压缩 gz 后缀文件，浏览器正常解析，需要 配置 nginx http 请求，告诉浏览器支持的类型，设置响应头 content-encoding: gzip 。
 
 ::: details 在nginx添加配置
+
 ``` js
 http {
     # 开启或者关闭gzip模块(on|off)
@@ -95,9 +95,8 @@ http {
     gzip_comp_level 2;
 }
 ```
+
 :::
-
-
 
 ## 图片压缩
 
@@ -108,6 +107,7 @@ npm i vite-plugin-imagemin -D
 ```
 
 ::: details vite.config.ts
+
 ``` js {2,5-32}
 import { defineConfig,loadEnv} from 'vite'
 import viteImagemin from 'vite-plugin-imagemin'
@@ -144,12 +144,12 @@ export default  ({ mode }) => defineConfig({
   ]
 })
 ```
+
 :::
 
 使用后，可以看到图片的压缩比例
 
 <img src="/Vite项目体积优化/2.webp" alt="">
-
 
 ## `Treeshaking` 去除无用的代码
 
@@ -170,8 +170,6 @@ const obj = cloneDeep({})
 import { cloneDeep } from 'lodash-es'
 const obj = cloneDeep({})
 ```
-
-
 
 ## CDN 加速
 
@@ -267,7 +265,6 @@ const router = createRouter({
 })
 ```
 
-
 ## 开启HTTP2
 
 浏览器有请求并发限制，一般是 6 个，超过限制请求需要排队，之前可以通过域名分发、资源合并来解决
@@ -285,10 +282,6 @@ nginx -s stop && nginx
 ```
 
 <img src="/Vite项目体积优化/1.webp">
-
-
-
-
 
 ## 去除debugger 和 console
 
@@ -323,11 +316,13 @@ build: {
   }
 }
 ```
+
 :::
 
 ## vite.config.ts 详细配置
 
-::: details  
+::: details
+
 ``` js
 import {
     defineConfig,
@@ -530,10 +525,13 @@ export default defineConfig(({ command, mode }) => {
     }
 })
 ```
+
 :::
 
 ## Vite 常用配置解释
+
 ::: details
+
 ``` js
 {
   root: process.cwd(), // 项目根目录（index.html 文件所在的位置）,
@@ -658,4 +656,5 @@ export default defineConfig(({ command, mode }) => {
   }
 }
 ```
+
 :::

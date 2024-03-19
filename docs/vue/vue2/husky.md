@@ -22,7 +22,7 @@ pnpm husky install
 
 ```json
 {
-	"scripts": {
+  "scripts": {
     //...
     "prepare": "husky install"
   }
@@ -48,7 +48,7 @@ pnpm add lint-staged -D
 ```json
 {
   //...
-	"lint-staged": {
+  "lint-staged": {
     "*.{js,ts,jsx,tsx}": [
       "prettier --write",
       "eslint --fix"
@@ -77,7 +77,5 @@ pnpm lint-staged
 
 经过以上配置之后，我们就可以在每次提交之前对所有代码进行格式化，保证线上代码的规范性。
 
-
 > 在实际中如果遇见 `Use the --allow-empty option to continue, or check your task configuration` 这个问题。
->
 > 我们可以修改 `pnpm lint-staged` 为 `pnpm lint-staged --allow-empty` 来暂时屏蔽这个问题。

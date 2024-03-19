@@ -8,17 +8,14 @@
 
 而 [`commitlint`](https://commitlint.js.org/#/) 就是对 `commit message` 进行的检查的一个工具，当不规范时会终止提交。
 
-
 ## 示例
 
-```
 feat(eslint): 集成 eslint - xcder - 2022.07.01
 
 1. Vscode 安装 Eslint 插件即可在保存时自动格式化
 2. 运行 pnpm lint:eslint 可全局进行代码格式化
 
 可以浏览 docs/1.工程化实践/1.eslint 文件了解详情。
-```
 
 ## 使用方法
 
