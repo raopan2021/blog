@@ -116,6 +116,7 @@ const config = defineConfig({
 			'/css/': { base: '/css/', items: CssSidebar() },
 			'/js/': { base: '/js/', items: JsSidebar() },
 			'/base/': { base: '/base/', items: BaseSidebar() },
+			'/vue/': { base: '/vue/vue2/', items: Vue2Sidebar() },
 			// '/reg/': { base: '/reg/', items: RegSidebar() },
 			'/weekStudy/': { base: '/weekStudy/', items: WeekStudySidebar() },
 		},
@@ -127,6 +128,7 @@ function nav(): DefaultTheme.NavItem[] {
 		{ text: '前端配置', link: '/base/index', activeMatch: '/base/' },
 		{ text: 'CSS进阶', link: '/css/index', activeMatch: '/css/' },
 		{ text: 'JS进阶', link: '/js/index', activeMatch: '/js/' },
+		{ text: 'Vue', link: '/vue/vue2/index', activeMatch: '/vue/vue2/' },
 		// { text: '正则', link: '/reg/入门', activeMatch: '/reg/' },
 		{ text: '每周学习', link: '/weekStudy/2024/2024年度目标', activeMatch: '/weekStudy/' },
 	]
@@ -341,6 +343,28 @@ function JsSidebar(): DefaultTheme.SidebarItem[] {
 		],
 	}]
 }
+function Vue2Sidebar(): DefaultTheme.SidebarItem[] {
+	return [{
+		text: 'Vue',
+		items: [
+			{
+				text: 'Vue2',
+				collapsed: false,
+				base: "/vue/vue2/",
+				items: [
+					{ text: 'Vue 2.7 + Vite 脚手架', link: 'index' },
+					{ text: 'Vite 基础配置', link: 'vite' },
+					{ text: 'Css 样式处理', link: 'css' },
+					{ text: 'stylelint CSS 代码检查', link: 'stylelint' },
+					{ text: 'axios 封装及接口管理', link: 'axios' },
+					{ text: 'eslint 代码格式化', link: 'eslint' },
+					{ text: 'husky 代码提交前脚本', link: 'husky' },
+					{ text: 'commitlint 提交信息校验', link: 'commitlint' },
+				],
+			},
+		],
+	}]
+}
 function RegSidebar(): DefaultTheme.SidebarItem[] {
 	return [{
 		text: '正则表达式',
@@ -379,5 +403,4 @@ function WeekStudySidebar(): DefaultTheme.SidebarItem[] {
 }
 
 
-export default config
-
+export default config;

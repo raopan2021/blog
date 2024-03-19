@@ -45,6 +45,12 @@ features:
     link: /js/
 
   - icon:
+      src: /vue.svg
+    title: Vue 2.7 + Vite 脚手架
+    details: 开箱即用的脚手架模板
+    link: /vue/vue2/
+
+  - icon:
       src: /study.svg
     title: weekStudy
     details: 每周学点东西
