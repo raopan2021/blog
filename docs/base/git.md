@@ -50,7 +50,7 @@ cat ~/.ssh/id_rsa.pub
 
 输入该命令回车后，复制看到的公钥，是类似于这样的一串字符
 
-``` ssh
+``` txt
 ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDY01oB1yY4wbZj8T/
 ·······
 kf82w4u+RZwyu4E20I6p7boP/EKjGXiDBw10/Qc= raopan2021@outlook.com

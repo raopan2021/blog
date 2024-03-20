@@ -117,6 +117,7 @@ const config = defineConfig({
 			'/js/': { base: '/js/', items: JsSidebar() },
 			'/base/': { base: '/base/', items: BaseSidebar() },
 			'/vue/': { base: '/vue/vue2/', items: Vue2Sidebar() },
+			'/engineering/': { base: '/engineering/', items: EngineeringSidebar() },
 			// '/reg/': { base: '/reg/', items: RegSidebar() },
 			'/weekStudy/': { base: '/weekStudy/', items: WeekStudySidebar() },
 		},
@@ -129,6 +130,7 @@ function nav(): DefaultTheme.NavItem[] {
 		{ text: 'CSS进阶', link: '/css/index', activeMatch: '/css/' },
 		{ text: 'JS进阶', link: '/js/index', activeMatch: '/js/' },
 		{ text: 'Vue', link: '/vue/vue2/index', activeMatch: '/vue/vue2/' },
+		{ text: 'Engineering', link: '/engineering/index', activeMatch: '/engineering/' },
 		// { text: '正则', link: '/reg/入门', activeMatch: '/reg/' },
 		{ text: '每周学习', link: '/weekStudy/2024/2024年度目标', activeMatch: '/weekStudy/' },
 	]
@@ -360,6 +362,27 @@ function Vue2Sidebar(): DefaultTheme.SidebarItem[] {
 					{ text: 'eslint 代码格式化', link: 'eslint' },
 					{ text: 'husky 代码提交前脚本', link: 'husky' },
 					{ text: 'commitlint 提交信息校验', link: 'commitlint' },
+				],
+			},
+		],
+	}]
+}
+function EngineeringSidebar(): DefaultTheme.SidebarItem[] {
+	return [{
+		text: '前端工程化',
+		link: 'index',
+		base: "/engineering/",
+		items: [
+			{
+				text: '代码规范',
+				collapsed: false,
+				base: "/engineering/standard/",
+				items: [
+					{ text: '代码规范', link: 'index' },
+					{ text: '代码格式化', link: 'format' },
+					{ text: 'Git 提交规范', link: 'git' },
+					{ text: '项目规范', link: 'project' },
+					{ text: 'UI 及框架规范', link: 'ui' },
 				],
 			},
 		],
