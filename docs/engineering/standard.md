@@ -1,13 +1,6 @@
-# 代码规范
+# 代码规范简介
 
 代码规范是指程序员在编码时要遵守的规则，规范的目的就是为了让程序员编写易于阅读、可维护的代码。
-
-统一代码规范的好处：
-
-* 规范的代码可以促进团队合作
-* 规范的代码可以降低维护成本
-* 规范的代码有助于 code review（代码审查）
-* 养成代码规范的习惯，有助于程序员自身的成长
 
 当团队的成员都严格按照代码规范来写代码时，可以保证每个人的代码看起来都像是一个人写的，看别人的代码就像是在看自己的代码（代码一致性），阅读起来更加顺畅。更重要的是我们能够认识到规范的重要性，并坚持规范的开发习惯。
 
@@ -41,7 +34,7 @@ function formatDate() { ... }
 function toArray() { ... }
 ```
 
-由于拼音同音字太多，千万不要使用拼音来命名。
+由于拼音同音字太多，千万不要使用拼音来命名！
 
 ## 文档注释规范
 
@@ -66,12 +59,21 @@ const active = true
 
 ## JavaScript 代码规范参考
 
-* [airbnb (101k star 英文版)](https://github.com/airbnb/javascript)
-* [airbnb-中文版](https://github.com/lin-123/javascript)
-* [standard (24.5k star) 中文版](https://github.com/standard/standard/blob/master/docs/README-zhcn.md)
-* [百度前端编码规范 3.9k star](https://github.com/ecomfe/spec)
+- [airbnb (101k star 英文版)](https://github.com/airbnb/javascript)
+- [airbnb-中文版](https://github.com/lin-123/javascript)
+- [standard (24.5k star) 中文版](https://github.com/standard/standard/blob/master/docs/README-zhcn.md)
+- [百度前端编码规范 3.9k star](https://github.com/ecomfe/spec)
 
 ## CSS 代码规范参考
 
-* [styleguide 2.3k star](https://github.com/fex-team/styleguide/blob/master/css.md)
-* [spec 3.9k star](https://github.com/ecomfe/spec/blob/master/css-style-guide.md)
+- [styleguide 2.3k star](https://github.com/fex-team/styleguide/blob/master/css.md)
+- [spec 3.9k star](https://github.com/ecomfe/spec/blob/master/css-style-guide.md)
+
+## 以上仅供参考，实际通过插件辅助规范开发
+
+如：
+
+- Eslint
+- Stylelint
+- lint-staged
+- Markdown Preview Enhanced 一款 VSCode 的 Markdown 插件。 规范 Markdown 写作格式。（写的我烦死了）

@@ -51,6 +51,12 @@ features:
     link: /vue/vue2/
 
   - icon:
+      src: /engineering.svg
+    title: 前端工程化
+    details: Eslint Stylelint Husky lint-staged ...
+    link: /engineering/
+
+  - icon:
       src: /study.svg
     title: weekStudy
     details: 每周学点东西
@@ -60,7 +66,7 @@ features:
       src: /markdown.svg
     title: Markdown编写
     details: 搭建 Markdown 强大写作环境（VSCode）
-    link: /other/markdown
+    link: /markdown/
 
   - icon:
       src: /drag.svg

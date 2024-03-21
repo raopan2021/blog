@@ -30,7 +30,7 @@ VSCode 默认是支持 Markdown 的，但还是有必装下面 3 个插件提高
 
 这是个功能强大的 Markdown 语法检查器，可以帮助你书写出规范的文档，同时避免书写错误导致文档无法渲染。个人观点，认为这个也是必装扩展。
 
-[markdownlint常见错误提示速查](https://blog.csdn.net/longtype/article/details/103582331)
+[markdownlint常见错误提示速查](./lint.md)
 
 ## Markdown Kroki
 

@@ -118,6 +118,7 @@ const config = defineConfig({
 			'/base/': { base: '/base/', items: BaseSidebar() },
 			'/vue/': { base: '/vue/vue2/', items: Vue2Sidebar() },
 			'/engineering/': { base: '/engineering/', items: EngineeringSidebar() },
+			'/markdown/': { base: '/markdown/', items: MarkdownSidebar() },
 			// '/reg/': { base: '/reg/', items: RegSidebar() },
 			'/weekStudy/': { base: '/weekStudy/', items: WeekStudySidebar() },
 		},
@@ -373,18 +374,24 @@ function EngineeringSidebar(): DefaultTheme.SidebarItem[] {
 		link: 'index',
 		base: "/engineering/",
 		items: [
-			{
-				text: '代码规范',
-				collapsed: false,
-				base: "/engineering/standard/",
-				items: [
-					{ text: '代码规范', link: 'index' },
-					{ text: '代码格式化', link: 'format' },
-					{ text: 'Git 提交规范', link: 'git' },
-					{ text: '项目规范', link: 'project' },
-					{ text: 'UI 及框架规范', link: 'ui' },
-				],
-			},
+			{ text: '首页', link: 'index' },
+			{ text: '代码规范简介', link: 'standard' },
+			{ text: 'ESLint 基本配置与使用', link: 'eslint' },
+			{ text: '代码格式化', link: 'format' },
+			{ text: 'Git 提交规范', link: 'git' },
+			{ text: '项目规范', link: 'project' },
+			{ text: 'UI 及框架规范', link: 'ui' },
+		],
+	}]
+}
+function MarkdownSidebar(): DefaultTheme.SidebarItem[] {
+	return [{
+		text: 'Markdown',
+		link: 'index',
+		base: "/markdown/",
+		items: [
+			{ text: '首页', link: 'index' },
+			{ text: 'markdownlint常见错误提示速查', link: 'lint' },
 		],
 	}]
 }
