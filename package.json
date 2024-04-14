@@ -21,7 +21,7 @@
 		"element-plus": "^2.4.4"
 	},
 	"devDependencies": {
-		"vitepress": "^1.0.0-rc.45",
+		"vitepress": "^1.0.0",
 		"@types/node": "^20.8.8",
 		"sass": "^1.69.6"
 	}

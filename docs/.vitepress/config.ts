@@ -121,6 +121,7 @@ const config = defineConfig({
 			'/markdown/': { base: '/markdown/', items: MarkdownSidebar() },
 			// '/reg/': { base: '/reg/', items: RegSidebar() },
 			'/weekStudy/': { base: '/weekStudy/', items: WeekStudySidebar() },
+			'/java/': { base: '/java/基础', items: JavaSidebar() },
 		},
 	},
 })
@@ -134,6 +135,7 @@ function nav(): DefaultTheme.NavItem[] {
 		{ text: 'Engineering', link: '/engineering/index', activeMatch: '/engineering/' },
 		// { text: '正则', link: '/reg/入门', activeMatch: '/reg/' },
 		{ text: '每周学习', link: '/weekStudy/2024/2024年度目标', activeMatch: '/weekStudy/' },
+		{ text: 'java', link: '/java/基础/index', activeMatch: '/java/' },
 	]
 }
 function VitePressSidebar(): DefaultTheme.SidebarItem[] {
@@ -428,6 +430,20 @@ function WeekStudySidebar(): DefaultTheme.SidebarItem[] {
 					{ text: '七夕', link: '七夕' },
 				],
 			},
+		],
+	}]
+}
+function JavaSidebar(): DefaultTheme.SidebarItem[] {
+	return [{
+		text: 'Java',
+		link: 'index',
+		base: "/java/基础/",
+		items: [
+			{ text: '首页', link: 'index' },
+			{ text: 'jdk与环境变量', link: 'jdk与环境变量' },
+			{ text: 'idea与配置', link: 'idea' },
+			{ text: 'maven', link: 'maven' },
+			{ text: 'SpringBoot', link: 'SpringBoot' },
 		],
 	}]
 }

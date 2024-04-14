@@ -74,6 +74,12 @@ features:
     details: Vue.Draggable 拖拽插件
     link: /other/vueDraggable
 
+  - icon:
+      src: /drag.svg
+    title: Java
+    details: Java基础
+    link: /java/基础/index
+
 ---
 
 <!-- iconfont https://www.iconfont.cn/?spm=a313x.search_index.i3.d4d0a486a.586b3a81T19Bxt -->
