@@ -75,7 +75,7 @@ features:
     link: /other/vueDraggable
 
   - icon:
-      src: /drag.svg
+      src: /java.svg
     title: Java
     details: Java基础
     link: /java/基础/index
