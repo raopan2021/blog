@@ -80,6 +80,12 @@ features:
     details: Java基础
     link: /java/基础/index
 
+  - icon:
+      src: /mysql.svg
+    title: mysql
+    details: mysql基础
+    link: /mysql/index
+
 ---
 
 <!-- iconfont https://www.iconfont.cn/?spm=a313x.search_index.i3.d4d0a486a.586b3a81T19Bxt -->

@@ -122,6 +122,7 @@ const config = defineConfig({
 			// '/reg/': { base: '/reg/', items: RegSidebar() },
 			'/weekStudy/': { base: '/weekStudy/', items: WeekStudySidebar() },
 			'/java/': { base: '/java/基础', items: JavaSidebar() },
+			'/mysql/': { base: '/mysql/', items: MysqlSidebar() },
 		},
 	},
 })
@@ -136,6 +137,7 @@ function nav(): DefaultTheme.NavItem[] {
 		// { text: '正则', link: '/reg/入门', activeMatch: '/reg/' },
 		{ text: '每周学习', link: '/weekStudy/2024/2024年度目标', activeMatch: '/weekStudy/' },
 		{ text: 'java', link: '/java/基础/index', activeMatch: '/java/' },
+		{ text: 'mysql', link: '/mysql/index', activeMatch: '/mysql/' },
 	]
 }
 function VitePressSidebar(): DefaultTheme.SidebarItem[] {
@@ -444,6 +446,17 @@ function JavaSidebar(): DefaultTheme.SidebarItem[] {
 			{ text: 'idea与配置', link: 'idea' },
 			{ text: 'maven', link: 'maven' },
 			{ text: 'SpringBoot', link: 'SpringBoot' },
+		],
+	}]
+}
+function MysqlSidebar(): DefaultTheme.SidebarItem[] {
+	return [{
+		text: 'mysql',
+		link: 'index',
+		base: "/mysql/",
+		items: [
+			{ text: '首页', link: 'index' },
+			{ text: 'mysql安装配置', link: 'mysql安装配置' },
 		],
 	}]
 }

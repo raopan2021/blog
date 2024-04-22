@@ -22,6 +22,8 @@
 
 变量值：`.;%JAVA_HOME%\lib\dt.jar;%JAVA_HOME%\lib\tools.jar`
 
+---
+
 Path变量添加： `%JAVA_HOME%\bin;%JAVA_HOME%\jre\bin`
 
 ## 测试jdk是否配置完成
