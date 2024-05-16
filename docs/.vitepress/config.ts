@@ -347,6 +347,15 @@ function JsSidebar(): DefaultTheme.SidebarItem[] {
 					{ text: '油猴脚本', link: '油猴脚本' },
 				],
 			},
+			{
+				text: 'js组件',
+				collapsed: false,
+				base: "js/组件/",
+				items: [
+					{ text: 'highLight代码高亮组件', link: 'highLight代码高亮组件' },
+					{ text: 'sse（对话）', link: 'fetchEventSource' },
+				],
+			},
 		],
 	}]
 }
