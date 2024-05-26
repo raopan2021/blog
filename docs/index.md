@@ -38,6 +38,12 @@ features:
     details: CSS进阶
     link: /css/
 
+  - icon: 
+      src: /check.svg
+    title: SVG
+    details: SVG学习
+    link: /svg/
+
   - icon:
       src: /js.svg
     title: JavaScript

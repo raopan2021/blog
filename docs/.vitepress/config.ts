@@ -22,7 +22,7 @@ const config = defineConfig({
 	// 最后更新于 开关
 	lastUpdated: true,
 	head: [
-		['link', { rel: 'icon', type: 'image/svg+xml', href: '/vitepress-logo-mini.svg' }],
+		// ['link', { rel: 'icon', type: 'image/svg+xml', href: '/vitepress-logo-mini.svg' }],
 		['link', { rel: 'icon', type: 'image/png', href: '/vitepress-logo-mini.png' }],
 		['meta', { name: 'theme-color', content: '#5f67ee' }],
 		['meta', { name: 'og:type', content: 'website' }],
@@ -114,6 +114,7 @@ const config = defineConfig({
 		sidebar: {	// 侧边导航
 			'/vitepress/': { base: '/vitepress/', items: VitePressSidebar() },
 			'/css/': { base: '/css/', items: CssSidebar() },
+			'/svg/': { base: '/svg/', items: SvgSidebar() },
 			'/js/': { base: '/js/', items: JsSidebar() },
 			'/base/': { base: '/base/', items: BaseSidebar() },
 			'/vue/': { base: '/vue/vue2/', items: Vue2Sidebar() },
@@ -131,6 +132,7 @@ function nav(): DefaultTheme.NavItem[] {
 		{ text: 'vitepress', link: '/vitepress/what-is-vitepress', activeMatch: '/vitepress/' },
 		{ text: '前端配置', link: '/base/index', activeMatch: '/base/' },
 		{ text: 'CSS进阶', link: '/css/index', activeMatch: '/css/' },
+		{ text: 'SVG学习', link: '/svg/index', activeMatch: '/svg/' },
 		{ text: 'JS进阶', link: '/js/index', activeMatch: '/js/' },
 		{ text: 'Vue', link: '/vue/vue2/index', activeMatch: '/vue/vue2/' },
 		{ text: 'Engineering', link: '/engineering/index', activeMatch: '/engineering/' },
@@ -290,6 +292,23 @@ function CssSidebar(): DefaultTheme.SidebarItem[] {
 					{ text: 'glass 玻璃拟态', link: 'glass2' },
 					{ text: 'tab动画', link: 'tab' },
 					{ text: '按钮特效', link: 'buttonHover' },
+				],
+			},
+		],
+	}]
+}
+function SvgSidebar(): DefaultTheme.SidebarItem[] {
+	return [{
+		text: 'SVG学习',
+		link: 'index',
+		items: [
+			{ text: '首页', link: 'index' },
+			{
+				text: '练习demo',
+				collapsed: false,
+				base: '/svg/demo/',
+				items: [
+					{ text: '进度完成打勾动画', link: '进度完成打勾动画' },
 				],
 			},
 		],
