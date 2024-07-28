@@ -112,13 +112,13 @@ const config = defineConfig({
 		},
 		nav: nav(),	// 顶部导航nav
 		sidebar: {	// 侧边导航
-			'/vitepress/': { base: '/vitepress/', items: VitePressSidebar() },
 			'/css/': { base: '/css/', items: CssSidebar() },
 			'/svg/': { base: '/svg/', items: SvgSidebar() },
 			'/js/': { base: '/js/', items: JsSidebar() },
 			'/base/': { base: '/base/', items: BaseSidebar() },
 			'/vue/': { base: '/vue/vue2/', items: Vue2Sidebar() },
 			'/engineering/': { base: '/engineering/', items: EngineeringSidebar() },
+			'/micro/': { base: '/micro/', items: MicroSidebar() },
 			'/markdown/': { base: '/markdown/', items: MarkdownSidebar() },
 			// '/reg/': { base: '/reg/', items: RegSidebar() },
 			'/weekStudy/': { base: '/weekStudy/', items: WeekStudySidebar() },
@@ -129,103 +129,17 @@ const config = defineConfig({
 })
 function nav(): DefaultTheme.NavItem[] {
 	return [
-		{ text: 'vitepress', link: '/vitepress/what-is-vitepress', activeMatch: '/vitepress/' },
 		{ text: '前端配置', link: '/base/index', activeMatch: '/base/' },
 		{ text: 'CSS进阶', link: '/css/index', activeMatch: '/css/' },
 		{ text: 'SVG学习', link: '/svg/index', activeMatch: '/svg/' },
 		{ text: 'JS进阶', link: '/js/index', activeMatch: '/js/' },
 		{ text: 'Vue', link: '/vue/vue2/index', activeMatch: '/vue/vue2/' },
 		{ text: 'Engineering', link: '/engineering/index', activeMatch: '/engineering/' },
+		{ text: '微前端', link: '/micro/index', activeMatch: '/micro/' },
 		// { text: '正则', link: '/reg/入门', activeMatch: '/reg/' },
 		{ text: '每周学习', link: '/weekStudy/2024/2024年度目标', activeMatch: '/weekStudy/' },
 		{ text: 'java', link: '/java/基础/index', activeMatch: '/java/' },
 		{ text: 'mysql', link: '/mysql/index', activeMatch: '/mysql/' },
-	]
-}
-function VitePressSidebar(): DefaultTheme.SidebarItem[] {
-	// 匹配不同路由，侧边导航有所变化，如果没有多页面需求，可以只写一个数组
-	// link 字段以 / 开头，该根目录为 /docs/ 目录
-	return [
-		{
-			text: '介绍',
-			collapsed: false, // 初始折叠状态 true 为折叠
-			items: [
-				{ text: '什么是 VitePress?', link: 'what-is-vitepress' },
-				{ text: '快速开始', link: 'getting-started' },
-				{ text: '路由', link: 'routing' },
-				{ text: '部署', link: 'deploy' },
-			],
-		},
-		{
-			text: '编写',
-			collapsed: true,
-			items: [
-				{ text: 'Markdown 基础语法', link: 'markdown-base' },
-				{ text: 'Markdown 扩展', link: 'markdown' },
-				{ text: '静态资源处理', link: 'asset-handling' },
-				{ text: 'Frontmatter', link: 'frontmatter' },
-				{ text: '在 Markdown 中 使用 Vue', link: 'using-vue' },
-				{ text: '国际化', link: 'i18n' },
-			],
-		},
-		{
-			text: '详细配置',
-			collapsed: true,
-			base: '/vitepress/default-theme-',
-			items: [
-				{ text: '概览', link: 'config' },
-				{ text: '导航栏', link: 'nav' },
-				{ text: '侧边栏', link: 'sidebar' },
-				{ text: '主页', link: 'home-page' },
-				{ text: '页脚', link: 'footer' },
-				{ text: '布局', link: 'layout' },
-				{ text: '徽标', link: 'badge' },
-				{ text: '团队', link: 'team-page' },
-				{ text: '上（下）一篇', link: 'prev-next-links' },
-				{ text: '编辑链接', link: 'edit-link' },
-				{ text: '最近更新时间', link: 'last-updated' },
-				{ text: '搜索', link: 'search' },
-				{ text: 'Carbon Ads', link: 'carbon-ads' },
-			],
-		},
-		{
-			text: '自定义',
-			collapsed: true,
-			items: [
-				{ text: '使用自定义主题', link: 'custom-theme' },
-				{ text: '扩展默认主题', link: 'extending-default-theme' },
-				{ text: '构建时数据加载', link: 'data-loading' },
-				{ text: 'SSR 兼容性', link: 'ssr-compat' },
-				{ text: '连接到 CMS', link: 'cms' },
-			],
-		},
-		{
-			text: '实验性的',
-			collapsed: true,
-			items: [
-				{ text: 'MPA Mode', link: 'mpa-mode', },
-				{ text: 'Sitemap 生成器', link: 'sitemap-generation', },
-			],
-		},
-		{
-			text: '其他配置',
-			collapsed: true,
-			items: [
-				{ text: '站点配置', link: 'site-config' },
-				{ text: 'Frontmatter 配置', link: 'frontmatter-config' },
-				{ text: 'Runtime API', link: 'runtime-api' },
-				{ text: 'CLI', link: 'cli' },
-			],
-		},
-		{
-			text: '其他非官方自定义',
-			collapsed: false,
-			items: [
-				{ text: '滚动时文字渐入效果', link: '滚动时文字渐入效果', },
-				{ text: '使用 Element-Plus', link: 'element-Plus-import' },
-				{ text: 'vitepress动画', link: 'vitepress动画' },
-			],
-		},
 	]
 }
 function BaseSidebar(): DefaultTheme.SidebarItem[] {
@@ -413,6 +327,17 @@ function EngineeringSidebar(): DefaultTheme.SidebarItem[] {
 			{ text: 'Git 提交规范', link: 'git' },
 			{ text: '项目规范', link: 'project' },
 			{ text: 'UI 及框架规范', link: 'ui' },
+		],
+	}]
+}
+function MicroSidebar(): DefaultTheme.SidebarItem[] {
+	return [{
+		text: '微前端',
+		link: 'index',
+		base: "/micro/",
+		items: [
+			{ text: '首页', link: 'index' },
+			{ text: 'micro-app', link: 'micro-app' },
 		],
 	}]
 }

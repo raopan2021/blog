@@ -20,12 +20,6 @@ hero:
       alt: VitePress
 
 features:
-  - icon:
-      src: /vitepress-logo-mini.svg
-    title: Vitepress
-    details: Vitepress 中文文档
-    link: /vitepress/what-is-vitepress
-
   - icon: 
       src: /frontend.svg
     title: 前端百宝箱

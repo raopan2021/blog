@@ -11,22 +11,24 @@
 .circle {
     stroke-dasharray: 1194;
     stroke-dashoffset: 1194;
+    transition: all 1s linear;
 }
 
 .check {
     stroke-dasharray: 350;
     stroke-dashoffset: 350;
+    transition: all 1s linear;
 }
 
 svg:hover {
     .circle {
         stroke-dashoffset: 2388;
-        transition: all 1s;
+        transition-delay: 0;
     }
 
     .check {
         stroke-dashoffset: 0;
-        transition: all 1s ease .9s;
+        transition-delay: 1s;
     }
 }
 </style>
