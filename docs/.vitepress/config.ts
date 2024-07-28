@@ -113,17 +113,18 @@ const config = defineConfig({
 		nav: nav(),	// 顶部导航nav
 		sidebar: {	// 侧边导航
 			'/css/': { base: '/css/', items: CssSidebar() },
-			'/svg/': { base: '/svg/', items: SvgSidebar() },
 			'/js/': { base: '/js/', items: JsSidebar() },
 			'/base/': { base: '/base/', items: BaseSidebar() },
 			'/vue/': { base: '/vue/vue2/', items: Vue2Sidebar() },
 			'/engineering/': { base: '/engineering/', items: EngineeringSidebar() },
+			'/node/': { base: '/node/', items: NodeSidebar() },
 			'/micro/': { base: '/micro/', items: MicroSidebar() },
 			'/markdown/': { base: '/markdown/', items: MarkdownSidebar() },
 			// '/reg/': { base: '/reg/', items: RegSidebar() },
 			'/weekStudy/': { base: '/weekStudy/', items: WeekStudySidebar() },
 			'/java/': { base: '/java/基础', items: JavaSidebar() },
 			'/mysql/': { base: '/mysql/', items: MysqlSidebar() },
+			'/svg/': { base: '/svg/', items: SvgSidebar() },
 		},
 	},
 })
@@ -131,15 +132,16 @@ function nav(): DefaultTheme.NavItem[] {
 	return [
 		{ text: '前端配置', link: '/base/index', activeMatch: '/base/' },
 		{ text: 'CSS进阶', link: '/css/index', activeMatch: '/css/' },
-		{ text: 'SVG学习', link: '/svg/index', activeMatch: '/svg/' },
 		{ text: 'JS进阶', link: '/js/index', activeMatch: '/js/' },
 		{ text: 'Vue', link: '/vue/vue2/index', activeMatch: '/vue/vue2/' },
 		{ text: 'Engineering', link: '/engineering/index', activeMatch: '/engineering/' },
+		{ text: 'Node', link: '/node/index', activeMatch: '/node/' },
 		{ text: '微前端', link: '/micro/index', activeMatch: '/micro/' },
 		// { text: '正则', link: '/reg/入门', activeMatch: '/reg/' },
 		{ text: '每周学习', link: '/weekStudy/2024/2024年度目标', activeMatch: '/weekStudy/' },
 		{ text: 'java', link: '/java/基础/index', activeMatch: '/java/' },
 		{ text: 'mysql', link: '/mysql/index', activeMatch: '/mysql/' },
+		{ text: 'SVG学习', link: '/svg/index', activeMatch: '/svg/' },
 	]
 }
 function BaseSidebar(): DefaultTheme.SidebarItem[] {
@@ -206,23 +208,6 @@ function CssSidebar(): DefaultTheme.SidebarItem[] {
 					{ text: 'glass 玻璃拟态', link: 'glass2' },
 					{ text: 'tab动画', link: 'tab' },
 					{ text: '按钮特效', link: 'buttonHover' },
-				],
-			},
-		],
-	}]
-}
-function SvgSidebar(): DefaultTheme.SidebarItem[] {
-	return [{
-		text: 'SVG学习',
-		link: 'index',
-		items: [
-			{ text: '首页', link: 'index' },
-			{
-				text: '练习demo',
-				collapsed: false,
-				base: '/svg/demo/',
-				items: [
-					{ text: '进度完成打勾动画', link: '进度完成打勾动画' },
 				],
 			},
 		],
@@ -330,6 +315,17 @@ function EngineeringSidebar(): DefaultTheme.SidebarItem[] {
 		],
 	}]
 }
+function NodeSidebar(): DefaultTheme.SidebarItem[] {
+	return [{
+		text: 'Node',
+		link: 'index',
+		base: "/node/",
+		items: [
+			{ text: '首页', link: 'index' },
+			{ text: 'pnpm', link: 'pnpm' },
+		],
+	}]
+}
 function MicroSidebar(): DefaultTheme.SidebarItem[] {
 	return [{
 		text: '微前端',
@@ -413,6 +409,22 @@ function MysqlSidebar(): DefaultTheme.SidebarItem[] {
 		],
 	}]
 }
-
+function SvgSidebar(): DefaultTheme.SidebarItem[] {
+	return [{
+		text: 'SVG学习',
+		link: 'index',
+		items: [
+			{ text: '首页', link: 'index' },
+			{
+				text: '练习demo',
+				collapsed: false,
+				base: '/svg/demo/',
+				items: [
+					{ text: '进度完成打勾动画', link: '进度完成打勾动画' },
+				],
+			},
+		],
+	}]
+}
 
 export default config;

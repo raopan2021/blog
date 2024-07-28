@@ -111,7 +111,7 @@ logs
 
 :::
 
-然后在`apps`目录中把之前搭建的 [UmiJS](./engineering/umijs.md) 工程`clone`下来作为主应用
+然后在`apps`目录中把之前搭建的 UmiJS 工程`clone`下来作为主应用
 
 ```sh
 cd apps

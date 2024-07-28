@@ -32,12 +32,6 @@ features:
     details: CSS进阶
     link: /css/
 
-  - icon: 
-      src: /check.svg
-    title: SVG
-    details: SVG学习
-    link: /svg/
-
   - icon:
       src: /js.svg
     title: JavaScript
@@ -55,6 +49,12 @@ features:
     title: 前端工程化
     details: Eslint Stylelint Husky lint-staged ...
     link: /engineering/
+
+  - icon:
+      src: /node.svg
+    title: Node
+    details: nodejs nvm npm pnpm
+    link: /node/
 
   - icon:
       src: /study.svg
@@ -86,6 +86,17 @@ features:
     details: mysql基础
     link: /mysql/index
 
+  - icon: 
+      src: /check.svg
+    title: SVG
+    details: SVG学习
+    link: /svg/
+
+  # - icon: 
+  #     src: /check.svg
+  #   title: SVG
+  #   details: SVG学习
+  #   link: /svg/
 ---
 
 <!-- iconfont https://www.iconfont.cn/?spm=a313x.search_index.i3.d4d0a486a.586b3a81T19Bxt -->
