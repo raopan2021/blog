@@ -2,4 +2,4 @@
 
 - nvm
 - npm
-- pnpm
+- [pnpm](./pnpm.md)
