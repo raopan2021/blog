@@ -1,4 +1,3 @@
-import type { UserConfig } from 'vitepress'
 import { defineConfig, type DefaultTheme } from 'vitepress'
 import { createRequire } from 'module'
 
@@ -334,7 +333,21 @@ function EngineeringSidebar(): DefaultTheme.SidebarItem[] {
 			{ text: 'Git 提交规范', link: 'git' },
 			{ text: '项目规范', link: 'project' },
 			{ text: 'UI 及框架规范', link: 'ui' },
-			{ text: '脚手架的实现', link: 'cli' },
+			{
+				text: '脚手架的实现',
+				link: 'index',
+				base: "/engineering/cli/",
+				items: [
+					{ text: '介绍', link: 'index' },
+					{ text: 'chalk', link: 'chalk' },
+					{ text: 'ora', link: 'ora' },
+					{ text: 'figlet', link: 'figlet' },
+					{ text: 'fs-extra', link: 'fs-extra' },
+					{ text: 'commander', link: 'commander' },
+					{ text: 'inquirer', link: 'inquirer' },
+					{ text: 'download-git-repo', link: 'download-git-repo' },
+				]
+			},
 		],
 	}]
 }
