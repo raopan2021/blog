@@ -40,12 +40,9 @@
       |--- template-vue
 ```
 
-<<< ./demo/package.json {6-9,16-23}
-
-<<< ./demo/bin/index.js
-
-<<< ./demo/bin/printLogo.js
-
-<<< ./demo/bin/options.js
+<<< ./demo/pkg.json {6-9,16-23}
+<<< ./demo/index.js
+<<< ./demo/printLogo.js
+<<< ./demo/options.js
 
 :::
