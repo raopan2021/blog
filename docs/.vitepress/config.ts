@@ -346,6 +346,7 @@ function EngineeringSidebar(): DefaultTheme.SidebarItem[] {
 					{ text: 'commander', link: 'commander' },
 					{ text: 'inquirer', link: 'inquirer' },
 					{ text: 'download-git-repo', link: 'download-git-repo' },
+					{ text: '脚手架实操', link: 'cli' },
 				]
 			},
 		],
