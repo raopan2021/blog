@@ -347,6 +347,7 @@ function EngineeringSidebar(): DefaultTheme.SidebarItem[] {
 					{ text: 'inquirer', link: 'inquirer' },
 					{ text: 'download-git-repo', link: 'download-git-repo' },
 					{ text: '脚手架实操', link: 'cli' },
+					{ text: '上传到npm', link: 'publish' },
 				]
 			},
 		],

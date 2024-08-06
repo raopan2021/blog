@@ -2,44 +2,39 @@
 
 import { Command } from 'commander';
 import fs from 'fs-extra'
+import print from './print.js';
 import printLogo from './printLogo.js';
-import inquirer from 'inquirer';
-
-import options from './options.js';
-import chalk from 'chalk';
-import ora from 'ora';
+import deleteNodeModules from './delete_node_modules.js';
+import create from './create.js';
+import run from './run.js';
 
 const program = new Command();
 
+let fileDirTemp = import.meta.url.replace('file:///','').replace('bin/index.js','');
+
 program
-    .name('rpcli 脚手架')
+    .name('raopancli 脚手架')
     .description('raopan 的 JavaScript 脚手架工具')
-    .version(JSON.parse(JSON.stringify(fs.readFileSync('package.json','utf-8'))).version,'-v, -V, --vers,--version');
+    .option('-v --version','查看脚手架版本号')
+    .option('-r --run','本地启动项目或打包项目')
+    .option('-d --delete','删除当前目录的 node_modules')
+    .option('-c --create','生成 vite 项目')
+    .action(async (options) => {
+        if (options.version) {
+            print(JSON.parse(fs.readFileSync(fileDirTemp + 'package.json','utf-8')).version)
+        } else if (options.run) {
+            printLogo()
+            run()
+        } else if (options.delete) {
+            print('删除目录下的noded_modules \n')
+            deleteNodeModules()
+        } else if (options.create) {
+            printLogo()
+            create()
+        }
+        if (JSON.stringify(options) == '{}') {
+            printLogo()
+        }
+    });
 
 program.parse()
-
-printLogo();
-
-inquirer.prompt(options).then(res => {
-    console.log(chalk.blue('项目名称： ') + chalk.green(res.project))
-    console.log(chalk.blue('项目框架： ') + chalk.green(res.framework))
-    console.log(chalk.blue((res.variant === 'JavaScript' ? '不 ' : '') + '使用ts\n\r'))
-
-    let fileDirTemp = import.meta.url.replace('file:///','').replace('bin/index.js','');
-    let fileDir = fileDirTemp + 'lib/template-' + res.framework
-    if (res.variant === 'TypeScript') fileDir += '-ts'
-
-    const spinner = ora('正在创建项目').start();
-    fs.copySync(fileDir,res.project);
-
-    spinner.succeed('项目创建成功\n\r');
-
-    // 修改 package.json 的name字段
-    const packageJson = JSON.parse(fs.readFileSync(fileDirTemp + res.project + '/package.json','utf8'));
-    packageJson.name = res.project;
-    fs.writeFileSync(fileDirTemp + res.project + '/package.json',JSON.stringify(packageJson,null,2));
-
-    console.log(chalk.blue('cd ' + res.project))
-    console.log(chalk.blue('pnpm i'))
-    console.log(chalk.blue('pnpm dev\n\r'))
-});

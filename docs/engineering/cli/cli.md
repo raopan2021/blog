@@ -10,7 +10,7 @@
 6. 在 `bin` 目录下创建 `index.js`，`printLogo.js`，`options.js` 文件；
 7. 从 [vite的仓库](https://github.com/vitejs/vite/tree/main/packages/create-vite) 复制 `template模板` 到项目的 `lib` 目录；
 8. 测试一下；
-9. 上传到 `npm`。
+9. [上传到 `npm`](./publish.md)。
 
 ::: code-group
 
@@ -18,9 +18,13 @@
  --- package.json
  |
  --- bin
+ |    |--- addversion.js
+ |    |--- create.js
+ |    |--- delete_node_modules.js
  |    |--- index.js
+ |    |--- print.js
  |    |--- printLogo.js
- |    |--- options.js
+ |    |--- run.js
  --- lib
       |--- template-lit-ts
       |--- template-lit
@@ -40,9 +44,13 @@
       |--- template-vue
 ```
 
-<<< ./demo/pkg.json {6-9,16-23}
+<<< ./demo/pkg.json {6-9,16-23} [package.json]
+<<< ./demo/addversion.js
+<<< ./demo/create.js
+<<< ./demo/delete_node_modules.js
 <<< ./demo/index.js
+<<< ./demo/print.js
 <<< ./demo/printLogo.js
-<<< ./demo/options.js
+<<< ./demo/run.js
 
 :::
