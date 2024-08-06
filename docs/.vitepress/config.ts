@@ -138,6 +138,7 @@ function nav(): DefaultTheme.NavItem[] {
 				{ text: 'JS进阶', link: '/js/index', activeMatch: '/js/' },
 				{ text: 'Vue', link: '/vue/vue2/index', activeMatch: '/vue/vue2/' },
 				{ text: '工程化', link: '/engineering/index', activeMatch: '/engineering/' },
+				{ text: '脚手架', link: '/cli/index', activeMatch: '/cli/' },
 				{ text: '微前端', link: '/micro/index', activeMatch: '/micro/' },
 			]
 		},
