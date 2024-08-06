@@ -25,6 +25,7 @@
  |    |--- print.js
  |    |--- printLogo.js
  |    |--- run.js
+ |    |--- setRegistry.js
  --- lib
       |--- template-lit-ts
       |--- template-lit
@@ -52,5 +53,6 @@
 <<< ./demo/print.js
 <<< ./demo/printLogo.js
 <<< ./demo/run.js
+<<< ./demo/setRegistry.js
 
 :::

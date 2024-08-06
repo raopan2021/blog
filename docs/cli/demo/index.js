@@ -7,6 +7,7 @@ import printLogo from './printLogo.js';
 import deleteNodeModules from './delete_node_modules.js';
 import create from './create.js';
 import run from './run.js';
+import setRegistry from './setRegistry.js';
 
 const program = new Command();
 
@@ -19,6 +20,7 @@ program
     .option('-r --run','本地启动项目或打包项目')
     .option('-d --delete','删除当前目录的 node_modules')
     .option('-c --create','生成 vite 项目')
+    .option('-s --setRegistry','切换npm源')
     .action(async (options) => {
         if (options.version) {
             print(JSON.parse(fs.readFileSync(fileDirTemp + 'package.json','utf-8')).version)
@@ -31,6 +33,8 @@ program
         } else if (options.create) {
             printLogo()
             create()
+        } else if (options.setRegistry) {
+            setRegistry()
         }
         if (JSON.stringify(options) == '{}') {
             printLogo()

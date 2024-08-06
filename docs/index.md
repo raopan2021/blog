@@ -51,6 +51,12 @@ features:
     link: /engineering/
 
   - icon:
+      src: /cli.svg
+    title: 前端脚手架的实现
+    details: 创建一个自己的脚手架
+    link: /cli/
+
+  - icon:
       src: /node.svg
     title: Node
     details: nodejs nvm npm pnpm

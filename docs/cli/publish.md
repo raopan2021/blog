@@ -8,6 +8,15 @@ npm login
 
 ## 上传
 
+::: tip
+上传前需要注意，npm需要切换到官方源，否则会报错
+
+```bash
+npm config set registry https://registry.npmjs.org/
+```
+
+:::
+
 ```bash
 npm publish
 ```

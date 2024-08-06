@@ -5,4 +5,5 @@ docs/.vitepress/dist
 node_modules
 
 test
-pnpm-lock.yaml
+pnpm-lock*
+package-lock*

@@ -116,6 +116,7 @@ const config = defineConfig({
 			'/base/': { base: '/base/', items: BaseSidebar() },
 			'/vue/': { base: '/vue/vue2/', items: Vue2Sidebar() },
 			'/engineering/': { base: '/engineering/', items: EngineeringSidebar() },
+			'/cli/': { base: '/cli/', items: CliSidebar() },
 			'/node/': { base: '/node/', items: NodeSidebar() },
 			'/micro/': { base: '/micro/', items: MicroSidebar() },
 			'/markdown/': { base: '/markdown/', items: MarkdownSidebar() },
@@ -333,24 +334,26 @@ function EngineeringSidebar(): DefaultTheme.SidebarItem[] {
 			{ text: 'Git 提交规范', link: 'git' },
 			{ text: '项目规范', link: 'project' },
 			{ text: 'UI 及框架规范', link: 'ui' },
-			{
-				text: '脚手架的实现',
-				link: 'index',
-				base: "/engineering/cli/",
-				items: [
-					{ text: '介绍', link: 'index' },
-					{ text: 'chalk', link: 'chalk' },
-					{ text: 'ora', link: 'ora' },
-					{ text: 'figlet', link: 'figlet' },
-					{ text: 'fs-extra', link: 'fs-extra' },
-					{ text: 'commander', link: 'commander' },
-					{ text: 'inquirer', link: 'inquirer' },
-					{ text: 'download-git-repo', link: 'download-git-repo' },
-					{ text: '脚手架实操', link: 'cli' },
-					{ text: '上传到npm', link: 'publish' },
-				]
-			},
 		],
+	}]
+}
+function CliSidebar(): DefaultTheme.SidebarItem[] {
+	return [{
+		text: '脚手架的实现',
+		link: 'index',
+		base: "/cli/",
+		items: [
+			{ text: '介绍', link: 'index' },
+			{ text: 'chalk', link: 'chalk' },
+			{ text: 'ora', link: 'ora' },
+			{ text: 'figlet', link: 'figlet' },
+			{ text: 'fs-extra', link: 'fs-extra' },
+			{ text: 'commander', link: 'commander' },
+			{ text: 'inquirer', link: 'inquirer' },
+			{ text: 'download-git-repo', link: 'download-git-repo' },
+			{ text: '脚手架实操', link: 'cli' },
+			{ text: '上传到npm', link: 'publish' },
+		]
 	}]
 }
 function NodeSidebar(): DefaultTheme.SidebarItem[] {
