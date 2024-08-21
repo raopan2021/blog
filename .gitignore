@@ -5,4 +5,3 @@ docs/.vitepress/dist
 node_modules
 
 test
-pnpm-lock*
