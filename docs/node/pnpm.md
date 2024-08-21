@@ -61,31 +61,31 @@ pnpm uninstall -g vue
 允许设置全局安装包的 bin 文件的目标目录。
 
 ``` bash
-pnpm config set global-bin-dir "E:\pnpm-store"
+pnpm config set global-bin-dir "D:\pnpm-store"
 ```
 
 包元数据缓存的位置。
 
 ``` bash
-pnpm config set cache-dir "E:\pnpm-store\pnpm-cache"
+pnpm config set cache-dir "D:\pnpm-store\pnpm-cache"
 ```
 
 pnpm 创建的当前仅由更新检查器使用的 pnpm-state.json 文件的目录。
 
 ``` bash
-pnpm config set state-dir "E:\pnpm-store\pnpm-state"
+pnpm config set state-dir "D:\pnpm-store\pnpm-state"
 ```
 
 指定储存全局依赖的目录。
 
 ``` bash
-pnpm config set global-dir "E:\pnpm-store\global"
+pnpm config set global-dir "D:\pnpm-store\global"
 ```
 
 所有包被保存在磁盘上的位置。（可选，以下这条命令可以选择不执行也是OK的）
 
 ``` bash
-pnpm config set store-dir "E:\pnpm-store\pnpm-store"
+pnpm config set store-dir "D:\pnpm-store\pnpm-store"
 ```
 
 ## 在项目本地配置 `.npmrc`
