@@ -1,10 +1,10 @@
-import { defineConfig, type DefaultTheme } from 'vitepress'
+import mdFootnote from 'markdown-it-footnote'
+import mdTaskList from 'markdown-it-task-lists'
 import { createRequire } from 'module'
+import { defineConfig, type DefaultTheme } from 'vitepress'
 
 const require = createRequire(import.meta.url)
 const pkg = require('vitepress/package.json')
-import mdFootnote from 'markdown-it-footnote'
-import mdTaskList from 'markdown-it-task-lists'
 
 const config = defineConfig({
 	vite: {
@@ -71,15 +71,17 @@ const config = defineConfig({
 		outline: { level: 'deep', label: '当前页' },
 		siteTitle: 'Home',
 		// 上一页下一页文本
-		docFooter: { prev: '上一篇', next: '下一篇', },
+		docFooter: { prev: '上一篇', next: '下一篇' },
 		// 社交媒体跳转
 		socialLinks: [
 			{ icon: 'github', link: 'https://github.com/raopan2021/blog' },
 			// 自定义icon
 			{
-				icon: { svg: '<svg t="1703941582641" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1437" width="32" height="32"><path d="M793.6 450.56H460.8c-10.24 0-25.6 15.36-25.6 25.6v66.56c0 15.36 15.36 25.6 25.6 25.6h209.92c15.36 0 25.6 15.36 25.6 25.6v20.48c0 46.08-40.96 81.92-81.92 81.92H348.16c-15.36 0-25.6-15.36-25.6-25.6V399.36C317.44 358.4 358.4 317.44 399.36 317.44h389.12c10.24 0 25.6-15.36 25.6-25.6V230.4c5.12-10.24-10.24-25.6-20.48-25.6H409.6C296.96 204.8 204.8 296.96 204.8 409.6v384c0 10.24 15.36 25.6 25.6 25.6h404.48c102.4 0 184.32-81.92 184.32-184.32V476.16c0-10.24-15.36-25.6-25.6-25.6z" fill="#d81e06" p-id="1438"></path></svg>' },
-				link: 'https://gitee.com/raopan2021/blog'
-			}
+				icon: {
+					svg: '<svg t="1703941582641" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1437" width="32" height="32"><path d="M793.6 450.56H460.8c-10.24 0-25.6 15.36-25.6 25.6v66.56c0 15.36 15.36 25.6 25.6 25.6h209.92c15.36 0 25.6 15.36 25.6 25.6v20.48c0 46.08-40.96 81.92-81.92 81.92H348.16c-15.36 0-25.6-15.36-25.6-25.6V399.36C317.44 358.4 358.4 317.44 399.36 317.44h389.12c10.24 0 25.6-15.36 25.6-25.6V230.4c5.12-10.24-10.24-25.6-20.48-25.6H409.6C296.96 204.8 204.8 296.96 204.8 409.6v384c0 10.24 15.36 25.6 25.6 25.6h404.48c102.4 0 184.32-81.92 184.32-184.32V476.16c0-10.24-15.36-25.6-25.6-25.6z" fill="#d81e06" p-id="1438"></path></svg>',
+				},
+				link: 'https://gitee.com/raopan2021/blog',
+			},
 		],
 		// 每个页面页脚的编辑此页  :path  为当前路由
 		editLink: {
@@ -109,8 +111,9 @@ const config = defineConfig({
 				},
 			},
 		},
-		nav: nav(),	// 顶部导航nav
-		sidebar: {	// 侧边导航
+		nav: nav(), // 顶部导航nav
+		sidebar: {
+			// 侧边导航
 			'/css/': { base: '/css/', items: CssSidebar() },
 			'/js/': { base: '/js/', items: JsSidebar() },
 			'/base/': { base: '/base/', items: BaseSidebar() },
@@ -140,7 +143,7 @@ function nav(): DefaultTheme.NavItem[] {
 				{ text: '工程化', link: '/engineering/index', activeMatch: '/engineering/' },
 				{ text: '脚手架', link: '/cli/index', activeMatch: '/cli/' },
 				{ text: '微前端', link: '/micro/index', activeMatch: '/micro/' },
-			]
+			],
 		},
 		{
 			text: '后端',
@@ -148,325 +151,383 @@ function nav(): DefaultTheme.NavItem[] {
 				{ text: 'Node', link: '/node/index', activeMatch: '/node/' },
 				{ text: 'java', link: '/java/基础/index', activeMatch: '/java/' },
 				{ text: 'mysql', link: '/mysql/index', activeMatch: '/mysql/' },
-			]
+			],
 		},
 		{
 			text: '其他',
 			items: [
 				{ text: '每周学习', link: '/weekStudy/2024/2024年度目标', activeMatch: '/weekStudy/' },
 				{ text: 'SVG学习', link: '/svg/index', activeMatch: '/svg/' },
-			]
+			],
 		},
 		{
 			text: '友链',
-			items: [
-				{ text: 'vitepress', link: 'https://vitepress.dev/zh' },
-			]
-
-		}
+			items: [{ text: 'vitepress', link: 'https://vitepress.dev/zh' }],
+		},
 		// { text: '正则', link: '/reg/入门', activeMatch: '/reg/' },
 	]
 }
 function BaseSidebar(): DefaultTheme.SidebarItem[] {
-	return [{
-		text: '前端配置',
-		items: [
-			{
-				text: '环境',
-				collapsed: false,
-				base: "/base/",
-				items: [
-					{ text: '首页', link: 'index' },
-					{ text: 'git', link: 'git' },
-					{ text: 'nvm', link: 'nvm' },
-					{ text: 'pnpm', link: 'pnpm' },
-					{ text: 'Vite项目体积优化', link: 'Vite项目体积优化' },
-				],
-			},
-		],
-	}]
+	return [
+		{
+			text: '前端配置',
+			items: [
+				{
+					text: '环境',
+					collapsed: false,
+					base: '/base/',
+					items: [
+						{ text: '首页', link: 'index' },
+						{ text: 'git', link: 'git' },
+						{ text: 'nvm', link: 'nvm' },
+						{ text: 'pnpm', link: 'pnpm' },
+						{ text: 'Vite项目体积优化', link: 'Vite项目体积优化' },
+					],
+				},
+			],
+		},
+	]
 }
 function CssSidebar(): DefaultTheme.SidebarItem[] {
-	return [{
-		text: 'CSS进阶',
-		link: 'index',
-		items: [
-			{ text: '首页', link: 'index' },
-			{ text: '清除默认样式', link: 'reset' },
-			{
-				text: '基础',
-				collapsed: false,
-				base: '/css/基础/',
-				items: [
-					{ text: '伪类和伪元素', link: '伪类和伪元素' },
-					{ text: '2D-3D转换', link: '2D-3D转换' },
-					{ text: 'CSS选择器优先级', link: 'CSS选择器优先级' },
-					{ text: '图片格式', link: '图片格式' },
-					{ text: '清除浮动', link: '清除浮动' },
-					{ text: 'BFC', link: 'BFC' },
-				],
-			},
-			{
-				text: 'css属性',
-				collapsed: false,
-				base: '/css/',
-				items: [
-					{ text: 'list-style', link: 'list-style' },
-					{ text: '字体', link: 'fontFamily' },
-					{ text: 'filter 滤镜', link: 'filter' },
-					{ text: 'shadow 阴影', link: 'shadow' },
-					{ text: 'verticalAlign 图文相对位置', link: 'verticalAlign' },
-				],
-			},
-			{
-				text: '特效',
-				collapsed: false,
-				base: '/css/',
-				items: [
-					{ text: '文字特效', link: 'textColor' },
-					{ text: 'verticalCenter 垂直居中', link: 'verticalCenter' },
-					{ text: 'colorfulShadow 彩色阴影', link: 'colorfulShadow' },
-					{ text: 'paper 纸张效果', link: 'paper' },
-					{ text: 'glass 毛玻璃', link: 'glass' },
-					{ text: 'glass 玻璃拟态', link: 'glass2' },
-					{ text: 'tab动画', link: 'tab' },
-					{ text: '按钮特效', link: 'buttonHover' },
-				],
-			},
-		],
-	}]
+	return [
+		{
+			text: 'CSS进阶',
+			link: 'index',
+			items: [
+				{ text: '首页', link: 'index' },
+				{ text: '清除默认样式', link: 'reset' },
+				{
+					text: '基础',
+					collapsed: false,
+					base: '/css/基础/',
+					items: [
+						{ text: '伪类和伪元素', link: '伪类和伪元素' },
+						{ text: '2D-3D转换', link: '2D-3D转换' },
+						{ text: 'CSS选择器优先级', link: 'CSS选择器优先级' },
+						{ text: '图片格式', link: '图片格式' },
+						{ text: '清除浮动', link: '清除浮动' },
+						{ text: 'BFC', link: 'BFC' },
+					],
+				},
+				{
+					text: 'css属性',
+					collapsed: false,
+					base: '/css/',
+					items: [
+						{ text: 'list-style', link: 'list-style' },
+						{ text: '字体', link: 'fontFamily' },
+						{ text: 'filter 滤镜', link: 'filter' },
+						{ text: 'shadow 阴影', link: 'shadow' },
+						{ text: 'verticalAlign 图文相对位置', link: 'verticalAlign' },
+					],
+				},
+				{
+					text: '特效',
+					collapsed: false,
+					base: '/css/',
+					items: [
+						{ text: '文字特效', link: 'textColor' },
+						{ text: 'verticalCenter 垂直居中', link: 'verticalCenter' },
+						{ text: 'colorfulShadow 彩色阴影', link: 'colorfulShadow' },
+						{ text: 'paper 纸张效果', link: 'paper' },
+						{ text: 'glass 毛玻璃', link: 'glass' },
+						{ text: 'glass 玻璃拟态', link: 'glass2' },
+						{ text: 'tab动画', link: 'tab' },
+						{ text: '按钮特效', link: 'buttonHover' },
+					],
+				},
+			],
+		},
+	]
 }
 function JsSidebar(): DefaultTheme.SidebarItem[] {
-	return [{
-		text: 'JS进阶',
-		link: 'index',
-		items: [
-			{ text: '首页', link: 'index' },
-			{
-				text: 'js基础',
-				collapsed: true,
-				base: "js/基础/",
-				items: [
-					{ text: 'index', link: 'index' },
-					{ text: 'Dom节点', link: 'Dom节点' },
-					{ text: '字符串常用的方法', link: '字符串常用的方法' },
-					{ text: '数组常用方法', link: '数组常用方法' },
-					{ text: '数组字符串其他方法', link: '数组字符串其他方法' },
-					{ text: '类数组', link: '类数组' },
-					{ text: 'Math常用的方法', link: 'Math常用的方法' },
-					{ text: '浅拷贝与深拷贝', link: '浅拷贝与深拷贝' },
-					{ text: '类型转换', link: '类型转换' },
-					{ text: '递归', link: '递归' },
-					{ text: '函数记忆', link: '函数记忆' },
-					{ text: '防抖节流', link: '防抖节流' },
-					{ text: '重绘和回流', link: '重绘和回流' },
-				],
-			},
-			{
-				text: 'js算法',
-				collapsed: true,
-				base: "js/算法/",
-				items: [
-					{ text: 'index', link: 'index' },
-					{ text: '冒泡排序', link: '冒泡排序' },
-					{ text: '选择排序', link: '选择排序' },
-					{ text: '插入排序', link: '插入排序' },
-					{ text: '归并排序', link: '归并排序' },
-					{ text: '计数排序', link: '计数排序' },
-					{ text: '基数排序', link: '基数排序' },
-				],
-			},
-			{
-				text: 'js进阶',
-				collapsed: true,
-				base: "js/进阶/",
-				items: [
-					{ text: 'index', link: 'index' },
-					{ text: '运算符进阶', link: '运算符进阶' },
-					{ text: 'js风格指南', link: 'js风格指南' },
-					{ text: 'js测试题自测', link: 'js测试题自测' },
-					{ text: '油猴脚本', link: '油猴脚本' },
-				],
-			},
-			{
-				text: 'js组件',
-				collapsed: false,
-				base: "js/组件/",
-				items: [
-					{ text: 'highLight代码高亮组件', link: 'highLight代码高亮组件' },
-					{ text: 'sse（对话）', link: 'fetchEventSource' },
-				],
-			},
-		],
-	}]
+	return [
+		{
+			text: 'JS进阶',
+			link: 'index',
+			items: [
+				{ text: '首页', link: 'index' },
+				{
+					text: 'js基础',
+					collapsed: true,
+					base: 'js/基础/',
+					items: [
+						{ text: 'index', link: 'index' },
+						{ text: 'Dom节点', link: 'Dom节点' },
+						{ text: '字符串常用的方法', link: '字符串常用的方法' },
+						{ text: '数组常用方法', link: '数组常用方法' },
+						{ text: '数组字符串其他方法', link: '数组字符串其他方法' },
+						{ text: '类数组', link: '类数组' },
+						{ text: 'Math常用的方法', link: 'Math常用的方法' },
+						{ text: '浅拷贝与深拷贝', link: '浅拷贝与深拷贝' },
+						{ text: '类型转换', link: '类型转换' },
+						{ text: '递归', link: '递归' },
+						{ text: '函数记忆', link: '函数记忆' },
+						{ text: '防抖节流', link: '防抖节流' },
+						{ text: '重绘和回流', link: '重绘和回流' },
+					],
+				},
+				{
+					text: 'js算法',
+					collapsed: true,
+					base: 'js/算法/',
+					items: [
+						{ text: 'index', link: 'index' },
+						{ text: '冒泡排序', link: '冒泡排序' },
+						{ text: '选择排序', link: '选择排序' },
+						{ text: '插入排序', link: '插入排序' },
+						{ text: '归并排序', link: '归并排序' },
+						{ text: '计数排序', link: '计数排序' },
+						{ text: '基数排序', link: '基数排序' },
+					],
+				},
+				{
+					text: 'js进阶',
+					collapsed: true,
+					base: 'js/进阶/',
+					items: [
+						{ text: 'index', link: 'index' },
+						{ text: '运算符进阶', link: '运算符进阶' },
+						{ text: 'js风格指南', link: 'js风格指南' },
+						{ text: 'js测试题自测', link: 'js测试题自测' },
+						{ text: '油猴脚本', link: '油猴脚本' },
+					],
+				},
+				{
+					text: 'js组件',
+					collapsed: false,
+					base: 'js/组件/',
+					items: [
+						{ text: 'highLight代码高亮组件', link: 'highLight代码高亮组件' },
+						{ text: 'sse（对话）', link: 'fetchEventSource' },
+					],
+				},
+				{
+					text: 'js深入',
+					collapsed: false,
+					base: 'js/深入/',
+					items: [
+						{ text: '01_深入JavaScript运行原理', link: '01_深入JavaScript运行原理' },
+						{ text: '02_JS内存管理和闭包', link: '02_JS内存管理和闭包' },
+						{ text: '03_JS内存管理和闭包-day03', link: '03_JS内存管理和闭包-day03' },
+						{ text: '04_JS函数的this指向', link: '04_JS函数的this指向' },
+						{ text: '05_JS函数的this指向', link: '05_JS函数的this指向' },
+						{ text: '06_JS函数增强知识点补充', link: '06_JS函数增强知识点补充' },
+						{ text: '07_JS额外知识补充', link: '07_JS额外知识补充' },
+						{ text: '08_深入JS面向对象', link: '08_深入JS面向对象' },
+						{ text: '09_深入JS面向对象二', link: '09_深入JS面向对象二' },
+						{ text: '10_深入JS面向对象继承', link: '10_深入JS面向对象继承' },
+						{ text: '11_深入JS面向对象继承', link: '11_深入JS面向对象继承' },
+						{ text: '12_JS面向对象补充', link: '12_JS面向对象补充' },
+						{ text: '13_ES6~ES12-一', link: '13_ES6~ES12-一' },
+						{ text: '14_ES6~ES12-二', link: '14_ES6~ES12-二' },
+						{ text: '15_ES6~ES12-三', link: '15_ES6~ES12-三' },
+						{ text: '16_ES6~ES12-四', link: '16_ES6~ES12-四' },
+						{ text: '17_Proxy-Reflect-响应式', link: '17_Proxy-Reflect-响应式' },
+						{ text: '18_Promise使用详解', link: '18_Promise使用详解' },
+						{ text: '19_Promise使用详解的副本', link: '19_Promise使用详解的副本' },
+						{ text: '20_Iterator-Generator', link: '20_Iterator-Generator' },
+						{ text: '21_await-async-事件循环', link: '21_await-async-事件循环' },
+						{ text: '22_await-async-事件循环', link: '22_await-async-事件循环' },
+						{ text: '23_异常处理_JavaScript模块化', link: '23_异常处理_JavaScript模块化' },
+						{ text: '24_JavaScript模块化', link: '24_JavaScript模块化' },
+						{ text: '25_npm包管理工具', link: '25_npm包管理工具' },
+						{ text: '26_JSON-Storage', link: '26_JSON-Storage' },
+						{ text: '27_DOM-BOM操作', link: '27_DOM-BOM操作' },
+						{ text: '28_DOM-BOM操作', link: '28_DOM-BOM操作' },
+						{ text: '29_手写防抖节流', link: '29_手写防抖节流' },
+						{ text: '30_手写防抖节流-深拷贝-事件总线', link: '30_手写防抖节流-深拷贝-事件总线' },
+					],
+				},
+			],
+		},
+	]
 }
 function Vue2Sidebar(): DefaultTheme.SidebarItem[] {
-	return [{
-		text: 'Vue',
-		items: [
-			{
-				text: 'Vue2',
-				collapsed: false,
-				base: "/vue/vue2/",
-				items: [
-					{ text: 'Vue 2.7 + Vite 脚手架', link: 'index' },
-					{ text: 'Vite 基础配置', link: 'vite' },
-					{ text: 'Css 样式处理', link: 'css' },
-					{ text: 'stylelint CSS 代码检查', link: 'stylelint' },
-					{ text: 'axios 封装及接口管理', link: 'axios' },
-					{ text: 'eslint 代码格式化', link: 'eslint' },
-					{ text: 'husky 代码提交前脚本', link: 'husky' },
-					{ text: 'commitlint 提交信息校验', link: 'commitlint' },
-				],
-			},
-		],
-	}]
+	return [
+		{
+			text: 'Vue',
+			items: [
+				{
+					text: 'Vue2',
+					collapsed: false,
+					base: '/vue/vue2/',
+					items: [
+						{ text: 'Vue 2.7 + Vite 脚手架', link: 'index' },
+						{ text: 'Vite 基础配置', link: 'vite' },
+						{ text: 'Css 样式处理', link: 'css' },
+						{ text: 'stylelint CSS 代码检查', link: 'stylelint' },
+						{ text: 'axios 封装及接口管理', link: 'axios' },
+						{ text: 'eslint 代码格式化', link: 'eslint' },
+						{ text: 'husky 代码提交前脚本', link: 'husky' },
+						{ text: 'commitlint 提交信息校验', link: 'commitlint' },
+					],
+				},
+			],
+		},
+	]
 }
 function EngineeringSidebar(): DefaultTheme.SidebarItem[] {
-	return [{
-		text: '前端工程化',
-		link: 'index',
-		base: "/engineering/",
-		items: [
-			{ text: '首页', link: 'index' },
-			{ text: '代码规范简介', link: 'standard' },
-			{ text: 'ESLint 基本配置与使用', link: 'eslint' },
-			{ text: '代码格式化', link: 'format' },
-			{ text: 'Git 提交规范', link: 'git' },
-			{ text: '项目规范', link: 'project' },
-			{ text: 'UI 及框架规范', link: 'ui' },
-		],
-	}]
+	return [
+		{
+			text: '前端工程化',
+			link: 'index',
+			base: '/engineering/',
+			items: [
+				{ text: '首页', link: 'index' },
+				{ text: '代码规范简介', link: 'standard' },
+				{ text: 'ESLint 基本配置与使用', link: 'eslint' },
+				{ text: '代码格式化', link: 'format' },
+				{ text: 'Git 提交规范', link: 'git' },
+				{ text: '项目规范', link: 'project' },
+				{ text: 'UI 及框架规范', link: 'ui' },
+			],
+		},
+	]
 }
 function CliSidebar(): DefaultTheme.SidebarItem[] {
-	return [{
-		text: '脚手架的实现',
-		link: 'index',
-		base: "/cli/",
-		items: [
-			{ text: '介绍', link: 'index' },
-			{ text: 'chalk', link: 'chalk' },
-			{ text: 'ora', link: 'ora' },
-			{ text: 'figlet', link: 'figlet' },
-			{ text: 'fs-extra', link: 'fs-extra' },
-			{ text: 'commander', link: 'commander' },
-			{ text: 'inquirer', link: 'inquirer' },
-			{ text: 'download-git-repo', link: 'download-git-repo' },
-			{ text: '脚手架实操', link: 'cli' },
-			{ text: '上传到npm', link: 'publish' },
-		]
-	}]
+	return [
+		{
+			text: '脚手架的实现',
+			link: 'index',
+			base: '/cli/',
+			items: [
+				{ text: '介绍', link: 'index' },
+				{ text: 'chalk', link: 'chalk' },
+				{ text: 'ora', link: 'ora' },
+				{ text: 'figlet', link: 'figlet' },
+				{ text: 'fs-extra', link: 'fs-extra' },
+				{ text: 'commander', link: 'commander' },
+				{ text: 'inquirer', link: 'inquirer' },
+				{ text: 'download-git-repo', link: 'download-git-repo' },
+				{ text: '脚手架实操', link: 'cli' },
+				{ text: '上传到npm', link: 'publish' },
+			],
+		},
+	]
 }
 function NodeSidebar(): DefaultTheme.SidebarItem[] {
-	return [{
-		text: 'Node',
-		link: 'index',
-		base: "/node/",
-		items: [
-			{ text: '首页', link: 'index' },
-			{ text: 'pnpm', link: 'pnpm' },
-		],
-	}]
+	return [
+		{
+			text: 'Node',
+			link: 'index',
+			base: '/node/',
+			items: [
+				{ text: '首页', link: 'index' },
+				{ text: 'pnpm', link: 'pnpm' },
+			],
+		},
+	]
 }
 function MicroSidebar(): DefaultTheme.SidebarItem[] {
-	return [{
-		text: '微前端',
-		link: 'index',
-		base: "/micro/",
-		items: [
-			{ text: '首页', link: 'index' },
-			{ text: 'micro-app', link: 'micro-app' },
-		],
-	}]
+	return [
+		{
+			text: '微前端',
+			link: 'index',
+			base: '/micro/',
+			items: [
+				{ text: '首页', link: 'index' },
+				{ text: 'micro-app', link: 'micro-app' },
+			],
+		},
+	]
 }
 function MarkdownSidebar(): DefaultTheme.SidebarItem[] {
-	return [{
-		text: 'Markdown',
-		link: 'index',
-		base: "/markdown/",
-		items: [
-			{ text: '首页', link: 'index' },
-			{ text: 'markdownlint常见错误提示速查', link: 'lint' },
-		],
-	}]
+	return [
+		{
+			text: 'Markdown',
+			link: 'index',
+			base: '/markdown/',
+			items: [
+				{ text: '首页', link: 'index' },
+				{ text: 'markdownlint常见错误提示速查', link: 'lint' },
+			],
+		},
+	]
 }
 function RegSidebar(): DefaultTheme.SidebarItem[] {
-	return [{
-		text: '正则表达式',
-		items: [
-			{ text: '入门', link: '入门' },
-		],
-	}]
+	return [
+		{
+			text: '正则表达式',
+			items: [{ text: '入门', link: '入门' }],
+		},
+	]
 }
 function WeekStudySidebar(): DefaultTheme.SidebarItem[] {
-	return [{
-		text: '每周学习',
-		items: [
-			{
-				text: '2024',
-				link: '2024年度目标',
-				collapsed: false,
-				base: "/weekStudy/2024/",
-				items: [
-					{ text: '毛泽东', link: '毛泽东' },
-					{ text: '辛弃疾', link: '辛弃疾' },
-					{ text: '李清照', link: '李清照' },
-					{ text: '苏轼', link: '苏轼' },
-					{ text: '王维', link: '王维' },
-					{ text: '陆游', link: '陆游' },
-					{ text: '孟浩然', link: '孟浩然' },
-					{ text: '杜牧', link: '杜牧' },
-					{ text: '元稹', link: '元稹' },
-					{ text: '其他诗词1', link: '其他诗词1' },
-					{ text: 'We Choose to Go to the Moon', link: 'We Choose to Go to the Moon' },
-					{ text: '文言文', link: '文言文' },
-					{ text: '七夕', link: '七夕' },
-				],
-			},
-		],
-	}]
+	return [
+		{
+			text: '每周学习',
+			items: [
+				{
+					text: '2024',
+					link: '2024年度目标',
+					collapsed: false,
+					base: '/weekStudy/2024/',
+					items: [
+						{ text: '毛泽东', link: '毛泽东' },
+						{ text: '辛弃疾', link: '辛弃疾' },
+						{ text: '李清照', link: '李清照' },
+						{ text: '苏轼', link: '苏轼' },
+						{ text: '王维', link: '王维' },
+						{ text: '陆游', link: '陆游' },
+						{ text: '孟浩然', link: '孟浩然' },
+						{ text: '杜牧', link: '杜牧' },
+						{ text: '元稹', link: '元稹' },
+						{ text: '其他诗词1', link: '其他诗词1' },
+						{ text: 'We Choose to Go to the Moon', link: 'We Choose to Go to the Moon' },
+						{ text: '文言文', link: '文言文' },
+						{ text: '七夕', link: '七夕' },
+					],
+				},
+			],
+		},
+	]
 }
 function JavaSidebar(): DefaultTheme.SidebarItem[] {
-	return [{
-		text: 'Java',
-		link: 'index',
-		base: "/java/基础/",
-		items: [
-			{ text: '首页', link: 'index' },
-			{ text: 'jdk与环境变量', link: 'jdk与环境变量' },
-			{ text: 'idea与配置', link: 'idea' },
-			{ text: 'maven', link: 'maven' },
-			{ text: 'SpringBoot', link: 'SpringBoot' },
-		],
-	}]
+	return [
+		{
+			text: 'Java',
+			link: 'index',
+			base: '/java/基础/',
+			items: [
+				{ text: '首页', link: 'index' },
+				{ text: 'jdk与环境变量', link: 'jdk与环境变量' },
+				{ text: 'idea与配置', link: 'idea' },
+				{ text: 'maven', link: 'maven' },
+				{ text: 'SpringBoot', link: 'SpringBoot' },
+			],
+		},
+	]
 }
 function MysqlSidebar(): DefaultTheme.SidebarItem[] {
-	return [{
-		text: 'mysql',
-		link: 'index',
-		base: "/mysql/",
-		items: [
-			{ text: '首页', link: 'index' },
-			{ text: 'mysql安装配置', link: 'mysql安装配置' },
-		],
-	}]
+	return [
+		{
+			text: 'mysql',
+			link: 'index',
+			base: '/mysql/',
+			items: [
+				{ text: '首页', link: 'index' },
+				{ text: 'mysql安装配置', link: 'mysql安装配置' },
+			],
+		},
+	]
 }
 function SvgSidebar(): DefaultTheme.SidebarItem[] {
-	return [{
-		text: 'SVG学习',
-		link: 'index',
-		items: [
-			{ text: '首页', link: 'index' },
-			{
-				text: '练习demo',
-				collapsed: false,
-				base: '/svg/demo/',
-				items: [
-					{ text: '进度完成打勾动画', link: '进度完成打勾动画' },
-				],
-			},
-		],
-	}]
+	return [
+		{
+			text: 'SVG学习',
+			link: 'index',
+			items: [
+				{ text: '首页', link: 'index' },
+				{
+					text: '练习demo',
+					collapsed: false,
+					base: '/svg/demo/',
+					items: [{ text: '进度完成打勾动画', link: '进度完成打勾动画' }],
+				},
+			],
+		},
+	]
 }
 
-export default config;
+export default config

@@ -5,8 +5,6 @@ import hoverTab from './components/tab/hoverTab.vue'
 import centerTab from './components/tab/centerTab.vue'
 </script>
 
-
-
 ## 追随动画
 
 ::: tip hover to change
@@ -17,8 +15,6 @@ import centerTab from './components/tab/centerTab.vue'
 ::: details 详细代码
 <<< ./components/tab/hoverTab.vue
 :::
-
-
 
 ## 中间展开
 
