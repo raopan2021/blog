@@ -1,15 +1,15 @@
 @import url('https://cdn.jsdelivr.net/npm/lxgw-wenkai-lite-webfont@1.6.0/style.min.css');
 
 :root {
-	--vp-font-family-base: 'LXGW WenKai Lite', 'Inter var experimental', 'Inter var', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans',
-		'Droid Sans', 'Helvetica Neue', sans-serif;
-	--vp-font-family-mono: 'LXGW WenKai Lite', ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+    --vp-font-family-base: 'LXGW WenKai Lite', 'Inter var experimental', 'Inter var', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans',
+        'Droid Sans', 'Helvetica Neue', sans-serif;
+    --vp-font-family-mono: 'LXGW WenKai Lite', ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
 }
 
 /* 标题颜色 */
 :root {
-	--vp-home-hero-name-color: transparent;
-	--vp-home-hero-name-background: -webkit-linear-gradient(120deg, #bd34fe, #41d1ff);
+    --vp-home-hero-name-color: transparent;
+    --vp-home-hero-name-background: -webkit-linear-gradient(120deg, #bd34fe, #41d1ff);
 }
 
 /**
@@ -17,61 +17,61 @@
 * -------------------------------------------------------------------------- */
 .VPHomeHero .name,
 .VPHomeHero .image {
-	background-image: none;
-	transition: background-image 0.8s;
+    background-image: none;
+    transition: background-image 0.8s;
 }
 
 :root {
-	--vp-home-hero-name-color: transparent;
-	--vp-home-hero-name-background: -webkit-linear-gradient(120deg, #bd34fe 30%, #41d1ff);
-	--vp-home-hero-image-background-image: linear-gradient(to right bottom, #bd34fe, #47caff);
-	--vp-home-hero-image-filter: blur(70px);
+    --vp-home-hero-name-color: transparent;
+    --vp-home-hero-name-background: -webkit-linear-gradient(120deg, #bd34fe 30%, #41d1ff);
+    --vp-home-hero-image-background-image: linear-gradient(to right bottom, #bd34fe, #47caff);
+    --vp-home-hero-image-filter: blur(70px);
 }
 
 .dark {
-	--vp-home-hero-image-background-image: linear-gradient(-45deg, #bd34fe 50%, #4c09b9 50%);
+    --vp-home-hero-image-background-image: linear-gradient(-45deg, #bd34fe 50%, #4c09b9 50%);
 }
 
 @media (min-width: 640px) {
-	:root {
-		--vp-home-hero-image-filter: blur(80px);
-	}
+    :root {
+        --vp-home-hero-image-filter: blur(80px);
+    }
 }
 
 @media (min-width: 960px) {
-	:root {
-		--vp-home-hero-image-filter: blur(100px);
-	}
+    :root {
+        --vp-home-hero-image-filter: blur(100px);
+    }
 }
 
 .poem-layout {
-	h3 {
-		text-align: center;
-		margin-top: 50px;
-	}
+    h3 {
+        text-align: center;
+        margin-top: 50px;
+    }
 
-	h3:nth-child(n+5) {
-		display: block;
-		border-top: 1px solid #99999950;
-		margin-top: 50px;
-		height: 100px;
-		line-height: 150px;
-	}
+    h3:nth-child(n+5) {
+        display: block;
+        border-top: 1px solid #99999950;
+        margin-top: 50px;
+        height: 100px;
+        line-height: 150px;
+    }
 
-	h4 {
-		display: inline-block;
-		height: 50px;
-		line-height: 50px;
-		margin-left: calc(100% - 200px);
-	}
+    h4 {
+        display: inline-block;
+        height: 50px;
+        line-height: 50px;
+        margin-left: calc(100% - 200px);
+    }
 
-	/* 不能直接写 p ，避免tip里面的内容也居中了 */
-	>div>p {
-		text-align: center;
-	}
+    /* 不能直接写 p ，避免tip里面的内容也居中了 */
+    >div>p {
+        text-align: center;
+    }
 }
 
 .dark .Layout .VPFeature {
-	background: transparent;
-	border: 1px solid #ffffff50
+    background: transparent;
+    border: 1px solid #ffffff50
 }

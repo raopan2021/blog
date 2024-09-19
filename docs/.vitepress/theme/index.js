@@ -1,6 +1,7 @@
+import mediumZoom from 'medium-zoom'
+import { useData, useRoute } from 'vitepress'
 import DefaultTheme from 'vitepress/theme'
-import { h, onMounted, onBeforeUnmount, watch, nextTick, ref } from 'vue'
-import { useRoute, useData } from 'vitepress'
+import { h, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 
 // import AdComponent from './AdComponent.vue'
 import Layout from './Layout.vue'
@@ -9,13 +10,13 @@ import Poem from './poem.vue' // 自定义的markdowm布局
 // import elementplus from "element-plus"
 // import "element-plus/dist/index.css";
 
-import './custom.scss'
 import 'animate.css'
 import 'element-plus/dist/index.css'
 import 'element-plus/theme-chalk/dark/css-vars.css'
+import './custom.scss'
+import './zoom.scss'
 
 const observers = [] // 用于存储所有观察者 -> 收集起来主要是为了当路由变化时效果之前的观察者。
-
 
 export default {
 	...DefaultTheme,
@@ -27,22 +28,28 @@ export default {
 		app.component('poem', Poem)
 	},
 
-
 	// 文字渐入效果
 	// 滚动时隐藏顶部nav
 	setup() {
 		// 文字渐入效果-------------开始--------------
 		const route = useRoute()
+
 		onMounted(() => {
 			animateFn() // 文字渐入效果
+			initZoom()
 		})
-		// 文字渐入效果 
+
+		const initZoom = () => {
+			// 为所有图片增加缩放功能
+			mediumZoom('.main img', { background: 'var(--vp-c-bg)' })
+		}
+		// 文字渐入效果
 		const animateFn = () => {
 			const main = document.querySelector('.vp-doc>div') || []
 			const paragraphs = [...(main?.children || [])]
-			paragraphs.forEach(item => {
-				const observer = new IntersectionObserver(entries => {
-					entries.forEach(entry => {
+			paragraphs.forEach((item) => {
+				const observer = new IntersectionObserver((entries) => {
+					entries.forEach((entry) => {
 						// 如果这个值为true，表示被监听的元素显示在视口中了
 						// 如果这个值为false，表示被监听的元素在视口外
 						if (entry.isIntersecting) {
@@ -66,12 +73,13 @@ export default {
 			() =>
 				nextTick(() => {
 					// 清空所有 observer 的函数
-					observers.forEach(observe => {
+					observers.forEach((observe) => {
 						observe.disconnect() // 使 IntersectionObserver 对象停止监听目标。
 					})
 					observers.length = 0 // 清空
 					animateFn() // 再次执行文字渐入效果
-				})
+					initZoom()
+				}),
 		)
 
 		// 滚动时隐藏顶部nav-------------开始--------------
@@ -80,28 +88,33 @@ export default {
 		let VPNavLineDom = null // 顶部下划线dom
 		const scrollTop = ref(0) // 页面滚动距离
 		onMounted(() => {
-			if (route.path !== repoName) { // 当前不是首页
+			if (route.path !== repoName) {
+				// 当前不是首页
 				VPNavDom = document.querySelector('.content') // 顶部dom
 				VPNavLineDom = document.querySelector('.divider-line') // 顶部下划线dom
-				window.addEventListener('scroll', () => {
-					scrollTop.value = document.documentElement.scrollTop || document.body.scrollTop;
-				}, true)
+				window.addEventListener(
+					'scroll',
+					() => {
+						scrollTop.value = document.documentElement.scrollTop || document.body.scrollTop
+					},
+					true,
+				)
 			}
 		})
 		// 滚动时隐藏顶部nav
 		watch(scrollTop, (newVal, oldVal) => {
 			nextTick(() => {
 				if (newVal > oldVal) {
-					VPNavDom.style.display = "none"
-					VPNavLineDom.style.display = "none"
+					VPNavDom.style.display = 'none'
+					VPNavLineDom.style.display = 'none'
 				} else {
-					VPNavDom.style.display = "block"
-					VPNavLineDom.style.display = "block"
+					VPNavDom.style.display = 'block'
+					VPNavLineDom.style.display = 'block'
 				}
 			})
 		})
 		onBeforeUnmount(() => {
-			window.removeEventListener("scroll")
+			window.removeEventListener('scroll')
 			VPNavDom = null
 			VPNavLineDom = null
 		})

@@ -1,6 +1,8 @@
 import mdFootnote from 'markdown-it-footnote'
 import mdTaskList from 'markdown-it-task-lists'
 import { createRequire } from 'module'
+import viteCompression from 'vite-plugin-compression'
+import ViteRestart from 'vite-plugin-restart'
 import { defineConfig, type DefaultTheme } from 'vitepress'
 
 const require = createRequire(import.meta.url)
@@ -8,7 +10,36 @@ const pkg = require('vitepress/package.json')
 
 const config = defineConfig({
 	vite: {
-		plugins: [],
+		plugins: [
+			//开启Gzip压缩
+			viteCompression({
+				verbose: true, // 是否在控制台中输出压缩结果
+				disable: false,
+				threshold: 10240, // 如果体积大于阈值，将被压缩，单位为b，体积过小时请不要压缩，以免适得其反
+				algorithm: 'gzip', // 压缩算法，可选['gzip'，' brotliccompress '，'deflate '，'deflateRaw']
+				ext: '.gz',
+				deleteOriginFile: true, // 源文件压缩后是否删除(我为了看压缩后的效果，先选择了true)
+			}),
+			// 监听 `vite.config.js` 或 `.env.development` 等配置文件修改直接生效，不需要反复重启 Vite
+			ViteRestart({
+				restart: ['vite.config.[jt]s'],
+			}),
+		],
+		build: {
+			rollupOptions: {
+				output: {
+					chunkFileNames: 'js/[name]-[hash].js', // 引入文件名的名称
+					entryFileNames: 'js/[name]-[hash].js', // 包的入口文件名称
+					assetFileNames: '[ext]/[name]-[hash].[ext]', // 资源文件像 字体，图片等
+					manualChunks(id) {
+						// 最小化拆分包
+						if (id.includes('node_modules')) {
+							return id.toString().split('node_modules/')[1].split('/')[0].toString()
+						}
+					},
+				},
+			},
+		},
 	},
 	base: '/blog',
 	lang: 'zh-CN',
