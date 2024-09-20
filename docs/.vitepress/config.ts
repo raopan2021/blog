@@ -124,7 +124,7 @@ const config = defineConfig({
 			'/css/': { base: '/css/', items: CssSidebar() },
 			'/js/': { base: '/js/', items: JsSidebar() },
 			'/base/': { base: '/base/', items: BaseSidebar() },
-			'/vue/': { base: '/vue/vue2/', items: Vue2Sidebar() },
+			'/vue/': { base: '/vue/vue2/', items: VueSidebar() },
 			'/engineering/': { base: '/engineering/', items: EngineeringSidebar() },
 			'/cli/': { base: '/cli/', items: CliSidebar() },
 			'/node/': { base: '/node/', items: NodeSidebar() },
@@ -146,7 +146,7 @@ function nav(): DefaultTheme.NavItem[] {
 				{ text: '前端配置', link: '/base/index', activeMatch: '/base/' },
 				{ text: 'CSS进阶', link: '/css/index', activeMatch: '/css/' },
 				{ text: 'JS进阶', link: '/js/index', activeMatch: '/js/' },
-				{ text: 'Vue', link: '/vue/vue2/index', activeMatch: '/vue/vue2/' },
+				{ text: 'Vue', link: '/vue/index', activeMatch: '/vue/' },
 				{ text: '工程化', link: '/engineering/index', activeMatch: '/engineering/' },
 				{ text: '脚手架', link: '/cli/index', activeMatch: '/cli/' },
 				{ text: '微前端', link: '/micro/index', activeMatch: '/micro/' },
@@ -350,17 +350,19 @@ function JsSidebar(): DefaultTheme.SidebarItem[] {
 		},
 	]
 }
-function Vue2Sidebar(): DefaultTheme.SidebarItem[] {
+function VueSidebar(): DefaultTheme.SidebarItem[] {
 	return [
 		{
 			text: 'Vue',
+			link: '/',
+			base: '/vue/',
 			items: [
 				{
-					text: 'Vue2',
-					collapsed: false,
+					text: 'Vue2.7 模板',
+					collapsed: true,
 					base: '/vue/vue2/',
 					items: [
-						{ text: 'Vue 2.7 + Vite 脚手架', link: 'index' },
+						{ text: 'Vue 2.7 + Vite 模板', link: 'index' },
 						{ text: 'Vite 基础配置', link: 'vite' },
 						{ text: 'Css 样式处理', link: 'css' },
 						{ text: 'stylelint CSS 代码检查', link: 'stylelint' },
@@ -368,6 +370,15 @@ function Vue2Sidebar(): DefaultTheme.SidebarItem[] {
 						{ text: 'eslint 代码格式化', link: 'eslint' },
 						{ text: 'husky 代码提交前脚本', link: 'husky' },
 						{ text: 'commitlint 提交信息校验', link: 'commitlint' },
+					],
+				},
+				{
+					text: 'vue组件',
+					collapsed: true,
+					base: '/vue/other/',
+					items: [
+						{ text: 'PDF 预览', link: 'vue-pdf' },
+						{ text: 'Vue.Draggable 拖拽插件', link: 'vueDraggable' },
 					],
 				},
 			],

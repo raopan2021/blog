@@ -40,9 +40,9 @@ features:
 
   - icon:
       src: /vue.svg
-    title: Vue 2.7 + Vite 脚手架
-    details: 开箱即用的脚手架模板
-    link: /vue/vue2/
+    title: Vue 框架
+    details: Vue2 Vue3 及相关组件
+    link: /vue/
 
   - icon:
       src: /engineering.svg
@@ -73,12 +73,6 @@ features:
     title: Markdown编写
     details: 搭建 Markdown 强大写作环境（VSCode）
     link: /markdown/
-
-  - icon:
-      src: /drag.svg
-    title: 拖拽组件
-    details: Vue.Draggable 拖拽插件
-    link: /other/vueDraggable
 
   - icon:
       src: /java.svg
