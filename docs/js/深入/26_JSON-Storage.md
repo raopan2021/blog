@@ -1,7 +1,9 @@
 # 26_JSON-Storage
 
 <script setup>
-import pdf from '../components/pdf.vue'
+import { VuePDF, usePDF } from '@tato30/vue-pdf';
+import pathName from  '/pdf/26_JSON-Storage.pdf'
+const { pdf, pages } = usePDF(pathName)
 </script>
 
-<pdf path="26_JSON-Storage" />
+<VuePDF v-for="page in pages" :key="page" :pdf="pdf" :page="page" />

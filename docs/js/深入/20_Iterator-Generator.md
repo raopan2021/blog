@@ -1,7 +1,9 @@
 # 20_Iterator-Generator
 
 <script setup>
-import pdf from '../components/pdf.vue'
+import { VuePDF, usePDF } from '@tato30/vue-pdf';
+import pathName from  '/pdf/20_Iterator-Generator.pdf'
+const { pdf, pages } = usePDF(pathName)
 </script>
 
-<pdf path="20_Iterator-Generator" />
+<VuePDF v-for="page in pages" :key="page" :pdf="pdf" :page="page" />

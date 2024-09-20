@@ -1,7 +1,9 @@
 # 25_npm包管理工具
 
 <script setup>
-import pdf from '../components/pdf.vue'
+import { VuePDF, usePDF } from '@tato30/vue-pdf';
+import pathName from  '/pdf/25_npm包管理工具.pdf'
+const { pdf, pages } = usePDF(pathName)
 </script>
 
-<pdf path="25_npm包管理工具" />
+<VuePDF v-for="page in pages" :key="page" :pdf="pdf" :page="page" />

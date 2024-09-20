@@ -1,7 +1,9 @@
 # 18_Promise使用详解
 
 <script setup>
-import pdf from '../components/pdf.vue'
+import { VuePDF, usePDF } from '@tato30/vue-pdf';
+import pathName from  '/pdf/18_Promise使用详解.pdf'
+const { pdf, pages } = usePDF(pathName)
 </script>
 
-<pdf path="18_Promise使用详解" />
+<VuePDF v-for="page in pages" :key="page" :pdf="pdf" :page="page" />

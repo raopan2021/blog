@@ -1,7 +1,9 @@
 # 22_await-async-事件循环
 
 <script setup>
-import pdf from '../components/pdf.vue'
+import { VuePDF, usePDF } from '@tato30/vue-pdf';
+import pathName from  '/pdf/22_await-async-事件循环.pdf'
+const { pdf, pages } = usePDF(pathName)
 </script>
 
-<pdf path="22_await-async-事件循环" />
+<VuePDF v-for="page in pages" :key="page" :pdf="pdf" :page="page" />

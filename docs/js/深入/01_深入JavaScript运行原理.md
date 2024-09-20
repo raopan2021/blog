@@ -1,7 +1,9 @@
 # 01_深入JavaScript运行原理
 
 <script setup>
-import pdf from '../components/pdf.vue'
+import { VuePDF, usePDF } from '@tato30/vue-pdf';
+import pathName from  '/pdf/01_深入JavaScript运行原理.pdf'
+const { pdf, pages } = usePDF(pathName)
 </script>
 
-<pdf path="01_深入JavaScript运行原理" />
+<VuePDF v-for="page in pages" :key="page" :pdf="pdf" :page="page" />

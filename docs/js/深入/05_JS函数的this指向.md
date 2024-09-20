@@ -1,7 +1,9 @@
 # 05_JS函数的this指向
 
 <script setup>
-import pdf from '../components/pdf.vue'
+import { VuePDF, usePDF } from '@tato30/vue-pdf';
+import pathName from  '/pdf/05_JS函数的this指向.pdf'
+const { pdf, pages } = usePDF(pathName)
 </script>
 
-<pdf path="05_JS函数的this指向" />
+<VuePDF v-for="page in pages" :key="page" :pdf="pdf" :page="page" />

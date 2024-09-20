@@ -1,7 +1,9 @@
 # 27_DOM-BOM操作
 
 <script setup>
-import pdf from '../components/pdf.vue'
+import { VuePDF, usePDF } from '@tato30/vue-pdf';
+import pathName from  '/pdf/27_DOM-BOM操作.pdf'
+const { pdf, pages } = usePDF(pathName)
 </script>
 
-<pdf path="27_DOM-BOM操作" />
+<VuePDF v-for="page in pages" :key="page" :pdf="pdf" :page="page" />
