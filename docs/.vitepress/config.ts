@@ -24,7 +24,7 @@ const config = defineConfig({
 	description: '我的blog',
 	cleanUrls: true,
 	// 是否忽略死链
-	ignoreDeadLinks: false,
+	ignoreDeadLinks: true,
 	// 最后更新于 开关
 	lastUpdated: true,
 	head: [
