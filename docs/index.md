@@ -1,11 +1,11 @@
 ---
 layout: home
 
-title: VitePress
-titleTemplate: 由 Vite 和 Vue 驱动的静态站点生成器
+title: 饶盼的blog
+titleTemplate: 边学边记录（菜就多练） 
 
 hero:
-  name: 饶盼 raopan2021 
+  name: 饶盼 raopan
   text: 我的技术 blog
   tagline: 边学边记录（菜就多练） 
   actions:
@@ -56,6 +56,18 @@ features:
     details: 创建一个自己的脚手架
     link: /cli/
 
+  - icon: 
+      src: /check.svg
+    title: SVG
+    details: SVG学习
+    link: /svg/
+
+  - icon:
+      src: /markdown.svg
+    title: Markdown编写
+    details: 搭建 Markdown 强大写作环境（VSCode）
+    link: /markdown/
+
   - icon:
       src: /node.svg
     title: Node
@@ -67,18 +79,6 @@ features:
     title: NEST.js
     details: nestjs学习
     link: /node/nestjs/
-
-  - icon:
-      src: /markdown.svg
-    title: Markdown编写
-    details: 搭建 Markdown 强大写作环境（VSCode）
-    link: /markdown/
-
-  - icon: 
-      src: /check.svg
-    title: SVG
-    details: SVG学习
-    link: /svg/
 
   - icon:
       src: /java.svg
