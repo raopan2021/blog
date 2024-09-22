@@ -21,6 +21,7 @@ export function WeekStudySidebar(): DefaultTheme.SidebarItem[] {
 						{ text: '孟浩然', link: '孟浩然' },
 						{ text: '杜牧', link: '杜牧' },
 						{ text: '元稹', link: '元稹' },
+						{ text: '柳永', link: '柳永' },
 						{ text: '其他诗词1', link: '其他诗词1' },
 						{ text: 'We Choose to Go to the Moon', link: 'We Choose to Go to the Moon' },
 						{ text: '文言文', link: '文言文' },
