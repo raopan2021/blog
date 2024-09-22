@@ -63,16 +63,22 @@ features:
     link: /node/
 
   - icon:
-      src: /study.svg
-    title: weekStudy
-    details: 每周学点东西
-    link: /weekStudy/2024/2024年度目标
+      src: /nestjs.svg
+    title: NEST.js
+    details: nestjs学习
+    link: /node/nestjs/
 
   - icon:
       src: /markdown.svg
     title: Markdown编写
     details: 搭建 Markdown 强大写作环境（VSCode）
     link: /markdown/
+
+  - icon: 
+      src: /check.svg
+    title: SVG
+    details: SVG学习
+    link: /svg/
 
   - icon:
       src: /java.svg
@@ -86,17 +92,12 @@ features:
     details: mysql基础
     link: /mysql/index
 
-  - icon: 
-      src: /check.svg
-    title: SVG
-    details: SVG学习
-    link: /svg/
+  - icon:
+      src: /study.svg
+    title: weekStudy
+    details: 每周学点东西
+    link: /weekStudy/2024/2024年度目标
 
-  # - icon: 
-  #     src: /check.svg
-  #   title: SVG
-  #   details: SVG学习
-  #   link: /svg/
 ---
 
 <!-- iconfont https://www.iconfont.cn/?spm=a313x.search_index.i3.d4d0a486a.586b3a81T19Bxt -->

@@ -44,33 +44,6 @@
     }
 }
 
-.poem-layout {
-    h3 {
-        text-align: center;
-        margin-top: 50px;
-    }
-
-    h3:nth-child(n+5) {
-        display: block;
-        border-top: 1px solid #99999950;
-        margin-top: 50px;
-        height: 100px;
-        line-height: 150px;
-    }
-
-    h4 {
-        display: inline-block;
-        height: 50px;
-        line-height: 50px;
-        margin-left: calc(100% - 200px);
-    }
-
-    /* 不能直接写 p ，避免tip里面的内容也居中了 */
-    >div>p {
-        text-align: center;
-    }
-}
-
 .dark .Layout .VPFeature {
     background: transparent;
     border: 1px solid #ffffff50

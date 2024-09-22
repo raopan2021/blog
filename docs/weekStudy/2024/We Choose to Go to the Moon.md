@@ -1,3 +1,14 @@
+---
+layout: poem
+outline: [2,3]
+---
+
+<style module>
+p {
+    text-align: left !important;
+}
+</style>
+
 # We Choose to Go to the Moon
 
 我们决定登月
@@ -340,4 +351,4 @@ Thank you.
 
 谢谢。
 
- 作者：onc哦 https://www.bilibili.com/read/cv7350799/ 出处：bilibili
+ 作者：onc哦 <https://www.bilibili.com/read/cv7350799/> 出处：bilibili

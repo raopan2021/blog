@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { useRoute, useData } from 'vitepress'
-import { computed } from 'vue'
-import { useSidebar } from 'vitepress/dist/client/theme-default/composables/sidebar'
+import { useData, useRoute } from 'vitepress'
 import VPDocAside from 'vitepress/dist/client/theme-default/components/VPDocAside.vue'
 import VPDocFooter from 'vitepress/dist/client/theme-default/components/VPDocFooter.vue'
+import { useSidebar } from 'vitepress/dist/client/theme-default/composables/sidebar'
+import { computed } from 'vue'
 
 import { ElBacktop } from 'element-plus'
 
@@ -72,7 +72,7 @@ const pageName = computed(() =>
     </div>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 .VPDoc {
     padding: 32px 24px 96px;
     width: 100%;

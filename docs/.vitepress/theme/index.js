@@ -13,8 +13,9 @@ import Poem from './poem.vue' // 自定义的markdowm布局
 import 'animate.css'
 import 'element-plus/dist/index.css'
 import 'element-plus/theme-chalk/dark/css-vars.css'
-import './custom.scss'
-import './zoom.scss'
+import './style/custom.scss'
+import './style/poem.scss'
+import './style/zoom.scss'
 
 const observers = [] // 用于存储所有观察者 -> 收集起来主要是为了当路由变化时效果之前的观察者。
 
