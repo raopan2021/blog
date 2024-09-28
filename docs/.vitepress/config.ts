@@ -2,7 +2,7 @@ import mdFootnote from 'markdown-it-footnote'
 import mdTaskList from 'markdown-it-task-lists'
 import { createRequire } from 'module'
 import { defineConfig } from 'vitepress'
-import { nav, side } from './sideBar'
+import { nav, side } from './sideBar/_index.ts'
 
 const require = createRequire(import.meta.url)
 const pkg = require('vitepress/package.json')

@@ -1,8 +1,7 @@
 # js技巧
 
-
-
 ## 重构赋值
+
 通过重构赋值，可以轻松地从数组或对象中提取值。可以使用简洁的语法直接提取特定值，而不是传统的变量赋值。这有助于编写更简洁、更易读的代码，尤其是在处理复杂的数据结构时。
 
 假设我们有一个对象，包含用户的姓名和年龄信息：
@@ -22,9 +21,8 @@ let { name, age } = user;
 // 这种方法不仅代码更加简洁，而且提高了代码的可读性。
 ```
 
-
-
 ## 展开语法 [...array1, ...array2]
+
 展开语法（三点： ... ）允许将数组、对象或函数参数扩展为单独的元素。这对于合并数组、克隆对象或向函数动态传递多个参数等任务非常有用。该功能可简化数据操作，大大减少代码的冗长度。
 
 假设我们有两个数组，需要将它们合并成一个新数组：
@@ -39,18 +37,17 @@ let array2 = [4, 5, 6];
 ``` js
 let combinedArray = array1.concat(array2);
 ```
+
 但是通过使用展开语法，我们可以更简洁地实现相同的目的：
 
 ``` js
 let combinedArray = [...array1, ...array2];
 ```
+
 这样，array1 和 array2 中的元素就被展开，并组成了一个新的数组 combinedArray。这种方法不仅代码更加简洁，而且更直观易懂。
 
-
-
-
-
 ## Promises 和 Async/Await
+
 在 JavaScript 中，Promises 和 async/await 是管理异步操作的重要特性。
 
 Promises 处理异步任务，并通过 .then() 和 .catch() 方法处理成功或失败的情况。
@@ -67,7 +64,7 @@ function fetchData() {
         }, 1000);
     });
 }
-``` 
+```
 
 使用 Promises 的方法，我们可以这样处理成功或失败的情况：
 
@@ -98,9 +95,8 @@ getData();
 
 在这个例子中，Async/Await 使得异步代码的结构更清晰，更接近于传统的同步代码结构，从而提高了代码的可读性和可维护性。
 
+## Memoization 内存化
 
-
-##  Memoization 内存化
 内存化 Memoization 是一种根据输入参数缓存函数结果的技术。
 
 通过存储以前计算的结果，可以避免多余的计算，显著提高重复或昂贵函数的性能。在 JavaScript 中实现缓存可以很简单，只需创建一个缓存对象，并在计算结果之前对其进行检查即可。
@@ -112,7 +108,7 @@ function fibonacci(n) {
     if (n <= 1) { return n }
     return fibonacci(n - 1) + fibonacci(n - 2);
 }
-``` 
+```
 
 在不使用备忘录化的情况下，这个函数会进行大量的重复计算。现在，我们引入 Memoization：
 
@@ -129,13 +125,12 @@ function fibonacciMemoized(n) {
     memo[n] = fibonacciMemoized(n - 1) + fibonacciMemoized(n - 2);
     return memo[n];
 }
-``` 
+```
 
 在这个改进的版本中，我们使用一个对象 memo 来缓存已经计算过的斐波那契数。这样，每次调用 fibonacciMemoized 时，如果结果已经在缓存中，就可以直接返回，避免了不必要的重复计算。这极大地提高了函数的性能
 
-
-
 ## 事件委托
+
 事件委托是一种使用事件转发来高效处理事件的模型。
 
 与其给每个元素单独附加事件监听器，不如给父元素附加一个监听器，然后处理多个子元素的事件。
@@ -164,20 +159,19 @@ document.getElementById('myList').addEventListener('click', function(e) {
 
 这样，无论列表中有多少项，或者以后添加了多少新项，都无需单独为每一项添加事件监听器，从而提高了性能并减少了内存使用。
 
+## 使用控制台调试
 
-
-##  使用控制台调试
 JavaScript 中的控制台对象提供了强大的调试功能。
 
-除了 console.log()，还可以使用 
+除了 console.log()，还可以使用
+
 - console.warn()
-- console.error() 
+- console.error()
 - console.table() 来增强试工作流。
 
 - console.time() + console.timeEnd()
 
 此外，使用 console.log() 中的 %c 占位符，可以为控制台消息设置样式，使它们更具视觉吸引力并更易于区分。
-
 
 <script setup>
 import ComponentInHeader from '../../components/ComponentInHeader.vue'

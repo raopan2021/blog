@@ -1,6 +1,7 @@
 import { type DefaultTheme } from 'vitepress'
 
 // 导入目录内的所有ts文件的函数，并导出
+import { AlgorithmSidebar } from './Algorithm.ts'
 import { BaseSidebar } from './BaseSidebar.ts'
 import { CliSidebar } from './CliSidebar.ts'
 import { CssSidebar } from './CssSidebar.ts'
@@ -26,6 +27,7 @@ export const side = {
 	'/js/': { base: '/js/', items: JsSidebar() },
 	'/markdown/': { base: '/markdown/', items: MarkdownSidebar() },
 	'/micro/': { base: '/micro/', items: MicroSidebar() },
+	'/algorithm/': { base: '/algorithm/', items: AlgorithmSidebar() },
 	'/mysql/': { base: '/mysql/', items: MysqlSidebar() },
 	'/node/': { base: '/node/', items: NodeSidebar() },
 	'/reg/': { base: '/reg/', items: RegSidebar() },
@@ -52,10 +54,12 @@ export function nav(): DefaultTheme.NavItem[] {
 			text: '后端',
 			items: [
 				{ text: 'Node', link: '/node/index', activeMatch: '/node/' },
+				{ text: 'NestJS', link: '/node/nestjs/index', activeMatch: '/node/nestjs/index' },
 				{ text: 'java', link: '/java/基础/index', activeMatch: '/java/' },
 				{ text: 'mysql', link: '/mysql/index', activeMatch: '/mysql/' },
 			],
 		},
+		{ text: '算法', link: '/algorithm/index' },
 		{
 			text: '其他',
 			items: [
