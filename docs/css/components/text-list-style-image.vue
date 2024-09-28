@@ -1,6 +1,6 @@
 <script setup>
-import { ref, computed } from 'vue'
-import { ElText, ElRadioGroup, ElRadio } from 'element-plus'
+import { ElRadio, ElRadioGroup, ElText } from 'element-plus';
+import { computed, ref } from 'vue';
 
 const radioSelect = ref("/gitee.svg")
 
@@ -10,7 +10,7 @@ const listStyleImage = computed(() => {
     }
 })
 </script>
-    
+
 <template>
     <ul :style="listStyleImage">
         <li>楼阴缺，栏杆影卧东厢月 </li>
@@ -26,9 +26,9 @@ const listStyleImage = computed(() => {
             /gitee.svg
             <img src="/gitee.svg" style="height: 20px;width: 20px;">
         </el-radio>
-        <el-radio label="/logo.svg">
-            /logo.svg
-            <img src="/logo.svg" style="height: 20px;width: 20px;">
+        <el-radio label="/mainView/logo.svg">
+            /mainView/logo.svg
+            <img src="/mainView/logo.svg" style="height: 20px;width: 20px;">
         </el-radio>
     </el-radio-group>
 </template>
