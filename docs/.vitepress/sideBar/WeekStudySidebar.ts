@@ -12,6 +12,7 @@ export function WeekStudySidebar(): DefaultTheme.SidebarItem[] {
 					base: '/weekStudy/2024/',
 					items: [
 						{ text: '毛泽东', link: '毛泽东' },
+						{ text: '李白', link: '李白' },
 						{ text: '辛弃疾', link: '辛弃疾' },
 						{ text: '李清照', link: '李清照' },
 						{ text: '苏轼', link: '苏轼' },
