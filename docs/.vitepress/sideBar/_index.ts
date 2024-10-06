@@ -8,6 +8,7 @@ import { CssSidebar } from './CssSidebar.ts'
 import { EngineeringSidebar } from './EngineeringSidebar.ts'
 import { JavaSidebar } from './JavaSidebar.ts'
 import { JsSidebar } from './JsSidebar.ts'
+import { LinuxSidebar } from './LinuxSidebar.ts'
 import { MarkdownSidebar } from './MarkdownSidebar.ts'
 import { MicroSidebar } from './MicroSidebar.ts'
 import { MysqlSidebar } from './MysqlSidebar.ts'
@@ -30,6 +31,8 @@ export const side = {
 	'/algorithm/': { base: '/algorithm/', items: AlgorithmSidebar() },
 	'/mysql/': { base: '/mysql/', items: MysqlSidebar() },
 	'/node/': { base: '/node/', items: NodeSidebar() },
+	'/linux/': { base: '/linux/', items: LinuxSidebar() },
+	'/docker/': { base: '/docker/', items: LinuxSidebar() },
 	'/reg/': { base: '/reg/', items: RegSidebar() },
 	'/svg/': { base: '/svg/', items: SvgSidebar() },
 	'/vue/': { base: '/vue/vue2/', items: VueSidebar() },
@@ -57,6 +60,8 @@ export function nav(): DefaultTheme.NavItem[] {
 				{ text: 'NestJS', link: '/node/nestjs/index', activeMatch: '/node/nestjs/index' },
 				{ text: 'java', link: '/java/基础/index', activeMatch: '/java/' },
 				{ text: 'mysql', link: '/mysql/index', activeMatch: '/mysql/' },
+				{ text: 'linux', link: '/linux/index', activeMatch: '/linux/' },
+				{ text: 'docker', link: '/linux/docker/index', activeMatch: '/linux/docker/' },
 			],
 		},
 		{ text: '算法', link: '/algorithm/index' },

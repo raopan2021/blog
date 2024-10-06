@@ -29,6 +29,16 @@ export function JsSidebar(): DefaultTheme.SidebarItem[] {
 					],
 				},
 				{
+					text: 'ES6',
+					collapsed: true,
+					base: 'js/ES6/',
+					items: [
+						{ text: '首页', link: 'index' },
+						{ text: 'babel', link: 'babel' },
+						{ text: 'let 和 const 命令', link: 'let 和 const 命令' },
+					],
+				},
+				{
 					text: '字符串',
 					collapsed: true,
 					base: 'js/字符串/',

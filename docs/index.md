@@ -81,6 +81,18 @@ features:
     link: /mysql/index
 
   - icon:
+      src: /mainView/linux.svg
+    title: linux
+    details: linux基础
+    link: /linux/index
+
+  - icon:
+      src: /mainView/docker.svg
+    title: docker
+    details: docker基础
+    link: /linux/docker/index
+
+  - icon:
       src: /mainView/algorithm.svg
     title: 算法
     details: 算法
