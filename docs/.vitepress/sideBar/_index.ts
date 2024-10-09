@@ -13,6 +13,7 @@ import { MarkdownSidebar } from './MarkdownSidebar.ts'
 import { MicroSidebar } from './MicroSidebar.ts'
 import { MysqlSidebar } from './MysqlSidebar.ts'
 import { NodeSidebar } from './NodeSidebar.ts'
+import { PythonSidebar } from './PythonSidebar.ts'
 import { RegSidebar } from './RegSidebar.ts'
 import { SvgSidebar } from './SvgSidebar.ts'
 import { VueSidebar } from './VueSidebar.ts'
@@ -25,6 +26,7 @@ export const side = {
 	'/css/': { base: '/css/', items: CssSidebar() },
 	'/engineering/': { base: '/engineering/', items: EngineeringSidebar() },
 	'/java/': { base: '/java/基础', items: JavaSidebar() },
+	'/python/': { base: '/python/', items: PythonSidebar() },
 	'/js/': { base: '/js/', items: JsSidebar() },
 	'/markdown/': { base: '/markdown/', items: MarkdownSidebar() },
 	'/micro/': { base: '/micro/', items: MicroSidebar() },
@@ -59,6 +61,7 @@ export function nav(): DefaultTheme.NavItem[] {
 				{ text: 'Node', link: '/node/index', activeMatch: '/node/' },
 				{ text: 'NestJS', link: '/node/nestjs/index', activeMatch: '/node/nestjs/index' },
 				{ text: 'java', link: '/java/基础/index', activeMatch: '/java/' },
+				{ text: 'python', link: '/python/index', activeMatch: '/python/' },
 				{ text: 'mysql', link: '/mysql/index', activeMatch: '/mysql/' },
 				{ text: 'linux', link: '/linux/index', activeMatch: '/linux/' },
 				{ text: 'docker', link: '/linux/docker/index', activeMatch: '/linux/docker/' },
@@ -72,6 +75,10 @@ export function nav(): DefaultTheme.NavItem[] {
 				{ text: 'SVG学习', link: '/svg/index', activeMatch: '/svg/' },
 				{ text: '每周学习', link: '/weekStudy/2024/2024年度目标', activeMatch: '/weekStudy/' },
 			],
+		},
+		{
+			text: '梯子',
+			link: 'TIZI',
 		},
 		{
 			text: '友链',

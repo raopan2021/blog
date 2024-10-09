@@ -8,8 +8,8 @@ export function LinuxSidebar(): DefaultTheme.SidebarItem[] {
 			base: '/linux/',
 			items: [
 				{ text: '首页', link: 'index' },
-				{ text: 'CentOS', link: 'CentOS' },
 				{ text: 'VMware', link: 'VMware' },
+				{ text: 'CentOS', link: 'CentOS' },
 				{ text: 'ssh', link: 'ssh' },
 				{ text: 'yum', link: 'yum' },
 				{ text: '端口', link: '端口' },

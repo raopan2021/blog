@@ -69,6 +69,12 @@ features:
     link: /node/nestjs/
 
   - icon:
+      src: /mainView/python.svg
+    title: Python
+    details: python学习
+    link: /python/
+
+  - icon:
       src: /mainView/java.svg
     title: Java
     details: Java基础
