@@ -13,6 +13,6 @@
 
     /* 不能直接写 p ，避免tip里面的内容也居中了 */
     >div>p {
-        text-align: center;
+        text-align: center !important;
     }
 }
