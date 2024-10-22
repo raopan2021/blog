@@ -9,6 +9,7 @@ export function PythonSidebar(): DefaultTheme.SidebarItem[] {
 			items: [
 				{ text: '介绍', link: 'index' },
 				{ text: '虚拟环境工具 pyenv', link: 'pyenv' },
+				{ text: 'conda', link: 'conda' },
 			],
 		},
 	]
