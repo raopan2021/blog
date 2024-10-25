@@ -99,6 +99,12 @@ features:
     link: /linux/docker/index
 
   - icon:
+      src: /mainView/gpt.svg
+    title: 大模型
+    details: 大模型学习
+    link: /ai/index
+
+  - icon:
       src: /mainView/algorithm.svg
     title: 算法
     details: 算法

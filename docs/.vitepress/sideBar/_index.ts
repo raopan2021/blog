@@ -1,23 +1,24 @@
 import { type DefaultTheme } from 'vitepress'
 
 // 导入目录内的所有ts文件的函数，并导出
-import { AlgorithmSidebar } from './Algorithm.ts'
-import { BaseSidebar } from './BaseSidebar.ts'
-import { CliSidebar } from './CliSidebar.ts'
-import { CssSidebar } from './CssSidebar.ts'
-import { EngineeringSidebar } from './EngineeringSidebar.ts'
-import { JavaSidebar } from './JavaSidebar.ts'
-import { JsSidebar } from './JsSidebar.ts'
-import { LinuxSidebar } from './LinuxSidebar.ts'
-import { MarkdownSidebar } from './MarkdownSidebar.ts'
-import { MicroSidebar } from './MicroSidebar.ts'
-import { MysqlSidebar } from './MysqlSidebar.ts'
-import { NodeSidebar } from './NodeSidebar.ts'
-import { PythonSidebar } from './PythonSidebar.ts'
-import { RegSidebar } from './RegSidebar.ts'
-import { SvgSidebar } from './SvgSidebar.ts'
-import { VueSidebar } from './VueSidebar.ts'
-import { WeekStudySidebar } from './WeekStudySidebar.ts'
+import { AISidebar } from './ai.ts'
+import { AlgorithmSidebar } from './algorithm.ts'
+import { BaseSidebar } from './base.ts'
+import { CliSidebar } from './cli.ts'
+import { CssSidebar } from './css.ts'
+import { EngineeringSidebar } from './engineering.ts'
+import { JavaSidebar } from './java.ts'
+import { JsSidebar } from './js.ts'
+import { LinuxSidebar } from './linux.ts'
+import { MarkdownSidebar } from './markdown.ts'
+import { MicroSidebar } from './micro.ts'
+import { MysqlSidebar } from './mysql.ts'
+import { NodeSidebar } from './node.ts'
+import { PythonSidebar } from './python.ts'
+import { RegSidebar } from './reg.ts'
+import { SvgSidebar } from './svg.ts'
+import { VueSidebar } from './vue.ts'
+import { WeekStudySidebar } from './weekstudy.ts'
 
 export const side = {
 	// 侧边导航
@@ -35,6 +36,7 @@ export const side = {
 	'/node/': { base: '/node/', items: NodeSidebar() },
 	'/linux/': { base: '/linux/', items: LinuxSidebar() },
 	'/docker/': { base: '/docker/', items: LinuxSidebar() },
+	'/ai/': { base: '/ai/', items: AISidebar() },
 	'/reg/': { base: '/reg/', items: RegSidebar() },
 	'/svg/': { base: '/svg/', items: SvgSidebar() },
 	'/vue/': { base: '/vue/vue2/', items: VueSidebar() },
@@ -67,6 +69,7 @@ export function nav(): DefaultTheme.NavItem[] {
 				{ text: 'docker', link: '/linux/docker/index', activeMatch: '/linux/docker/' },
 			],
 		},
+		{ text: 'AI', link: '/ai/index' },
 		{ text: '算法', link: '/algorithm/index' },
 		{
 			text: '其他',
