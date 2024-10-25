@@ -22,7 +22,7 @@ hero:
 features:
   - icon: 
       src: /mainView/frontend.svg
-    title: 前端百宝箱
+    title: 前端配置
     details: 新PC环境相关配置、收藏
     link: /base/
 

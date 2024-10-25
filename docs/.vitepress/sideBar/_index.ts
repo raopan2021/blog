@@ -2,7 +2,7 @@ import { type DefaultTheme } from 'vitepress'
 
 // 导入目录内的所有ts文件的函数，并导出
 import { AISidebar } from './ai.ts'
-import { AlgorithmSidebar } from './algorithm.ts'
+import { AlgorithmSidebar } from './algorithms.ts'
 import { BaseSidebar } from './base.ts'
 import { CliSidebar } from './cli.ts'
 import { CssSidebar } from './css.ts'
