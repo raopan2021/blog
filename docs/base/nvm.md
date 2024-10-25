@@ -1,4 +1,4 @@
-# `nvm` - `node` 版本管理工具
+# nvm - node 版本管理工具
 
 由于不同项目依赖的node版本可能不同，所以在维护多个项目时通常需要使用不同的node版本，这时候用nvm来切换不同的node版本就很方便。
 
@@ -6,46 +6,45 @@
 
  <a href="https://nvm.uihtm.com/" target="_blank">nvm使用手册</a>
 
-
-
 ## nvm下载
 
 当前最新版本是 1.1.12 ， 建议安装最新版（2023-6）
 
 [国内下载链接](https://nvm.uihtm.com/)
 
-
 ## 常用命令
 
 显示nvm版本。
+
 ```js
 nvm version
 ```
 
 显示可下载版本的部分列表
+
 ```js
 nvm list available 
 ```
 
 下载14.0.0版本的node
+
 ```js
 nvm install 14.0.0
 ```
 
 使用14.0.0版本的node
+
 ```js
 nvm use 14.0.0 
 ```
 
 列出所有安装的node版本
+
 ```js
 nvm list
 ```
 
-
-
-
-## `nvm` 和 `npm` 切换国内镜像
+## nvm 和 npm 切换国内镜像
 
 1、安装 [chsrc 换源工具](https://gitee.com/RubyMetric/chsrc)
 
@@ -60,6 +59,7 @@ chsrc set node
 ```
 
 结果：
+
 ```bash {8}
 C:\Users\raopa>chsrc set node
 √ 命令 npm 存在
@@ -83,20 +83,21 @@ npm config set registry https://mirrors.zju.edu.cn/npm
 ``` bash
 npm config get registry
 ```
+
 结果：
-https://mirrors.zju.edu.cn/npm
+<https://mirrors.zju.edu.cn/npm>
 
 ## nvm所有命令
 
-- `nvm arch`：显示node是运行在32位还是64位。
+- `nvm version` ：显示nvm版本。version可简化为v。
 - `nvm install <version> [arch]` ：安装node， version是特定版本也可以是最新稳定版本latest。可选参数arch指定安装32位还是64位版本，默认是系统位数。可以添加--insecure绕过远程服务器的SSL。
+- `nvm use [version] [arch]` ：使用制定版本node。可指定32/64位。
+- `nvm uninstall <version>` ：卸载指定版本node。
+- `nvm node_mirror [url]` ：设置node镜像。默认是<https://nodejs.org/dist/。> 如果不写url，则使用默认url。设置后可至安装目录settings.txt文件查看，也可直接在该文件操作。
+- `nvm npm_mirror [url]` ：设置npm镜像。<https://github.com/npm/cli/archive/。> 如果不写url，则使用默认url。设置后可至安装目录settings.txt文件查看，也可直接在该文件操作。
+- `nvm arch`：显示node是运行在32位还是64位。
 - `nvm list [available]` ：显示已安装的列表。可选参数available，显示可安装的所有版本。list可简化为ls。
 - `nvm on` ：开启node.js版本管理。
 - `nvm off` ：关闭node.js版本管理。
 - `nvm proxy [url]` ：设置下载代理。不加可选参数url，显示当前代理。将url设置为none则移除代理。
-- `nvm node_mirror [url]` ：设置node镜像。默认是https://nodejs.org/dist/。 如果不写url，则使用默认url。设置后可至安装目录settings.txt文件查看，也可直接在该文件操作。
-- `nvm npm_mirror [url]` ：设置npm镜像。https://github.com/npm/cli/archive/。 如果不写url，则使用默认url。设置后可至安装目录settings.txt文件查看，也可直接在该文件操作。
-- `nvm uninstall <version>` ：卸载指定版本node。
-- `nvm use [version] [arch]` ：使用制定版本node。可指定32/64位。
 - `nvm root [path]` ：设置存储不同版本node的目录。如果未设置，默认使用当前目录。
-- `nvm version` ：显示nvm版本。version可简化为v。

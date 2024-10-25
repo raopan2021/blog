@@ -7,8 +7,8 @@ export function NodeSidebar(): DefaultTheme.SidebarItem[] {
 			link: 'index',
 			base: '/node/',
 			items: [
-				{ text: '首页', link: 'index' },
-				{ text: 'pnpm', link: 'pnpm' },
+				// { text: '首页', link: 'index' },
+				// { text: 'pnpm', link: 'pnpm' },
 				{
 					text: 'NestJS',
 					link: 'nestjs',

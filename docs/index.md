@@ -56,11 +56,11 @@ features:
     details: 创建一个自己的脚手架
     link: /cli/
 
-  - icon:
-      src: /mainView/node.svg
-    title: Node
-    details: nodejs nvm npm pnpm
-    link: /node/
+#   - icon:
+#       src: /mainView/node.svg
+#     title: Node
+#     details: nodejs nvm npm pnpm
+#     link: /node/
 
   - icon:
       src: /mainView/nestjs.svg
@@ -100,8 +100,8 @@ features:
 
   - icon:
       src: /mainView/gpt.svg
-    title: 大模型
-    details: 大模型学习
+    title: AI
+    details: AI 学习
     link: /ai/index
 
   - icon:
