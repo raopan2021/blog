@@ -26,6 +26,7 @@ export function LinuxSidebar(): DefaultTheme.SidebarItem[] {
 				{ text: '镜像', link: '镜像' },
 				{ text: '部署Nginx', link: 'nginx' },
 				{ text: '部署MySQL', link: 'mysql' },
+				{ text: '部署2个MySQL', link: 'mysql2' },
 			],
 		},
 	]
