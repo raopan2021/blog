@@ -96,7 +96,7 @@ features:
       src: /mainView/docker.svg
     title: docker
     details: docker基础
-    link: /linux/docker/index
+    link: /docker/index
 
   - icon:
       src: /mainView/gpt.svg

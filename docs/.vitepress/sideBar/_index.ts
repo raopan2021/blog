@@ -66,7 +66,7 @@ export function nav(): DefaultTheme.NavItem[] {
 				{ text: 'python', link: '/python/index', activeMatch: '/python/' },
 				{ text: 'mysql', link: '/mysql/index', activeMatch: '/mysql/' },
 				{ text: 'linux', link: '/linux/index', activeMatch: '/linux/' },
-				{ text: 'docker', link: '/linux/docker/index', activeMatch: '/linux/docker/' },
+				{ text: 'docker', link: '/docker/index', activeMatch: '/docker/' },
 			],
 		},
 		{ text: 'AI', link: '/ai/index' },
