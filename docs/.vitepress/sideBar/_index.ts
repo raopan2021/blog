@@ -14,11 +14,12 @@ import { MarkdownSidebar } from './markdown.ts'
 import { MicroSidebar } from './micro.ts'
 import { MysqlSidebar } from './mysql.ts'
 import { NodeSidebar } from './node.ts'
+import { PlanSidebar } from './plan.ts'
+import { PoemSidebar } from './poem.ts'
 import { PythonSidebar } from './python.ts'
 import { RegSidebar } from './reg.ts'
 import { SvgSidebar } from './svg.ts'
 import { VueSidebar } from './vue.ts'
-import { WeekStudySidebar } from './weekstudy.ts'
 
 export const side = {
 	// 侧边导航
@@ -40,7 +41,8 @@ export const side = {
 	'/reg/': { base: '/reg/', items: RegSidebar() },
 	'/svg/': { base: '/svg/', items: SvgSidebar() },
 	'/vue/': { base: '/vue/vue2/', items: VueSidebar() },
-	'/weekStudy/': { base: '/weekStudy/', items: WeekStudySidebar() },
+	'/poem/': { base: '/poem/', items: PoemSidebar() },
+	'/plan/': { base: '/plan/', items: PlanSidebar() },
 }
 
 export function nav(): DefaultTheme.NavItem[] {
@@ -69,19 +71,17 @@ export function nav(): DefaultTheme.NavItem[] {
 				{ text: 'docker', link: '/docker/index', activeMatch: '/docker/' },
 			],
 		},
-		{ text: 'AI', link: '/ai/index' },
-		{ text: '算法', link: '/algorithm/index' },
+        { text: '学习计划', link: '/plan/2025', activeMatch: '/plan/' },
 		{
 			text: '其他',
 			items: [
 				{ text: '正则', link: '/reg/入门', activeMatch: '/reg/' },
 				{ text: 'SVG学习', link: '/svg/index', activeMatch: '/svg/' },
-				{ text: '每周学习', link: '/weekStudy/2024/2024年度目标', activeMatch: '/weekStudy/' },
+				{ text: '算法', link: '/algorithm/index' },
+				{ text: 'AI', link: '/ai/index' },
+				{ text: '梯子', link: 'TIZI' },
+				{ text: '诗词', link: '/poem/毛泽东', activeMatch: '/poem/' },
 			],
-		},
-		{
-			text: '梯子',
-			link: 'TIZI',
 		},
 		{
 			text: '友链',
