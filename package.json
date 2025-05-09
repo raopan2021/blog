@@ -11,11 +11,13 @@
 		"docs:build": "vitepress build docs",
 		"preview": "npm run docs:preview",
 		"docs:preview": "vitepress preview docs",
-		"docs:serve": "vitepress serve docs"
+		"docs:serve": "vitepress serve docs",
+		"parse": "node ./docs/bookmarks/parse.js"
 	},
 	"dependencies": {
 		"@tato30/vue-pdf": "^1.11.1",
 		"animate.css": "^4.1.1",
+		"bookmarks-to-json": "^1.0.5",
 		"element-plus": "^2.4.4",
 		"markdown-it-footnote": "^3.0.3",
 		"markdown-it-mathjax3": "^4.3.2",

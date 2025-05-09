@@ -130,4 +130,16 @@ features:
 
 ---
 
+<script setup lang="ts">
+import BookMarks from './bookmarks/index.vue'
+</script>
+
+<BookMarks />
+
+<style>
+a {
+    text-decoration: none !important;
+}
+</style>
+
 <!-- iconfont https://www.iconfont.cn/?spm=a313x.search_index.i3.d4d0a486a.586b3a81T19Bxt -->
