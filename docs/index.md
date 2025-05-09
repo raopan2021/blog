@@ -126,7 +126,7 @@ features:
       src: /mainView/study.svg
     title: weekStudy
     details: 每周学点东西
-    link: /weekStudy/2024/2024年度目标
+    link: /plan/2025
 
 ---
 
