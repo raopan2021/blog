@@ -31,6 +31,7 @@ export function CssSidebar(): DefaultTheme.SidebarItem[] {
 						{ text: 'filter 滤镜', link: 'filter' },
 						{ text: 'shadow 阴影', link: 'shadow' },
 						{ text: 'verticalAlign 图文相对位置', link: 'verticalAlign' },
+						{ text: '鼠标横向滚动', link: 'rowScroll' },
 					],
 				},
 				{
