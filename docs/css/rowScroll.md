@@ -1,4 +1,4 @@
-# shadow 阴影
+# 鼠标横向滚动
 
 <script setup>
 import RowScroll from './components/RowScroll.vue'
