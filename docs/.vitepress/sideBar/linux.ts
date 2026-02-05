@@ -9,7 +9,7 @@ export function LinuxSidebar(): DefaultTheme.SidebarItem[] {
 			items: [
 				{ text: '首页', link: 'index' },
 				{ text: 'VMware', link: 'VMware' },
-				{ text: 'CentOS', link: 'CentOS' },
+				{ text: '一键替换源', link: '一键替换源' },
 				{ text: 'ssh', link: 'ssh' },
 				{ text: 'yum', link: 'yum' },
 				{ text: '端口', link: '端口' },
