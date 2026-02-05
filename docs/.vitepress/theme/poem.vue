@@ -2,7 +2,6 @@
 import { useData, useRoute } from 'vitepress'
 import VPDocAside from 'vitepress/dist/client/theme-default/components/VPDocAside.vue'
 import VPDocFooter from 'vitepress/dist/client/theme-default/components/VPDocFooter.vue'
-import { useSidebar } from 'vitepress/dist/client/theme-default/composables/sidebar'
 import { computed } from 'vue'
 
 import { ElBacktop } from 'element-plus'
@@ -10,7 +9,6 @@ import { ElBacktop } from 'element-plus'
 const { theme } = useData()
 
 const route = useRoute()
-const { hasSidebar, hasAside, leftAside } = useSidebar()
 
 const pageName = computed(() =>
     route.path.replace(/[./]+/g, '_').replace(/_html$/, '')
@@ -18,10 +16,10 @@ const pageName = computed(() =>
 </script>
 
 <template>
-    <div class="VPDoc" :class="{ 'has-sidebar': hasSidebar, 'has-aside': hasAside }">
+    <div class="VPDoc">
         <slot name="doc-top" />
         <div class="container">
-            <div v-if="hasAside" class="aside" :class="{ 'left-aside': leftAside }">
+            <div class="aside">
                 <div class="aside-curtain" />
                 <div class="aside-container">
                     <div class="aside-content">

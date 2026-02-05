@@ -1,5 +1,5 @@
-import mdFootnote from 'markdown-it-footnote'
-import mdTaskList from 'markdown-it-task-lists'
+// import mdFootnote from 'markdown-it-footnote'
+// import mdTaskList from 'markdown-it-task-lists'
 import { createRequire } from 'module'
 import { defineConfig } from 'vitepress'
 import { nav, side } from './sideBar/_index.ts'
@@ -40,7 +40,7 @@ const config = defineConfig({
 	],
 	// markdown配置
 	markdown: {
-		math: true,
+		// math: true,
 		lineNumbers: true,
 		container: {
 			tipLabel: '提示',
@@ -50,8 +50,8 @@ const config = defineConfig({
 			detailsLabel: '详细信息',
 		},
 		config: (md) => {
-			md.use(mdFootnote)
-			md.use(mdTaskList)
+			// md.use(mdFootnote)
+			// md.use(mdTaskList)
 		},
 	},
 	//  主题配置

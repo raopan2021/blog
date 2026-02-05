@@ -14,6 +14,10 @@ export default defineConfig({
 		// 	}),
 	],
 	server: {
-		host: "0.0.0.0"
-	}
+		host: '0.0.0.0',
+	},
+	optimizeDeps: {
+		include: ['pdf'], // 将pdf文件添加到include数组中
+		exclude: [], // 排除其他不需要优化的文件类型
+	},
 })
