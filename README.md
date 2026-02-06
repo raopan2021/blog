@@ -2,8 +2,6 @@
 
 包含
 
-- 非官方翻译的 VitePress 中文文档  [官方文档](https://vitepress.vuejs.org/)
-
 - css进阶
 
 - SVG学习

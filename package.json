@@ -22,7 +22,6 @@
 	"devDependencies": {
 		"@types/node": "^24",
 		"sass": "^1.69.6",
-		"vite": "^8.0.0-beta.10",
 		"vitepress": "^2.0.0-alpha.16"
 	},
 	"optionalDependencies": {
