@@ -14,6 +14,9 @@ importers:
       element-plus:
         specifier: ^2.13.2
         version: 2.13.2(vue@3.5.27)
+      lxgw-wenkai-lite-webfont:
+        specifier: ^1.7.0
+        version: 1.7.0
       medium-zoom:
         specifier: ^1.1.0
         version: 1.1.0
@@ -990,6 +993,9 @@ packages:
 
   lodash@4.17.23:
     resolution: {integrity: sha512-LgVTMpQtIopCi79SJeDiP0TfWi5CNEc/L/aRdTh3yIvmZXTnheWpKjSZhnvMl8iXbC1tFg9gdHHDMLoV7CnG+w==}
+
+  lxgw-wenkai-lite-webfont@1.7.0:
+    resolution: {integrity: sha512-VcQYNRpdXAxaZsJ18rfT1mmAreGqkIFNZ/9pdVLbT2Tkb+2lLWJDXq4zYxMEk9AcecSnxO31R2LHh5ieLlxjRg==}
 
   magic-string@0.30.21:
     resolution: {integrity: sha512-vd2F4YUyEXKGcLHoq+TEyCjxueSeHnFxyyjNp80yg0XV4vUhnDer/lvvlqM/arB5bXQN5K2/3oinyCRyx8T2CQ==}
@@ -2105,6 +2111,8 @@ snapshots:
       lodash-es: 4.17.23
 
   lodash@4.17.23: {}
+
+  lxgw-wenkai-lite-webfont@1.7.0: {}
 
   magic-string@0.30.21:
     dependencies:

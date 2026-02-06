@@ -1,18 +1,17 @@
 .poem-layout {
+	h1,
+	h2,
+	h3 {
+		text-align: center;
+		margin: 50px 0;
+	}
 
-    h1,
-    h2,
-    h3 {
-        text-align: center;
-        margin: 50px 0;
-    }
+	h1 {
+		font-weight: 700;
+	}
 
-    h1 {
-        font-weight: 700;
-    }
-
-    /* 不能直接写 p ，避免tip里面的内容也居中了 */
-    >div>p {
-        text-align: center !important;
-    }
+	/* 不能直接写 p ，避免tip里面的内容也居中了 */
+	> div > p {
+		text-align: center !important;
+	}
 }
