@@ -70,19 +70,52 @@ systemctl enable sshd.service
 
 ## 免密登录
 
-### 在客户端生成公钥id_rsa.pub 和私钥
+### 在windows 终端生成公钥id_rsa.pub 和私钥
 
 ```bash
 ssh-keygen -t rsa
 ```
 
+```bash
+# 一直回车，生成在 C:\Users\raopan\.ssh 目录下
+D:\App\System>ssh-keygen -t rsa
+Generating public/private rsa key pair.
+Enter file in which to save the key (C:\Users\raopan/.ssh/id_rsa):
+C:\Users\raopan/.ssh/id_rsa already exists.
+Overwrite (y/n)? y
+Enter passphrase (empty for no passphrase):
+Enter same passphrase again:
+Your identification has been saved in C:\Users\raopan/.ssh/id_rsa
+Your public key has been saved in C:\Users\raopan/.ssh/id_rsa.pub
+The key fingerprint is:
+SHA256:kxXPPHC2AOa/xup6/5v3J/whMCcn5qe1gVUQWzJkXD0 raopan@DESKTOP-SHG4ECH
+The key's randomart image is:
++---[RSA 3072]----+
+|        o.+ =Boo.|
+|       o   X.o*E.|
+|        . . *. ..|
+|         oo.X    |
+|          +o * . |
+|        .o  +.B o|
+|      .+o..o++ ++|
++----[SHA256]-----+
+```
+
 ### 将公钥复制到服务器上
 
-在root/.ssh目录下，生成authorized_keys文件
+在 linux root/.ssh目录下，生成authorized_keys文件
 
-将id_rsa.pub内容copy到authorized_keys文件
+```bash
+touch ~/.ssh/authorized_keys
+```
 
-将文件夹权限修改 600
+将 id_rsa.pub 复制到 linux root/.ssh 目录下，copy到authorized_keys文件
+
+```bash
+cat id_rsa.pub >> authorized_keys
+```
+
+将文件权限修改 600
 
 ```bash
 chmod 600 .ssh/authorized_keys
