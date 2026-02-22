@@ -15,6 +15,7 @@ export function BaseSidebar(): DefaultTheme.SidebarItem[] {
 						{ text: 'nvm', link: 'nvm' },
 						{ text: 'pnpm', link: 'pnpm' },
 						{ text: 'Vite项目体积优化', link: 'Vite项目体积优化' },
+						{ text: 'axios封装', link: 'axios/index' },
 					],
 				},
 			],
