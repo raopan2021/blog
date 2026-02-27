@@ -29,6 +29,12 @@ export default defineConfig({
 
 ## 打包文件拆分
 
+vite基于rollup打包，而打包后的chunk(代码块)后静态资源名称比较简单
+
+使用命名规则可以确保在每次构建应用程序时，文件的名称都会随着内容的更改而变化，从而帮助缓存管理和版本控制。
+
+可以避免浏览器缓存旧版本文件的问题，并确保每次部署新的构建版本时，浏览器可以正确加载更新的文件。
+
 ```js
 build: {
   outDir: 'dist',
@@ -169,6 +175,63 @@ const obj = cloneDeep({})
 ``` js
 import { cloneDeep } from 'lodash-es'
 const obj = cloneDeep({})
+```
+
+# 删除不被使用的图片资源
+
+```js
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const imageDir = path.join(__dirname, 'src/assets'); // 确保路径正确
+
+function findUnusedImages(dir) {
+  const files = fs.readdirSync(dir);
+
+  files.forEach(file => {
+    const filePath = path.join(dir, file);
+    const stat = fs.statSync(filePath);
+
+    if (stat.isDirectory()) {
+      // 如果是目录，递归调用
+      findUnusedImages(filePath);
+    } else {
+      const fileName = path.basename(file);
+      const isUsed = searchFileInDirectory('src', fileName);
+      if (!isUsed && fileName !== 'iconfont.js' && fileName !== 'iconfont.json') {
+        console.log(`未引用的图片: ${fileName}`);
+        fs.unlinkSync(filePath); // 删除文件
+      }
+    }
+  });
+}
+
+function searchFileInDirectory(directory, searchTerm) {
+  const files = fs.readdirSync(directory);
+
+  for (const file of files) {
+    const filePath = path.join(directory, file);
+    const stat = fs.statSync(filePath);
+
+    if (stat.isDirectory()) {
+      if (searchFileInDirectory(filePath, searchTerm)) {
+        return true;
+      }
+    } else {
+      const content = fs.readFileSync(filePath, 'utf-8');
+      if (content.includes(searchTerm)) {
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
+findUnusedImages(imageDir);
 ```
 
 ## CDN 加速
