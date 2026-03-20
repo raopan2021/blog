@@ -33,17 +33,58 @@
 
 ## Kotlin vs JavaScript 对比
 
+### 变量声明
+
 ```kotlin
-// Kotlin：类型推断 + 空安全
-val name: String = "API Helper"
-val count: Int? = null  // 可空类型
-val length = name?.length ?: 0  // 安全调用 + Elvis
+// Kotlin：val（不可变）vs var（可变）
+val name: String = "API Helper"  // 不可重新赋值
+var count: Int = 0               // 可以重新赋值
+count = 1  // OK
 
 // 对比 JavaScript
-const name = "API Helper"
-const count = null
-const length = name?.length ?? 0  // 原生也支持可选链
+const name = "API Helper"  // 不可变
+let count = 0              // 可变
+count = 1  // OK
 ```
+
+### 空安全
+
+```kotlin
+// Kotlin：? 表示可空类型，编译时就避免 NPE
+val name: String = "API Helper"    // 非空，不能赋值为 null
+val nickname: String? = null       // 可空类型
+
+// 安全调用操作符 ?.
+val length = nickname?.length      // 如果 nickname 为 null，返回 null
+
+// Elvis 操作符 ?:
+val length = nickname?.length ?: 0  // 如果为 null，返回默认值 0
+
+// 对比 JavaScript（运行时才会报错）
+const name = "API Helper"
+const nickname = null
+const length = nickname?.length ?? 0  // 现代 JS 也支持可选链
+```
+
+### 函数定义
+
+```kotlin
+// Kotlin：默认参数、命名参数
+fun greet(name: String, greeting: String = "Hello") {
+    println("$greeting, $name!")
+}
+
+greet("World")                     // Hello, World!
+greet("World", "Hi")              // Hi, World!
+greet(name = "World", greeting = "Hey")  // 命名参数
+
+// 对比 JavaScript
+function greet(name, greeting = "Hello") {
+    console.log(`${greeting}, ${name}!`)
+}
+```
+
+### 数据类
 
 ```kotlin
 // Kotlin：数据类，自动生成 equals/hashCode/copy/toString
@@ -53,6 +94,20 @@ data class UserAccount(
     val token: String,
     val createdAt: Long = System.currentTimeMillis()
 )
+
+// 自动生成：
+// - equals()：按属性比较
+// - hashCode()：根据属性生成
+// - toString()：格式 "UserAccount(id=xxx, username=xxx, ...)"
+// - copy()：复制并修改部分属性
+// - componentN()：解构
+
+val account = UserAccount("1", "张三", "sk-xxx")
+println(account)  // UserAccount(id=1, username=张三, token=sk-xxx, ...)
+
+// copy 使用
+val account2 = account.copy(username = "李四")
+// account2.username = "李四"，其他属性相同
 
 // 对比 JavaScript（需要自己写或用库）
 class UserAccount {
