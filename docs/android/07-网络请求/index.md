@@ -1,0 +1,316 @@
+# 07 - 网络请求
+
+## Coroutines 异步编程
+
+在 Android 中，网络请求不能在主线程（UI 线程）执行，否则会阻塞 UI。Kotlin Coroutines 提供了轻量级的异步编程方式。
+
+<!-- more -->
+
+### 核心概念
+
+```kotlin
+// ══════════════════════════════════════════════════════
+//  关键字说明
+// ══════════════════════════════════════════════════════
+
+// suspend：挂起函数，可以在不阻塞线程的情况下"暂停"
+suspend fun fetchData(): String {
+    delay(1000)  // 模拟网络请求，不阻塞线程
+    return "数据"
+}
+
+// viewModelScope：ViewModel 自带的协程作用域
+// ViewModel 销毁时自动取消所有协程，防止内存泄漏
+viewModelScope.launch {
+    val result = fetchData()  // 调用 suspend 函数
+    println(result)  // "数据"
+}
+
+// withContext(Dispatchers.IO)：切换到 IO 线程池
+// IO 线程池专门处理网络/文件操作，最多 64 个并发
+suspend fun fetchFromNetwork(): String = withContext(Dispatchers.IO) {
+    // 这里在 IO 线程执行
+    val response = urlConnection.inputStream.bufferedReader().readText()
+    // 切换回主线程（suspend 函数会自动切回调用者的线程）
+}
+
+// ══════════════════════════════════════════════════════
+//  Result 类型：标准化的成功/失败处理
+// ══════════════════════════════════════════════════════
+
+suspend fun queryQuota(account: UserAccount): Result<QuotaData> {
+    return try {
+        // 成功：包装成 Result.success
+        val data = api.call(account)
+        Result.success(data)
+    } catch (e: Exception) {
+        // 失败：包装成 Result.failure
+        Result.failure(e)
+    }
+}
+
+// 调用方处理
+viewModelScope.launch {
+    val result = queryQuota(account)
+    result.onSuccess { data ->
+        // 处理成功
+    }
+    result.onFailure { error ->
+        // 处理失败
+    }
+}
+```
+
+## HttpURLConnection
+
+本项目使用 Android 自带的 `HttpURLConnection`，不依赖第三方库（保持 APK 体积小）。
+
+### 完整网络请求实现
+
+```kotlin
+package com.apiapp.api_quota_helper.data.service
+
+import com.apiapp.api_quota_helper.data.model.QuotaData
+import com.apiapp.api_quota_helper.data.model.UserAccount
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import org.json.JSONObject
+import java.io.BufferedReader
+import java.io.InputStreamReader
+import java.io.OutputStreamWriter
+import java.net.HttpURLConnection
+import java.net.URL
+
+class QuotaService {
+
+    /**
+     * 查询账户额度
+     * @return Result<QuotaData> 成功返回数据，失败返回异常
+     */
+    suspend fun queryQuota(account: UserAccount): Result<QuotaData> =
+        withContext(Dispatchers.IO) {
+
+            var lastException: Exception? = null
+
+            // ════════════════════════════════════════
+            //  重试机制：最多 3 次
+            // ════════════════════════════════════════
+            repeat(3) { attempt ->
+
+                try {
+                    // 1. 创建连接
+                    val url = URL("http://v2api.aicodee.com/chaxun/query")
+                    val connection = url.openConnection() as HttpURLConnection
+
+                    // 2. 配置连接
+                    connection.requestMethod = "POST"
+                    connection.doOutput = true    // 需要写数据
+                    connection.doInput = true     // 需要读数据
+                    connection.connectTimeout = 15000   // 连接超时 15s
+                    connection.readTimeout = 30000       // 读取超时 30s
+                    connection.setRequestProperty("Content-Type", "application/json")
+                    connection.setRequestProperty("Accept", "application/json")
+
+                    // 3. 发送请求体
+                    val jsonBody = JSONObject().apply {
+                        put("username", account.username)
+                        put("token", account.token)
+                    }.toString()
+
+                    // 写入请求体
+                    OutputStreamWriter(connection.outputStream, "UTF-8").use { writer ->
+                        writer.write(jsonBody)
+                        writer.flush()
+                    }
+
+                    // 4. 读取响应
+                    val responseCode = connection.responseCode
+                    val responseMessage = connection.responseMessage
+
+                    val reader = BufferedReader(InputStreamReader(
+                        if (responseCode == HttpURLConnection.HTTP_OK)
+                            connection.inputStream
+                        else
+                            connection.errorStream,
+                        "UTF-8"
+                    ))
+
+                    val responseBody = reader.readText()
+                    reader.close()
+
+                    // 5. 记录日志
+                    LogBuffer.logRequest("额度查询", account.username, jsonBody)
+
+                    // 6. 解析响应
+                    if (responseCode != HttpURLConnection.HTTP_OK || !responseBody.contains("\"success\":true")) {
+                        val errorMsg = when {
+                            responseCode != HttpURLConnection.HTTP_OK -> "HTTP $responseCode"
+                            responseBody.isEmpty() -> "空响应"
+                            else -> JSONObject(responseBody).optString("message", "查询失败")
+                        }
+
+                        LogBuffer.logResponse("额度查询", account.username, jsonBody,
+                            success = false, responseCode = responseCode,
+                            responseMessage = responseMessage, responseBody = responseBody,
+                            errorMessage = errorMsg)
+
+                        if (attempt < 2) {
+                            lastException = Exception(errorMsg)
+                            kotlinx.coroutines.delay(1000)  // 1秒后重试
+                            return@repeat
+                        }
+
+                        return@withContext Result.failure(Exception(errorMsg))
+                    }
+
+                    LogBuffer.logResponse("额度查询", account.username, jsonBody,
+                        success = true, responseCode = responseCode,
+                        responseMessage = responseMessage, responseBody = responseBody)
+
+                    // 7. 解析 JSON 数据
+                    val jsonObject = JSONObject(responseBody)
+                    if (!jsonObject.optBoolean("success")) {
+                        return@withContext Result.failure(
+                            Exception(jsonObject.optString("message", "查询失败"))
+                        )
+                    }
+
+                    val data = jsonObject.optJSONObject("data")
+                        ?: return@withContext Result.failure(Exception("数据为空"))
+
+                    val quotaData = QuotaData(
+                        subscription_id = data.optInt("subscription_id", 0),
+                        plan_name = data.optString("plan_name", ""),
+                        days_remaining = data.optInt("days_remaining", 0),
+                        end_time = data.optString("end_time", ""),
+                        amount = data.optDouble("amount", 0.0),
+                        amount_used = data.optDouble("amount_used", 0.0),
+                        next_reset_time = data.optString("next_reset_time", ""),
+                        status = data.optString("status", "")
+                    )
+
+                    return@withContext Result.success(quotaData)
+
+                } catch (e: Exception) {
+                    LogBuffer.logResponse("额度查询", account.username, jsonBody,
+                        success = false, responseCode = 0,
+                        responseMessage = "", responseBody = "",
+                        errorMessage = e.message)
+                    lastException = e
+
+                    if (attempt < 2) {
+                        kotlinx.coroutines.delay(1000)  // 重试
+                    }
+                }
+            }
+
+            Result.failure(lastException ?: Exception("请求失败"))
+        }
+
+    // 生成 UUID
+    fun generateAccountId(): String = java.util.UUID.randomUUID().toString()
+}
+```
+
+## 重试机制详解
+
+```kotlin
+repeat(3) { attempt ->
+    // attempt = 0, 1, 2（共 3 次）
+    try {
+        // 执行请求
+    } catch (e: Exception) {
+        if (attempt < 2) {  // 还有重试机会
+            delay(1000)     // 等待 1 秒
+            return@repeat  // 跳到下一次循环
+        }
+    }
+    // 3 次都失败，或成功后 return@withContext
+}
+```
+
+## 日志系统
+
+使用线程安全的 `ConcurrentLinkedQueue` 实现内存日志：
+
+```kotlin
+object LogBuffer {
+    // 线程安全队列，最多 50 条
+    private val logs = ConcurrentLinkedQueue<LogEntry>()
+
+    data class LogEntry(
+        val id: Long = System.currentTimeMillis(),
+        val time: String,
+        val success: Boolean,
+        val logType: String,
+        val username: String,
+        val requestBody: String,
+        val responseCode: Int,
+        val responseMessage: String,
+        val responseBody: String,
+        val errorMessage: String? = null
+    )
+
+    fun logRequest(logType: String, username: String, requestBody: String) {
+        val time = SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(Date())
+        add(LogEntry(
+            time = time, success = false, logType = logType,
+            username = username, requestBody = requestBody,
+            responseCode = 0, responseMessage = "请求中...", responseBody = ""
+        ))
+    }
+
+    fun logResponse(logType: String, username: String, requestBody: String,
+                    success: Boolean, responseCode: Int,
+                    responseMessage: String, responseBody: String,
+                    errorMessage: String? = null) {
+        val time = SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(Date())
+        add(LogEntry(time, success, logType, username, requestBody,
+            responseCode, responseMessage, responseBody, errorMessage))
+    }
+
+    fun add(entry: LogEntry) {
+        logs.offer(entry)
+        while (logs.size > maxSize) {
+            logs.poll()  // 移除最旧的
+        }
+    }
+
+    fun getAll(): List<LogEntry> = logs.toList().reversed()  // 倒序，最新的在前
+    fun delete(id: Long) { logs.removeAll { it.id == id } }
+    fun clear() = logs.clear()
+}
+```
+
+::: tip `object` vs `class`
+Kotlin 中 `object` 是单例，整个应用只有一个实例。`LogBuffer` 用 `object` 确保日志全局唯一。
+:::
+
+## JSON 解析
+
+项目使用 org.json（Android 自带）解析 JSON，不依赖 Gson/Jackson：
+
+```kotlin
+import org.json.JSONObject
+
+val jsonObject = JSONObject(responseBody)
+
+// 读取字段
+val success: Boolean = jsonObject.optBoolean("success", false)
+val message: String = jsonObject.optString("message", "")
+val data: JSONObject? = jsonObject.optJSONObject("data")
+
+// 安全读取嵌套字段
+val planName: String = data?.optString("plan_name", "") ?: ""
+
+// 遍历数组
+val array = jsonObject.optJSONArray("items")
+for (i in 0 until array.length()) {
+    val item = array.getJSONObject(i)
+    println(item.getString("name"))
+}
+```
+
+## 下一章
+
+[Compose 基础 →](./08-Compose基础)

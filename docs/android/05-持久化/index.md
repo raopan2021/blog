@@ -1,0 +1,295 @@
+# 05 - DataStore 持久化
+
+## 为什么需要持久化？
+
+应用重启后，数据不能丢失。Android 提供了多种持久化方案：
+
+| 方案 | 适用场景 | 缺点 |
+|------|----------|------|
+| SharedPreferences | 简单键值对 | 不适合复杂对象，API 同步 |
+| DataStore | 键值对 + 复杂对象 | 需要配合 JSON 序列化 |
+| Room | 结构化数据库 | 过度设计，本项目不需要 |
+| 文件存储 | 大数据 | 需要自己管理格式 |
+
+本项目使用 **DataStore + JSON 序列化**。
+
+<!-- more -->
+
+## DataStore 基础
+
+### 创建 DataStore
+
+```kotlin
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStore
+
+// 扩展属性，创建 DataStore 实例
+private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(
+    name = "app_data"  // 文件名，会生成 app_data.preferences_pb
+)
+
+class AccountRepository(private val context: Context) {
+    private val json = Json { ignoreUnknownKeys = true }
+
+    // 定义存储的 Key
+    private val accountsKey = stringPreferencesKey("accounts")
+    private val settingsKey = stringPreferencesKey("settings")
+}
+```
+
+::: tip `by preferencesDataStore` 做了什么？
+Kotlin 的 `by` 是**委托语法**。这段代码会：
+1. 自动创建 `DataStore<Preferences>` 实例
+2. 首次访问时初始化
+3. 保证同一个 name 在同一进程中是单例
+:::
+
+### DataStore 的数据类型
+
+DataStore 只支持基本类型作为 Key，但可以通过 JSON 存储复杂对象：
+
+```kotlin
+// DataStore 支持的 Key 类型
+stringPreferencesKey("key")      // String
+intPreferencesKey("key")          // Int
+longPreferencesKey("key")         // Long
+booleanPreferencesKey("key")      // Boolean
+floatPreferencesKey("key")        // Float
+doublePreferencesKey("key")       // Double
+stringSetPreferencesKey("key")   // Set<String>
+
+// 复杂对象 → 转成 JSON 字符串存储
+val accountsKey = stringPreferencesKey("accounts")
+// 存储："[{\"id\":\"1\",\"username\":\"张三\",...}]"
+```
+
+## Repository 模式
+
+Repository（仓库）模式封装了数据操作细节，对上层（ViewModel）屏蔽数据来源。数据可能来自 DataStore、API、Room...但对上层来说调用方式一致。
+
+```kotlin
+class AccountRepository(private val context: Context) {
+    private val json = Json { ignoreUnknownKeys = true }
+
+    // ══════════════════════════════════════════════
+    //  读取数据：Flow 版本（响应式，自动通知更新）
+    // ══════════════════════════════════════════════
+
+    val accounts: Flow<List<UserAccount>> = context.dataStore.data
+        .map { prefs ->
+            // DataStore 发生任何变化，这里都会自动重新执行
+            val accountsJson = prefs[accountsKey] ?: "[]"
+            try {
+                json.decodeFromString<List<UserAccount>>(accountsJson)
+            } catch (e: Exception) {
+                emptyList()  // 解析失败返回空列表
+            }
+        }
+
+    val settings: Flow<AppSettings> = context.dataStore.data.map { prefs ->
+        val settingsJson = prefs[settingsKey]
+        if (settingsJson != null) {
+            try {
+                json.decodeFromString<AppSettings>(settingsJson)
+            } catch (e: Exception) {
+                AppSettings()
+            }
+        } else {
+            AppSettings()
+        }
+    }
+
+    // ══════════════════════════════════════════════
+    //  写入数据：suspend 函数（必须在 Coroutine 中调用）
+    // ══════════════════════════════════════════════
+
+    suspend fun saveAccount(account: UserAccount) {
+        context.dataStore.edit { prefs ->
+            // edit {} 是事务操作，要么全部成功，要么全部回滚
+            val current = try {
+                // 读取 → 修改 → 写入
+                json.decodeFromString<List<UserAccount>>(prefs[accountsKey] ?: "[]").toMutableList()
+            } catch (e: Exception) {
+                mutableListOf()
+            }
+
+            // 查找是否已存在
+            val existing = current.indexOfFirst { it.id == account.id }
+            if (existing >= 0) {
+                current[existing] = account  // 更新
+            } else {
+                current.add(account)         // 新增
+            }
+
+            // 写回 DataStore
+            prefs[accountsKey] = json.encodeToString(current)
+        }
+    }
+
+    suspend fun deleteAccount(accountId: String) {
+        context.dataStore.edit { prefs ->
+            val current = try {
+                json.decodeFromString<List<UserAccount>>(prefs[accountsKey] ?: "[]").toMutableList()
+            } catch (e: Exception) {
+                mutableListOf()
+            }
+            current.removeAll { it.id == accountId }
+            prefs[accountsKey] = json.encodeToString(current)
+        }
+    }
+
+    suspend fun saveSettings(settings: AppSettings) {
+        context.dataStore.edit { prefs ->
+            prefs[settingsKey] = json.encodeToString(settings)
+        }
+    }
+}
+```
+
+## Flow 响应式数据流
+
+Flow 是 Kotlin 协程库提供的响应式数据流，类似于 RxJava 但更轻量：
+
+```kotlin
+// Flow 的三个核心概念
+val accounts: Flow<List<UserAccount>> = ...
+
+// 1. collect - 收集数据（类似 subscribe）
+viewModelScope.launch {
+    accounts.collect { list ->
+        // 当 accounts 变化时，这里会自动执行
+        println("账户数量: ${list.size}")
+    }
+}
+
+// 2. map - 转换数据
+val names: Flow<List<String>> = accounts.map { list ->
+    list.map { it.username }
+}
+
+// 3. first - 只取第一个值（不观察后续变化）
+val currentAccounts = accounts.first()
+```
+
+### ViewModel 中使用 Flow
+
+```kotlin
+class MainViewModel(
+    private val repository: AccountRepository,
+    private val quotaService: QuotaService
+) : ViewModel() {
+
+    // ViewModelScope 确保在 ViewModel 销毁时自动取消协程
+    private fun loadAccounts() {
+        viewModelScope.launch {
+            _uiState.update { it.copy(isLoading = true) }
+
+            // 收集 accounts Flow，当数据变化时自动更新 UI
+            repository.accounts.collect { accounts ->
+                _uiState.update {
+                    it.copy(
+                        accounts = accounts.map { AccountWithQuota(it) },
+                        isLoading = false
+                    )
+                }
+            }
+        }
+    }
+}
+```
+
+## 完整 Repository 代码
+
+```kotlin
+package com.apiapp.api_quota_helper.data.repository
+
+import android.content.Context
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.stringPreferencesKey
+import androidx.datastore.preferences.preferencesDataStore
+import com.apiapp.api_quota_helper.data.model.AppSettings
+import com.apiapp.api_quota_helper.data.model.UserAccount
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
+
+private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "app_data")
+
+class AccountRepository(private val context: Context) {
+    private val json = Json { ignoreUnknownKeys = true }
+
+    companion object {
+        private val ACCOUNTS_KEY = stringPreferencesKey("accounts")
+        private val SETTINGS_KEY = stringPreferencesKey("settings")
+    }
+
+    val accounts: Flow<List<UserAccount>> = context.dataStore.data.map { prefs ->
+        val jsonStr = prefs[ACCOUNTS_KEY] ?: "[]"
+        try {
+            json.decodeFromString<List<UserAccount>>(jsonStr)
+        } catch (e: Exception) {
+            emptyList()
+        }
+    }
+
+    val settings: Flow<AppSettings> = context.dataStore.data.map { prefs ->
+        val jsonStr = prefs[SETTINGS_KEY]
+        if (jsonStr != null) {
+            try {
+                json.decodeFromString<AppSettings>(jsonStr)
+            } catch (e: Exception) {
+                AppSettings()
+            }
+        } else {
+            AppSettings()
+        }
+    }
+
+    suspend fun saveAccount(account: UserAccount) {
+        context.dataStore.edit { prefs ->
+            val current = json.decodeFromString<List<UserAccount>>(
+                prefs[ACCOUNTS_KEY] ?: "[]"
+            ).toMutableList()
+
+            val index = current.indexOfFirst { it.id == account.id }
+            if (index >= 0) current[index] = account else current.add(account)
+
+            prefs[ACCOUNTS_KEY] = json.encodeToString(current)
+        }
+    }
+
+    suspend fun deleteAccount(accountId: String) {
+        context.dataStore.edit { prefs ->
+            val current = json.decodeFromString<List<UserAccount>>(
+                prefs[ACCOUNTS_KEY] ?: "[]"
+            ).toMutableList()
+            current.removeAll { it.id == accountId }
+            prefs[ACCOUNTS_KEY] = json.encodeToString(current)
+        }
+    }
+
+    suspend fun saveSettings(settings: AppSettings) {
+        context.dataStore.edit { prefs ->
+            prefs[SETTINGS_KEY] = json.encodeToString(settings)
+        }
+    }
+}
+```
+
+::: tip DataStore vs SharedPreferences
+| 特性 | DataStore | SharedPreferences |
+|------|-----------|-----------------|
+| API | 异步（Flow） | 同步（但可开线程） |
+| 类型安全 | Key 类型安全 | Key 类型安全 |
+| 复杂对象 | 需 JSON | 需 JSON |
+| 迁移 | 支持 | 不支持 |
+| 推荐 | ✅ 首选 | 仅简单场景 |
+:::
+
+## 下一章
+
+[状态管理 →](./06-状态管理)

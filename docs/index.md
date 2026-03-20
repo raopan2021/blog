@@ -99,6 +99,12 @@ features:
     link: /docker/index
 
   - icon:
+      src: /mainView/android.svg
+    title: Android
+    details: Kotlin + Compose 实战笔记
+    link: /android/
+
+  - icon:
       src: /mainView/gpt.svg
     title: AI
     details: AI 学习
