@@ -1,4 +1,4 @@
-# 06 - ViewModel 与状态管理
+# 07 - 状态管理
 
 ## 什么是 ViewModel？
 
