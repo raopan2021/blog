@@ -187,6 +187,36 @@ defaultConfig {
 }
 ```
 
+### Gradle 内存不足
+
+如果构建时出现 `OutOfMemoryError`，修改 `gradle.properties`：
+
+```properties
+org.gradle.jvmargs=-Xmx4096m -Dfile.encoding=UTF-8
+```
+
+### Android Studio 同步失败
+
+1. File → Invalidate Caches → Invalidate and Restart
+2. 删除 `.gradle` 和 `build` 目录
+3. 重新 Sync Project
+
+### 真机调试识别不到设备
+
+```bash
+# 查看设备
+adb devices
+
+# 如果是 unauthorized，重新插拔 USB 并在手机上确认授权
+# 如果是 no devices，检查 USB 驱动或尝试换个 USB 口
+```
+
+### 模拟器启动失败
+
+- 确保 BIOS 中已启用虚拟化技术（VT-x/AMD-V）
+- 确保 HAXM 或 WHPX 正确安装
+- 尝试从 AVD Manager 中 wipe data 后重启
+
 ## 下一章
 
 [项目结构 →](./03-项目结构)

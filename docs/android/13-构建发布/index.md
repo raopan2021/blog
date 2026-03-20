@@ -307,6 +307,44 @@ if (conn.responseCode == 200) {
 ./gradlew assembleDebug --info
 ```
 
+## 调试技巧
+
+### 查看 APK 信息
+
+```bash
+# 查看 APK 包含的架构
+aapt dump badging app/build/outputs/apk/release/app-release.apk | grep sdk
+
+# 查看 APK 大小
+ls -lh app/build/outputs/apk/release/app-release.apk
+
+# 对比 debug 和 release 大小
+ls -lh app/build/outputs/apk/debug/app-debug.apk app/build/outputs/apk/release/app-release.apk
+```
+
+### 查看依赖冲突
+
+```bash
+# 查看依赖树（特定库）
+./gradlew app:dependencies --configuration releaseRuntimeClasspath | grep kotlin
+
+# 查看重复依赖
+./gradlew app:dependencies --configuration releaseRuntimeClasspath | grep "om\\.google" | head -20
+```
+
+### 本地测试不同主题
+
+```kotlin
+// 在 MainActivity 中临时修改
+ApiQuotaHelperTheme(darkTheme = true) {  // 强制暗黑模式
+    // ...
+}
+```
+
+### 查看 Compose UI 层级
+
+在设备上摇一摇（或运行 `adb shell input keyevent 82`）打开 Dev Menu，选择 "Inspect" 可以查看 Compose UI 层级结构。
+
 ## 总结
 
 本章涵盖：
