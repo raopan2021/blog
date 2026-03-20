@@ -186,6 +186,77 @@ fun MyBox() {
 | `.border(1.dp, Color.Black)` | 边框 | `border: 1px solid black` |
 | `.clip(RoundedCornerShape(8.dp))` | 裁剪圆角 | `border-radius: 8px` |
 
+## 图标：Icons vs Icons2
+
+本项目使用自定义 `Icons2` 图标系统，而非标准的 Material Icons。
+
+### 为什么不用 Icons.Default？
+
+标准 Material Icons 需要依赖 `material-icons-extended` 库，仅此一项就会增加 **2-3MB** APK 体积。本项目使用自定义 vector drawable 图标，总计仅 **~20KB**。
+
+### Icons2 使用方式
+
+```kotlin
+// ❌ 标准 Material Icons（体积大）
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+
+Icon(Icons.Default.Add, contentDescription = "添加")
+
+// ✅ 本项目自定义 Icons2（体积小）
+import com.apiapp.api_quota_helper.ui.Icons2
+
+Icon(Icons2.Add(), contentDescription = "添加")
+```
+
+### Icons2 实现原理
+
+```kotlin
+object Icons2 {
+    // 每个图标都是一个 Composable 函数，返回 Painter
+    @Composable
+    fun Refresh(): Painter = painterResource(R.drawable.ic_refresh)
+    
+    @Composable
+    fun Settings(): Painter = painterResource(R.drawable.ic_settings)
+    
+    @Composable
+    fun Add(): Painter = painterResource(R.drawable.ic_add)
+    
+    // ... 其他图标
+}
+
+// 使用时像函数一样调用
+Icon(painter = Icons2.Add(), contentDescription = "添加")
+```
+
+### vector drawable 图标文件
+
+图标存放在 `app/src/main/res/drawable/` 目录下：
+
+```xml
+<!-- ic_add.xml 示例 -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <path
+        android:fillColor="#FF000000"
+        android:pathData="M19,13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+</vector>
+```
+
+::: tip 图标体积优化技巧
+如果你的应用只需要少量图标，自定义 vector drawable 是很好的选择：
+1. 从 [Material Icons](https://fonts.google.com/icons) 下载 SVG
+2. 用 Android Studio 转换为 vector drawable（File → New → Vector Asset）
+3. 放入 `res/drawable/` 目录
+4. 在 Icons2 中注册
+
+这样可以避免引入整个图标库，大大减小 APK 体积。
+:::
+
 ## 列表渲染
 
 ### LazyColumn（高性能列表）
