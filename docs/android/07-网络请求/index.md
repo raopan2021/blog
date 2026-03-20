@@ -6,7 +6,7 @@
 
 <!-- more -->
 
-### 核心概念
+## 核心概念
 
 ```kotlin
 // ══════════════════════════════════════════════════════
@@ -65,7 +65,7 @@ viewModelScope.launch {
 
 本项目使用 Android 自带的 `HttpURLConnection`，不依赖第三方库（保持 APK 体积小）。
 
-### 完整网络请求实现
+### QuotaService + LogBuffer 完整代码
 
 ```kotlin
 package com.apiapp.api_quota_helper.data.service
@@ -80,135 +80,185 @@ import java.io.InputStreamReader
 import java.io.OutputStreamWriter
 import java.net.HttpURLConnection
 import java.net.URL
+import java.text.SimpleDateFormat
+import java.util.*
+
+/**
+ * 日志缓冲区 - 线程安全的内存日志存储
+ * 使用 ConcurrentLinkedQueue，最多存储 50 条日志
+ */
+object LogBuffer {
+    // 线程安全队列
+    private val logs = ConcurrentLinkedQueue<LogEntry>()
+    private const val maxSize = 50
+
+    data class LogEntry(
+        val id: Long = System.currentTimeMillis(),
+        val time: String,
+        val success: Boolean,
+        val logType: String,
+        val username: String,
+        val requestBody: String,
+        val responseCode: Int,
+        val responseMessage: String,
+        val responseBody: String,
+        val errorMessage: String? = null
+    )
+
+    fun add(entry: LogEntry) {
+        logs.offer(entry)
+        while (logs.size > maxSize) {
+            logs.poll()  // 移除最旧的
+        }
+    }
+
+    fun logRequest(logType: String, username: String, requestBody: String) {
+        val time = SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(Date())
+        add(LogEntry(
+            time = time, success = false, logType = logType,
+            username = username, requestBody = requestBody,
+            responseCode = 0, responseMessage = "请求中...", responseBody = ""
+        ))
+    }
+
+    fun logResponse(logType: String, username: String, requestBody: String,
+                    success: Boolean, responseCode: Int,
+                    responseMessage: String, responseBody: String,
+                    errorMessage: String? = null) {
+        val time = SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(Date())
+        add(LogEntry(time, success, logType, username, requestBody,
+            responseCode, responseMessage, responseBody, errorMessage))
+    }
+
+    fun getAll(): List<LogEntry> = logs.toList().reversed()
+    fun delete(id: Long) = logs.removeAll { it.id == id }
+    fun clear() = logs.clear()
+
+    fun getAsString(entry: LogEntry): String = if (entry.success) {
+        "[${entry.time}] [${entry.logType}] ✅ ${entry.username}\n" +
+        "请求:\n${entry.requestBody}\n响应:\n${entry.responseBody}"
+    } else {
+        "[${entry.time}] [${entry.logType}] ❌ ${entry.username}\n" +
+        "请求:\n${entry.requestBody}\n错误: ${entry.errorMessage ?: entry.responseBody}"
+    }
+
+    fun getAllAsString(): String = getAll().joinToString("\n---\n") { getAsString(it) }
+}
 
 class QuotaService {
 
-    /**
-     * 查询账户额度
-     * @return Result<QuotaData> 成功返回数据，失败返回异常
-     */
-    suspend fun queryQuota(account: UserAccount): Result<QuotaData> =
-        withContext(Dispatchers.IO) {
+    suspend fun queryQuota(account: UserAccount): Result<QuotaData> = withContext(Dispatchers.IO) {
+        var lastException: Exception? = null
 
-            var lastException: Exception? = null
+        // ════════════════════════════════════════
+        //  重试机制：最多 3 次
+        // ════════════════════════════════════════
+        repeat(3) { attempt ->
+            val jsonBody = JSONObject().apply {
+                put("username", account.username)
+                put("token", account.token)
+            }.toString()
 
-            // ════════════════════════════════════════
-            //  重试机制：最多 3 次
-            // ════════════════════════════════════════
-            repeat(3) { attempt ->
+            try {
+                val url = URL("http://v2api.aicodee.com/chaxun/query")
+                val connection = url.openConnection() as HttpURLConnection
 
-                try {
-                    // 1. 创建连接
-                    val url = URL("http://v2api.aicodee.com/chaxun/query")
-                    val connection = url.openConnection() as HttpURLConnection
+                connection.requestMethod = "POST"
+                connection.doOutput = true
+                connection.doInput = true
+                connection.connectTimeout = 15000
+                connection.readTimeout = 30000
+                connection.setRequestProperty("Content-Type", "application/json")
+                connection.setRequestProperty("Accept", "application/json")
 
-                    // 2. 配置连接
-                    connection.requestMethod = "POST"
-                    connection.doOutput = true    // 需要写数据
-                    connection.doInput = true     // 需要读数据
-                    connection.connectTimeout = 15000   // 连接超时 15s
-                    connection.readTimeout = 30000       // 读取超时 30s
-                    connection.setRequestProperty("Content-Type", "application/json")
-                    connection.setRequestProperty("Accept", "application/json")
+                // 记录请求
+                LogBuffer.logRequest("额度查询", account.username, jsonBody)
 
-                    // 3. 发送请求体
-                    val jsonBody = JSONObject().apply {
-                        put("username", account.username)
-                        put("token", account.token)
-                    }.toString()
+                // 发送请求体
+                OutputStreamWriter(connection.outputStream, "UTF-8").use { writer ->
+                    writer.write(jsonBody)
+                    writer.flush()
+                }
 
-                    // 写入请求体
-                    OutputStreamWriter(connection.outputStream, "UTF-8").use { writer ->
-                        writer.write(jsonBody)
-                        writer.flush()
-                    }
+                // 读取响应
+                val responseCode = connection.responseCode
+                val responseMessage = connection.responseMessage
 
-                    // 4. 读取响应
-                    val responseCode = connection.responseCode
-                    val responseMessage = connection.responseMessage
+                val reader = BufferedReader(InputStreamReader(
+                    if (responseCode == HttpURLConnection.HTTP_OK)
+                        connection.inputStream
+                    else
+                        connection.errorStream,
+                    "UTF-8"
+                ))
 
-                    val reader = BufferedReader(InputStreamReader(
-                        if (responseCode == HttpURLConnection.HTTP_OK)
-                            connection.inputStream
-                        else
-                            connection.errorStream,
-                        "UTF-8"
-                    ))
+                val body = reader.readText()
+                reader.close()
 
-                    val responseBody = reader.readText()
-                    reader.close()
+                // 检查响应是否成功
+                if (responseCode != HttpURLConnection.HTTP_OK ||
+                    body.isEmpty() ||
+                    !body.contains("\"success\":true")) {
 
-                    // 5. 记录日志
-                    LogBuffer.logRequest("额度查询", account.username, jsonBody)
-
-                    // 6. 解析响应
-                    if (responseCode != HttpURLConnection.HTTP_OK || !responseBody.contains("\"success\":true")) {
-                        val errorMsg = when {
-                            responseCode != HttpURLConnection.HTTP_OK -> "HTTP $responseCode"
-                            responseBody.isEmpty() -> "空响应"
-                            else -> JSONObject(responseBody).optString("message", "查询失败")
-                        }
-
-                        LogBuffer.logResponse("额度查询", account.username, jsonBody,
-                            success = false, responseCode = responseCode,
-                            responseMessage = responseMessage, responseBody = responseBody,
-                            errorMessage = errorMsg)
-
-                        if (attempt < 2) {
-                            lastException = Exception(errorMsg)
-                            kotlinx.coroutines.delay(1000)  // 1秒后重试
-                            return@repeat
-                        }
-
-                        return@withContext Result.failure(Exception(errorMsg))
+                    val errorMsg = when {
+                        responseCode != HttpURLConnection.HTTP_OK -> "HTTP $responseCode"
+                        body.isEmpty() -> "空响应"
+                        else -> JSONObject(body).optString("message", "查询失败")
                     }
 
                     LogBuffer.logResponse("额度查询", account.username, jsonBody,
-                        success = true, responseCode = responseCode,
-                        responseMessage = responseMessage, responseBody = responseBody)
-
-                    // 7. 解析 JSON 数据
-                    val jsonObject = JSONObject(responseBody)
-                    if (!jsonObject.optBoolean("success")) {
-                        return@withContext Result.failure(
-                            Exception(jsonObject.optString("message", "查询失败"))
-                        )
-                    }
-
-                    val data = jsonObject.optJSONObject("data")
-                        ?: return@withContext Result.failure(Exception("数据为空"))
-
-                    val quotaData = QuotaData(
-                        subscription_id = data.optInt("subscription_id", 0),
-                        plan_name = data.optString("plan_name", ""),
-                        days_remaining = data.optInt("days_remaining", 0),
-                        end_time = data.optString("end_time", ""),
-                        amount = data.optDouble("amount", 0.0),
-                        amount_used = data.optDouble("amount_used", 0.0),
-                        next_reset_time = data.optString("next_reset_time", ""),
-                        status = data.optString("status", "")
-                    )
-
-                    return@withContext Result.success(quotaData)
-
-                } catch (e: Exception) {
-                    LogBuffer.logResponse("额度查询", account.username, jsonBody,
-                        success = false, responseCode = 0,
-                        responseMessage = "", responseBody = "",
-                        errorMessage = e.message)
-                    lastException = e
+                        false, responseCode, responseMessage, body, errorMsg)
 
                     if (attempt < 2) {
-                        kotlinx.coroutines.delay(1000)  // 重试
+                        lastException = Exception(errorMsg)
+                        kotlinx.coroutines.delay(1000)  // 1秒后重试
+                        return@repeat
                     }
+                    return@withContext Result.failure(Exception(errorMsg))
+                } else {
+                    LogBuffer.logResponse("额度查询", account.username, jsonBody,
+                        true, responseCode, responseMessage, body)
+                }
+
+                // 解析 JSON
+                val jsonObject = JSONObject(body)
+                if (!jsonObject.optBoolean("success", false)) {
+                    return@withContext Result.failure(
+                        Exception(jsonObject.optString("message", "查询失败"))
+                    )
+                }
+
+                val data = jsonObject.optJSONObject("data")
+                    ?: return@withContext Result.failure(Exception("数据为空"))
+
+                val quotaData = QuotaData(
+                    subscription_id = data.optInt("subscription_id", 0),
+                    plan_name = data.optString("plan_name", ""),
+                    days_remaining = data.optInt("days_remaining", 0),
+                    end_time = data.optString("end_time", ""),
+                    amount = data.optDouble("amount", 0.0),
+                    amount_used = data.optDouble("amount_used", 0.0),
+                    next_reset_time = data.optString("next_reset_time", ""),
+                    status = data.optString("status", "")
+                )
+
+                return@withContext Result.success(quotaData)
+
+            } catch (e: Exception) {
+                LogBuffer.logResponse("额度查询", account.username, jsonBody,
+                    false, 0, "", "", e.message)
+                lastException = e
+
+                if (attempt < 2) {
+                    kotlinx.coroutines.delay(1000)  // 重试
                 }
             }
-
-            Result.failure(lastException ?: Exception("请求失败"))
         }
 
-    // 生成 UUID
-    fun generateAccountId(): String = java.util.UUID.randomUUID().toString()
+        Result.failure(lastException ?: Exception("请求失败"))
+    }
+
+    fun generateAccountId(): String = UUID.randomUUID().toString()
 }
 ```
 
