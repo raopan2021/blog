@@ -292,4 +292,4 @@ class AccountRepository(private val context: Context) {
 
 ## 下一章
 
-[状态管理 →](./06-状态管理)
+[状态管理 →](./07-状态管理)
