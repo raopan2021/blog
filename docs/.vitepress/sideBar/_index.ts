@@ -3,6 +3,7 @@ import { type DefaultTheme } from 'vitepress'
 // 导入目录内的所有ts文件的函数，并导出
 import { AISidebar } from './ai.ts'
 import { AlgorithmSidebar } from './algorithms.ts'
+import { AndroidSidebar } from './android.ts'
 import { BaseSidebar } from './base.ts'
 import { CliSidebar } from './cli.ts'
 import { CssSidebar } from './css.ts'
@@ -38,6 +39,7 @@ export const side = {
 	'/linux/': { base: '/linux/', items: LinuxSidebar() },
 	'/docker/': { base: '/docker/', items: LinuxSidebar() },
 	'/ai/': { base: '/ai/', items: AISidebar() },
+	'/android/': { base: '/android/', items: AndroidSidebar() },
 	'/reg/': { base: '/reg/', items: RegSidebar() },
 	'/svg/': { base: '/svg/', items: SvgSidebar() },
 	'/vue/': { base: '/vue/vue2/', items: VueSidebar() },
@@ -69,6 +71,12 @@ export function nav(): DefaultTheme.NavItem[] {
 				{ text: 'mysql', link: '/mysql/index', activeMatch: '/mysql/' },
 				{ text: 'linux', link: '/linux/index', activeMatch: '/linux/' },
 				{ text: 'docker', link: '/docker/index', activeMatch: '/docker/' },
+			],
+		},
+		{
+			text: '移动开发',
+			items: [
+				{ text: 'Android', link: '/android/项目开发笔记', activeMatch: '/android/' },
 			],
 		},
         { text: '学习计划', link: '/plan/2025', activeMatch: '/plan/' },
