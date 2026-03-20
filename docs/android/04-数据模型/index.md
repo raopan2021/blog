@@ -130,7 +130,7 @@ data class AccountWithQuota(
 @Serializable
 data class AppSettings(
     val darkMode: Boolean = false,       // 是否开启暗黑模式
-    val refreshIntervalMinutes: Int = 30 // 自动刷新间隔（分钟）
+    val refreshIntervalSeconds: Int = 300 // 自动刷新间隔（秒，默认5分钟）
 )
 ```
 
