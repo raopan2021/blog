@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>汽车展示 - 3D WebGL</title>
+    <title>小米 SU7 展示 - 3D WebGL</title>
     <style>
       * {
         margin: 0;
@@ -12,7 +12,7 @@
       }
 
       body {
-        overflow-x: hidden;
+        overflow: hidden;
         background: #0a0a0a;
         font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
         color: white;
@@ -27,287 +27,270 @@
         z-index: 1;
       }
 
-      /* 内容层 */
-      .content {
-        position: relative;
-        z-index: 2;
+      /* ========================================
+         加载屏幕
+         ======================================== */
+      .loader-screen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #0a0a0a;
+        z-index: 1000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: opacity 1.5s ease, visibility 1.5s ease;
+      }
+
+      .loader-screen.hollow {
+        opacity: 0;
+        visibility: hidden;
         pointer-events: none;
       }
 
-      /* 各个章节 */
-      .section {
-        height: 100vh;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        padding: 0 10%;
+      .loading-container {
+        text-align: center;
       }
 
-      .section h1 {
-        font-size: 80px;
+      .loading {
+        display: flex;
+        gap: 8px;
+        font-size: 32px;
         font-weight: 200;
         letter-spacing: 8px;
-        margin-bottom: 20px;
-        opacity: 0;
-        transform: translateY(60px);
-        transition: all 1s ease;
+        color: rgba(255, 255, 255, 0.9);
       }
 
-      .section p {
-        font-size: 18px;
-        font-weight: 300;
-        color: rgba(255, 255, 255, 0.6);
-        max-width: 500px;
-        line-height: 1.8;
-        opacity: 0;
-        transform: translateY(40px);
-        transition: all 1s ease 0.2s;
+      .loading span {
+        display: inline-block;
+        animation: loadingPulse 1.5s ease-in-out infinite;
+        animation-delay: calc(var(--i) * 0.1s);
       }
 
-      /* 激活态（滚动到视口时） */
-      .section.active h1 {
-        opacity: 1;
-        transform: translateY(0);
+      @keyframes loadingPulse {
+        0%, 100% {
+          opacity: 0.3;
+          transform: scale(0.95);
+        }
+        50% {
+          opacity: 1;
+          transform: scale(1.05);
+        }
       }
 
-      .section.active p {
-        opacity: 1;
-        transform: translateY(0);
+      .loading-subtitle {
+        margin-top: 30px;
+        font-size: 12px;
+        letter-spacing: 4px;
+        color: rgba(255, 255, 255, 0.3);
       }
 
-      /* 顶部导航 */
-      .nav {
+      /* ========================================
+         顶部标题
+         ======================================== */
+      .top-title {
         position: fixed;
         top: 0;
         left: 0;
         right: 0;
         z-index: 10;
+        padding: 30px 60px;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 30px 60px;
-        background: linear-gradient(to bottom, rgba(0,0,0,0.5), transparent);
-        pointer-events: auto;
+        background: linear-gradient(to bottom, rgba(0,0,0,0.6), transparent);
+        pointer-events: none;
       }
 
-      .nav-logo {
-        font-size: 20px;
+      .top-title .logo {
+        font-size: 18px;
         font-weight: 300;
-        letter-spacing: 4px;
+        letter-spacing: 6px;
+        color: rgba(255, 255, 255, 0.8);
       }
 
-      .nav-links {
-        display: flex;
-        gap: 40px;
+      .top-title .hint {
+        font-size: 13px;
+        color: rgba(255, 255, 255, 0.35);
+        letter-spacing: 1px;
       }
 
-      .nav-links a {
-        color: rgba(255,255,255,0.6);
-        text-decoration: none;
-        font-size: 14px;
-        transition: color 0.3s;
-        pointer-events: auto;
-      }
-
-      .nav-links a:hover {
-        color: white;
-      }
-
-      /* 底部进度条 */
-      .progress-bar {
+      /* ========================================
+         右下角信息
+         ======================================== */
+      .car-info {
         position: fixed;
-        bottom: 0;
-        left: 0;
-        height: 3px;
-        background: linear-gradient(90deg, #00f5ff, #ff6b6b);
+        bottom: 40px;
+        right: 60px;
         z-index: 10;
-        width: 0%;
-        transition: width 0.1s;
-      }
-
-      /* 角落指示 */
-      .indicator {
-        position: fixed;
-        right: 40px;
-        top: 50%;
-        transform: translateY(-50%);
-        z-index: 10;
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-      }
-
-      .indicator-dot {
-        width: 8px;
-        height: 8px;
-        border-radius: 50%;
-        background: rgba(255,255,255,0.2);
-        cursor: pointer;
-        pointer-events: auto;
-        transition: all 0.3s;
-      }
-
-      .indicator-dot.active {
-        background: white;
-        transform: scale(1.5);
-      }
-
-      /* 统计数字 */
-      .stats {
-        display: flex;
-        gap: 80px;
-        margin-top: 40px;
+        text-align: right;
+        pointer-events: none;
         opacity: 0;
-        transform: translateY(40px);
-        transition: all 1s ease 0.4s;
+        transform: translateY(20px);
+        transition: opacity 1s ease 0.5s, transform 1s ease 0.5s;
       }
 
-      .section.active .stats {
+      .car-info.visible {
         opacity: 1;
         transform: translateY(0);
       }
 
-      .stat-item {
-        display: flex;
-        flex-direction: column;
+      .car-info h2 {
+        font-size: 42px;
+        font-weight: 200;
+        letter-spacing: 4px;
+        margin-bottom: 8px;
+        color: white;
       }
 
-      .stat-value {
-        font-size: 48px;
+      .car-info p {
+        font-size: 14px;
+        color: rgba(255, 255, 255, 0.4);
+        letter-spacing: 2px;
+      }
+
+      .car-info .specs {
+        margin-top: 20px;
+        display: flex;
+        gap: 30px;
+        justify-content: flex-end;
+      }
+
+      .car-info .spec {
+        text-align: center;
+      }
+
+      .car-info .spec-value {
+        font-size: 24px;
         font-weight: 200;
         color: #00f5ff;
       }
 
-      .stat-label {
-        font-size: 14px;
-        color: rgba(255,255,255,0.4);
-        margin-top: 5px;
+      .car-info .spec-label {
+        font-size: 11px;
+        color: rgba(255, 255, 255, 0.3);
+        margin-top: 4px;
+        letter-spacing: 1px;
       }
 
-      /* 价格区域 */
-      .price {
-        font-size: 56px;
-        font-weight: 200;
-        margin-top: 30px;
+      /* ========================================
+         加速模式提示
+         ======================================== */
+      .rush-hint {
+        position: fixed;
+        bottom: 40px;
+        left: 60px;
+        z-index: 10;
+        pointer-events: none;
         opacity: 0;
-        transform: translateY(40px);
-        transition: all 1s ease 0.3s;
+        transition: opacity 0.5s ease;
       }
 
-      .price span {
-        font-size: 20px;
-        color: rgba(255,255,255,0.5);
-      }
-
-      .section.active .price {
+      .rush-hint.visible {
         opacity: 1;
-        transform: translateY(0);
       }
 
-      /* CTA 按钮 */
-      .cta-btn {
-        margin-top: 40px;
-        padding: 18px 50px;
-        background: white;
-        color: black;
-        border: none;
-        font-size: 16px;
+      .rush-hint .text {
+        font-size: 13px;
+        color: rgba(255, 255, 255, 0.3);
         letter-spacing: 2px;
-        cursor: pointer;
-        opacity: 0;
-        transform: translateY(40px);
-        transition: all 0.3s;
-        pointer-events: auto;
-        width: fit-content;
       }
 
-      .section.active .cta-btn {
-        opacity: 1;
-        transform: translateY(0);
-        transition: all 1s ease 0.5s, background 0.3s, transform 0.3s;
+      .rush-hint .text.active {
+        color: #00f5ff;
       }
 
-      .cta-btn:hover {
-        background: #00f5ff;
-        transform: translateY(-2px) !important;
+      /* ========================================
+         底部进度条
+         ======================================== */
+      .progress-bar {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        height: 2px;
+        background: linear-gradient(90deg, #00f5ff, #ff6b6b);
+        z-index: 10;
+        width: 0%;
+        transition: width 0.3s ease;
       }
     </style>
-    <script type="module" crossorigin src="./assets/index-C-akWIHy.js"></script>
+    <script type="module" crossorigin src="./assets/index-DNiMwUcN.js"></script>
   </head>
   <body>
+    <!-- 加载屏幕 -->
+    <div class="loader-screen" id="loader-screen">
+      <div class="loading-container">
+        <div class="loading">
+          <span style="--i: 0">L</span>
+          <span style="--i: 1">O</span>
+          <span style="--i: 2">A</span>
+          <span style="--i: 3">D</span>
+          <span style="--i: 4">I</span>
+          <span style="--i: 5">N</span>
+          <span style="--i: 6">G</span>
+        </div>
+        <div class="loading-subtitle">INITIALIZING EXPERIENCE</div>
+      </div>
+    </div>
+
+    <!-- 顶部标题 -->
+    <div class="top-title">
+      <div class="logo">SU7 SHOWCASE</div>
+      <div class="hint">点击汽车触发加速模式</div>
+    </div>
+
+    <!-- 3D Canvas -->
     <canvas id="canvas"></canvas>
 
-    <!-- 顶部导航 -->
-    <nav class="nav">
-      <div class="nav-logo">SU7 SHOWCASE</div>
-      <div class="nav-links">
-        <a href="#section1">车型</a>
-        <a href="#section2">性能</a>
-        <a href="#section3">内饰</a>
-        <a href="#section4">预约</a>
+    <!-- 右下角车型信息 -->
+    <div class="car-info" id="car-info">
+      <h2>小米 SU7</h2>
+      <p>智能电动汽车</p>
+      <div class="specs">
+        <div class="spec">
+          <div class="spec-value">2.78s</div>
+          <div class="spec-label">零百加速</div>
+        </div>
+        <div class="spec">
+          <div class="spec-value">800km</div>
+          <div class="spec-label">续航里程</div>
+        </div>
+        <div class="spec">
+          <div class="spec-value">673hp</div>
+          <div class="spec-label">最大马力</div>
+        </div>
       </div>
-    </nav>
-
-    <!-- 内容层 -->
-    <div class="content">
-      <section class="section active" id="section1" data-color="#ffffff">
-        <h1>小米 SU7</h1>
-        <p>为驾驶者而生，为速度而造。每一次启动，都是一场与未来的对话。</p>
-        <div class="stats">
-          <div class="stat-item">
-            <span class="stat-value">2.78s</span>
-            <span class="stat-label">零百加速</span>
-          </div>
-          <div class="stat-item">
-            <span class="stat-value">800km</span>
-            <span class="stat-label">续航里程</span>
-          </div>
-          <div class="stat-item">
-            <span class="stat-value">673hp</span>
-            <span class="stat-label">最大马力</span>
-          </div>
-        </div>
-      </section>
-
-      <section class="section" id="section2" data-color="#00f5ff">
-        <h1>澎湃动力</h1>
-        <p>双电机全轮驱动，智能四驱系统。瞬间爆发的力量，源自对速度的极致追求。</p>
-        <div class="price">¥299,900 <span>起</span></div>
-        <button class="cta-btn">立即下定</button>
-      </section>
-
-      <section class="section" id="section3" data-color="#ff6b6b">
-        <h1>精致内饰</h1>
-        <p>Nappa真皮座椅，16扬声器音响系统。每一处细节，都彰显豪华品质。</p>
-        <div class="stats">
-          <div class="stat-item">
-            <span class="stat-value">16.1"</span>
-            <span class="stat-label">中控大屏</span>
-          </div>
-          <div class="stat-item">
-            <span class="stat-value">56"</span>
-            <span class="stat-label">HUD抬头显示</span>
-          </div>
-        </div>
-      </section>
-
-      <section class="section" id="section4" data-color="#ffd93d">
-        <h1>预约试驾</h1>
-        <p>即刻预约，亲身体验驾驶乐趣。名额有限，先到先得。</p>
-        <button class="cta-btn">预约试驾</button>
-      </section>
     </div>
 
-    <!-- 滚动进度条 -->
-    <div class="progress-bar" id="progressBar"></div>
-
-    <!-- 右侧指示器 -->
-    <div class="indicator">
-      <div class="indicator-dot active" data-section="section1"></div>
-      <div class="indicator-dot" data-section="section2"></div>
-      <div class="indicator-dot" data-section="section3"></div>
-      <div class="indicator-dot" data-section="section4"></div>
+    <!-- 左下角提示 -->
+    <div class="rush-hint" id="rush-hint">
+      <div class="text" id="rush-text">⚡ 点击汽车触发加速</div>
     </div>
 
+    <!-- 进度条 -->
+    <div class="progress-bar" id="progress-bar"></div>
+
+    <script>
+      // 加载完成后显示汽车信息
+      window.addEventListener('load', () => {
+        setTimeout(() => {
+          document.getElementById('car-info').classList.add('visible')
+          document.getElementById('rush-hint').classList.add('visible')
+        }, 4500)
+      })
+
+      // 更新加速提示文字
+      window.addEventListener('rush-start', () => {
+        document.getElementById('rush-text').textContent = '⚡ 加速中... 点击取消'
+        document.getElementById('rush-text').classList.add('active')
+      })
+
+      window.addEventListener('rush-end', () => {
+        document.getElementById('rush-text').textContent = '⚡ 点击汽车触发加速'
+        document.getElementById('rush-text').classList.remove('active')
+      })
+    </script>
   </body>
 </html>
