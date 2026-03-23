@@ -76,7 +76,7 @@ export function nav(): DefaultTheme.NavItem[] {
 		{
 			text: '移动开发',
 			items: [
-				{ text: 'Android', link: '/android/项目开发笔记', activeMatch: '/android/' },
+				{ text: 'Android', link: '/android/', activeMatch: '/android/' },
 			],
 		},
         { text: '学习计划', link: '/plan/2025', activeMatch: '/plan/' },
