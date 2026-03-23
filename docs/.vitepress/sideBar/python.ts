@@ -3,7 +3,7 @@ import { type DefaultTheme } from 'vitepress'
 export function PythonSidebar(): DefaultTheme.SidebarItem[] {
 	return [
 		{
-			text: 'Python',
+			text: 'Python 入门',
 			collapsed: false,
 			base: '/python/',
 			items: [
@@ -32,11 +32,6 @@ export function PythonSidebar(): DefaultTheme.SidebarItem[] {
 			base: '/python/',
 			items: [
 				{ text: '装饰器', link: '进阶-装饰器' },
-				{ text: '生成器与迭代器', link: '进阶-生成器与迭代器' },
-				{ text: '上下文管理器', link: '进阶-上下文管理器' },
-				{ text: '元编程', link: '进阶-元编程' },
-				{ text: '异步编程 async/await', link: '进阶-异步编程' },
-				{ text: '类型提示 Type Hints', link: '进阶-类型提示' },
 			],
 		},
 		{
@@ -45,9 +40,7 @@ export function PythonSidebar(): DefaultTheme.SidebarItem[] {
 			base: '/python/',
 			items: [
 				{ text: 'Flask 快速入门', link: 'Flask快速入门' },
-				{ text: 'Django 快速入门', link: 'Django快速入门' },
 				{ text: 'FastAPI 高性能框架', link: 'FastAPI' },
-				{ text: 'RESTful API 设计', link: 'RESTfulAPI' },
 			],
 		},
 		{
@@ -56,10 +49,7 @@ export function PythonSidebar(): DefaultTheme.SidebarItem[] {
 			base: '/python/',
 			items: [
 				{ text: 'Requests 网络请求', link: '爬虫-Requests' },
-				{ text: 'BeautifulSoup 解析', link: '爬虫-BeautifulSoup' },
-				{ text: 'Scrapy 框架', link: '爬虫-Scrapy' },
 				{ text: 'Pandas 数据处理', link: '数据处理-Pandas' },
-				{ text: 'NumPy 科学计算', link: '数据处理-NumPy' },
 			],
 		},
 	]
