@@ -44,7 +44,7 @@ export function AndroidSidebar(): DefaultTheme.SidebarItem[] {
 				},
 				{
 					text: '📋 项目研发笔记',
-					collapsed: true,
+					collapsed: false,
 					base: '/android/',
 					items: [
 						{ text: '项目研发笔记', link: '项目研发笔记' },

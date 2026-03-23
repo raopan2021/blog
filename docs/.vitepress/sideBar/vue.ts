@@ -36,7 +36,7 @@ export function VueSidebar(): DefaultTheme.SidebarItem[] {
 				},
 				{
 					text: 'Vue2.7 模板',
-					collapsed: true,
+					collapsed: false,
 					base: '/vue/vue2/',
 					items: [
 						{ text: 'Vue 2.7 + Vite 模板', link: 'index' },
@@ -51,7 +51,7 @@ export function VueSidebar(): DefaultTheme.SidebarItem[] {
 				},
 				{
 					text: 'ElementUI',
-					collapsed: true,
+					collapsed: false,
 					base: '/vue/element-ui/',
 					items: [
 						{ text: '导航菜单 navMenu', link: '导航菜单navMenu' },
@@ -66,7 +66,7 @@ export function VueSidebar(): DefaultTheme.SidebarItem[] {
 				},
 				{
 					text: 'vue组件',
-					collapsed: true,
+					collapsed: false,
 					base: '/vue/other/',
 					items: [
 						{ text: 'PDF 预览', link: 'vue-pdf' },

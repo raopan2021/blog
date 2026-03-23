@@ -31,7 +31,7 @@ export function ThreeSidebar(): DefaultTheme.SidebarItem[] {
 				},
 				{
 					text: '高级篇',
-					collapsed: true,
+					collapsed: false,
 					base: '/three/',
 					items: [
 						{ text: '08 后期处理', link: '08-后期处理' },

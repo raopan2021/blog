@@ -18,7 +18,7 @@ export function EngineeringSidebar(): DefaultTheme.SidebarItem[] {
 		},
 		{
 			text: 'Git 部署',
-			collapsed: true,
+			collapsed: false,
 			base: '/engineering/',
 			items: [
 				{ text: 'gitblit 部署', link: 'gitblit部署' },
