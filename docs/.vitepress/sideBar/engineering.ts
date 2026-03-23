@@ -16,5 +16,14 @@ export function EngineeringSidebar(): DefaultTheme.SidebarItem[] {
 				{ text: 'UI 及框架规范', link: 'ui' },
 			],
 		},
+		{
+			text: 'Git 部署',
+			collapsed: true,
+			base: '/engineering/',
+			items: [
+				{ text: 'gitblit 部署', link: 'gitblit部署' },
+				{ text: 'Vue 单页面部署到 Gitee', link: 'vue单页面部署到gitee' },
+			],
+		},
 	]
 }
