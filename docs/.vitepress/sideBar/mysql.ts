@@ -12,6 +12,8 @@ export function MysqlSidebar(): DefaultTheme.SidebarItem[] {
 				{ text: 'SQL 基础', link: 'SQL基础' },
 				{ text: '索引', link: '索引' },
 				{ text: '事务', link: '事务' },
+				{ text: '锁机制', link: '锁机制' },
+				{ text: '性能优化', link: '性能优化' },
 			],
 		},
 	]
