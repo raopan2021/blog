@@ -42,6 +42,14 @@ export function AndroidSidebar(): DefaultTheme.SidebarItem[] {
 						{ text: '13 构建与发布', link: '13-构建发布' },
 					],
 				},
+				{
+					text: '📋 项目研发笔记',
+					collapsed: true,
+					base: '/android/',
+					items: [
+						{ text: '项目研发笔记', link: '项目研发笔记' },
+					],
+				},
 			],
 		},
 	]
