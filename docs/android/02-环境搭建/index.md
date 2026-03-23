@@ -217,6 +217,3 @@ adb devices
 - 确保 HAXM 或 WHPX 正确安装
 - 尝试从 AVD Manager 中 wipe data 后重启
 
-## 下一章
-
-[项目结构 →](./03-项目结构)

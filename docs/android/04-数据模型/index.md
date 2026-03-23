@@ -227,6 +227,3 @@ println(name?.length ?: 0)  // null 时返回 0
 println(name!!.length)  // null 时直接崩溃
 ```
 
-## 下一章
-
-[Compose 基础 →](./05-Compose基础)

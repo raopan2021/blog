@@ -290,6 +290,3 @@ class AccountRepository(private val context: Context) {
 | 推荐 | ✅ 首选 | 仅简单场景 |
 :::
 
-## 下一章
-
-[状态管理 →](./07-状态管理)

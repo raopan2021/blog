@@ -462,6 +462,3 @@ fun AccountCard(
          对话框关闭（dismissDialog）
 ```
 
-## 下一章
-
-[实战：设置页面 →](./11-实战设置页面)

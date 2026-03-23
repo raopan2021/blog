@@ -488,6 +488,3 @@ SwipeToDismiss 删除
 LogBuffer.delete()
 ```
 
-## 下一章
-
-[构建与发布 →](./13-构建发布)

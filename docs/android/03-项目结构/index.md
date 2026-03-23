@@ -252,6 +252,3 @@ package com.apiapp.api_quota_helper
 
 一个包可以有多个文件，比如 `data/model/` 下的所有文件都在 `com.apiapp.api_quota_helper.data.model` 包下，编译时自动合并。
 
-## 下一章
-
-[数据模型 →](./04-数据模型)

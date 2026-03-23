@@ -393,6 +393,3 @@ fun MainScreen(viewModel: MainViewModel) {
 这就是为什么 Compose 能响应式地更新 UI——不需要手动调用 `notifyDataSetChanged()`。
 :::
 
-## 下一章
-
-[网络请求 →](./08-网络请求)

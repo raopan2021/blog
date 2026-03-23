@@ -361,6 +361,3 @@ for (i in 0 until array.length()) {
 }
 ```
 
-## 下一章
-
-[Compose 进阶 →](./09-Compose进阶)

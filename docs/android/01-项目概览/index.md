@@ -208,6 +208,3 @@ fun MainScreen(viewModel: MainViewModel) {
 }
 ```
 
-## 下一章
-
-[环境搭建 →](./02-环境搭建)

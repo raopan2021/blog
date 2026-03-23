@@ -348,6 +348,3 @@ class MainActivity : ComponentActivity() {
 }
 ```
 
-## 下一章
-
-[实战：账户管理 →](./10-实战账户管理)
