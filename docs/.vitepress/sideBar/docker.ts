@@ -11,6 +11,7 @@ export function DockerSidebar(): DefaultTheme.SidebarItem[] {
 					{ text: 'Docker 入门', link: 'Docker入门' },
 					{ text: '常用命令', link: '常用命令' },
 					{ text: '镜像管理', link: '镜像' },
+					{ text: '镜像构建', link: '镜像构建' },
 					{ text: '容器管理', link: '容器管理' },
 				],
 			},
@@ -20,7 +21,8 @@ export function DockerSidebar(): DefaultTheme.SidebarItem[] {
 				base: '/docker/',
 				items: [
 					{ text: '数据持久化', link: '数据持久化' },
-					{ text: '容器网络', link: '网络' },
+					{ text: '容器网络', link: '容器网络' },
+					{ text: '网络', link: '网络' },
 				],
 			},
 			{
