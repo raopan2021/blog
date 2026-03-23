@@ -1,114 +1,212 @@
-# Docker 容器化
+---
+title: Docker 概览
+---
 
-> Docker 是一个开源的容器化平台，用于打包、分发和运行应用程序
+# Docker 概览
 
-## 📚 目录导航
+## 什么是 Docker
 
-- [常见命令](./常见命令) - Docker 基础命令速查
-- [命令别名](./命令别名) - 提高效率的命令别名配置
-- [镜像管理](./镜像) - 镜像的构建、拉取、推送
-- [部署 Nginx](./nginx) - 使用 Docker 部署 Web 服务
-- [部署 MySQL](./mysql) - 使用 Docker 运行 MySQL 数据库
-- [部署 MongoDB](./mongo) - 使用 Docker 运行 MongoDB
-- [部署 Redis](./redis) - 使用 Docker 运行 Redis
-- [Windows 安装 Docker](./windesk) - Windows 环境下安装 Docker Desktop
+Docker 是一个开源的容器化平台，让开发者可以将应用及其依赖打包成轻量级的容器，实现"构建一次，到处运行"。
 
-## 核心概念
+### 容器 vs 虚拟机
 
-- **镜像（Image）**：应用程序的只读模板
-- **容器（Container）**：镜像的运行实例
-- **仓库（Registry）**：存储和分发镜像的服务（如 Docker Hub）
+| 特性 | 容器 | 虚拟机 |
+|------|------|--------|
+| 启动速度 | 秒级 | 分钟级 |
+| 资源占用 | 小（MB级） | 大（GB级） |
+| 性能 | 接近原生 | 有虚拟化开销 |
+| 隔离性 | 进程级 | 完整系统级 |
+| 移植性 | 强 | 强 |
 
-## Docker 特点
+### Docker 核心概念
 
-- **轻量级**：共享宿主机内核，容器启动快
-- **可移植**：一次构建，处处运行
-- **隔离性**：应用间相互隔离
-- **版本控制**：可追踪镜像版本
-- **生态丰富**：官方和社区提供大量镜像
-
-[参考](https://b11et3un53m.feishu.cn/wiki/Rfocw7ctXij2RBkShcucLZbrn2d)
-
-## 卸载旧版
-
-首先如果系统中已经存在旧的Docker，则先卸载：
-
-```bash
-yum remove docker \
-    docker-client \
-    docker-client-latest \
-    docker-common \
-    docker-latest \
-    docker-latest-logrotate \
-    docker-logrotate \
-    docker-engine \
-    docker-selinux
+```
+Docker Client (命令行工具)
+       ↓
+Docker Daemon (守护进程)
+       ↓
+Container (容器) ← Image (镜像)
+       ↓
+Registry (仓库) ← Docker Hub
 ```
 
-## 配置Docker的yum库
+## 为什么要用 Docker
 
-首先要安装一个yum工具
+### 1. 环境一致性
 
-```bash
-sudo yum install -y yum-utils device-mapper-persistent-data lvm2
+开发、测试、生产环境一致，避免"在我机器上能运行"问题。
+
+### 2. 快速部署
+
+容器秒级启动，快速扩缩容。
+
+### 3. 资源隔离
+
+不同应用运行在独立容器，互不影响。
+
+### 4. 微服务架构
+
+天然适合微服务，每个服务一个容器。
+
+## Docker 基本架构
+
+```
+┌─────────────────────────────────────────┐
+│              Docker Host                │
+│  ┌─────────────────────────────────┐   │
+│  │       Docker Daemon (dockerd)    │   │
+│  │   ┌─────────┐    ┌────────────┐  │   │
+│  │   │ Container│    │  Container │  │   │
+│  │   │   Nginx   │    │   Python   │  │   │
+│  │   └─────────┘    └────────────┘  │   │
+│  │   ┌─────────────────────────┐    │   │
+│  │   │        Images           │    │   │
+│  │   │  nginx   python   redis  │    │   │
+│  │   └─────────────────────────┘    │   │
+│  └─────────────────────────────────┘   │
+└─────────────────────────────────────────┘
+         ↑              ↓
+┌─────────────┐   ┌──────────────────┐
+│    Client   │   │     Registry     │
+│  docker CLI │   │  Docker Hub 等   │
+└─────────────┘   └──────────────────┘
 ```
 
-安装成功后，执行命令，配置Docker的yum源（已更新为阿里云源）：
+## 核心组件
+
+### Docker Daemon (dockerd)
+
+后台运行的服务进程，接收客户端请求，管理容器、镜像、网络等。
 
 ```bash
-sudo yum-config-manager --add-repo <https://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo>
+# 查看状态
+systemctl status docker
 
-sudo sed -i 's+download.docker.com+mirrors.aliyun.com/docker-ce+' /etc/yum.repos.d/docker-ce.repo
+# 重启
+sudo systemctl restart docker
+
+# 查看版本
+docker version
 ```
 
-更新yum，建立缓存
+### Docker Client
+
+命令行工具，与 Daemon 通信。
 
 ```bash
-sudo yum makecache fast
+docker build   # 构建镜像
+docker run     # 运行容器
+docker ps      # 查看容器
+docker pull    # 拉取镜像
+docker push    # 推送镜像
 ```
 
-## 安装Docker
+### Docker Registry
 
-最后，执行命令，安装Docker
+存储和分发镜像的服务。
+
+- **Docker Hub**：官方公共仓库
+- **私有仓库**：企业自建 Harbor
 
 ```bash
-yum install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+# 登录 Docker Hub
+docker login
+
+# 搜索镜像
+docker search nginx
+
+# 拉取镜像
+docker pull nginx:latest
 ```
 
-## 启动Docker
+### Images（镜像）
+
+只读模板，用于创建容器。
+
+### Containers（容器）
+
+镜像的运行实例，是动态的。
+
+## 安装 Docker
+
+### Ubuntu/Debian
 
 ```bash
-systemctl start docker
+# 卸载旧版本
+sudo apt-get remove docker docker-engine docker.io containerd runc
+
+# 安装依赖
+sudo apt-get update
+sudo apt-get install -y ca-certificates curl gnupg lsb-release
+
+# 添加 Docker GPG 密钥
+sudo mkdir -p /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+
+# 添加 Docker 仓库
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list
+
+# 安装 Docker
+sudo apt-get update
+sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+# 启动
+sudo systemctl start docker
+sudo systemctl enable docker
+
+# 添加当前用户到 docker 组（避免每次 sudo）
+sudo usermod -aG docker $USER
+# 需要重新登录生效
 ```
 
-## 停止Docker
+### 验证安装
 
 ```bash
-systemctl stop docker
+docker run hello-world
 ```
 
-## 重启
+## Docker 工作流程
+
+```
+1. 开发编写代码
+2. Dockerfile 定义应用环境
+3. docker build 构建镜像
+4. docker push 推送镜像到仓库
+5. docker pull 从仓库拉取镜像
+6. docker run 运行容器
+```
+
+## 常用命令速查
 
 ```bash
-systemctl restart docker
+# 镜像操作
+docker images                    # 列出本地镜像
+docker pull nginx:latest         # 拉取镜像
+docker rmi nginx                 # 删除镜像
+docker build -t myapp:v1 .      # 构建镜像
+
+# 容器操作
+docker ps                        # 运行中的容器
+docker ps -a                     # 所有容器（包括停止的）
+docker run -d nginx              # 后台运行
+docker exec -it container_id bash # 进入容器
+docker stop container_id         # 停止容器
+docker rm container_id           # 删除容器
+
+# 日志和调试
+docker logs container_id         # 查看日志
+docker inspect container_id      # 查看容器详情
+docker stats                     # 查看资源使用
 ```
 
-## Docker开机自启
+## Docker 生态工具
 
-```bash
-systemctl enable docker
-```
+| 工具 | 用途 |
+|------|------|
+| Docker Compose | 定义多容器应用 |
+| Docker Swarm | 容器编排（集群） |
+| Kubernetes | 容器编排（K8S） |
+| Docker Desktop | 桌面客户端 |
+| Portainer | Web 管理界面 |
 
-## Docker容器开机自启
-
-```bash
-docker update --restart=always [容器名/容器id]
-# 例如
-docker update --restart=always mysql
-```
-
-## 执行docker ps命令，如果不报错，说明安装启动成功
-
-```bash
-docker ps
-```
+[[返回 Docker 首页|docker/index]]
