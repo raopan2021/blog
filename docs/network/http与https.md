@@ -1,48 +1,213 @@
-# http和https
+---
+title: HTTP 与 HTTPS
+---
 
-[TOC]
+# HTTP 与 HTTPS
 
+## HTTP 基础
 
+HTTP（HyperText Transfer Protocol）是浏览器和服务器之间的通信协议。
 
-## http和https的基本概念
+### 请求结构
 
-http: 超文本传输协议，是互联网上应用最为广泛的一种网络协议，是一个客户端和服务器端请求和应答的标准（TCP），用于从WWW服务器传输超文本到本地浏览器的传输协议，它可以使浏览器更加高效，使网络传输减少。
+```
+请求行：GET /index.html HTTP/1.1
+请求头：Host: example.com
+       User-Agent: Mozilla/5.0
+       Accept: text/html
+       Cookie: session_id=abc123
 
-https: 是以安全为目标的HTTP通道，简单讲是HTTP的安全版，即HTTP下加入SSL层，HTTPS的安全基础是SSL，因此加密的详细内容就需要SSL。
+请求体：（GET 请求通常为空，POST 请求有数据）
+```
 
-https协议的主要作用是：建立一个信息安全通道，来确保数组的传输，确保网站的真实性。
+### 响应结构
 
-## http和https的区别？
+```
+状态行：HTTP/1.1 200 OK
+响应头：Content-Type: text/html
+        Content-Length: 1234
+        Server: nginx/1.20.1
+        Set-Cookie: session=xyz
 
-http传输的数据都是未加密的，也就是明文的，网景公司设置了SSL协议来对http协议传输的数据进行加密处理，简单来说https协议是由http和ssl协议构建的可进行加密传输和身份认证的网络协议，比http协议的安全性更高。
+响应体：<html>...</html>
+```
 
-### 主要的区别如下：
+### 常见状态码
 
-Https协议需要ca证书，费用较高。
-http是超文本传输协议，信息是明文传输，https则是具有安全性的ssl加密传输协议。
-使用不同的链接方式，端口也不同，一般而言，http协议的端口为80，https的端口为443
-http的连接很简单，是无状态的；HTTPS协议是由SSL+HTTP协议构建的可进行加密传输、身份认证的网络协议，比http协议安全。
+| 状态码 | 含义 |
+|--------|------|
+| 200 | OK，请求成功 |
+| 301 | 永久重定向 |
+| 302 | 临时重定向 |
+| 304 | Not Modified，缓存未过期 |
+| 400 | Bad Request，请求语法错误 |
+| 401 | Unauthorized，未认证 |
+| 403 | Forbidden，无权限 |
+| 404 | Not Found，资源不存在 |
+| 500 | Internal Server Error |
+| 502 | Bad Gateway |
+| 503 | Service Unavailable |
+| 504 | Gateway Timeout |
 
-## https协议的工作原理
+### HTTP 方法
 
-客户端在使用HTTPS方式与Web服务器通信时有以下几个步骤：
-客户使用https url访问服务器，则要求web 服务器建立ssl链接。
-web服务器接收到客户端的请求之后，会将网站的证书（证书中包含了公钥），返回或者说传输给客户端。
-客户端和web服务器端开始协商SSL链接的安全等级，也就是加密等级。
-客户端浏览器通过双方协商一致的安全等级，建立会话密钥，然后通过网站的公钥来加密会话密钥，并传送给网站。
-web服务器通过自己的私钥解密出会话密钥。
-web服务器通过会话密钥加密与客户端之间的通信。
+| 方法 | 语义 | 幂等 | 安全性 |
+|------|------|------|--------|
+| GET | 获取资源 | ✅ | ✅ |
+| POST | 创建资源 | ❌ | ✅ |
+| PUT | 更新资源（整体） | ✅ | ❌ |
+| DELETE | 删除资源 | ✅ | ❌ |
+| PATCH | 部分更新 | ❌ | ❌ |
+| HEAD | 获取响应头 | ✅ | ✅ |
+| OPTIONS | 预检请求 | ✅ | ✅ |
 
-## https协议的优点
+## HTTPS 加密原理
 
-使用HTTPS协议可认证用户和服务器，确保数据发送到正确的客户机和服务器；
-HTTPS协议是由SSL+HTTP协议构建的可进行加密传输、身份认证的网络协议，要比http协议安全，可防止数据在传输过程中不被窃取、改变，确保数据的完整性。
-HTTPS是现行架构下最安全的解决方案，虽然不是绝对安全，但它大幅增加了中间人攻击的成本。
-谷歌曾在2014年8月份调整搜索引擎算法，并称“比起同等HTTP网站，采用HTTPS加密的网站在搜索结果中的排名将会更高”。
+HTTPS = HTTP + TLS/SSL
 
-## https协议的缺点
+```
+TLS 握手流程：
 
-https握手阶段比较费时，会使页面加载时间延长50%，增加10%~20%的耗电。
-https缓存不如http高效，会增加数据开销。
-SSL证书也需要钱，功能越强大的证书费用越高。
-SSL证书需要绑定IP，不能再同一个ip上绑定多个域名，ipv4资源支持不了这种消耗。
+1. 客户端 → 服务器：ClientHello（支持的加密套件）
+2. 服务器 → 客户端：Certificate（服务器证书 + 公钥）
+3. 客户端 → 服务器：ClientKeyExchange（用公钥加密的随机数）
+4. 双方用随机数生成对称密钥
+5. 之后的通信用对称密钥加密
+```
+
+### 对称加密 vs 非对称加密
+
+| 类型 | 特点 | 代表算法 |
+|------|------|---------|
+| 对称加密 | 加密解密用同一密钥，速度快 | AES、DES |
+| 非对称加密 | 公钥加密，私钥解密，速度慢 | RSA、ECC |
+
+HTTPS 实际使用：先用非对称加密传递对称密钥，之后用对称加密通信。
+
+### SSL 证书
+
+```bash
+# 证书类型
+DV（Domain Validation）：域名验证，最快
+OV（Organization Validation）：组织验证
+EV（Extended Validation）：扩展验证，地址栏变绿
+```
+
+## HTTP/1.1 特性
+
+### 持久连接（Keep-Alive）
+
+```bash
+# 一次 TCP 连接，多个 HTTP 请求
+Connection: keep-alive    # 保持连接
+Connection: close          # 关闭连接
+```
+
+### 管道化（Pipeline）
+
+```
+请求1 → 请求2 → 请求3 →
+← 响应1 ← 响应2 ← 响应3
+```
+
+### 队头阻塞
+
+```
+问题：HTTP 1.1 的管道化不完善
+      响应必须按顺序返回
+      前面的请求慢会阻塞后面的请求
+
+解决：
+1. 合并请求（雪碧图、合并 JS/CSS）
+2. 域名分片
+3. HTTP/2 多路复用
+```
+
+## HTTP/2 特性
+
+### 多路复用
+
+```
+一个 TCP 连接，并行传输多个请求/响应
+请求1 ──→ 响应1 ←──
+请求2 ──→ 响应2 ←──
+请求3 ──→ 响应3 ←──
+（在一个连接上并行）
+```
+
+### Header 压缩
+
+```
+使用 HPACK 算法压缩头部
+维护头部表，已发送过的头部只传索引
+```
+
+### Server Push
+
+```
+服务器主动推送资源
+客户端请求 HTML → 服务器主动推送 CSS/JS
+```
+
+## HTTP/3 特性
+
+```
+HTTP/3 = HTTP/2 + QUIC（基于 UDP）
+
+优势：
+- 0-RTT 握手（首次连接更快）
+- 不存在 TCP 队头阻塞
+- 连接迁移（IP 变了不断开）
+```
+
+## 常用 HTTP 头
+
+### 请求头
+
+```bash
+Host: example.com              # 目标域名
+User-Agent: Mozilla/5.0...     # 浏览器标识
+Accept: text/html,application/json  # 接受的类型
+Accept-Language: zh-CN,en     # 语言偏好
+Accept-Encoding: gzip, deflate  # 支持的压缩方式
+Authorization: Bearer token     # 认证令牌
+Cookie: session=abc123         # Cookie
+Referer: https://google.com     # 来源页面
+```
+
+### 响应头
+
+```bash
+Content-Type: text/html; charset=utf-8  # 内容类型
+Content-Length: 1234             # 内容长度
+Content-Encoding: gzip           # 压缩方式
+Cache-Control: max-age=3600     # 缓存控制
+Set-Cookie: session=abc; HttpOnly; Secure; SameSite=Strict
+Location: https://new.com       # 重定向目标
+Access-Control-Allow-Origin: *  # CORS 跨域
+```
+
+## HTTPS 配置（Nginx）
+
+```nginx
+server {
+    listen 443 ssl http2;
+    ssl_certificate /path/to/cert.pem;
+    ssl_certificate_key /path/to/key.pem;
+
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_ciphers ECDHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384;
+    ssl_prefer_server_ciphers on;
+
+    ssl_session_cache shared:SSL:10m;
+    ssl_session_timeout 10m;
+}
+
+# HTTP 强制跳转到 HTTPS
+server {
+    listen 80;
+    return 301 https://$host$request_uri;
+}
+```
+
+[[返回 计算机网络首页|../index]]
