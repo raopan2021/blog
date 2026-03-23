@@ -20,7 +20,7 @@
 ...
 ```
 
-​    在讲transition的时候讲过将需要进行动画效果的内容进行<transition>包裹起来，而<keep-alive>是缓存组件，应该将谁包裹起来呢？谁变化就包谁，<keep-alive>组件并不发生变化，而是通过<component>进行不同组件的动态切换，所以应该这样来写：
+​    在讲transition的时候讲过将需要进行动画效果的内容进行 `<transition>` 包裹起来，而 `<keep-alive>` 是缓存组件，应该将谁包裹起来呢？谁变化就包谁，`<keep-alive>` 组件并不发生变化，而是通过 `<component>` 进行不同组件的动态切换，所以应该这样来写：
 
 ```html
 <keep-alive>

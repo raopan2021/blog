@@ -8,92 +8,101 @@ import { BaseSidebar } from './base.ts'
 import { CliSidebar } from './cli.ts'
 import { CssSidebar } from './css.ts'
 import { EngineeringSidebar } from './engineering.ts'
+import { H5Sidebar } from './h5.ts'
 import { JavaSidebar } from './java.ts'
 import { JsSidebar } from './js.ts'
 import { LinuxSidebar } from './linux.ts'
 import { MarkdownSidebar } from './markdown.ts'
 import { MicroSidebar } from './micro.ts'
 import { MysqlSidebar } from './mysql.ts'
+import { NetworkSidebar } from './network.ts'
 import { NodeSidebar } from './node.ts'
 import { PlanSidebar } from './plan.ts'
 import { PoemSidebar } from './poem.ts'
 import { PythonSidebar } from './python.ts'
 import { RegSidebar } from './reg.ts'
 import { SvgSidebar } from './svg.ts'
+import { ThreeSidebar } from './three.ts'
 import { VueSidebar } from './vue.ts'
 
 export const side = {
-	// 侧边导航
-	'/base/': { base: '/base/', items: BaseSidebar() },
-	'/cli/': { base: '/cli/', items: CliSidebar() },
-	'/css/': { base: '/css/', items: CssSidebar() },
-	'/engineering/': { base: '/engineering/', items: EngineeringSidebar() },
-	'/java/': { base: '/java/基础', items: JavaSidebar() },
-	'/python/': { base: '/python/', items: PythonSidebar() },
-	'/js/': { base: '/js/', items: JsSidebar() },
-	'/markdown/': { base: '/markdown/', items: MarkdownSidebar() },
-	'/micro/': { base: '/micro/', items: MicroSidebar() },
-	'/algorithm/': { base: '/algorithm/', items: AlgorithmSidebar() },
-	'/mysql/': { base: '/mysql/', items: MysqlSidebar() },
-	'/node/': { base: '/node/', items: NodeSidebar() },
-	'/linux/': { base: '/linux/', items: LinuxSidebar() },
-	'/docker/': { base: '/docker/', items: LinuxSidebar() },
-	'/ai/': { base: '/ai/', items: AISidebar() },
-	'/android/': { base: '/android/', items: AndroidSidebar() },
-	'/reg/': { base: '/reg/', items: RegSidebar() },
-	'/svg/': { base: '/svg/', items: SvgSidebar() },
-	'/vue/': { base: '/vue/vue2/', items: VueSidebar() },
-	'/poem/': { base: '/poem/', items: PoemSidebar() },
-	'/plan/': { base: '/plan/', items: PlanSidebar() },
+  '/algorithm/': { base: '/algorithm/', items: AlgorithmSidebar() },
+  '/android/': { base: '/android/', items: AndroidSidebar() },
+  '/base/': { base: '/base/', items: BaseSidebar() },
+  '/cli/': { base: '/cli/', items: CliSidebar() },
+  '/css/': { base: '/css/', items: CssSidebar() },
+  '/engineering/': { base: '/engineering/', items: EngineeringSidebar() },
+  '/h5/': { base: '/h5/', items: H5Sidebar() },
+  '/java/': { base: '/java/基础/', items: JavaSidebar() },
+  '/python/': { base: '/python/', items: PythonSidebar() },
+  '/js/': { base: '/js/', items: JsSidebar() },
+  '/markdown/': { base: '/markdown/', items: MarkdownSidebar() },
+  '/micro/': { base: '/micro/', items: MicroSidebar() },
+  '/mysql/': { base: '/mysql/', items: MysqlSidebar() },
+  '/network/': { base: '/network/', items: NetworkSidebar() },
+  '/node/': { base: '/node/', items: NodeSidebar() },
+  '/linux/': { base: '/linux/', items: LinuxSidebar() },
+  '/docker/': { base: '/docker/', items: LinuxSidebar() },
+  '/ai/': { base: '/ai/', items: AISidebar() },
+  '/reg/': { base: '/reg/', items: RegSidebar() },
+  '/svg/': { base: '/svg/', items: SvgSidebar() },
+  '/three/': { base: '/three/', items: ThreeSidebar() },
+  '/vue/': { base: '/vue/', items: VueSidebar() },
+  '/poem/': { base: '/poem/', items: PoemSidebar() },
+  '/plan/': { base: '/plan/', items: PlanSidebar() },
 }
 
 export function nav(): DefaultTheme.NavItem[] {
-	return [
-		{
-			text: '前端',
-			items: [
-				{ text: '前端配置', link: '/base/index', activeMatch: '/base/' },
-				{ text: 'CSS进阶', link: '/css/index', activeMatch: '/css/' },
-				{ text: 'JS进阶', link: '/js/index', activeMatch: '/js/' },
-				{ text: 'Vue', link: '/vue/index', activeMatch: '/vue/' },
-				{ text: '工程化', link: '/engineering/index', activeMatch: '/engineering/' },
-				{ text: '脚手架', link: '/cli/index', activeMatch: '/cli/' },
-				{ text: '微前端', link: '/micro/index', activeMatch: '/micro/' },
-			],
-		},
-		{
-			text: '后端',
-			items: [
-				{ text: 'Node', link: '/node/index', activeMatch: '/node/' },
-				{ text: 'NestJS', link: '/node/nestjs/index', activeMatch: '/node/nestjs/index' },
-				{ text: 'java', link: '/java/基础/index', activeMatch: '/java/' },
-				{ text: 'python', link: '/python/index', activeMatch: '/python/' },
-				{ text: 'mysql', link: '/mysql/index', activeMatch: '/mysql/' },
-				{ text: 'linux', link: '/linux/index', activeMatch: '/linux/' },
-				{ text: 'docker', link: '/docker/index', activeMatch: '/docker/' },
-			],
-		},
-		{
-			text: '移动开发',
-			items: [
-				{ text: 'Android', link: '/android/', activeMatch: '/android/' },
-			],
-		},
-        { text: '学习计划', link: '/plan/2025', activeMatch: '/plan/' },
-		{
-			text: '其他',
-			items: [
-				{ text: '正则', link: '/reg/入门', activeMatch: '/reg/' },
-				{ text: 'SVG学习', link: '/svg/index', activeMatch: '/svg/' },
-				{ text: '算法', link: '/algorithm/index' },
-				{ text: 'AI', link: '/ai/index' },
-				{ text: '梯子', link: 'TIZI' },
-				{ text: '诗词', link: '/poem/毛泽东', activeMatch: '/poem/' },
-			],
-		},
-		{
-			text: '友链',
-			items: [{ text: 'vitepress', link: 'https://vitepress.dev/zh' }],
-		},
-	]
+  return [
+    {
+      text: '前端',
+      items: [
+        { text: '前端配置', link: '/base/', activeMatch: '/base/' },
+        { text: 'HTML5', link: '/h5/', activeMatch: '/h5/' },
+        { text: 'CSS 进阶', link: '/css/', activeMatch: '/css/' },
+        { text: 'SVG', link: '/svg/', activeMatch: '/svg/' },
+        { text: 'JavaScript 进阶', link: '/js/', activeMatch: '/js/' },
+        { text: 'Vue', link: '/vue/', activeMatch: '/vue/' },
+        { text: 'Markdown', link: '/markdown/', activeMatch: '/markdown/' },
+        { text: 'Three.js', link: '/three/', activeMatch: '/three/' },
+        { text: '工程化', link: '/engineering/', activeMatch: '/engineering/' },
+        { text: '脚手架', link: '/cli/', activeMatch: '/cli/' },
+        { text: '微前端', link: '/micro/', activeMatch: '/micro/' },
+      ],
+    },
+    {
+      text: '移动开发',
+      items: [
+        { text: 'Android 开发笔记', link: '/android/', activeMatch: '/android/' },
+      ],
+    },
+    {
+      text: '后端',
+      items: [
+        { text: 'NodeJs', link: '/node/', activeMatch: '/node/' },
+        { text: 'NestJS', link: '/node/nestjs/', activeMatch: '/node/nestjs/' },
+        { text: 'Java', link: '/java/', activeMatch: '/java/' },
+        { text: 'Python', link: '/python/', activeMatch: '/python/' },
+        { text: 'MySQL', link: '/mysql/', activeMatch: '/mysql/' },
+        { text: 'Linux', link: '/linux/', activeMatch: '/linux/' },
+        { text: 'Docker', link: '/docker/', activeMatch: '/docker/' },
+        { text: '计算机网络', link: '/network/', activeMatch: '/network/' },
+      ],
+    },
+    {
+      text: '工具 & 其他',
+      items: [
+        { text: '算法', link: '/algorithm/', activeMatch: '/algorithm/' },
+        { text: 'AI 大模型', link: '/ai/', activeMatch: '/ai/' },
+        { text: '正则表达式', link: '/reg/', activeMatch: '/reg/' },
+        { text: '诗词', link: '/poem/', activeMatch: '/poem/' },
+        { text: '学习计划', link: '/plan/', activeMatch: '/plan/' },
+        { text: '梯子', link: 'TIZI' },
+      ],
+    },
+    {
+      text: '友链',
+      items: [{ text: 'VitePress', link: 'https://vitepress.dev/zh' }],
+    },
+  ]
 }
