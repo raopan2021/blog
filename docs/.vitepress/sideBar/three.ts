@@ -38,6 +38,15 @@ export function ThreeSidebar(): DefaultTheme.SidebarItem[] {
 						{ text: '09 物理与交互', link: '09-物理与交互' },
 					],
 				},
+				{
+					text: '项目实战',
+					collapsed: false,
+					base: '/three/',
+					items: [
+						{ text: '10 项目实战一：3D 卡片展示', link: '10-项目实战一3D卡片展示' },
+						{ text: '11 项目实战二：汽车展示网站', link: '11-项目实战二汽车展示网站' },
+					],
+				},
 			],
 		},
 	]

@@ -1,0 +1,430 @@
+# 项目实战二：汽车展示网站
+
+> 小米 SU7 风格的 3D 汽车展示网站，滚动驱动场景变化、多章节主题切换
+
+## 效果演示
+
+::: demo-wrapper
+<div style="text-align:center; padding: 20px; background: linear-gradient(135deg, #0a0a0a 0%, #000811 100%); border-radius: 8px;">
+  <p style="color: rgba(255,255,255,0.6); margin-bottom: 10px;">🚗 滚动页面切换章节，汽车随滚动旋转</p>
+  <p style="color: rgba(255,255,255,0.4); font-size: 13px;">右侧指示器可点击跳转 | 顶部导航固定</p>
+</div>
+:::
+
+## 技术栈
+
+| 技术 | 用途 |
+|------|------|
+| Three.js | 3D 渲染引擎 |
+| EffectComposer + UnrealBloomPass | Bloom 后处理发光效果 |
+| Scroll-driven Animation | 滚动驱动动画（原生 JS） |
+| Canvas API + ExtrudeGeometry | 汽车建模 |
+| CSS Scroll Snap | 章节吸附滚动 |
+| GSAP (可选) | 复杂时间线动画 |
+
+## 核心原理
+
+### 1. 项目架构
+
+```
+├── index.html    # 主页面（章节内容 + CSS）
+└── src/
+    └── main.js  # Three.js 全部逻辑
+```
+
+HTML 结构分为两层：
+- **Canvas 层**（`position: fixed`）：Three.js 渲染器占满全屏，作为背景
+- **内容层**（`position: relative`）：各章节的文字内容叠加在 Canvas 上方
+
+```html
+<canvas id="canvas"></canvas>
+
+<div class="content">
+  <section class="section" id="section1">
+    <h1>小米 SU7</h1>
+    <p>...</p>
+  </section>
+  <!-- 更多章节 -->
+</div>
+```
+
+```css
+canvas {
+  position: fixed;  /* 固定在底层 */
+  z-index: 1;
+}
+.content {
+  position: relative; /* 叠加在 canvas 上 */
+  z-index: 2;
+  pointer-events: none; /* 允许鼠标穿透点击 canvas */
+}
+.section {
+  height: 100vh;       /* 每个章节占满一屏 */
+  pointer-events: auto; /* 内容需要响应点击 */
+}
+```
+
+### 2. 滚动进度计算
+
+```js
+function onScroll() {
+  const scrollTop = window.scrollY
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight
+  scrollProgress = Math.min(scrollTop / docHeight, 1)  // 0 ~ 1
+
+  // 更新进度条
+  document.getElementById('progressBar').style.width = `${scrollProgress * 100}%`
+
+  // 判断当前章节
+  const sectionHeight = docHeight / (sections.length - 1)
+  currentSection = Math.min(Math.floor(scrollTop / sectionHeight), sections.length - 1)
+}
+```
+
+### 3. 汽车建模（低多边形风格）
+
+由于无法可靠加载外部 GLB 模型，使用 Three.js 基本几何体手工构建一辆「低多边形」风格的汽车：
+
+```
+汽车结构分解：
+┌──────────────────────────────────┐
+│  [车顶] BoxGeometry              │
+│    ┌────────────────────────┐    │
+│  [车身] ExtrudeGeometry       │    │
+│  [前窗] PlaneGeometry (玻璃)  │    │
+│  [后窗] PlaneGeometry         │    │
+│  [侧窗] PlaneGeometry × 2     │    │
+│  [前灯] CircleGeometry × 2    │    │
+│  [日行灯] BoxGeometry (LED)   │    │
+│  [尾灯] BoxGeometry × 2      │    │
+│  [轮毂] TorusGeometry + 柱体 │    │
+└──────────────────────────────────┘
+```
+
+#### 车身（ExtrudeGeometry 拉伸成型）
+
+```js
+// 用 2D 路径绘制车身截面，然后拉伸成 3D
+const bodyShape = new THREE.Shape()
+bodyShape.moveTo(-2.2, 0)   // 左下
+bodyShape.lineTo(2.2, 0)     // 右下
+bodyShape.lineTo(2.0, 0.5)   // 右上（车顶后部较高）
+bodyShape.lineTo(-2.0, 0.5)  // 左上（车顶前部倾斜）
+bodyShape.lineTo(-2.2, 0)   // 回到起点
+
+// 拉伸成型（extrude）
+const bodyGeometry = new THREE.ExtrudeGeometry(bodyShape, {
+  steps: 1,
+  depth: 1.6,              // 车身宽度（Z轴）
+  bevelEnabled: true,      // 开启倒角
+  bevelThickness: 0.05,   // 倒角大小
+  bevelSize: 0.05,
+  bevelSegments: 3,       // 倒角分段（光滑度）
+})
+
+const body = new THREE.Mesh(bodyGeometry, bodyMaterial)
+scene.add(body)
+```
+
+**ExtrudeGeometry 原理**：
+
+```
+     shape 路径（XY平面）
+         ↑
+      ┌──┐
+   ╱══╲  │  ← 拉伸方向：Z 轴
+  ╱════╲ │
+ ╱══════╲│
+ ────────→ depth=1.6
+
+ 最终得到一个流线型车身截面
+```
+
+#### 玻璃材质（MeshPhysicalMaterial）
+
+```js
+const glassMaterial = new THREE.MeshPhysicalMaterial({
+  color: 0x88ccff,
+  transparent: true,
+  opacity: 0.4,
+  roughness: 0,              // 完全光滑
+  metalness: 0.1,
+  transmission: 0.9,          // 透光率
+})
+// transmission 使得玻璃可以透过它看到背后的物体
+```
+
+#### 发光材质（emissive）
+
+```js
+// 前灯和日行灯使用 emissive 材质（自发光）
+const headlightMaterial = new THREE.MeshStandardMaterial({
+  color: 0xffffff,
+  emissive: 0xffffff,       // 发光颜色
+  emissiveIntensity: 2,      // 发光强度
+})
+```
+
+#### 轮毂（TorusGeometry + 圆柱体组合）
+
+```js
+function createWheel() {
+  const wheelGroup = new THREE.Group()
+
+  // 轮胎（圆环体）
+  const tireGeometry = new THREE.TorusGeometry(0.3, 0.1, 16, 32)
+  const tire = new THREE.Mesh(tireGeometry, tireMaterial)
+  tire.rotation.y = Math.PI / 2  // 轮胎竖起来
+  wheelGroup.add(tire)
+
+  // 轮毂（圆柱）
+  const rimGeometry = new THREE.CylinderGeometry(0.22, 0.22, 0.08, 16)
+  const rim = new THREE.Mesh(rimGeometry, rimMaterial)
+  rim.rotation.z = Math.PI / 2
+  wheelGroup.add(rim)
+
+  // 五条幅装饰
+  for (let i = 0; i < 5; i++) {
+    const spoke = new THREE.Mesh(spokeGeometry, rimMaterial)
+    const angle = (i / 5) * Math.PI * 2
+    spoke.position.set(0.04, Math.cos(angle) * 0.1, Math.sin(angle) * 0.1)
+    wheelGroup.add(spoke)
+  }
+
+  return wheelGroup
+}
+```
+
+### 4. 滚动驱动的相机动画
+
+每个章节对应一组相机位置，通过插值在滚动时平滑过渡：
+
+```js
+const cameraPositions = [
+  { x: 6, y: 2.5, z: 8 },   // Section 1: 侧面视角
+  { x: 5, y: 1.5, z: 5 },   // Section 2: 45° 视角
+  { x: -5, y: 2, z: 0 },     // Section 3: 正面视角
+  { x: 0, y: 8, z: 0.1 },    // Section 4: 俯视视角
+]
+
+function animate() {
+  // 计算插值系数
+  const camT = (scrollProgress * (cameraPositions.length - 1)) % 1
+
+  const camPos = {
+    x: lerp(cameraPositions[currentSection].x, cameraPositions[nextCamIdx].x, camT),
+    y: lerp(cameraPositions[currentSection].y, cameraPositions[nextCamIdx].y, camT),
+    z: lerp(cameraPositions[currentSection].z, cameraPositions[nextCamIdx].z, camT),
+  }
+
+  camera.position.set(camPos.x, camPos.y, camPos.z)
+  camera.lookAt(0, 0.5, 0)  // 始终看向车身中心
+}
+```
+
+### 5. 颜色主题过渡
+
+每个章节有独立的颜色主题（背景色、强调色、光照色），滚动时平滑插值：
+
+```js
+const sectionColors = [
+  { bg: 0x0a0a0a, accent: 0xffffff, light: 0xffffff, ambient: 0x111111 },  // 黑白
+  { bg: 0x000811, accent: 0x00f5ff, light: 0x00f5ff, ambient: 0x002233 },  // 科技蓝
+  { bg: 0x0a0000, accent: 0xff6b6b, light: 0xff4444, ambient: 0x220000 },  // 烈焰红
+  { bg: 0x0a0a00, accent: 0xffd93d, light: 0xffd700, ambient: 0x222200 },  // 金色
+]
+
+// 背景色插值
+const bgColor = new THREE.Color(colors.bg).lerp(new THREE.Color(nextColors.bg), t)
+scene.background = bgColor
+```
+
+### 6. Bloom 后处理发光
+
+使用 `EffectComposer` 添加后处理通道，使发光物体（如车灯）产生光晕效果：
+
+```js
+import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js'
+import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js'
+import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js'
+import { OutputPass } from 'three/examples/jsm/postprocessing/OutputPass.js'
+
+function setupPostProcessing() {
+  composer = new EffectComposer(renderer)
+
+  // 基础渲染通道
+  const renderPass = new RenderPass(scene, camera)
+  composer.addPass(renderPass)
+
+  // Bloom 发光通道
+  const bloomPass = new UnrealBloomPass(
+    new THREE.Vector2(width, height),
+    0.8,   // strength（发光强度）
+    0.4,   // radius（发光半径）
+    0.85   // threshold（发光阈值，低于此亮度不发光）
+  )
+  composer.addPass(bloomPass)
+
+  // 输出通道（确保颜色正确）
+  const outputPass = new OutputPass()
+  composer.addPass(outputPass)
+}
+```
+
+**Bloom 效果原理**：
+
+```
+原始图像 → 高亮检测 → 高斯模糊 → 与原图混合 → 发光效果
+
+emissiveIntensity 高的像素（日行灯、尾灯）会被检测为高亮，
+经过模糊后和原图叠加，就产生了「光晕」效果。
+```
+
+### 7. 呼吸灯效果
+
+车灯使用正弦波控制 `emissiveIntensity`，模拟呼吸灯效果：
+
+```js
+// 在动画循环中
+const emissiveIntensity = 1 + Math.sin(elapsed * 2) * 0.5
+headlights.forEach((light) => {
+  if (light.material?.emissive) {
+    light.material.emissiveIntensity = emissiveIntensity
+  }
+})
+```
+
+### 8. CSS 滚动吸附
+
+为了让章节切换更流畅，使用原生 CSS Scroll Snap：
+
+```css
+html {
+  scroll-behavior: smooth;  /* 平滑滚动 */
+}
+
+.content {
+  overflow-x: hidden;
+}
+
+.section {
+  scroll-snap-align: start;  /* 吸附到每节开头 */
+}
+```
+
+或者使用 JavaScript `scrollIntoView` 进行强制吸附：
+
+```js
+target.scrollIntoView({ behavior: 'smooth' })
+```
+
+## 项目结构
+
+```
+car-showcase/
+├── index.html    # 主页面（章节内容 + CSS 动画）
+├── package.json  # 依赖（three, gsap, vite）
+├── vite.config.js
+├── public/       # 公共资源（空）
+└── src/
+    └── main.js  # 全部 Three.js 逻辑
+```
+
+## 运行项目
+
+```bash
+# 安装依赖
+pnpm install
+
+# 开发模式
+pnpm dev
+
+# 构建生产版本
+pnpm build
+```
+
+## 进阶扩展
+
+### 练习 1：加载真实 3D 汽车模型
+
+使用 `GLTFLoader` 加载外部 `.glb` 文件：
+
+```js
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
+
+const loader = new GLTFLoader()
+loader.load('/path/to/su7.glb', (gltf) => {
+  const car = gltf.scene
+  car.traverse((child) => {
+    if (child.isMesh) {
+      child.castShadow = true
+      child.receiveShadow = true
+    }
+  })
+  scene.add(car)
+})
+```
+
+推荐模型网站：[Sketchfab](https://sketchfab.com/)（搜索 car / vehicle）
+
+### 练习 2：添加 GSAP 时间线动画
+
+使用 GSAP 控制更复杂的动画序列：
+
+```js
+import { gsap } from 'gsap'
+
+// 相机动画时间线
+const tl = gsap.timeline({
+  scrollTrigger: {
+    trigger: '.content',
+    start: 'top top',
+    end: 'bottom bottom',
+    scrub: 1,  // 与滚动同步
+  }
+})
+
+tl.to(camera.position, { x: 0, y: 8, z: 0.1 })
+  .to(carGroup.rotation, { y: Math.PI / 2 }, '<')
+```
+
+### 练习 3：添加环境贴图
+
+使用 `RoomEnvironment` 或 HDR 环境贴图提升汽车金属质感：
+
+```js
+import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js'
+
+const pmremGenerator = new THREE.PMREMGenerator(renderer)
+const envTexture = pmremGenerator.fromScene(new RoomEnvironment()).texture
+
+scene.environment = envTexture  // 为所有材质提供环境反射
+```
+
+### 练习 4：加入粒子特效
+
+在场景中添加飘动的粒子，增强科技感：
+
+```js
+const particleGeometry = new THREE.BufferGeometry()
+const particleCount = 1000
+const positions = new Float32Array(particleCount * 3)
+
+for (let i = 0; i < particleCount; i++) {
+  positions[i * 3] = (Math.random() - 0.5) * 20
+  positions[i * 3 + 1] = (Math.random() - 0.5) * 20
+  positions[i * 3 + 2] = (Math.random() - 0.5) * 20
+}
+
+particleGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3))
+const particles = new THREE.Points(particleGeometry, particleMaterial)
+scene.add(particles)
+```
+
+## 下载项目
+
+<a href="/blog/three-projects/car-showcase.zip" download>📦 下载汽车展示项目源码</a>
+
+---
+
+[[返回 Three.js 首页|../index]]

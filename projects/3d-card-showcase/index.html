@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>3D 卡片展示 - Three.js</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        overflow: hidden;
+        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+        font-family: 'Segoe UI', sans-serif;
+      }
+      canvas {
+        display: block;
+      }
+      #info {
+        position: absolute;
+        bottom: 30px;
+        left: 50%;
+        transform: translateX(-50%);
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 14px;
+        pointer-events: none;
+        text-align: center;
+      }
+      #title {
+        position: absolute;
+        top: 30px;
+        left: 50%;
+        transform: translateX(-50%);
+        color: white;
+        font-size: 24px;
+        font-weight: 300;
+        letter-spacing: 4px;
+        pointer-events: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="title">3D CARD SHOWCASE</div>
+    <canvas id="canvas"></canvas>
+    <div id="info">👆 点击卡片翻转 &nbsp;|&nbsp; 🖱️ 悬浮鼠标控制角度</div>
+    <script type="module" src="./src/main.js"></script>
+  </body>
+</html>

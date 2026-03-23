@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>汽车展示 - 3D WebGL</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        overflow-x: hidden;
+        background: #0a0a0a;
+        font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+        color: white;
+      }
+
+      #canvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+      }
+
+      /* 内容层 */
+      .content {
+        position: relative;
+        z-index: 2;
+        pointer-events: none;
+      }
+
+      /* 各个章节 */
+      .section {
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 0 10%;
+      }
+
+      .section h1 {
+        font-size: 80px;
+        font-weight: 200;
+        letter-spacing: 8px;
+        margin-bottom: 20px;
+        opacity: 0;
+        transform: translateY(60px);
+        transition: all 1s ease;
+      }
+
+      .section p {
+        font-size: 18px;
+        font-weight: 300;
+        color: rgba(255, 255, 255, 0.6);
+        max-width: 500px;
+        line-height: 1.8;
+        opacity: 0;
+        transform: translateY(40px);
+        transition: all 1s ease 0.2s;
+      }
+
+      /* 激活态（滚动到视口时） */
+      .section.active h1 {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .section.active p {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* 顶部导航 */
+      .nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 10;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 30px 60px;
+        background: linear-gradient(to bottom, rgba(0,0,0,0.5), transparent);
+        pointer-events: auto;
+      }
+
+      .nav-logo {
+        font-size: 20px;
+        font-weight: 300;
+        letter-spacing: 4px;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 40px;
+      }
+
+      .nav-links a {
+        color: rgba(255,255,255,0.6);
+        text-decoration: none;
+        font-size: 14px;
+        transition: color 0.3s;
+        pointer-events: auto;
+      }
+
+      .nav-links a:hover {
+        color: white;
+      }
+
+      /* 底部进度条 */
+      .progress-bar {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        height: 3px;
+        background: linear-gradient(90deg, #00f5ff, #ff6b6b);
+        z-index: 10;
+        width: 0%;
+        transition: width 0.1s;
+      }
+
+      /* 角落指示 */
+      .indicator {
+        position: fixed;
+        right: 40px;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 10;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .indicator-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.2);
+        cursor: pointer;
+        pointer-events: auto;
+        transition: all 0.3s;
+      }
+
+      .indicator-dot.active {
+        background: white;
+        transform: scale(1.5);
+      }
+
+      /* 统计数字 */
+      .stats {
+        display: flex;
+        gap: 80px;
+        margin-top: 40px;
+        opacity: 0;
+        transform: translateY(40px);
+        transition: all 1s ease 0.4s;
+      }
+
+      .section.active .stats {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .stat-item {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .stat-value {
+        font-size: 48px;
+        font-weight: 200;
+        color: #00f5ff;
+      }
+
+      .stat-label {
+        font-size: 14px;
+        color: rgba(255,255,255,0.4);
+        margin-top: 5px;
+      }
+
+      /* 价格区域 */
+      .price {
+        font-size: 56px;
+        font-weight: 200;
+        margin-top: 30px;
+        opacity: 0;
+        transform: translateY(40px);
+        transition: all 1s ease 0.3s;
+      }
+
+      .price span {
+        font-size: 20px;
+        color: rgba(255,255,255,0.5);
+      }
+
+      .section.active .price {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* CTA 按钮 */
+      .cta-btn {
+        margin-top: 40px;
+        padding: 18px 50px;
+        background: white;
+        color: black;
+        border: none;
+        font-size: 16px;
+        letter-spacing: 2px;
+        cursor: pointer;
+        opacity: 0;
+        transform: translateY(40px);
+        transition: all 0.3s;
+        pointer-events: auto;
+        width: fit-content;
+      }
+
+      .section.active .cta-btn {
+        opacity: 1;
+        transform: translateY(0);
+        transition: all 1s ease 0.5s, background 0.3s, transform 0.3s;
+      }
+
+      .cta-btn:hover {
+        background: #00f5ff;
+        transform: translateY(-2px) !important;
+      }
+    </style>
+    <script type="module" crossorigin src="./assets/index-C-akWIHy.js"></script>
+  </head>
+  <body>
+    <canvas id="canvas"></canvas>
+
+    <!-- 顶部导航 -->
+    <nav class="nav">
+      <div class="nav-logo">SU7 SHOWCASE</div>
+      <div class="nav-links">
+        <a href="#section1">车型</a>
+        <a href="#section2">性能</a>
+        <a href="#section3">内饰</a>
+        <a href="#section4">预约</a>
+      </div>
+    </nav>
+
+    <!-- 内容层 -->
+    <div class="content">
+      <section class="section active" id="section1" data-color="#ffffff">
+        <h1>小米 SU7</h1>
+        <p>为驾驶者而生，为速度而造。每一次启动，都是一场与未来的对话。</p>
+        <div class="stats">
+          <div class="stat-item">
+            <span class="stat-value">2.78s</span>
+            <span class="stat-label">零百加速</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-value">800km</span>
+            <span class="stat-label">续航里程</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-value">673hp</span>
+            <span class="stat-label">最大马力</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="section2" data-color="#00f5ff">
+        <h1>澎湃动力</h1>
+        <p>双电机全轮驱动，智能四驱系统。瞬间爆发的力量，源自对速度的极致追求。</p>
+        <div class="price">¥299,900 <span>起</span></div>
+        <button class="cta-btn">立即下定</button>
+      </section>
+
+      <section class="section" id="section3" data-color="#ff6b6b">
+        <h1>精致内饰</h1>
+        <p>Nappa真皮座椅，16扬声器音响系统。每一处细节，都彰显豪华品质。</p>
+        <div class="stats">
+          <div class="stat-item">
+            <span class="stat-value">16.1"</span>
+            <span class="stat-label">中控大屏</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-value">56"</span>
+            <span class="stat-label">HUD抬头显示</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="section4" data-color="#ffd93d">
+        <h1>预约试驾</h1>
+        <p>即刻预约，亲身体验驾驶乐趣。名额有限，先到先得。</p>
+        <button class="cta-btn">预约试驾</button>
+      </section>
+    </div>
+
+    <!-- 滚动进度条 -->
+    <div class="progress-bar" id="progressBar"></div>
+
+    <!-- 右侧指示器 -->
+    <div class="indicator">
+      <div class="indicator-dot active" data-section="section1"></div>
+      <div class="indicator-dot" data-section="section2"></div>
+      <div class="indicator-dot" data-section="section3"></div>
+      <div class="indicator-dot" data-section="section4"></div>
+    </div>
+
+  </body>
+</html>
