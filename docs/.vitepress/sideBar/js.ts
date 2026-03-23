@@ -14,7 +14,7 @@ export function JsSidebar(): DefaultTheme.SidebarItem[] {
 					items: [
 						{ text: 'index', link: 'index' },
 						{ text: 'js风格指南', link: 'js风格指南' },
-						{ text: 'Dom节点', link: 'Dom节点' },
+						{ text: 'DOM节点', link: 'DOM节点' },
 						{ text: 'Math常用的方法', link: 'Math常用的方法' },
 						{ text: '从ECMAScript规范解读this', link: '从ECMAScript规范解读this' },
 						{ text: '类型判断(上)', link: '类型判断(上)' },
