@@ -8,7 +8,9 @@ export function MicroSidebar(): DefaultTheme.SidebarItem[] {
 			base: '/micro/',
 			items: [
 				{ text: '首页', link: 'index' },
-				{ text: 'micro-app', link: 'micro-app' },
+				{ text: '京东 micro-app', link: 'micro-app' },
+				{ text: '阿里 Qiankun 乾坤', link: 'qiankun' },
+				{ text: '字节 Wujie 无界', link: 'wujie' },
 			],
 		},
 	]

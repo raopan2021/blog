@@ -13,6 +13,7 @@ import { JavaSidebar } from './java.ts'
 import { JsSidebar } from './js.ts'
 import { LinuxSidebar } from './linux.ts'
 import { MarkdownSidebar } from './markdown.ts'
+import { DockerSidebar } from './docker.ts'
 import { MicroSidebar } from './micro.ts'
 import { MysqlSidebar } from './mysql.ts'
 import { NetworkSidebar } from './network.ts'
@@ -42,7 +43,7 @@ export const side = {
   '/network/': { base: '/network/', items: NetworkSidebar() },
   '/node/': { base: '/node/', items: NodeSidebar() },
   '/linux/': { base: '/linux/', items: LinuxSidebar() },
-  '/docker/': { base: '/docker/', items: LinuxSidebar() },
+  '/docker/': { base: '/docker/', items: DockerSidebar() },
   '/ai/': { base: '/ai/', items: AISidebar() },
   '/reg/': { base: '/reg/', items: RegSidebar() },
   '/svg/': { base: '/svg/', items: SvgSidebar() },
