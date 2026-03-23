@@ -4,10 +4,11 @@
 
 ## 📚 目录
 
-### 框架
-- [micro-app](./micro-app.md) - 京东微前端方案
-- [qiankun](./qiankun.md) - 阿里乾坤微前端框架
-- [wujie](./wujie.md) - 字节跳动微前端框架
+### 框架教程
+
+- [micro-app](./micro-app.md) - 🔵 京东微前端方案
+- [qiankun](./qiankun.md) - 🟢 阿里乾坤微前端框架
+- [wujie](./wujie.md) - 🟠 字节跳动无界微前端框架
 
 ## 什么是微前端
 
@@ -23,12 +24,12 @@
 
 ## 主流方案对比
 
-| 方案 | 开发方 | 特点 | 侵入性 |
-|------|--------|------|--------|
-| qiankun | 阿里 | 基于 single-spa，生态成熟 | 较低 |
-| micro-app | 京东 | Web Component 隔离 | 低 |
-| wujie | 字节 | 降级 iframe，性能好 | 低 |
-| single-spa | - | 最早的微前端方案 | 较高 |
+| 方案 | 开发方 | 隔离方式 | 侵入性 | 特点 |
+|------|--------|---------|--------|------|
+| [qiankun](./qiankun.md) | 阿里 | JS Sandbox + CSS Module | 较低 | 基于 single-spa，生态成熟 |
+| [micro-app](./micro-app.md) | 京东 | Web Component | 低 | 使用 Web Component 隔离 |
+| [wujie](./wujie.md) | 字节 | JS+CSS 沙箱 | 低 | 降级 iframe，兼容性最强 |
+| single-spa | - | JS Sandbox | 较高 | 最早的微前端方案 |
 
 ## 基础架构
 
@@ -42,251 +43,75 @@
 └─────────────────────────────────────┘
 ```
 
-## qiankun 接入指南
+## 通信机制对比
 
-### 主应用配置
+| 方案 | 主→子通信 | 子→主通信 | 通信方式 |
+|------|-----------|-----------|----------|
+| qiankun | `setGlobalState` | `onGlobalStateChange` | GlobalState |
+| micro-app | `setData` | `addDataListener` | window 通信 |
+| wujie | `props` | `$wujie.bus.$emit` | 事件总线 |
 
-```bash
-pnpm add qiankun
-```
+## 选型建议
 
-```js
-// main.js
-import { registerMicroApps, start } from 'qiankun'
+### ✅ 适合使用微前端
 
-const apps = [
-  {
-    name: 'vue-app',           // 子应用名称
-    entry: '//localhost:8080', // 子应用入口
-    container: '#container',   // 挂载容器
-    activeRule: '/vue'          // 激活路由
-  },
-  {
-    name: 'react-app',
-    entry: '//localhost:3000',
-    container: '#container',
-    activeRule: '/react'
-  }
-]
+- 大型后台管理系统，多团队协作
+- 技术栈升级（Vue2 → Vue3 过渡期）
+- 独立部署的需求
+- 需要整合多个遗留系统
 
-registerMicroApps(apps)
+### ❌ 不适合使用微前端
 
-// 启动
-start({
-  prefetch: 'all',       // 预加载
-  sandbox: {
-    strictStyleIsolation: true  // 严格样式隔离
-  }
-})
-```
+- 小型项目（增加复杂度）
+- 团队小（沟通成本高）
+- 性能敏感的应用
+- SEO 优先的应用（SSR 不友好）
 
-### 子应用接入（Vue3）
+### 框架选择
 
-```js
-// src/entry.js
-import { createApp } from 'vue'
-import App from './App.vue'
-
-let app = null
-
-// 导出生命周期
-export async function bootstrap() {
-  console.log('Vue 子应用初始化')
-}
-
-export async function mount(props) {
-  console.log('Vue 子应用挂载', props)
-  app = createApp(App)
-  app.mount(props.container.querySelector('#app'))
-}
-
-export async function unmount() {
-  console.log('Vue 子应用卸载')
-  app?.unmount()
-  app = null
-}
-```
-
-### 主应用 → 子应用通信
-
-```js
-// 主应用
-import { initGlobalState } from 'qiankun'
-
-const state = { token: '', userInfo: {} }
-
-// 初始化状态
-const actions = initGlobalState(state)
-
-actions.onGlobalStateChange((state, prev) => {
-  console.log('状态变更:', state, prev)
-})
-
-// 设置状态
-actions.setGlobalState({ token: 'xxx', userInfo: { name: '张三' } })
-
-// 卸载
-actions.offGlobalStateChange()
-```
-
-```js
-// 子应用接收
-import { initGlobalState } from 'qiankun'
-
-const actions = initGlobalState({})
-
-actions.onGlobalStateChange((state) => {
-  console.log('收到主应用状态:', state)
-}, true)
-```
-
-## micro-app 接入指南
-
-### 主应用配置
-
-```html
-<script src="https://cdn.jsdelivr.net/npm/micro-app@latest/dist/micro-app.min.js"></script>
-```
-
-```html
-<micro-app name="vue-app" url="http://localhost:8080" baseroute="/vue"></micro-app>
-```
-
-```js
-// 监听子应用事件
-const microApp = document.querySelector('micro-app')
-
-microApp.addEventListener('data-change', (e) => {
-  console.log('收到子应用数据:', e.detail.data)
-})
-
-// 向子应用发送数据
-microApp.setData('vue-app', { fromMain: 'hello' })
-```
-
-### 子应用配置（Vue3）
-
-```bash
-pnpm add @micro-app/vue3
-```
-
-```js
-// main.js
-import { createApp } from 'vue'
-import App from './App.vue'
-import microApp from '@micro-app/vue3'
-
-const app = createApp(App)
-app.use(microApp)
-app.mount('#app')
-```
-
-## wujie 接入指南
-
-### 主应用配置
-
-```bash
-pnpm add wujie
-```
-
-```html
-<WujieVue width="100%" height="100%" name="vue-app" url="http://localhost:8080"></WujieVue>
-```
-
-```js
-import { setupApp, preloadApp } from 'wujie'
-
-setupApp({
-  name: 'vue-app',
-  url: 'http://localhost:8080',
-  attrs: {
-    // iframe 属性
-  }
-})
-
-// 预加载
-preloadApp({ name: 'vue-app' })
-```
-
-## 样式隔离方案
-
-### 方案一：CSS Modules
-
-```css
-/* 子应用样式 */
-.main-app .button {
-  color: #fff;
-}
-```
-
-### 方案二：动态加载 CSS
-
-```js
-// 子应用加载时注入命名空间
-const style = document.createElement('style')
-style.textContent = `.main-app { /* 样式 */ }`
-document.head.appendChild(style)
-```
-
-### 方案三：Shadow DOM（micro-app）
-
-```js
-// 子应用使用 Shadow DOM
-const shadow = host.attachShadow({ mode: 'open' })
-const app = document.createElement('div')
-shadow.appendChild(app)
-```
-
-## 公共依赖管理
-
-### 方案一：CDN external
-
-```js
-// webpack 配置
-externals: {
-  vue: 'Vue',
-  react: 'React'
-}
-```
-
-### 方案二：子应用全量打包（不推荐）
-
-体积大，但简单
+| 场景 | 推荐方案 |
+|------|----------|
+| 追求生态成熟 | qiankun |
+| 追求高性能 | micro-app |
+| 追求兼容性最强 | wujie |
+| 需要 IE 支持 | wujie (iframe 降级) |
 
 ## 常见问题
 
 ### 1. 子应用静态资源 404
 
+确保子应用的 `publicPath`/`base` 配置与主应用路由一致
+
+### 2. 样式冲突
+
+- 使用 CSS Modules
+- 启用框架自带的样式隔离
+- 给子应用样式添加命名空间前缀
+
+### 3. 全局变量污染
+
+- 利用框架的沙箱机制
+- 避免使用全局变量
+- 使用 IIFE 包裹代码
+
+### 4. 跨域问题
+
+确保子应用开发服务器配置了 CORS 头
+
 ```js
-// 主应用配置
-const apps = [
-  {
-    name: 'vue-app',
-    entry: '//localhost:8080',
-    // 配置公共基础路径
-    customLoader: (app) => {
-      // 自定义资源加载
-    }
-  }
-]
+headers: {
+  'Access-Control-Allow-Origin': '*',
+}
 ```
 
-### 2. 子应用 cookie 丢失
+## 学习路径
 
-确保同源或在请求头中携带认证信息
+1. **了解概念**：阅读本文档的概述部分
+2. **选择框架**：根据团队和技术栈选择合适的框架
+3. **跑通示例**：按照对应框架的教程搭建 demo
+4. **深入原理**：了解沙箱、隔离、通信等原理
+5. **生产实践**：在实际项目中应用和优化
 
-### 3. 多实例问题
+---
 
-使用单例模式确保子应用只加载一次
-
-## 适用场景
-
-✅ **适合使用微前端**：
-- 大型后台管理系统，多团队协作
-- 技术栈升级（Vue2 → Vue3 过渡期）
-- 独立部署的需求
-
-❌ **不适合使用微前端**：
-- 小型项目（增加复杂度）
-- 团队小（沟通成本高）
-- 性能敏感的应用
+_持续更新中，欢迎提出建议和补充！_
