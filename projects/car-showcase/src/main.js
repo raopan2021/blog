@@ -1,885 +1,905 @@
 /**
- * 汽车展示网站 - 增强版
- * 参考: https://github.com/alphardex/su7-replica
+ * ============================================================
+ * 小米 SU7 网站特效 - 主入口文件
+ * ============================================================
  *
- * 新增功能：
- * 1. 加载动画（LOADING 文字动画）
+ * 参考项目：https://github.com/alphardex/su7-replica
+ *
+ * 本项目复刻了小米 SU7 官网的以下特效：
+ * 1. LOADING 过渡动画
  * 2. 进场动画（相机推进 + 灯光渐亮）
  * 3. 点击汽车触发「加速模式」
- * 4. 加速特效（Speed Lines 着色器 + 相机抖动）
- * 5. FOV 动态变化 + Bloom 增强
- * 6. 地面反射增强
- * 7. 环境光动态变化
+ * 4. Speed Lines（速度线）特效
+ * 5. 相机抖动
+ * 6. HDR 环境图动态切换
+ * 7. Bloom 后处理发光
+ * 8. 地面反射
+ * 9. 背景音乐
+ *
+ * 目录结构：
+ * ├── index.html              # 入口 HTML（加载动画）
+ * ├── public/
+ * │   ├── audio/bgm.mp3      # 背景音乐
+ * │   ├── mesh/sm_car.gltf   # 汽车 3D 模型
+ * │   ├── mesh/sm_startroom.gltf  # 展示厅模型
+ * │   ├── mesh/sm_speedup.gltf     # 加速特效模型
+ * │   ├── texture/t_env_*.hdr     # HDR 环境贴图
+ * │   └── texture/t_*.jpg|webp   # 各类纹理贴图
+ * └── src/
+ *     └── main.js               # 主入口（单文件版）
  */
 
 import * as THREE from 'three'
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
+import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader.js'
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js'
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js'
 import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js'
-import { OutputPass } from 'three/examples/jsm/postprocessing/OutputPass.js'
 import gsap from 'gsap'
 
-// ============================================================
-// 全局变量
-// ============================================================
-let scene, camera, renderer, composer
-let carGroup, wheels = [], headlights = [], taillights = []
-let floor, floorMirror
-let scrollProgress = 0
-let currentSection = 0
-let targetCarRotationY = 0
-let currentCarRotationY = 0
-let mouseX = 0, mouseY = 0
-
-// 增强版新增
-let speedLinesMesh      // 加速线条
-let cameraShakeOffset   // 相机抖动
-let roomLights = []     // 环境灯光组
-let spotLightGroup      // 聚光灯组
-let emissiveMaterials = [] // 所有发光材质
-
-// 加速模式状态
-let isRushing = false
-let rushProgress = 0
-let speed = 0
-
-// 加载状态
-let isLoading = true
-let loadingProgress = 0
-
-// ============================================================
-// 初始化
-// ============================================================
-function init() {
-  // 场景
-  scene = new THREE.Scene()
-  scene.fog = new THREE.Fog(0x000000, 15, 60)
-
-  // 相机
-  camera = new THREE.PerspectiveCamera(33.4, window.innerWidth / window.innerHeight, 0.1, 1000)
-  camera.position.set(0, 0.8, -11)
-  camera.lookAt(0, 0.8, 0)
-
-  // 渲染器
-  renderer = new THREE.WebGLRenderer({
-    canvas: document.getElementById('canvas'),
-    antialias: true,
-    alpha: false,
-  })
-  renderer.setSize(window.innerWidth, window.innerHeight)
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
-  renderer.shadowMap.enabled = true
-  renderer.shadowMap.type = THREE.PCFSoftShadowMap
-  renderer.toneMapping = THREE.ACESFilmicToneMapping
-  renderer.toneMappingExposure = 1.0
-
-  // 后处理
-  setupPostProcessing()
-
-  // 构建场景
-  createFloor()
-  createShowroom()
-  createCar()
-  createSpeedLines()
-
-  // 事件
-  window.addEventListener('resize', onResize)
-  window.addEventListener('mousemove', onMouseMove)
-
-  // 点击汽车触发加速
-  setupInteraction()
-
-  // 开始动画循环
-  animate()
-
-  // 模拟加载完成后播放进场动画
-  simulateLoading()
+// =============================================================
+// 资源路径配置
+// =============================================================
+const ASSETS = {
+  car: 'mesh/sm_car.gltf',
+  startroom: 'mesh/sm_startroom.raw.gltf',
+  speedup: 'mesh/sm_speedup.gltf',
+  envNight: 'texture/t_env_night.hdr',
+  envLight: 'texture/t_env_light.hdr',
+  carBodyAO: 'texture/t_car_body_AO.raw.jpg',
+  startroomAO: 'texture/t_startroom_ao.raw.jpg',
+  startroomLight: 'texture/t_startroom_light.raw.jpg',
+  floorNormal: 'texture/t_floor_normal.webp',
+  floorRoughness: 'texture/t_floor_roughness.webp',
+  bgm: 'audio/bgm.mp3',
 }
 
-// ============================================================
-// 加载动画
-// ============================================================
+// =============================================================
+// 全局动画参数（GSAP 动画会修改这些值）
+// =============================================================
+const params = {
+  // 相机位置
+  cameraPos: { x: 0, y: 0.8, z: -11 },
+  cameraFov: 33.4,
 
-/**
- * 模拟资源加载（3秒后完成）
- * 实际项目中这里应该加载模型、纹理等资源
- */
-function simulateLoading() {
-  const loaderScreen = document.getElementById('loader-screen')
-  const loadingText = document.getElementById('loading-text')
-  const letters = 'LOADING'.split('')
+  // 速度（0=静止，10=全速）
+  speed: 0,
 
-  // 字母依次出现动画
-  letters.forEach((letter, i) => {
-    setTimeout(() => {
-      if (loadingText) {
-        loadingText.textContent = 'L' + 'O'.repeat(i + 1) + 'ADING'.slice(i + 1)
-      }
-    }, i * 150)
-  })
+  // 灯光
+  lightAlpha: 0,         // 颜色插值（0=黑，1=白）
+  lightIntensity: 0,     // 发光强度
+  lightOpacity: 1,       // 灯带透明度
 
-  // 3秒后完成加载
-  setTimeout(() => {
-    isLoading = false
-    if (loaderScreen) {
-      loaderScreen.classList.add('hollow')
-    }
-    playIntroAnimation()
-  }, 3000)
+  // 环境贴图
+  envIntensity: 0,       // 环境贴图强度
+  envWeight: 0,          // 两个 HDR 之间的权重
+
+  // 地面
+  reflectIntensity: 0,  // 反射强度
+  floorLerpColor: 0,   // 地面颜色（0=白，1=黑）
+
+  // 车身
+  carBodyEnvIntensity: 1,
+
+  // 相机抖动
+  cameraShakeIntensity: 0,
+
+  // Bloom
+  bloomLuminanceSmoothing: 1.6,
+  bloomIntensity: 1,
+
+  // 加速特效
+  speedUpOpacity: 0,
+
+  // 状态标志
+  isCameraMoving: false,
+  isRushing: false,
+  disableInteract: false,
 }
 
-/**
- * 进场动画（参考 su7-replica 的 enter() 时间线）
- * 相机从远处推进，灯光逐渐亮起，地面逐渐反射
- */
-function playIntroAnimation() {
-  // 1. 相机推进 (4秒)
-  gsap.to(camera.position, {
-    x: 0,
-    y: 0.8,
-    z: -7,
-    duration: 4,
-    ease: 'power2.inOut',
-    onUpdate: () => {
-      camera.lookAt(0, 0.8, 0)
-    },
-  })
+// =============================================================
+// 资源加载器
+// =============================================================
 
-  // 2. 灯光渐亮 (4秒，延迟1秒)
-  roomLights.forEach((light, i) => {
-    gsap.to(light, {
-      intensity: light.userData.originalIntensity,
-      duration: 4,
-      delay: 1 + i * 0.2,
-      ease: 'power2.inOut',
+class AssetManager {
+  constructor() {
+    this.items = {}
+    this.total = 0
+    this.loaded = 0
+    this.readyCallbacks = []
+  }
+
+  loadGLTF(name, path) {
+    this.total++
+    new GLTFLoader().load(path, (gltf) => {
+      this.items[name] = gltf
+      this.onLoaded()
     })
-  })
+  }
 
-  // 环境光强度
-  gsap.to(scene, {
-    fogNear: 15,
-    fogFar: 60,
-    duration: 4,
-    delay: 1,
-    ease: 'power2.inOut',
-  })
+  loadHDR(name, path) {
+    this.total++
+    new RGBELoader().load(path, (texture) => {
+      texture.mapping = THREE.EquirectangularReflectionMapping
+      this.items[name] = texture
+      this.onLoaded()
+    })
+  }
 
-  // 3. 地面反射强度渐强
-  if (floorMirror) {
-    gsap.to(floorMirror, {
-      blur: 0.3,
+  loadTexture(name, path) {
+    this.total++
+    new THREE.TextureLoader().load(path, (texture) => {
+      this.items[name] = texture
+      this.onLoaded()
+    })
+  }
+
+  onLoaded() {
+    this.loaded++
+    console.log(`[资源加载] ${this.loaded}/${this.total}`)
+    if (this.loaded >= this.total) {
+      this.readyCallbacks.forEach((cb) => cb())
+    }
+  }
+
+  onReady(cb) {
+    if (this.loaded >= this.total) cb()
+    else this.readyCallbacks.push(cb)
+  }
+}
+
+// =============================================================
+// 后处理（Bloom 发光）
+// =============================================================
+
+class Postprocessing {
+  constructor(experience) {
+    this.experience = experience
+    this.composer = new EffectComposer(experience.renderer)
+
+    const renderPass = new RenderPass(experience.scene, experience.camera)
+    this.composer.addPass(renderPass)
+
+    this.bloomPass = new UnrealBloomPass(
+      new THREE.Vector2(experience.width, experience.height),
+      0.8,   // strength - 发光强度
+      0.4,   // radius - 发光半径
+      0.85   // threshold - 发光阈值
+    )
+    this.composer.addPass(this.bloomPass)
+  }
+
+  setIntensity(value) {
+    this.bloomPass.strength = value
+  }
+
+  setLuminanceSmoothing(value) {
+    this.bloomPass.luminanceMaterial.smoothing = value
+  }
+
+  update() {}
+}
+
+// =============================================================
+// 动态环境贴图
+// 在两个 HDR 环境贴图之间切换
+// =============================================================
+
+class DynamicEnv {
+  constructor(experience, config = {}) {
+    this.experience = experience
+
+    // 创建 FBO（Framebuffer Object）用于存储渲染结果
+    this.fbo = new THREE.WebGLRenderTarget(1024, 1024)
+
+    // 创建着色器材质，实现两个环境贴图的加权混合
+    this.material = new THREE.ShaderMaterial({
+      uniforms: {
+        uEnvmap1: { value: config.envmap1 || null },
+        uEnvmap2: { value: config.envmap2 || null },
+        uWeight: { value: 0 },    // 混合权重
+        uIntensity: { value: 1 }, // 强度
+      },
+      vertexShader: `
+        varying vec2 vUv;
+        void main() {
+          vUv = uv;
+          gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+        }
+      `,
+      fragmentShader: `
+        uniform sampler2D uEnvmap1;
+        uniform sampler2D uEnvmap2;
+        uniform float uWeight;
+        uniform float uIntensity;
+        varying vec2 vUv;
+
+        void main() {
+          vec4 c1 = texture2D(uEnvmap1, vUv);
+          vec4 c2 = texture2D(uEnvmap2, vUv);
+          // 根据权重混合两个环境贴图
+          vec4 color = mix(c1, c2, uWeight) * uIntensity;
+          gl_FragColor = color;
+        }
+      `,
+    })
+
+    // 全屏四边形
+    this.quad = new THREE.Mesh(
+      new THREE.PlaneGeometry(2, 2),
+      this.material
+    )
+
+    this._envmap = this.fbo.texture
+  }
+
+  /** 获取混合后的环境贴图 */
+  get envmap() {
+    return this._envmap
+  }
+
+  /** 设置两个 HDR 之间的混合权重 */
+  setWeight(value) {
+    this.material.uniforms.uWeight.value = value
+  }
+
+  /** 设置环境强度 */
+  setIntensity(value) {
+    this.material.uniforms.uIntensity.value = value
+  }
+
+  /** 每帧渲染到 FBO */
+  update() {
+    this.experience.renderer.setRenderTarget(this.fbo)
+    this.experience.renderer.render(this.quad, this.experience.camera)
+    this.experience.renderer.setRenderTarget(null)
+  }
+}
+
+// =============================================================
+// 相机抖动
+// 使用 Simplex Noise 实现平滑的随机抖动
+// =============================================================
+
+function createNoise2D() {
+  // Permutation table
+  const p = []
+  for (let i = 0; i < 256; i++) p[i] = Math.floor(Math.random() * 256)
+
+  return function (x, y) {
+    const X = Math.floor(x) & 255
+    const Y = Math.floor(y) & 255
+    x -= Math.floor(x)
+    y -= Math.floor(y)
+    const u = fade(x)
+    const v = fade(y)
+    const a = p[X] + Y
+    const b = p[X + 1] + Y
+    return lerp(
+      v,
+      lerp(u, grad(p[a & 255], x, y), grad(p[b & 255], x - 1, y)),
+      lerp(u, grad(p[(a + 1) & 255], x, y - 1), grad(p[(b + 1) & 255], x - 1, y - 1))
+    )
+  }
+}
+
+function fade(t) { return t * t * t * (t * (t * 6 - 15) + 10) }
+function lerp(t, a, b) { return a + t * (b - a) }
+function grad(hash, x, y) {
+  const h = hash & 15
+  const u = h < 8 ? x : y
+  const v = h < 4 ? y : h === 12 || h === 14 ? x : 0
+  return ((h & 1) === 0 ? u : -u) + ((h & 2) === 0 ? v : -v)
+}
+
+class CameraShake {
+  constructor(experience) {
+    this.experience = experience
+    this.intensity = 0
+    this.tweenedOffset = new THREE.Vector3()
+    this.noise2D = createNoise2D()
+  }
+
+  setIntensity(value) {
+    this.intensity = value
+  }
+
+  update() {
+    if (this.intensity <= 0) return
+
+    const t = performance.now() * 0.001
+
+    // 用噪声生成偏移量
+    const offset = new THREE.Vector3(
+      this.noise2D(t * 0.5, 0) * 2,
+      this.noise2D(t * 0.5, 100) * 2,
+      this.noise2D(t * 0.5, 200) * 2
+    )
+
+    // 平滑插值到目标偏移
+    offset.multiplyScalar(0.1 * this.intensity)
+    this.tweenedOffset.lerp(offset, 0.1)
+
+    // 添加到相机位置
+    this.experience.camera.position.add(this.tweenedOffset)
+  }
+}
+
+// =============================================================
+// 主应用类
+// =============================================================
+
+class App {
+  constructor() {
+    // DOM 元素
+    this.container = document.getElementById('sketch')
+    this.loaderScreen = document.getElementById('loader-screen')
+
+    // 尺寸
+    this.width = this.container.clientWidth
+    this.height = this.container.clientHeight
+
+    // 场景
+    this.scene = new THREE.Scene()
+    this.scene.background = new THREE.Color('#000000')
+
+    // 相机
+    this.camera = new THREE.PerspectiveCamera(33.4, this.width / this.height, 0.1, 1000)
+    this.camera.position.set(params.cameraPos.x, params.cameraPos.y, params.cameraPos.z)
+    this.camera.lookAt(0, 0.8, 0)
+
+    // 渲染器
+    this.renderer = new THREE.WebGLRenderer({ antialias: true })
+    this.renderer.setSize(this.width, this.height)
+    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+    this.renderer.shadowMap.enabled = true
+    this.renderer.shadowMap.type = THREE.PCFSoftShadowMap
+    this.renderer.toneMapping = THREE.ACESFilmicToneMapping
+    this.renderer.toneMappingExposure = 1.0
+    this.container.appendChild(this.renderer.domElement)
+
+    // 后处理
+    this.postprocessing = new Postprocessing(this)
+
+    // 资源管理器
+    this.am = new AssetManager()
+
+    // GSAP 时间线
+    this.tweens = []
+
+    // 组件引用
+    this.dynamicEnv = null
+    this.startRoomModel = null
+    this.carModel = null
+    this.speedupModel = null
+    this.cameraShake = null
+
+    // 加载资源
+    this.loadAssets()
+
+    // 监听窗口大小变化
+    window.addEventListener('resize', () => this.onResize())
+
+    // 监听点击
+    this.setupInteraction()
+  }
+
+  /** 加载所有资源 */
+  loadAssets() {
+    // HDR 环境贴图
+    this.am.loadHDR('envNight', ASSETS.envNight)
+    this.am.loadHDR('envLight', ASSETS.envLight)
+
+    // GLTF 模型
+    this.am.loadGLTF('car', ASSETS.car)
+    this.am.loadGLTF('startroom', ASSETS.startroom)
+    this.am.loadGLTF('speedup', ASSETS.speedup)
+
+    // 纹理
+    this.am.loadTexture('carBodyAO', ASSETS.carBodyAO)
+    this.am.loadTexture('startroomAO', ASSETS.startroomAO)
+    this.am.loadTexture('startroomLight', ASSETS.startroomLight)
+    this.am.loadTexture('floorNormal', ASSETS.floorNormal)
+    this.am.loadTexture('floorRoughness', ASSETS.floorRoughness)
+
+    // 资源加载完成
+    this.am.onReady(() => {
+      console.log('✅ 所有资源加载完成')
+      this.onReady()
+    })
+  }
+
+  /** 资源加载完成后初始化 */
+  onReady() {
+    // 预处理贴图
+    this.preprocessTextures()
+
+    // 创建 HDR 环境贴图
+    const envmapNight = this.createEnvmap(this.am.items.envNight)
+    const envmapLight = this.createEnvmap(this.am.items.envLight)
+
+    // 动态环境
+    this.dynamicEnv = new DynamicEnv(this, { envmap1: envmapNight, envmap2: envmapLight })
+    this.scene.environment = this.dynamicEnv.envmap
+
+    // 展示厅
+    this.startRoomModel = this.am.items.startroom
+    this.configureStartRoom()
+
+    // 汽车
+    this.carModel = this.am.items.car
+    this.configureCar()
+
+    // 加速特效
+    this.speedupModel = this.am.items.speedup
+    if (this.speedupModel) {
+      this.scene.add(this.speedupModel.scene)
+    }
+
+    // 相机抖动
+    this.cameraShake = new CameraShake(this)
+
+    // 背景音乐
+    this.playBGM()
+
+    // 播放进场动画
+    this.enter()
+
+    // 开始渲染循环
+    this.animate()
+  }
+
+  /** 从 HDR 创建环境贴图 */
+  createEnvmap(hdrTexture) {
+    const pmrem = new THREE.PMREMGenerator(this.renderer)
+    pmrem.compileEquirectangularShader()
+    const envmap = pmrem.fromEquirectangular(hdrTexture).texture
+    pmrem.dispose()
+    return envmap
+  }
+
+  /** 预处理贴图 */
+  preprocessTextures() {
+    const i = this.am.items
+
+    // 汽车车身 AO 贴图
+    i.carBodyAO.flipY = false
+    i.carBodyAO.colorSpace = THREE.LinearSRGBColorSpace
+    i.carBodyAO.minFilter = THREE.NearestFilter
+    i.carBodyAO.magFilter = THREE.NearestFilter
+    i.carBodyAO.channel = 1
+
+    // 展示厅 AO
+    i.startroomAO.flipY = false
+    i.startroomAO.colorSpace = THREE.LinearSRGBColorSpace
+    i.startroomAO.channel = 1
+
+    // 展示厅光照贴图
+    i.startroomLight.flipY = false
+    i.startroomLight.colorSpace = THREE.SRGBColorSpace
+    i.startroomLight.channel = 1
+
+    // 地面法线
+    i.floorNormal.flipY = false
+    i.floorNormal.colorSpace = THREE.LinearSRGBColorSpace
+    i.floorNormal.wrapS = THREE.RepeatWrapping
+    i.floorNormal.wrapT = THREE.RepeatWrapping
+
+    // 地面粗糙度
+    i.floorRoughness.flipY = false
+    i.floorRoughness.colorSpace = THREE.LinearSRGBColorSpace
+    i.floorRoughness.wrapS = THREE.RepeatWrapping
+    i.floorRoughness.wrapT = THREE.RepeatWrapping
+  }
+
+  /** 配置展示厅模型 */
+  configureStartRoom() {
+    const scene = this.startRoomModel.scene
+
+    scene.traverse((child) => {
+      if (!child.isMesh || !child.material) return
+      const mat = child.material
+
+      // 灯带材质
+      if (mat.isMeshStandardMaterial && mat.emissive && mat.emissiveIntensity > 0) {
+        mat.emissive.set(0x000000)
+        mat.emissiveIntensity = 0
+        mat.toneMapped = false
+        mat.transparent = true
+        mat.alphaTest = 0.1
+        // 保存引用后续修改
+        this.startRoomLightMat = mat
+      }
+
+      // 地面材质
+      if (mat.isMeshPhysicalMaterial) {
+        mat.aoMap = this.am.items.startroomAO
+        mat.lightMap = this.am.items.startroomLight
+        mat.normalMap = this.am.items.floorNormal
+        mat.roughnessMap = this.am.items.floorRoughness
+        mat.envMapIntensity = 0
+        mat.roughness = 0.05
+        mat.metalness = 0.9
+        this.startRoomFloorMat = mat
+      }
+    })
+
+    this.scene.add(scene)
+  }
+
+  /** 配置汽车模型 */
+  configureCar() {
+    const scene = this.carModel.scene
+
+    scene.traverse((child) => {
+      if (!child.isMesh || !child.material) return
+      const mat = child.material
+
+      if (mat.isMeshStandardMaterial) {
+        // 检测是否是车身
+        if (!this.carBodyMat && mat.color?.getHex() !== 0x111111) {
+          this.carBodyMat = mat
+          mat.color.set(0x26d6e9)  // 小米 SU7 蓝色
+          mat.envMapIntensity = 1
+        }
+        mat.aoMap = this.am.items.carBodyAO
+      }
+    })
+
+    this.scene.add(scene)
+  }
+
+  /** 背景音乐 */
+  playBGM() {
+    try {
+      const bgm = new Howl({ src: [ASSETS.bgm], loop: true })
+      bgm.play()
+    } catch (e) {
+      console.warn('背景音乐播放失败:', e)
+    }
+  }
+
+  /** 设置点击交互 */
+  setupInteraction() {
+    const raycaster = new THREE.Raycaster()
+    const mouse = new THREE.Vector2()
+
+    window.addEventListener('click', (event) => {
+      if (params.disableInteract) return
+
+      mouse.x = (event.clientX / window.innerWidth) * 2 - 1
+      mouse.y = -(event.clientY / window.innerHeight) * 2 + 1
+
+      raycaster.setFromCamera(mouse, this.camera)
+      const intersects = raycaster.intersectObject(this.carModel.scene, true)
+
+      if (intersects.length > 0) {
+        this.rush()
+      }
+    })
+  }
+
+  /** 进场动画 */
+  enter() {
+    params.disableInteract = true
+
+    // 初始状态：全黑
+    this.dynamicEnv.setWeight(0)
+    this.dynamicEnv.setIntensity(0)
+    if (this.startRoomLightMat) {
+      this.startRoomLightMat.emissive.set(0x000000)
+      this.startRoomLightMat.emissiveIntensity = 0
+    }
+    if (this.startRoomFloorMat) {
+      this.startRoomFloorMat.color.set(0x000000)
+      this.startRoomFloorMat.envMapIntensity = 0
+    }
+
+    // 加载屏幕淡出
+    setTimeout(() => {
+      this.loaderScreen?.classList.add('hollow')
+    }, 1000)
+
+    // ========== 相机推进 ==========
+    const t1 = gsap.timeline()
+    this.tweens.push(t1)
+    t1.to(params.cameraPos, {
+      x: 0, y: 0.8, z: -7,
+      duration: 4,
+      ease: 'power2.inOut',
+      onComplete: () => {
+        params.isCameraMoving = false
+        params.disableInteract = false
+      },
+    })
+
+    // ========== 灯光渐亮 ==========
+    const t2 = gsap.timeline()
+    this.tweens.push(t2)
+    const blackColor = new THREE.Color(0x000000)
+    const whiteColor = new THREE.Color(0xffffff)
+    const lightColor = new THREE.Color()
+
+    t2.to(params, {
+      lightAlpha: 1,
+      lightIntensity: 1,
+      reflectIntensity: 25,
       duration: 4,
       delay: 1,
       ease: 'power2.inOut',
-    })
-  }
-}
-
-// ============================================================
-// 后处理（Bloom）
-// ============================================================
-let bloomPass, renderPass
-
-function setupPostProcessing() {
-  composer = new EffectComposer(renderer)
-
-  renderPass = new RenderPass(scene, camera)
-  composer.addPass(renderPass)
-
-  bloomPass = new UnrealBloomPass(
-    new THREE.Vector2(window.innerWidth, window.innerHeight),
-    0.8,   // strength
-    0.4,   // radius
-    0.85   // threshold
-  )
-  composer.addPass(bloomPass)
-
-  const outputPass = new OutputPass()
-  composer.addPass(outputPass)
-}
-
-// ============================================================
-// 地面（带反射）
-// ============================================================
-function createFloor() {
-  // 主地面
-  const floorGeometry = new THREE.PlaneGeometry(100, 100)
-  const floorMaterial = new THREE.MeshStandardMaterial({
-    color: 0x111111,
-    roughness: 0.05,
-    metalness: 0.9,
-  })
-  floor = new THREE.Mesh(floorGeometry, floorMaterial)
-  floor.rotation.x = -Math.PI / 2
-  floor.position.y = -0.5
-  floor.receiveShadow = true
-  scene.add(floor)
-
-  // 网格
-  const gridHelper = new THREE.GridHelper(40, 40, 0x222222, 0x111111)
-  gridHelper.position.y = -0.49
-  scene.add(gridHelper)
-
-  // 简单反射平面
-  const mirrorGeometry = new THREE.PlaneGeometry(30, 30)
-  const mirrorMaterial = new THREE.MeshStandardMaterial({
-    color: 0x000000,
-    roughness: 0.0,
-    metalness: 1.0,
-    transparent: true,
-    opacity: 0.3,
-  })
-  floorMirror = new THREE.Mesh(mirrorGeometry, mirrorMaterial)
-  floorMirror.rotation.x = -Math.PI / 2
-  floorMirror.position.y = -0.48
-  scene.add(floorMirror)
-}
-
-// ============================================================
-// 展示厅（灯光 + 墙面暗示）
-// ============================================================
-function createShowroom() {
-  // 顶部主聚光灯（模拟展厅射灯）
-  const spotLight1 = new THREE.SpotLight(0xffffff, 0, 50, Math.PI / 8, 0.5)
-  spotLight1.position.set(0, 12, 0)
-  spotLight1.target.position.set(0, 0, 0)
-  spotLight1.castShadow = true
-  spotLight1.shadow.mapSize.width = 2048
-  spotLight1.shadow.mapSize.height = 2048
-  spotLight1.userData.originalIntensity = 50
-  scene.add(spotLight1)
-  scene.add(spotLight1.target)
-  roomLights.push(spotLight1)
-
-  // 左右补光
-  const leftLight = new THREE.PointLight(0xffffff, 0, 20)
-  leftLight.position.set(-8, 3, 0)
-  leftLight.userData.originalIntensity = 5
-  scene.add(leftLight)
-  roomLights.push(leftLight)
-
-  const rightLight = new THREE.PointLight(0xffffff, 0, 20)
-  rightLight.position.set(8, 3, 0)
-  rightLight.userData.originalIntensity = 5
-  scene.add(rightLight)
-  roomLights.push(rightLight)
-
-  // 环境光（非常暗）
-  const ambientLight = new THREE.AmbientLight(0x111111, 0)
-  ambientLight.userData.originalIntensity = 0.3
-  scene.add(ambientLight)
-  roomLights.push(ambientLight)
-
-  // 发光灯带（模拟展厅天花板灯带）
-  createLightStrips()
-}
-
-function createLightStrips() {
-  // 横向灯带
-  const stripMaterial = new THREE.MeshStandardMaterial({
-    color: 0xffffff,
-    emissive: 0xffffff,
-    emissiveIntensity: 0, // 初始为0，进场动画中渐亮
-    toneMapped: false,
-  })
-  emissiveMaterials.push(stripMaterial)
-
-  const stripGeometry = new THREE.BoxGeometry(12, 0.05, 0.1)
-
-  // 前灯带
-  const frontStrip = new THREE.Mesh(stripGeometry, stripMaterial)
-  frontStrip.position.set(0, 5, -5)
-  scene.add(frontStrip)
-
-  // 后灯带
-  const backStrip = new THREE.Mesh(stripGeometry, stripMaterial)
-  backStrip.position.set(0, 5, 5)
-  scene.add(backStrip)
-
-  // 侧灯带
-  const sideStripGeometry = new THREE.BoxGeometry(0.1, 0.05, 12)
-  const leftStrip = new THREE.Mesh(sideStripGeometry, stripMaterial.clone())
-  leftStrip.position.set(-6, 5, 0)
-  scene.add(leftStrip)
-  emissiveMaterials.push(leftStrip.material)
-
-  const rightStrip = new THREE.Mesh(sideStripGeometry, stripMaterial.clone())
-  rightStrip.position.set(6, 5, 0)
-  scene.add(rightStrip)
-  emissiveMaterials.push(rightStrip.material)
-}
-
-// ============================================================
-// 创建汽车（更精致的版本）
-// ============================================================
-function createCar() {
-  carGroup = new THREE.Group()
-
-  // ---- 车身主体 ----
-  const bodyMaterial = new THREE.MeshStandardMaterial({
-    color: 0x26d9e9,  // 小米 SU7 蓝色
-    roughness: 0.3,
-    metalness: 0.85,
-    envMapIntensity: 1.0,
-  })
-  emissiveMaterials.push(bodyMaterial)
-
-  // 车身底部（深色）
-  const underbodyGeometry = new THREE.BoxGeometry(3.6, 0.15, 1.5)
-  const underbodyMaterial = new THREE.MeshStandardMaterial({
-    color: 0x0a0a0a,
-    roughness: 0.8,
-  })
-  const underbody = new THREE.Mesh(underbodyGeometry, underbodyMaterial)
-  underbody.position.set(0, 0.05, 0)
-  underbody.castShadow = true
-  carGroup.add(underbody)
-
-  // 车身主体（流线型，使用多个几何体）
-  const bodyMainGeometry = new THREE.BoxGeometry(3.4, 0.5, 1.5)
-  const bodyMain = new THREE.Mesh(bodyMainGeometry, bodyMaterial)
-  bodyMain.position.set(0, 0.5, 0)
-  bodyMain.castShadow = true
-  carGroup.add(bodyMain)
-
-  // 前舱盖（倾斜）
-  const hoodGeometry = new THREE.BoxGeometry(1.2, 0.15, 1.35)
-  const hood = new THREE.Mesh(hoodGeometry, bodyMaterial)
-  hood.position.set(-1.5, 0.75, 0)
-  hood.rotation.z = 0.15
-  hood.castShadow = true
-  carGroup.add(hood)
-
-  // 后备箱
-  const trunkGeometry = new THREE.BoxGeometry(0.8, 0.3, 1.35)
-  const trunk = new THREE.Mesh(trunkGeometry, bodyMaterial)
-  trunk.position.set(1.4, 0.9, 0)
-  trunk.castShadow = true
-  carGroup.add(trunk)
-
-  // 车顶（轿跑弧线）
-  const roofGeometry = new THREE.BoxGeometry(1.4, 0.12, 1.3)
-  const roof = new THREE.Mesh(roofGeometry, bodyMaterial)
-  roof.position.set(0.2, 1.15, 0)
-  roof.rotation.z = 0.05
-  roof.castShadow = true
-  carGroup.add(roof)
-
-  // A柱（倾斜）
-  const aPillarGeometry = new THREE.BoxGeometry(0.08, 0.5, 1.3)
-  const aPillarLeft = new THREE.Mesh(aPillarGeometry, bodyMaterial)
-  aPillarLeft.position.set(-0.55, 1.0, 0)
-  aPillarLeft.rotation.z = -0.4
-  carGroup.add(aPillarLeft)
-
-  const aPillarRight = aPillarLeft.clone()
-  aPillarRight.position.z = 0
-  carGroup.add(aPillarRight)
-
-  // ---- 玻璃 ----
-  const glassMaterial = new THREE.MeshPhysicalMaterial({
-    color: 0x88ccff,
-    transparent: true,
-    opacity: 0.25,
-    roughness: 0,
-    metalness: 0.1,
-    transmission: 0.95,
-    ior: 1.5,
-  })
-
-  // 前风挡
-  const windshieldGeometry = new THREE.PlaneGeometry(1.35, 0.55)
-  const windshield = new THREE.Mesh(windshieldGeometry, glassMaterial)
-  windshield.position.set(-0.7, 1.05, 0)
-  windshield.rotation.z = -0.5
-  carGroup.add(windshield)
-
-  // 后窗
-  const rearWindowGeometry = new THREE.PlaneGeometry(1.0, 0.35)
-  const rearWindow = new THREE.Mesh(rearWindowGeometry, glassMaterial)
-  rearWindow.position.set(0.9, 1.0, 0)
-  rearWindow.rotation.z = 0.35
-  carGroup.add(rearWindow)
-
-  // 侧窗
-  const sideWindowGeometry = new THREE.PlaneGeometry(1.1, 0.32)
-  const sideWindowLeft = new THREE.Mesh(sideWindowGeometry, glassMaterial)
-  sideWindowLeft.position.set(0.1, 1.05, 0.66)
-  sideWindowLeft.rotation.y = 0
-  carGroup.add(sideWindowLeft)
-
-  const sideWindowRight = new THREE.Mesh(sideWindowGeometry, glassMaterial)
-  sideWindowRight.position.set(0.1, 1.05, -0.66)
-  sideWindowRight.rotation.y = Math.PI
-  carGroup.add(sideWindowRight)
-
-  // ---- 大灯 ----
-  const headlightMaterial = new THREE.MeshStandardMaterial({
-    color: 0xffffff,
-    emissive: 0xffffff,
-    emissiveIntensity: 2,
-    toneMapped: false,
-  })
-  emissiveMaterials.push(headlightMaterial)
-
-  const headlightGeometry = new THREE.CircleGeometry(0.1, 16)
-  const headlightLeft = new THREE.Mesh(headlightGeometry, headlightMaterial)
-  headlightLeft.position.set(-1.72, 0.5, 0.5)
-  headlightLeft.rotation.y = Math.PI / 2
-  headlights.push(headlightLeft)
-  carGroup.add(headlightLeft)
-
-  const headlightRight = new THREE.Mesh(headlightGeometry, headlightMaterial)
-  headlightRight.position.set(-1.72, 0.5, -0.5)
-  headlightRight.rotation.y = Math.PI / 2
-  headlights.push(headlightRight)
-  carGroup.add(headlightRight)
-
-  // LED 日行灯带（贯穿式）
-  const drlGeometry = new THREE.BoxGeometry(0.04, 0.03, 1.2)
-  const drlMaterial = new THREE.MeshStandardMaterial({
-    color: 0x00f5ff,
-    emissive: 0x00f5ff,
-    emissiveIntensity: 3,
-    toneMapped: false,
-  })
-  emissiveMaterials.push(drlMaterial)
-  const drl = new THREE.Mesh(drlGeometry, drlMaterial)
-  drl.position.set(-1.73, 0.45, 0)
-  headlights.push(drl)
-  carGroup.add(drl)
-
-  // ---- 尾灯 ----
-  const taillightMaterial = new THREE.MeshStandardMaterial({
-    color: 0xff0000,
-    emissive: 0xff0000,
-    emissiveIntensity: 2,
-    toneMapped: false,
-  })
-  emissiveMaterials.push(taillightMaterial)
-
-  const taillightGeometry = new THREE.BoxGeometry(0.04, 0.08, 0.35)
-  const taillightLeft = new THREE.Mesh(taillightGeometry, taillightMaterial)
-  taillightLeft.position.set(1.72, 0.55, 0.5)
-  taillights.push(taillightLeft)
-  carGroup.add(taillightLeft)
-
-  const taillightRight = new THREE.Mesh(taillightGeometry, taillightMaterial)
-  taillightRight.position.set(1.72, 0.55, -0.5)
-  taillights.push(taillightRight)
-  carGroup.add(taillightRight)
-
-  // 尾灯贯穿灯带
-  const tailDrlGeometry = new THREE.BoxGeometry(0.04, 0.04, 1.3)
-  const tailDrlMaterial = new THREE.MeshStandardMaterial({
-    color: 0xff3333,
-    emissive: 0xff3333,
-    emissiveIntensity: 2,
-    toneMapped: false,
-  })
-  emissiveMaterials.push(tailDrlMaterial)
-  const tailDrl = new THREE.Mesh(tailDrlGeometry, tailDrlMaterial)
-  tailDrl.position.set(1.73, 0.55, 0)
-  taillights.push(tailDrl)
-  carGroup.add(tailDrl)
-
-  // ---- 轮毂 ----
-  const wheelPositions = [
-    { x: -1.15, z: 0.78 },
-    { x: -1.15, z: -0.78 },
-    { x: 1.15, z: 0.78 },
-    { x: 1.15, z: -0.78 },
-  ]
-
-  wheelPositions.forEach((pos) => {
-    const wheel = createDetailedWheel()
-    wheel.position.set(pos.x, -0.18, pos.z)
-    wheels.push(wheel)
-    carGroup.add(wheel)
-  })
-
-  // 车底裙边（深色塑料件）
-  const skirtGeometry = new THREE.BoxGeometry(3.2, 0.1, 1.6)
-  const skirtMaterial = new THREE.MeshStandardMaterial({
-    color: 0x111111,
-    roughness: 0.9,
-  })
-  const skirt = new THREE.Mesh(skirtGeometry, skirtMaterial)
-  skirt.position.set(0, 0.15, 0)
-  carGroup.add(skirt)
-
-  scene.add(carGroup)
-}
-
-function createDetailedWheel() {
-  const wheelGroup = new THREE.Group()
-
-  // 轮胎
-  const tireGeometry = new THREE.TorusGeometry(0.3, 0.12, 16, 32)
-  const tireMaterial = new THREE.MeshStandardMaterial({
-    color: 0x1a1a1a,
-    roughness: 0.9,
-  })
-  const tire = new THREE.Mesh(tireGeometry, tireMaterial)
-  tire.rotation.y = Math.PI / 2
-  wheelGroup.add(tire)
-
-  // 轮毂（铝合金质感）
-  const rimGeometry = new THREE.CylinderGeometry(0.22, 0.22, 0.1, 20)
-  const rimMaterial = new THREE.MeshStandardMaterial({
-    color: 0xaaaaaa,
-    roughness: 0.15,
-    metalness: 0.95,
-  })
-  const rim = new THREE.Mesh(rimGeometry, rimMaterial)
-  rim.rotation.z = Math.PI / 2
-  wheelGroup.add(rim)
-
-  // 中心盖
-  const capGeometry = new THREE.CylinderGeometry(0.06, 0.06, 0.12, 16)
-  const capMaterial = new THREE.MeshStandardMaterial({
-    color: 0x333333,
-    roughness: 0.3,
-    metalness: 0.8,
-  })
-  const cap = new THREE.Mesh(capGeometry, capMaterial)
-  cap.rotation.z = Math.PI / 2
-  wheelGroup.add(cap)
-
-  // 5条幅
-  for (let i = 0; i < 5; i++) {
-    const spokeGeometry = new THREE.BoxGeometry(0.03, 0.08, 0.15)
-    const spoke = new THREE.Mesh(spokeGeometry, rimMaterial)
-    const angle = (i / 5) * Math.PI * 2
-    spoke.position.set(0.05, Math.cos(angle) * 0.1, Math.sin(angle) * 0.1)
-    spoke.rotation.x = angle
-    wheelGroup.add(spoke)
-  }
-
-  // 刹车盘（内侧，通风盘样式）
-  const diskGeometry = new THREE.CylinderGeometry(0.16, 0.16, 0.04, 20)
-  const diskMaterial = new THREE.MeshStandardMaterial({
-    color: 0x555555,
-    roughness: 0.6,
-    metalness: 0.3,
-  })
-  const disk = new THREE.Mesh(diskGeometry, diskMaterial)
-  disk.rotation.z = Math.PI / 2
-  disk.position.x = -0.04
-  wheelGroup.add(disk)
-
-  return wheelGroup
-}
-
-// ============================================================
-// 速度线特效（Speed Lines）
-// 使用自定义着色器在屏幕空间绘制速度线
-// ============================================================
-function createSpeedLines() {
-  const geometry = new THREE.PlaneGeometry(2, 2)
-  const material = new THREE.ShaderMaterial({
-    transparent: true,
-    depthWrite: false,
-    uniforms: {
-      uSpeed: { value: 0.0 },
-      uOpacity: { value: 0.0 },
-      uTime: { value: 0.0 },
-    },
-    vertexShader: `
-      varying vec2 vUv;
-      void main() {
-        vUv = uv;
-        gl_Position = vec4(position, 1.0);
-      }
-    `,
-    fragmentShader: `
-      uniform float uSpeed;
-      uniform float uOpacity;
-      uniform float uTime;
-      varying vec2 vUv;
-
-      float random(vec2 st) {
-        return fract(sin(dot(st.xy, vec2(12.9898, 78.233))) * 43758.5453123);
-      }
-
-      void main() {
-        if (uSpeed < 0.01) {
-          gl_FragColor = vec4(0.0);
-          return;
+      onUpdate: () => {
+        lightColor.copy(blackColor).lerp(whiteColor, params.lightAlpha)
+        if (this.startRoomLightMat) {
+          this.startRoomLightMat.emissive.set(lightColor)
+          this.startRoomLightMat.emissiveIntensity = params.lightIntensity
         }
-
-        vec2 uv = vUv;
-
-        // 中心点（汽车消失点，通常在画面中心偏下）
-        vec2 center = vec2(0.5, 0.35);
-
-        // 计算从中心到当前像素的方向
-        vec2 dir = uv - center;
-        float dist = length(dir);
-
-        // 速度线：沿径向方向拉长
-        float angle = atan(dir.y, dir.x);
-        float speedLine = sin(angle * 30.0 + uTime * 10.0) * 0.5 + 0.5;
-
-        // 线条粗细（远处细，近处粗）
-        float thickness = 0.002 * (1.0 - dist * 0.5);
-
-        // 径向渐变（中心亮，边缘暗）
-        float radialFade = smoothstep(0.8, 0.0, dist);
-
-        // 随机性
-        float noise = random(vec2(angle * 0.1, floor(uTime * 5.0)));
-
-        // 最终线条强度
-        float line = speedLine * radialFade * noise * uSpeed;
-        line = smoothstep(thickness, thickness + 0.01, line);
-
-        // 颜色（白色带点青色）
-        vec3 color = mix(vec3(1.0, 1.0, 1.0), vec3(0.0, 0.96, 1.0), dist * 0.5);
-
-        gl_FragColor = vec4(color, line * uOpacity);
-      }
-    `,
-  })
-
-  speedLinesMesh = new THREE.Mesh(geometry, material)
-  speedLinesMesh.renderOrder = 999
-  speedLinesMesh.frustumCulled = false
-
-  // 添加到场景但不使用普通渲染路径
-  scene.add(speedLinesMesh)
-}
-
-// ============================================================
-// 交互
-// ============================================================
-const raycaster = new THREE.Raycaster()
-const mouse = new THREE.Vector2()
-
-function setupInteraction() {
-  window.addEventListener('click', onMouseClick)
-}
-
-function onMouseClick(event) {
-  if (isLoading) return
-
-  mouse.x = (event.clientX / window.innerWidth) * 2 - 1
-  mouse.y = -(event.clientY / window.innerHeight) * 2 + 1
-
-  raycaster.setFromCamera(mouse, camera)
-  const intersects = raycaster.intersectObjects(carGroup.children, true)
-
-  if (intersects.length > 0) {
-    triggerRush()
-  }
-}
-
-// ============================================================
-// 加速模式
-// ============================================================
-function triggerRush() {
-  if (isRushing) {
-    cancelRush()
-    return
-  }
-
-  isRushing = true
-
-  // 1. 加速线条出现
-  gsap.to(speedLinesMesh.material.uniforms.uOpacity, {
-    value: 0.8,
-    duration: 1,
-    ease: 'power2.out',
-  })
-
-  // 2. 速度值上升
-  gsap.to({ speed: 0 }, {
-    speed: 10,
-    duration: 4,
-    ease: 'power2.out',
-    onUpdate: function () {
-      speed = this.targets()[0].speed
-      speedLinesMesh.material.uniforms.uSpeed.value = speed / 10
-    },
-  })
-
-  // 3. FOV 增大（模拟加速感）
-  gsap.to(camera, {
-    fov: 45,
-    duration: 3,
-    ease: 'power2.out',
-    onUpdate: () => {
-      camera.updateProjectionMatrix()
-    },
-  })
-
-  // 4. Bloom 增强
-  gsap.to(bloomPass, {
-    strength: 1.8,
-    duration: 3,
-    ease: 'power2.out',
-  })
-
-  // 5. 地面变暗
-  if (floor.material) {
-    gsap.to(floor.material, {
-      roughness: 0.8,
-      duration: 3,
+        if (this.startRoomFloorMat) {
+          this.startRoomFloorMat.color.set(lightColor)
+          this.startRoomFloorMat.envMapIntensity = params.reflectIntensity * 0.01
+        }
+      },
     })
+
+    // ========== 环境贴图 ==========
+    const t3 = gsap.timeline()
+    this.tweens.push(t3)
+    t3.to(params, {
+      envIntensity: 1,
+      duration: 4,
+      delay: 0.5,
+      ease: 'power2.inOut',
+      onUpdate: () => {
+        this.dynamicEnv.setIntensity(params.envIntensity)
+      },
+    }).to(params, {
+      envWeight: 1,
+      duration: 4,
+      ease: 'power2.inOut',
+      onUpdate: () => {
+        this.dynamicEnv.setWeight(params.envWeight)
+      },
+    }, '-=2.5')
   }
 
-  // 6. 灯带强度降低
-  emissiveMaterials.forEach((mat) => {
-    gsap.to(mat, {
-      emissiveIntensity: mat.emissiveIntensity * 0.3,
+  /** 加速模式 */
+  rush() {
+    if (params.isRushing) {
+      this.rushDone()
+      return
+    }
+
+    params.disableInteract = true
+    params.isRushing = true
+    this.clearAllTweens()
+
+    // ========== 速度上升 ==========
+    const t4 = gsap.timeline()
+    this.tweens.push(t4)
+    t4.to(params, {
+      speed: 4,
       duration: 2,
       ease: 'power2.out',
+      onComplete: () => {
+        params.isRushing = true
+        params.disableInteract = false
+      },
+    }).to(params, {
+      speed: 10,
+      duration: 4,
+      ease: 'power2.out',
     })
-  })
 
-  // 7. 相机抖动开始
-  cameraShakeOffset = { x: 0, y: 0 }
-}
+    // ========== 灯带渐暗 ==========
+    const t5 = gsap.timeline()
+    this.tweens.push(t5)
+    t5.to(params, {
+      lightOpacity: 0,
+      duration: 1,
+      ease: 'power2.out',
+      onUpdate: () => {
+        if (this.startRoomLightMat) {
+          this.startRoomLightMat.opacity = params.lightOpacity
+        }
+      },
+    })
 
-function cancelRush() {
-  if (!isRushing) return
-  isRushing = false
+    // ========== 地面变暗 ==========
+    const t6 = gsap.timeline()
+    this.tweens.push(t6)
+    t6.to(params, {
+      floorLerpColor: 1,
+      duration: 4,
+      ease: 'power2.out',
+      onUpdate: () => {
+        if (this.startRoomFloorMat) {
+          const c = new THREE.Color(0xffffff).lerp(new THREE.Color(0x000000), params.floorLerpColor)
+          this.startRoomFloorMat.color.set(c)
+        }
+      },
+    })
 
-  // 取消所有动画
-  gsap.killTweensOf(speedLinesMesh.material.uniforms.uOpacity)
-  gsap.killTweensOf(camera)
-  gsap.killTweensOf(bloomPass)
-  gsap.killTweensOf(floor?.material)
+    // ========== 环境贴图变暗 ==========
+    const t7 = gsap.timeline()
+    this.tweens.push(t7)
+    t7.to(params, {
+      envIntensity: 0.01,
+      duration: 1,
+      ease: 'power2.out',
+      onUpdate: () => {
+        this.dynamicEnv.setIntensity(params.envIntensity)
+      },
+    })
 
-  // 恢复
-  gsap.to(speedLinesMesh.material.uniforms.uOpacity, {
-    value: 0,
-    duration: 1,
-  })
-  gsap.to(speedLinesMesh.material.uniforms.uSpeed, {
-    value: 0,
-    duration: 1,
-  })
-  gsap.to(camera, {
-    fov: 33.4,
-    duration: 2,
-    ease: 'power2.out',
-    onUpdate: () => {
-      camera.updateProjectionMatrix()
-    },
-  })
-  gsap.to(bloomPass, {
-    strength: 0.8,
-    duration: 2,
-  })
-  if (floor?.material) {
-    gsap.to(floor.material, {
-      roughness: 0.05,
+    // ========== FOV + 加速特效 ==========
+    const t8 = gsap.timeline()
+    this.tweens.push(t8)
+    t8.to(params, {
+      speedUpOpacity: 1,
+      cameraFov: 36,
       duration: 2,
+      ease: 'power2.out',
+      onUpdate: () => {
+        if (this.speedupModel?.scene) {
+          this.speedupModel.scene.visible = params.speedUpOpacity > 0
+        }
+      },
     })
+
+    // ========== Bloom + 抖动 ==========
+    setTimeout(() => {
+      this.scene.environment = this.dynamicEnv.envmap
+
+      const t9 = gsap.timeline()
+      this.tweens.push(t9)
+      t9.to(params, {
+        carBodyEnvIntensity: 10,
+        cameraShakeIntensity: 1,
+        bloomLuminanceSmoothing: 0.4,
+        bloomIntensity: 2,
+        duration: 4,
+        ease: 'power2.out',
+        onUpdate: () => {
+          if (this.carBodyMat) this.carBodyMat.envMapIntensity = params.carBodyEnvIntensity
+          if (this.cameraShake) this.cameraShake.setIntensity(params.cameraShakeIntensity)
+          this.postprocessing.setLuminanceSmoothing(params.bloomLuminanceSmoothing)
+          this.postprocessing.setIntensity(params.bloomIntensity)
+        },
+      })
+    }, 1000)
   }
-  emissiveMaterials.forEach((mat) => {
-    gsap.to(mat, {
-      emissiveIntensity: mat.userData?.originalEmissiveIntensity || mat.emissiveIntensity,
+
+  /** 取消加速模式 */
+  rushDone() {
+    if (!params.isRushing) return
+    params.disableInteract = true
+    params.isRushing = false
+    this.clearAllTweens()
+
+    const t4 = gsap.timeline()
+    this.tweens.push(t4)
+    t4.to(params, {
+      speed: 0,
       duration: 2,
+      ease: 'power2.out',
+      onComplete: () => { params.disableInteract = false },
     })
-  })
-}
 
-// ============================================================
-// 事件
-// ============================================================
-function onResize() {
-  camera.aspect = window.innerWidth / window.innerHeight
-  camera.updateProjectionMatrix()
-  renderer.setSize(window.innerWidth, window.innerHeight)
-  composer.setSize(window.innerWidth, window.innerHeight)
-}
-
-function onMouseMove(event) {
-  mouseX = (event.clientX / window.innerWidth) * 2 - 1
-  mouseY = -(event.clientY / window.innerHeight) * 2 + 1
-}
-
-// ============================================================
-// 动画循环
-// ============================================================
-const clock = new THREE.Clock()
-
-function animate() {
-  requestAnimationFrame(animate)
-
-  const elapsed = clock.getElapsedTime()
-  const delta = clock.getDelta()
-
-  // 加载时不渲染复杂场景
-  if (isLoading) {
-    renderer.render(scene, camera)
-    return
-  }
-
-  // ---- 基础动画 ----
-  // 汽车轻微浮动
-  if (carGroup) {
-    carGroup.position.y = Math.sin(elapsed * 0.8) * 0.02
-    carGroup.rotation.y = currentCarRotationY + Math.sin(elapsed * 0.3) * 0.02
-  }
-
-  // 车轮自转（加速模式下更快）
-  const wheelSpeed = isRushing ? speed * 0.1 : 0.02
-  wheels.forEach((wheel) => {
-    wheel.children.forEach((child) => {
-      if (child.geometry?.type === 'TorusGeometry') {
-        child.rotation.x += wheelSpeed
-      }
+    const t5 = gsap.timeline()
+    this.tweens.push(t5)
+    t5.to(params, {
+      lightOpacity: 1,
+      duration: 1,
+      ease: 'power2.out',
+      onUpdate: () => {
+        if (this.startRoomLightMat) this.startRoomLightMat.opacity = params.lightOpacity
+      },
     })
-  })
 
-  // 呼吸灯效果
-  const breathe = Math.sin(elapsed * 2) * 0.5 + 0.5
-  headlights.forEach((light) => {
-    if (light.material?.emissive) {
-      light.material.emissiveIntensity = 1.5 + breathe * 1.0
+    const t6 = gsap.timeline()
+    this.tweens.push(t6)
+    t6.to(params, {
+      floorLerpColor: 0,
+      duration: 4,
+      ease: 'power2.out',
+      onUpdate: () => {
+        if (this.startRoomFloorMat) {
+          const c = new THREE.Color(0xffffff).lerp(new THREE.Color(0x000000), 1 - params.floorLerpColor)
+          this.startRoomFloorMat.color.set(c)
+        }
+      },
+    })
+
+    const t7 = gsap.timeline()
+    this.tweens.push(t7)
+    t7.to(params, {
+      envIntensity: 1,
+      duration: 1,
+      ease: 'power2.out',
+      onUpdate: () => { this.dynamicEnv.setIntensity(params.envIntensity) },
+    })
+
+    const t8 = gsap.timeline()
+    this.tweens.push(t8)
+    t8.to(params, {
+      speedUpOpacity: 0,
+      cameraFov: 33.4,
+      duration: 2,
+      ease: 'power2.out',
+      onUpdate: () => {
+        if (this.speedupModel?.scene) this.speedupModel.scene.visible = params.speedUpOpacity > 0
+      },
+    })
+
+    const t9 = gsap.timeline()
+    this.tweens.push(t9)
+    t9.to(params, {
+      carBodyEnvIntensity: 1,
+      cameraShakeIntensity: 0,
+      bloomLuminanceSmoothing: 1.6,
+      bloomIntensity: 1,
+      duration: 4,
+      ease: 'power2.out',
+      onUpdate: () => {
+        if (this.carBodyMat) this.carBodyMat.envMapIntensity = params.carBodyEnvIntensity
+        if (this.cameraShake) this.cameraShake.setIntensity(params.cameraShakeIntensity)
+        this.postprocessing.setLuminanceSmoothing(params.bloomLuminanceSmoothing)
+        this.postprocessing.setIntensity(params.bloomIntensity)
+      },
+    })
+
+    this.scene.environment = this.dynamicEnv.envmap
+  }
+
+  /** 清除所有时间线 */
+  clearAllTweens() {
+    this.tweens.forEach((t) => t.kill())
+    this.tweens = []
+  }
+
+  /** 窗口大小变化 */
+  onResize() {
+    this.width = this.container.clientWidth
+    this.height = this.container.clientHeight
+    this.camera.aspect = this.width / this.height
+    this.camera.updateProjectionMatrix()
+    this.renderer.setSize(this.width, this.height)
+    this.postprocessing.composer.setSize(this.width, this.height)
+  }
+
+  /** 渲染循环 */
+  animate() {
+    requestAnimationFrame(() => this.animate())
+
+    // 相机跟随
+    if (params.isCameraMoving) {
+      this.camera.position.set(params.cameraPos.x, params.cameraPos.y, params.cameraPos.z)
+      this.camera.lookAt(0, 0.8, 0)
     }
-  })
-  taillights.forEach((light) => {
-    if (light.material?.emissive) {
-      light.material.emissiveIntensity = 1.5 + breathe * 0.5
+
+    // FOV 平滑过渡
+    if (Math.abs(this.camera.fov - params.cameraFov) > 0.01) {
+      this.camera.fov += (params.cameraFov - this.camera.fov) * 0.05
+      this.camera.updateProjectionMatrix()
     }
-  })
 
-  // ---- 加速模式特效 ----
-  if (speedLinesMesh) {
-    speedLinesMesh.material.uniforms.uTime.value = elapsed
+    // 更新组件
+    if (this.dynamicEnv) this.dynamicEnv.update()
+    if (this.cameraShake) this.cameraShake.update()
+
+    // 渲染
+    this.postprocessing.composer.render()
   }
-
-  // 相机抖动
-  if (isRushing && cameraShakeOffset) {
-    const shakeIntensity = 0.05 * Math.min(speed / 10, 1)
-    cameraShakeOffset.x = (Math.random() - 0.5) * shakeIntensity
-    cameraShakeOffset.y = (Math.random() - 0.5) * shakeIntensity
-    camera.position.x += cameraShakeOffset.x
-    camera.position.y += cameraShakeOffset.y
-  }
-
-  // ---- 鼠标跟随相机 ----
-  if (!isRushing) {
-    const targetRotY = mouseX * 0.15
-    currentCarRotationY += (targetRotY - currentCarRotationY) * 0.02
-  }
-
-  composer.render()
 }
 
-// ============================================================
+// =============================================================
 // 启动
-// ============================================================
-init()
+// =============================================================
+new App()
 
-console.log('✅ 汽车展示网站（增强版）已启动')
+console.log('✅ 小米 SU7 网站特效已启动')
 console.log('📌 操作说明：')
 console.log('   - 等待 LOADING 动画完成（约3秒）')
-console.log('   - 进场动画自动播放（相机推进 + 灯光亮起）')
-console.log('   - 点击汽车：触发「加速模式」（Speed Lines + 抖动 + FOV变化）')
+console.log('   - 进场动画自动播放（相机推进 + 灯光渐亮）')
+console.log('   - 点击汽车：触发「加速模式」')
 console.log('   - 再次点击：取消加速模式')
-console.log('   - 鼠标移动：轻微跟随视角')
+console.log('   - 背景音乐自动播放')

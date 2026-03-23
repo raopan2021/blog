@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>小米 SU7 展示 - 3D WebGL</title>
+    <title>小米 SU7 网站特效 - 3D WebGL</title>
     <style>
       * {
         margin: 0;
@@ -13,34 +13,29 @@
 
       body {
         overflow: hidden;
-        background: #0a0a0a;
+        background: #000;
         font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
         color: white;
       }
 
-      #canvas {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: 1;
+      #sketch {
+        width: 100vw;
+        height: 100vh;
       }
 
-      /* ========================================
+      /* ==========================================
          加载屏幕
-         ======================================== */
+         页面打开时显示的过渡动画
+         ========================================== */
       .loader-screen {
         position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: #0a0a0a;
+        inset: 0;
+        background: #000;
         z-index: 1000;
         display: flex;
         align-items: center;
         justify-content: center;
+        /* 淡出动画：1.5秒后透明度变为0并隐藏 */
         transition: opacity 1.5s ease, visibility 1.5s ease;
       }
 
@@ -54,6 +49,7 @@
         text-align: center;
       }
 
+      /* LOADING 文字动画 */
       .loading {
         display: flex;
         gap: 8px;
@@ -65,14 +61,16 @@
 
       .loading span {
         display: inline-block;
+        /* CSS 自定义属性，每个字母有不同的动画延迟 */
         animation: loadingPulse 1.5s ease-in-out infinite;
-        animation-delay: calc(var(--i) * 0.1s);
+        animation-delay: calc(var(--i) * 0.15s);
       }
 
+      /* 字母跳动关键帧 */
       @keyframes loadingPulse {
         0%, 100% {
           opacity: 0.3;
-          transform: scale(0.95);
+          transform: scale(0.9);
         }
         50% {
           opacity: 1;
@@ -83,137 +81,8 @@
       .loading-subtitle {
         margin-top: 30px;
         font-size: 12px;
-        letter-spacing: 4px;
-        color: rgba(255, 255, 255, 0.3);
-      }
-
-      /* ========================================
-         顶部标题
-         ======================================== */
-      .top-title {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        z-index: 10;
-        padding: 30px 60px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        background: linear-gradient(to bottom, rgba(0,0,0,0.6), transparent);
-        pointer-events: none;
-      }
-
-      .top-title .logo {
-        font-size: 18px;
-        font-weight: 300;
         letter-spacing: 6px;
-        color: rgba(255, 255, 255, 0.8);
-      }
-
-      .top-title .hint {
-        font-size: 13px;
-        color: rgba(255, 255, 255, 0.35);
-        letter-spacing: 1px;
-      }
-
-      /* ========================================
-         右下角信息
-         ======================================== */
-      .car-info {
-        position: fixed;
-        bottom: 40px;
-        right: 60px;
-        z-index: 10;
-        text-align: right;
-        pointer-events: none;
-        opacity: 0;
-        transform: translateY(20px);
-        transition: opacity 1s ease 0.5s, transform 1s ease 0.5s;
-      }
-
-      .car-info.visible {
-        opacity: 1;
-        transform: translateY(0);
-      }
-
-      .car-info h2 {
-        font-size: 42px;
-        font-weight: 200;
-        letter-spacing: 4px;
-        margin-bottom: 8px;
-        color: white;
-      }
-
-      .car-info p {
-        font-size: 14px;
-        color: rgba(255, 255, 255, 0.4);
-        letter-spacing: 2px;
-      }
-
-      .car-info .specs {
-        margin-top: 20px;
-        display: flex;
-        gap: 30px;
-        justify-content: flex-end;
-      }
-
-      .car-info .spec {
-        text-align: center;
-      }
-
-      .car-info .spec-value {
-        font-size: 24px;
-        font-weight: 200;
-        color: #00f5ff;
-      }
-
-      .car-info .spec-label {
-        font-size: 11px;
-        color: rgba(255, 255, 255, 0.3);
-        margin-top: 4px;
-        letter-spacing: 1px;
-      }
-
-      /* ========================================
-         加速模式提示
-         ======================================== */
-      .rush-hint {
-        position: fixed;
-        bottom: 40px;
-        left: 60px;
-        z-index: 10;
-        pointer-events: none;
-        opacity: 0;
-        transition: opacity 0.5s ease;
-      }
-
-      .rush-hint.visible {
-        opacity: 1;
-      }
-
-      .rush-hint .text {
-        font-size: 13px;
-        color: rgba(255, 255, 255, 0.3);
-        letter-spacing: 2px;
-      }
-
-      .rush-hint .text.active {
-        color: #00f5ff;
-      }
-
-      /* ========================================
-         底部进度条
-         ======================================== */
-      .progress-bar {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        height: 2px;
-        background: linear-gradient(90deg, #00f5ff, #ff6b6b);
-        z-index: 10;
-        width: 0%;
-        transition: width 0.3s ease;
+        color: rgba(255, 255, 255, 0.25);
       }
     </style>
   </head>
@@ -222,6 +91,7 @@
     <div class="loader-screen" id="loader-screen">
       <div class="loading-container">
         <div class="loading">
+          <!-- 8个字母，每个有 --i 自定义属性控制动画延迟 -->
           <span style="--i: 0">L</span>
           <span style="--i: 1">O</span>
           <span style="--i: 2">A</span>
@@ -229,68 +99,15 @@
           <span style="--i: 4">I</span>
           <span style="--i: 5">N</span>
           <span style="--i: 6">G</span>
+          <span style="--i: 7">.</span>
         </div>
         <div class="loading-subtitle">INITIALIZING EXPERIENCE</div>
       </div>
     </div>
 
-    <!-- 顶部标题 -->
-    <div class="top-title">
-      <div class="logo">SU7 SHOWCASE</div>
-      <div class="hint">点击汽车触发加速模式</div>
-    </div>
-
-    <!-- 3D Canvas -->
-    <canvas id="canvas"></canvas>
-
-    <!-- 右下角车型信息 -->
-    <div class="car-info" id="car-info">
-      <h2>小米 SU7</h2>
-      <p>智能电动汽车</p>
-      <div class="specs">
-        <div class="spec">
-          <div class="spec-value">2.78s</div>
-          <div class="spec-label">零百加速</div>
-        </div>
-        <div class="spec">
-          <div class="spec-value">800km</div>
-          <div class="spec-label">续航里程</div>
-        </div>
-        <div class="spec">
-          <div class="spec-value">673hp</div>
-          <div class="spec-label">最大马力</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- 左下角提示 -->
-    <div class="rush-hint" id="rush-hint">
-      <div class="text" id="rush-text">⚡ 点击汽车触发加速</div>
-    </div>
-
-    <!-- 进度条 -->
-    <div class="progress-bar" id="progress-bar"></div>
+    <!-- Three.js 渲染目标 -->
+    <div id="sketch"></div>
 
     <script type="module" src="./src/main.js"></script>
-    <script>
-      // 加载完成后显示汽车信息
-      window.addEventListener('load', () => {
-        setTimeout(() => {
-          document.getElementById('car-info').classList.add('visible')
-          document.getElementById('rush-hint').classList.add('visible')
-        }, 4500)
-      })
-
-      // 更新加速提示文字
-      window.addEventListener('rush-start', () => {
-        document.getElementById('rush-text').textContent = '⚡ 加速中... 点击取消'
-        document.getElementById('rush-text').classList.add('active')
-      })
-
-      window.addEventListener('rush-end', () => {
-        document.getElementById('rush-text').textContent = '⚡ 点击汽车触发加速'
-        document.getElementById('rush-text').classList.remove('active')
-      })
-    </script>
   </body>
 </html>
