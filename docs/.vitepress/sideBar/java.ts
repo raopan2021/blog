@@ -15,6 +15,15 @@ export function JavaSidebar(): DefaultTheme.SidebarItem[] {
 			],
 		},
 		{
+			text: 'Java 核心',
+			collapsed: true,
+			base: '/java/基础/',
+			items: [
+				{ text: 'Java 并发编程', link: 'Java并发编程' },
+				{ text: 'Java 8 新特性', link: 'Java8新特性' },
+			],
+		},
+		{
 			text: 'Spring 框架',
 			collapsed: true,
 			base: '/java/基础/',
