@@ -1,6 +1,31 @@
-# Docker
+# Docker 容器化
 
-## 安装docker
+> Docker 是一个开源的容器化平台，用于打包、分发和运行应用程序
+
+## 📚 目录导航
+
+- [常见命令](./常见命令) - Docker 基础命令速查
+- [命令别名](./命令别名) - 提高效率的命令别名配置
+- [镜像管理](./镜像) - 镜像的构建、拉取、推送
+- [部署 Nginx](./nginx) - 使用 Docker 部署 Web 服务
+- [部署 MySQL](./mysql) - 使用 Docker 运行 MySQL 数据库
+- [部署 MongoDB](./mongo) - 使用 Docker 运行 MongoDB
+- [部署 Redis](./redis) - 使用 Docker 运行 Redis
+- [Windows 安装 Docker](./windesk) - Windows 环境下安装 Docker Desktop
+
+## 核心概念
+
+- **镜像（Image）**：应用程序的只读模板
+- **容器（Container）**：镜像的运行实例
+- **仓库（Registry）**：存储和分发镜像的服务（如 Docker Hub）
+
+## Docker 特点
+
+- **轻量级**：共享宿主机内核，容器启动快
+- **可移植**：一次构建，处处运行
+- **隔离性**：应用间相互隔离
+- **版本控制**：可追踪镜像版本
+- **生态丰富**：官方和社区提供大量镜像
 
 [参考](https://b11et3un53m.feishu.cn/wiki/Rfocw7ctXij2RBkShcucLZbrn2d)
 
