@@ -4,9 +4,10 @@ export function AndroidSidebar(): DefaultTheme.SidebarItem[] {
 	return [
 		{
 			text: 'Android 开发笔记',
+			link: 'index',
 			base: '/android/',
 			items: [
-				{ text: '📖 学习导航', link: 'index' },
+				{ text: '首页', link: 'index' },
 				{
 					text: '第一阶段：入门',
 					collapsed: false,

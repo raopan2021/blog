@@ -4,8 +4,10 @@ export function NetworkSidebar(): DefaultTheme.SidebarItem[] {
 	return [
 		{
 			text: '计算机网络',
+			link: 'index',
 			base: '/network/',
 			items: [
+				{ text: '首页', link: 'index' },
 				{ text: '计算机网络概述', link: '计算机网络' },
 				{ text: 'TCP/IP 分层管理', link: 'TCPIP分层管理' },
 				{ text: 'TCP 与 UDP', link: 'TCP与UDP' },
