@@ -1,0 +1,297 @@
+# 项目实战一：3D 卡片展示
+
+> 一个交互式的 3D 卡片展示场景，支持鼠标悬浮倾斜、点击翻转动画
+
+## 效果演示
+
+::: demo-wrapper
+<div style="text-align:center; padding: 20px; background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); border-radius: 8px;">
+  <p style="color: rgba(255,255,255,0.7); margin-bottom: 10px;">👆 点击卡片翻转 &nbsp;|&nbsp; 🖱️ 悬浮鼠标控制角度</p>
+  <div style="color: #00f5ff; font-size: 14px;">💡 查看源码头部的操作说明</div>
+</div>
+:::
+
+## 技术栈
+
+| 技术 | 用途 |
+|------|------|
+| Three.js | 3D 渲染引擎 |
+| OrbitControls | 轨道控制器（鼠标拖拽） |
+| Canvas API | 程序化生成纹理 |
+| Vite | 项目构建工具 |
+
+## 核心原理
+
+### 1. 场景与相机
+
+```js
+// 透视相机（近大远小）
+const camera = new THREE.PerspectiveCamera(
+  45,                                    // FOV
+  window.innerWidth / window.innerHeight,  // 宽高比
+  0.1,                                   // 近裁切面
+  1000                                   // 远裁切面
+)
+camera.position.set(0, 0, 8)
+
+// 渲染器
+const renderer = new THREE.WebGLRenderer({
+  antialias: true,      // 抗锯齿
+  alpha: true,          // 透明背景
+})
+renderer.shadowMap.enabled = true       // 开启阴影
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2)) // 高清屏适配
+```
+
+### 2. 光照系统
+
+Three.js 的光照决定了物体呈现出的明暗、颜色和阴影效果。本项目使用了三种光源的组合：
+
+```js
+// ① 环境光（基础照明）
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.4)
+scene.add(ambientLight)
+
+// ② 主方向光（制造主要阴影）
+const mainLight = new THREE.DirectionalLight(0xffffff, 1.2)
+mainLight.position.set(5, 5, 5)
+mainLight.castShadow = true
+scene.add(mainLight)
+
+// ③ 点光源（边缘高光 + 动态光影变化）
+const pointLight = new THREE.PointLight(0x00ffff, 0.5, 20)
+pointLight.position.set(0, 3, 3)
+scene.add(pointLight)
+```
+
+**为什么要多种光？**
+- 环境光：消除完全黑暗的死角
+- 方向光：制造明确的光源方向和阴影
+- 点光源：模拟真实世界中灯泡的散射效果
+
+### 3. 创建 3D 卡片（BoxGeometry + Canvas 纹理）
+
+每张卡片使用 `BoxGeometry`（薄盒子）作为几何体，正面和背面分别使用不同的材质：
+
+```js
+// 卡片几何体（宽2，高1.25，厚0.1）
+const geometry = new THREE.BoxGeometry(2, 1.25, 0.1)
+
+// 正面材质（带程序化生成的纹理）
+const frontMaterial = new THREE.MeshStandardMaterial({
+  map: frontTexture,   // Canvas 生成的纹理
+  roughness: 0.3,      // 表面粗糙度
+  metalness: 0.1,     // 金属度
+})
+
+// 背面材质
+const backMaterial = new THREE.MeshStandardMaterial({
+  map: backTexture,
+  roughness: 0.5,
+  metalness: 0.2,
+})
+
+// 组合材质（6个面）
+// 顺序：[右, 左, 上, 下, 前, 后]
+const materials = [
+  sideMaterial, sideMaterial,
+  sideMaterial, sideMaterial,
+  frontMaterial, backMaterial
+]
+
+const mesh = new THREE.Mesh(geometry, materials)
+scene.add(mesh)
+```
+
+### 4. Canvas 纹理生成
+
+不使用外部图片，使用 Canvas API 程序化生成纹理背景：
+
+```js
+function createCardFrontTexture(title, subtitle, gradientStart, gradientEnd, icon) {
+  const canvas = document.createElement('canvas')
+  canvas.width = 512
+  canvas.height = 320
+  const ctx = canvas.getContext('2d')
+
+  // 渐变背景
+  const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height)
+  gradient.addColorStop(0, gradientStart)
+  gradient.addColorStop(1, gradientEnd)
+
+  // 圆角矩形
+  ctx.fillStyle = gradient
+  roundRect(ctx, 0, 0, canvas.width, canvas.height, 20)
+  ctx.fill()
+
+  // 绘制图标、标题、副标题...
+  ctx.font = '80px serif'
+  ctx.textAlign = 'center'
+  ctx.fillText(icon, canvas.width / 2, 120)
+
+  ctx.font = 'bold 36px sans-serif'
+  ctx.fillStyle = 'white'
+  ctx.fillText(title, canvas.width / 2, 200)
+
+  // 转换为 Three.js 纹理
+  return new THREE.CanvasTexture(canvas)
+}
+```
+
+### 5. 鼠标悬浮效果（射线检测 + 倾斜）
+
+核心思路：鼠标移动时发射一条射线，与卡片相交检测：
+
+```js
+const raycaster = new THREE.Raycaster()
+const mouse = new THREE.Vector2()
+
+window.addEventListener('mousemove', (event) => {
+  // 归一化鼠标坐标 (-1 到 1)
+  mouse.x = (event.clientX / window.innerWidth) * 2 - 1
+  mouse.y = -(event.clientY / window.innerHeight) * 2 + 1
+
+  // 射线检测
+  raycaster.setFromCamera(mouse, camera)
+  const intersects = raycaster.intersectObjects(cards)
+
+  hoveredCard = intersects.length > 0 ? intersects[0].object : null
+})
+```
+
+悬浮时卡片倾斜：
+
+```js
+if (hoveredCard === card) {
+  // X 方向：根据鼠标 Y 倾斜
+  card.rotation.x = lerp(card.rotation.x, mouse.y * 0.3, 0.05)
+  // Y 方向：加上翻转角度 + 鼠标 X 偏移
+  card.rotation.y = card.userData.currentRotationY + mouse.x * 0.3
+  // 轻微上浮
+  card.position.y = lerp(card.position.y, card.userData.basePositionY + 0.2, 0.1)
+}
+```
+
+### 6. 点击翻转动画（插值）
+
+翻转不是一瞬间完成的，而是通过 Lerp（线性插值）平滑过渡：
+
+```js
+function flipCard(card) {
+  // 切换目标状态
+  card.userData.isFlipped = !card.userData.isFlipped
+  // 目标角度：翻转 = 180° = Math.PI
+  card.userData.targetRotationY = card.userData.isFlipped ? Math.PI : 0
+}
+
+// 在动画循环中逐步逼近目标角度
+function lerp(start, end, t) {
+  return start + (end - start) * t
+}
+
+// 每帧调用
+card.userData.currentRotationY = lerp(
+  card.userData.currentRotationY,
+  card.userData.targetRotationY,
+  0.1  // 系数越小，翻转越慢
+)
+card.rotation.y = card.userData.currentRotationY
+```
+
+**Lerp 插值原理**：
+
+```
+t = 0.1 时:
+第1帧: current = 0 + (π - 0) * 0.1 = 0.314
+第2帧: current = 0.314 + (π - 0.314) * 0.1 = 0.594
+第3帧: current = 0.594 + (π - 0.594) * 0.1 = 0.845
+...
+逐渐逼近 π (约等于3.14159)
+```
+
+### 7. 动画循环
+
+```js
+const clock = new THREE.Clock()
+
+function animate() {
+  requestAnimationFrame(animate)  // 60fps 循环
+
+  const elapsed = clock.getElapsedTime()  // 总运行时间
+
+  // 更新每张卡片的动画
+  cards.forEach((card, index) => {
+    // 翻转插值
+    card.rotation.y = lerp(card.rotation.y, card.userData.targetRotationY, 0.1)
+
+    // 悬浮倾斜 + 上浮
+    // ...
+
+    // 轻微上下浮动（正弦波）
+    card.position.y += Math.sin(elapsed * 2 + index) * 0.001
+  })
+
+  // 点光源绕 Y 轴旋转（制造光影变化）
+  pointLight.position.x = Math.sin(elapsed * 0.5) * 3
+  pointLight.position.z = Math.cos(elapsed * 0.5) * 3
+
+  controls.update()  // 更新轨道控制器
+  renderer.render(scene, camera)  // 渲染
+}
+
+animate()
+```
+
+## 项目结构
+
+```
+3d-card-showcase/
+├── index.html          # 入口 HTML
+├── package.json        # 依赖配置
+├── vite.config.js      # Vite 构建配置
+├── public/             # 公共资源（空）
+└── src/
+    └── main.js         # 全部逻辑（场景、光照、卡片、交互、动画）
+```
+
+## 运行项目
+
+```bash
+# 安装依赖
+pnpm install
+
+# 开发模式
+pnpm dev
+
+# 构建生产版本
+pnpm build
+```
+
+## 扩展练习
+
+### 练习 1：添加拖拽排序
+使用 `@use-gesture` 或自定义实现，让卡片可以被拖拽重新排序。
+
+### 练习 2：卡片增加更多状态
+在「正面 → 翻转 → 正面」之外，增加一个「展开态」（卡片放大到屏幕中央）。
+
+### 练习 3：响应式适配
+当前卡片数量固定为 6 个（3×2 网格）。尝试根据屏幕宽度动态调整列数。
+
+```js
+function updateLayout() {
+  const cols = window.innerWidth > 1200 ? 4 : window.innerWidth > 800 ? 3 : 2
+  // 重新计算每张卡片的位置
+}
+```
+
+### 练习 4：3D 卡片画廊
+在卡片中加载真实图片纹理，并添加图片切换的过渡动画。
+
+## 下载项目
+
+<a href="/blog/three-projects/3d-card-showcase.zip" download>📦 下载 3D 卡片展示项目源码</a>
+
+---
+
+[[返回 Three.js 首页|../index]]
