@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <!-- Three.js style 3D cube -->
+  <polygon points="64,15 110,40 110,88 64,113 18,88 18,40" fill="none" stroke="#1a73e8" stroke-width="4"/>
+  <polygon points="64,15 110,40 64,65 18,40" fill="#1a73e833"/>
+  <polygon points="64,65 110,40 110,88 64,113" fill="#1a73e855"/>
+  <polygon points="64,65 18,40 18,88 64,113" fill="#1a73e822"/>
+  <circle cx="64" cy="65" r="6" fill="#ea4335"/>
+</svg>

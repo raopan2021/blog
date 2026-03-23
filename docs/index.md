@@ -20,29 +20,54 @@ hero:
       alt: VitePress
 
 features:
-  - icon: 
+  # ===== 前端 =====
+  - icon:
       src: /mainView/frontend.svg
     title: 前端配置
     details: 新PC环境相关配置、收藏
     link: /base/
 
-  - icon: 
+  - icon:
+      src: /mainView/h5.svg
+    title: HTML5
+    details: HTML5 新增特性和语义化标签
+    link: /h5/
+
+  - icon:
       src: /mainView/css.svg
     title: CSS
     details: CSS进阶
     link: /css/
 
   - icon:
+      src: /mainView/check.svg
+    title: SVG
+    details: SVG学习
+    link: /svg/
+
+  - icon:
       src: /mainView/js.svg
     title: JavaScript
     details: JavaScript进阶
     link: /js/
- 
+
   - icon:
       src: /mainView/vue.svg
     title: Vue 框架
     details: Vue2 Vue3 及相关组件
     link: /vue/
+
+  - icon:
+      src: /mainView/markdown.svg
+    title: Markdown编写
+    details: 搭建 Markdown 强大写作环境（VSCode）
+    link: /markdown/
+
+  - icon:
+      src: /mainView/three.svg
+    title: Three.js
+    details: 3D图形渲染
+    link: /three/
 
   - icon:
       src: /mainView/engineering.svg
@@ -56,23 +81,31 @@ features:
     details: 创建一个自己的脚手架
     link: /cli/
 
-#   - icon:
-#       src: /mainView/node.svg
-#     title: Node
-#     details: nodejs nvm npm pnpm
-#     link: /node/
+  - icon:
+      src: /mainView/micro.svg
+    title: 微前端
+    details: 前端微服务化方案
+    link: /micro/
+
+  # ===== 移动开发 =====
+  - icon:
+      src: /mainView/android.svg
+    title: Android
+    details: Kotlin + Compose 实战笔记
+    link: /android/
+
+  # ===== 后端 =====
+  - icon:
+      src: /mainView/node.svg
+    title: Node.js
+    details: Node.js nvm npm pnpm
+    link: /node/
 
   - icon:
       src: /mainView/nestjs.svg
     title: NEST.js
-    details: nestjs学习
+    details: NestJS 框架学习
     link: /node/nestjs/
-
-  - icon:
-      src: /mainView/python.svg
-    title: Python
-    details: python学习
-    link: /python/
 
   - icon:
       src: /mainView/java.svg
@@ -81,58 +114,53 @@ features:
     link: /java/基础/index
 
   - icon:
+      src: /mainView/python.svg
+    title: Python
+    details: Python学习
+    link: /python/
+
+  - icon:
       src: /mainView/mysql.svg
-    title: mysql
-    details: mysql基础
+    title: MySQL
+    details: MySQL基础
     link: /mysql/index
 
   - icon:
       src: /mainView/linux.svg
-    title: linux
-    details: linux基础
+    title: Linux
+    details: Linux基础
     link: /linux/index
 
   - icon:
       src: /mainView/docker.svg
-    title: docker
-    details: docker基础
+    title: Docker
+    details: Docker基础
     link: /docker/index
 
   - icon:
-      src: /mainView/android.svg
-    title: Android
-    details: Kotlin + Compose 实战笔记
-    link: /android/
+      src: /mainView/network.svg
+    title: 计算机网络
+    details: 计算机网络基础知识
+    link: /network/
+
+  # ===== 工具 & 其他 =====
+  - icon:
+      src: /mainView/algorithm.svg
+    title: 算法
+    details: 算法学习笔记
+    link: /algorithm/index
 
   - icon:
       src: /mainView/gpt.svg
-    title: AI
+    title: AI 大模型
     details: AI 学习
     link: /ai/index
 
   - icon:
-      src: /mainView/algorithm.svg
-    title: 算法
-    details: 算法
-    link: /algorithm/index
-
-  - icon: 
-      src: /mainView/check.svg
-    title: SVG
-    details: SVG学习
-    link: /svg/
-
-  - icon:
-      src: /mainView/markdown.svg
-    title: Markdown编写
-    details: 搭建 Markdown 强大写作环境（VSCode）
-    link: /markdown/
-
-  - icon:
       src: /mainView/study.svg
-    title: weekStudy
-    details: 每周学点东西
-    link: /weekStudy/2024/2024年度目标
+    title: 学习计划
+    details: 阶段性学习计划
+    link: /plan/
 
 ---
 
