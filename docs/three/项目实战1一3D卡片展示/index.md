@@ -18,6 +18,23 @@
   👆 点击卡片翻转 &nbsp;|&nbsp; 🖱️ 悬浮鼠标控制角度 &nbsp;|&nbsp; 拖拽空白处旋转场景
 </p>
 
+## 项目阶段
+
+本项目分为 **10 个 Stage**，每个 Stage 独立成篇：
+
+| 阶段 | 名称 | 内容 |
+|------|------|------|
+| Stage 1 | [[项目初始化\|Stage1-项目初始化]] | 目录结构、依赖安装、Vite 配置 |
+| Stage 2 | [[场景相机渲染器\|Stage2-场景相机渲染器]] | Scene、Camera、Renderer 三件套 |
+| Stage 3 | [[光照系统\|Stage3-光照系统]] | AmbientLight、DirectionalLight、PointLight |
+| Stage 4 | [[Canvas纹理生成\|Stage4-Canvas纹理生成]] | 程序化生成卡片正反面纹理 |
+| Stage 5 | [[3D卡片创建\|Stage5-3D卡片创建]] | BoxGeometry、材质数组、网格布局 |
+| Stage 6 | [[鼠标交互\|Stage6-鼠标交互]] | Raycaster、归一化坐标、悬浮检测 |
+| Stage 7 | [[翻转动画\|Stage7-翻转动画]] | Lerp 插值、180° 旋转、平滑过渡 |
+| Stage 8 | [[动画循环\|Stage8-动画循环]] | requestAnimationFrame、正弦波浮动 |
+| Stage 9 | [[响应式与性能\|Stage9-响应式与性能]] | resize 适配、高清屏、移动端 |
+| Stage 10 | [[扩展练习\|Stage10-扩展练习]] | 拖拽排序、展开态、音效反馈 |
+
 ## 项目架构
 
 以下流程图展示了整个项目的核心执行流程：
