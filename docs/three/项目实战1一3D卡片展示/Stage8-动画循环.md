@@ -108,4 +108,3 @@ animate()
 - `clock.getElapsedTime()` 内部缓存，多次调用无性能损失
 - 卡片的正弦波浮动使用加法而非重新计算位置
 
-[[返回项目首页|../index]] | [[上一 Stage|../Stage7-翻转动画]] | [[下一 Stage|../Stage8-响应式与性能]]

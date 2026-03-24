@@ -97,4 +97,3 @@ scene.add(pointLight)
 | DirectionalLight(补) | `0x4488ff` | 0.3 | (-5,0,5) | 无 |
 | PointLight | `0x00ffff` | 0.5 | (0,3,3) | 无 |
 
-[[返回项目首页|../index]] | [[上一 Stage|../Stage2-场景相机渲染器]] | [[下一 Stage|../Stage3-光照系统]]

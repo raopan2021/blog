@@ -126,4 +126,3 @@ animate()
 ### Q: 场景不显示？
 > 确认 `renderer.render(scene, camera)` 在 `animate()` 循环中调用。
 
-[[返回项目首页|../index]] | [[下一 Stage|../Stage3-光照系统]]

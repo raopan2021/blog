@@ -128,4 +128,3 @@ window.addEventListener('click', () => {
 })
 ```
 
-[[返回项目首页|../index]] | [[上一 Stage|../Stage5-3D卡片创建]] | [[下一 Stage|../Stage6-翻转动画]]

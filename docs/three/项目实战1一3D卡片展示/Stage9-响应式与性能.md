@@ -120,4 +120,3 @@ function animate() {
 }
 ```
 
-[[返回项目首页|../index]] | [[上一 Stage|../Stage8-动画循环]] | [[下一 Stage|../Stage9-扩展练习]]

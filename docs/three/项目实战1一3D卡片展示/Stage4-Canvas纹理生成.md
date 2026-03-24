@@ -167,4 +167,3 @@ texture.minFilter = THREE.LinearFilter  // 线性滤波
 texture.magFilter = THREE.LinearFilter
 ```
 
-[[返回项目首页|../index]] | [[上一 Stage|../Stage3-光照系统]] | [[下一 Stage|../Stage4-3D卡片创建]]

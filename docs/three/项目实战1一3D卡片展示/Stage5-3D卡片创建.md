@@ -143,4 +143,3 @@ mesh.userData.currentRotationY // 当前旋转角度
 mesh.userData.basePositionY    // 初始 Y 坐标
 ```
 
-[[返回项目首页|../index]] | [[上一 Stage|../Stage4-Canvas纹理生成]] | [[下一 Stage|../Stage5-鼠标交互]]

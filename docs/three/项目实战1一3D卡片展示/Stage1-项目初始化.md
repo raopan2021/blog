@@ -139,4 +139,3 @@ pnpm build
 
 下一 Stage 将实现 Three.js 的场景、相机和渲染器的初始化。
 
-[[返回项目首页|../index]]
