@@ -5,7 +5,7 @@
 ## 在线演示
 
 <iframe
-  src="https://cdn.jsdelivr.net/gh/raopan2021/blog@main/docs/public/three-projects/3d-card-showcase/index.html"
+  src="/blog/three-projects/3d-card-showcase/index.html"
   width="100%"
   height="520px"
   frameborder="0"

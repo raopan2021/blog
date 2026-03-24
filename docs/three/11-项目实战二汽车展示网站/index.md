@@ -1,0 +1,127 @@
+# 项目实战二：汽车展示网站（完整复刻版）
+
+> 完整复刻小米 SU7 官网特效，参考 [su7-replica](https://github.com/alphardex/su7-replica)
+
+## 在线演示
+
+<iframe
+  src="/blog/three-projects/car-showcase/index.html"
+  width="100%"
+  height="560px"
+  frameborder="0"
+  style="border-radius:8px; background:#000;"
+  allow="autoplay; xr-spatial-tracking"
+  allowfullscreen
+></iframe>
+
+<p style="text-align:center; color:rgba(255,255,255,0.4); font-size:12px; margin-top:8px;">
+  🚗 等待 LOADING 动画完成 → 进场 → 点击汽车触发加速 &nbsp;|&nbsp; Speed Lines · 相机抖动 · HDR 环境 · Bloom 发光
+</p>
+
+## 项目概述
+
+本项目完整复刻了小米 SU7 官网的 3D 展示特效，包含以下功能：
+
+| 功能 | 实现方式 |
+|------|---------|
+| LOADING 动画 | CSS 动画 + JS 过渡 |
+| 进场动画 | GSAP timeline 编排 |
+| 点击加速 | 射线检测 + GSAP 时间线 |
+| Speed Lines | GLTF 模型 |
+| 相机抖动 | Simplex Noise 算法 |
+| HDR 环境切换 | 两个 HDR 动态混合 |
+| Bloom 发光 | UnrealBloomPass 后处理 |
+| 背景音乐 | Howler.js |
+
+## 制作阶段
+
+本项目分为 **11 个阶段**，每个阶段独立成篇：
+
+| 阶段 | 名称 | 内容 |
+|------|------|------|
+| Stage 1 | [[项目初始化与结构\|Stage1-项目初始化]] | 目录结构、依赖安装、Vite 配置 |
+| Stage 2 | [[入口页面与加载动画\|Stage2-入口页面与加载动画]] | HTML 结构、CSS 动画原理 |
+| Stage 3 | [[Three.js 基础场景\|Stage3-ThreeJS基础场景]] | 场景、相机、渲染器、坐标系统 |
+| Stage 4 | [[资源加载系统\|Stage4-资源加载系统]] | AssetManager、HDR、纹理预处理 |
+| Stage 5 | [[后处理 Bloom 发光\|Stage5-后处理Bloom发光]] | EffectComposer、Bloom 原理、emissive 材质 |
+| Stage 6 | [[动态环境贴图\|Stage6-动态环境贴图]] | FBO、两个 HDR 混合、着色器 |
+| Stage 7 | [[汽车与展示厅模型\|Stage7-汽车与展示厅模型]] | GLTF 加载、材质配置、贴图详解 |
+| Stage 8 | [[GSAP 动画系统\|Stage8-GSAP动画系统]] | Timeline、缓动函数、进场动画 |
+| Stage 9 | [[加速模式\|Stage9-加速模式]] | rush/rushDone、完整时间线 |
+| Stage 10 | [[相机抖动\|Stage10-相机抖动]] | Simplex Noise、Lerp 平滑 |
+| Stage 11 | [[交互与完整流程\|Stage11-交互与完整流程]] | 射线检测、背景音乐、初始化流程 |
+
+## 项目架构
+
+以下流程图展示了汽车展示网站的完整执行流程：
+
+```mermaid
+graph TD
+    A[页面加载] --> B[显示 LOADING 动画]
+    B --> C[AssetManager 并行加载资源]
+    C --> D{HDR + GLTF 加载完成?}
+    D -- 否 --> C
+    D -- 是 --> E[淡出 LOADING 画面]
+    E --> F[GSAP 进场动画 Timeline]
+    F --> G[相机推进 + 灯光渐亮]
+    G --> H[等待用户点击汽车]
+    H --> I{点击汽车?}
+    I -- 否 --> H
+    I -- 是 --> J[触发加速模式 rush]
+    J --> K[Speed Lines 显示]
+    K --> L[相机抖动 Simplex Noise]
+    L --> M[HDR 环境切换为白天]
+    M --> N[Bloom 强度增强]
+    N --> O[加速完成, rushDone]
+    O --> P[恢复初始状态]
+    P --> H
+```
+
+## 项目结构
+
+```
+car-showcase/
+
+```
+
+## 运行项目
+
+```bash
+# 安装依赖
+pnpm install
+
+# 开发模式
+pnpm dev
+
+# 构建生产
+pnpm build
+```
+
+## 下载项目
+
+> ⚠️ 汽车展示项目含外部资源（模型/HDR/音频），在线演示需配合 public 文件夹使用
+
+<a href="/blog/three-projects/car-showcase/index.html" target="_blank">📄 在线预览汽车展示</a>
+
+<a href="/blog/three-projects/car-showcase.zip" download>📦 下载完整项目源码（含 3D 模型 + 贴图 + 音频）</a>
+
+## 扩展练习
+
+### 练习 1：添加轨道控制器
+在加速模式结束后允许用户自由旋转视角：
+
+```js
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
+const controls = new OrbitControls(camera, renderer.domElement)
+controls.enableDamping = true
+```
+
+### 练习 2：添加参数 HUD
+在 3D 场景上叠加汽车参数的浮动面板，显示当前速度、FOV 等。
+
+### 练习 3：添加加速音效
+使用 Howler.js 添加加速时的引擎声效。
+
+---
+
+[[返回 Three.js 首页|../index]]

@@ -1,113 +1,15 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>小米 SU7 网站特效 - 3D WebGL</title>
-    <style>
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
+<!doctype html>
+<html lang="en">
 
-      body {
-        overflow: hidden;
-        background: #000;
-        font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
-        color: white;
-      }
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>小米SU7网站特效复刻</title>
+</head>
 
-      #sketch {
-        width: 100vw;
-        height: 100vh;
-      }
+<body>
+  <div id="app"></div>
+  <script type="module" src="/src/main.ts"></script>
+</body>
 
-      /* ==========================================
-         加载屏幕
-         页面打开时显示的过渡动画
-         ========================================== */
-      .loader-screen {
-        position: fixed;
-        inset: 0;
-        background: #000;
-        z-index: 1000;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        /* 淡出动画：1.5秒后透明度变为0并隐藏 */
-        transition: opacity 1.5s ease, visibility 1.5s ease;
-      }
-
-      .loader-screen.hollow {
-        opacity: 0;
-        visibility: hidden;
-        pointer-events: none;
-      }
-
-      .loading-container {
-        text-align: center;
-      }
-
-      /* LOADING 文字动画 */
-      .loading {
-        display: flex;
-        gap: 8px;
-        font-size: 32px;
-        font-weight: 200;
-        letter-spacing: 8px;
-        color: rgba(255, 255, 255, 0.9);
-      }
-
-      .loading span {
-        display: inline-block;
-        /* CSS 自定义属性，每个字母有不同的动画延迟 */
-        animation: loadingPulse 1.5s ease-in-out infinite;
-        animation-delay: calc(var(--i) * 0.15s);
-      }
-
-      /* 字母跳动关键帧 */
-      @keyframes loadingPulse {
-        0%, 100% {
-          opacity: 0.3;
-          transform: scale(0.9);
-        }
-        50% {
-          opacity: 1;
-          transform: scale(1.05);
-        }
-      }
-
-      .loading-subtitle {
-        margin-top: 30px;
-        font-size: 12px;
-        letter-spacing: 6px;
-        color: rgba(255, 255, 255, 0.25);
-      }
-    </style>
-  </head>
-  <body>
-    <!-- 加载屏幕 -->
-    <div class="loader-screen" id="loader-screen">
-      <div class="loading-container">
-        <div class="loading">
-          <!-- 8个字母，每个有 --i 自定义属性控制动画延迟 -->
-          <span style="--i: 0">L</span>
-          <span style="--i: 1">O</span>
-          <span style="--i: 2">A</span>
-          <span style="--i: 3">D</span>
-          <span style="--i: 4">I</span>
-          <span style="--i: 5">N</span>
-          <span style="--i: 6">G</span>
-          <span style="--i: 7">.</span>
-        </div>
-        <div class="loading-subtitle">INITIALIZING EXPERIENCE</div>
-      </div>
-    </div>
-
-    <!-- Three.js 渲染目标 -->
-    <div id="sketch"></div>
-
-    <script type="module" src="./src/main.js"></script>
-  </body>
 </html>
