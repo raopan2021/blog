@@ -46,11 +46,11 @@ graph TD
 ```
 3d-card-showcase/
 ├── index.html              # 入口 HTML（标题、canvas画布）
-├── package.json            # 依赖：three.js, vite
-├── vite.config.js          # 构建配置（单文件打包）
-├── public/                 # 公共资源（本项目无外部资源）
+├── package.json           # 依赖：three.js ^0.170.0, vite ^5.4.0
+├── vite.config.js         # 构建配置（vite-plugin-singlefile 单文件打包）
+├── public/                # 公共资源（本项目无外部资源）
 └── src/
-    └── main.js             # 全部逻辑（约 340 行）
+    └── main.js            # 全部逻辑（约 340 行）
 ```
 
 ## 核心代码详解
