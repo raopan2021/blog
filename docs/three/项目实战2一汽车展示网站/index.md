@@ -224,4 +224,3 @@ controls.enableDamping = true
 
 ---
 
-[[返回 Three.js 首页|../index]]
