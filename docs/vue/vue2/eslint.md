@@ -31,7 +31,6 @@ trim_trailing_whitespace = false
 insert_final_newline = false
 ```
 
-
 > 很多 IDE 中会默认支持此配置，但是也有些不支持，如：VSCode、Atom、Sublime Text 等。
 > 具体列表可以参考官网，如果在 VSCode 中使用需要安装 `EditorConfig for VS Code` 插件。
 
@@ -51,7 +50,6 @@ insert_final_newline = false
 ```bash
 pnpm add eslint eslint-define-config eslint-plugin-vue vue-eslint-parser -D
 ```
-
 
 2. 添加 ESLint 配置文件
 
@@ -86,7 +84,6 @@ module.exports = defineConfig({
 })
 ```
 
-
 > 关于配置文件中的选项大家去看[官方文档](http://eslint.cn/docs/user-guide/configuring)，已经写得很详细了。
 
 3. 添加 ESLint 过滤规则
@@ -97,7 +94,6 @@ module.exports = defineConfig({
 public
 dist
 ```
-
 
 ## Prettier
 
@@ -113,7 +109,6 @@ Prettier 是一款强大的代码格式化工具，这里我们使用 ESLint + P
 pnpm add prettier eslint-config-prettier eslint-plugin-prettier -D
 ```
 
-
 2. 添加 Prettier 配置文件
 
 在根目录添加一个 `.prettierrc.js` 文件，内容如下：
@@ -127,7 +122,6 @@ module.exports = {
   arrowParens: 'avoid',
 }
 ```
-
 
 3. 修改 ESLint 配置，使 Eslint 兼容 Prettier 规则
 
@@ -148,7 +142,6 @@ module.exports = defineConfig({
 })
 ```
 
-
 ## 自动格式化代码
 
 做好以上配置之后，在编码时不符合规范的地方就会被编辑器标注出来，可以使我们更好的发现问题。
@@ -163,4 +156,3 @@ module.exports = defineConfig({
   }
 }
 ```
-

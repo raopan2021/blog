@@ -7,7 +7,6 @@
 静态环境贴图的问题：
 
 ```
-
 场景需求：
 - 进场时：环境从全黑 → 逐渐亮起
 - 正常状态：明亮的展厅
@@ -21,11 +20,9 @@
   ✓ 平滑过渡，效果自然 ← 本项目采用
 ```
 
-
 ## 6.2 FBO 工作原理
 
 ```
-
 Framebuffer Object (FBO) = 渲染到纹理
 
 正常渲染：
@@ -36,7 +33,6 @@ FBO 渲染：
                     ↓
           这张纹理可以作为输入再次渲染
 ```
-
 
 ## 6.3 DynamicEnv 实现
 
@@ -147,11 +143,9 @@ class DynamicEnv {
 }
 ```
 
-
 ## 6.4 混合原理图解
 
 ```
-
 uWeight = 0              uWeight = 0.5             uWeight = 1
 (只用夜晚)               (50% 混合)               (只用白天)
 
@@ -166,7 +160,6 @@ H = 夜晚（深蓝）         T = 白天（明亮）
 mix(night, light, 0) = night
 mix(night, light, 1) = light
 ```
-
 
 ## 6.5 在场景中使用
 
@@ -213,11 +206,9 @@ gsap.to(params, {
 })
 ```
 
-
 ## 6.6 全屏四边形渲染
 
 ```
-
 正常场景渲染：
       相机视角
          ↓
@@ -234,7 +225,6 @@ gsap.to(params, {
     FBO 纹理
 ```
 
-
 ## 6.7 性能优化
 
 | 优化项 | 方法 |
@@ -249,7 +239,6 @@ this.fbo = new THREE.WebGLRenderTarget(1024, 1024, {
   type: THREE.HalfFloatType,  // 或 THREE.FloatType
 })
 ```
-
 
 ---
 

@@ -10,11 +10,9 @@ NumPy（Numerical Python）是 Python 科学计算的基础库，提供了高性
 pip install numpy
 ```
 
-
 ```python
 import numpy as np
 ```
-
 
 约定俗成用 `np` 作为别名。
 
@@ -40,7 +38,6 @@ c = np.array([1, 2, 3], dtype=np.float32)
 print(c)  # [1. 2. 3.]
 ```
 
-
 ### 快速生成数组
 
 ```python
@@ -63,7 +60,6 @@ np.random.randint(0, 10, (3, 3))  # [0,10) 整数矩阵
 np.random.seed(42)                 # 固定随机种子
 ```
 
-
 ## 数组属性
 
 ```python
@@ -75,7 +71,6 @@ print(a.size)     # 6  元素总数
 print(a.dtype)    # int64 数据类型
 print(a.itemsize) # 8  每个元素的字节数
 ```
-
 
 ## 索引与切片
 
@@ -92,7 +87,6 @@ print(a[1, 2])     # 7           第二行第三列
 print(a[-1])       # [ 9 10 11 12] 最后一行
 ```
 
-
 ### 切片
 
 ```python
@@ -101,7 +95,6 @@ print(a[:, 0:2])        # 前两列
 print(a[1:, 2:])        # 第二行及之后，第三列及之后
 print(a[::2, ::2])      # 跳着取：行间隔2，列间隔2
 ```
-
 
 ### 布尔索引
 
@@ -115,7 +108,6 @@ print(a[mask])  # [30 40 50]
 # 一步到位
 print(a[a > 25])
 ```
-
 
 ### Fancy 索引（花式索引）
 
@@ -131,7 +123,6 @@ print(a[[0, 2]])  # 取第一行和第三行
 print(a[:, [1, 3]])  # 取第二列和第四列
 ```
 
-
 ## 数组运算
 
 ### 逐元素运算
@@ -145,7 +136,6 @@ print(a ** 2)     # [1 4 9]
 print(1 / a)      # [1. 0.5 0.333...]
 ```
 
-
 ### 数组间运算
 
 ```python
@@ -158,7 +148,6 @@ print(a @ b)   # 32          矩阵点积
 print(np.dot(a, b))  # 同上
 ```
 
-
 ### 矩阵乘法
 
 ```python
@@ -168,7 +157,6 @@ B = np.array([[5, 6], [7, 8]])
 print(A @ B)            # [[19 22] [43 50]] 矩阵乘法
 print(A * B)           # [[ 5 12] [21 32]] 逐元素相乘
 ```
-
 
 ## 广播机制
 
@@ -192,7 +180,6 @@ row_mean = a.mean(axis=1, keepdims=True)  # shape (2, 1)
 print(a - row_mean)  # 每行减去该行均值
 ```
 
-
 ## 常用统计函数
 
 ```python
@@ -215,7 +202,6 @@ print(a.argmin())      # 0  最小值索引
 print(np.cumsum(a))    # 累加 [1, 3, 6, 10, ...]
 print(np.cumprod(a))   # 累乘
 ```
-
 
 ## 数组重塑与合并
 
@@ -246,7 +232,6 @@ arr = np.arange(12)
 print(np.split(arr, [3, 7]))  # 按索引分割 [[0,1,2], [3,4,5,6], [7,8,9,10,11]]
 ```
 
-
 ## 排序
 
 ```python
@@ -260,7 +245,6 @@ print(np.sort(a, axis=0))      # 每列升序
 idx = np.argsort(a[0])         # [1 0 2]  第0行排序后的索引
 print(a[0][idx])               # [1 3 4]
 ```
-
 
 ## 实战：图像数据处理
 
@@ -286,7 +270,6 @@ flipped = image[:, ::-1]
 
 print(f"原始形状: {image.shape}, 亮度增强后: {brighter.shape}")
 ```
-
 
 ## 小结
 

@@ -6,7 +6,6 @@
 pip install fastapi uvicorn
 ```
 
-
 ## 最小应用
 
 ```python
@@ -20,7 +19,6 @@ def read_root():
 
 # 运行：uvicorn main:app --reload --port 8000
 ```
-
 
 ## 类型提示与自动文档
 
@@ -57,7 +55,6 @@ def update_item(item_id: int, item: Item):
     return {"item_id": item_id, "item": item}
 ```
 
-
 ## 请求参数
 
 ```python
@@ -81,7 +78,6 @@ def get_item(
 def read_user_agent(user_agent: str = Header(...)):
     return {"user_agent": user_agent}
 ```
-
 
 ## 响应模型
 
@@ -119,7 +115,6 @@ def create_user(user: UserCreate):
     }
 ```
 
-
 ## 依赖注入
 
 ```python
@@ -141,7 +136,6 @@ def protected_route(username: str = Depends(get_current_user)):
     return {"message": f"欢迎, {username}"}
 ```
 
-
 ## 中间件
 
 ```python
@@ -159,7 +153,6 @@ async def add_process_time_header(request, call_next):
     return response
 ```
 
-
 ## CORS 跨域
 
 ```python
@@ -176,7 +169,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 ```
-
 
 ---
 

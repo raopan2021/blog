@@ -45,12 +45,10 @@ touch tsconfig.json
 touch .gitignore
 ```
 
-
 ```yaml [pnpm-workspace]
 packages:
   - 'apps/*'
 ```
-
 
 ```json [tsconfig]
 {
@@ -86,7 +84,6 @@ packages:
 }
 ```
 
-
 ```ini [.gitignore]
 node_modules/
 .DS_Store
@@ -114,7 +111,6 @@ logs
 .eslintcache
 ```
 
-
 :::
 
 然后在`apps`目录中把之前搭建的 UmiJS 工程`clone`下来作为主应用
@@ -127,14 +123,12 @@ pnpm install
 pnpm add @micro-zoe/micro-app
 ```
 
-
 编辑`src/global.tsx`，初始化`micro-app`
 
 ```ts
 import microApp from '@micro-zoe/micro-app' // [!code ++]
 microApp.start() // [!code ++]
 ```
-
 
 之前整这个`UmiJS`的基础项目时，预先装了一些模块和包，有些在这里用不上，可以移除掉精简一下主应用，同时删掉目录下的`eslint`、`prettier`和`stylelint`的配置文件
 
@@ -156,7 +150,6 @@ microApp.start() // [!code ++]
 }
 ```
 
-
 ## 子应用构建
 
 理论上，通过`micro-app`构建微前端项目，在服务间不通信的前提下，子服务只需要配置跨域就可以，其他都不需要弄，可以说是完全零侵入、低成本的方案
@@ -170,7 +163,6 @@ microApp.start() // [!code ++]
 ```sh
 pnpm create react-app child-react18 --template typescript
 ```
-
 
 通过`create-react-app`构建的项目默认就进行了跨域的相关配置。如果不放心，或者想更改`webpack`的配置，可以执行`npm run eject`把脚手架隐藏起来的配置暴露出来
 
@@ -187,7 +179,6 @@ PORT=3100
 PUBLIC_URL='/child/react18'
 ```
 
-
 编辑`src/App.tsx`，给其加上一个标识
 
 ```tsx
@@ -202,7 +193,6 @@ function App() {
 }
 ```
 
-
 ### 子应用②
 
 这里使用`vue-cli`脚手架创建一个`vue2`默认配置的子应用②
@@ -211,14 +201,12 @@ function App() {
 vue create child-vue2
 ```
 
-
 新建`.env`文件，添加如下环境变量，让子应用②运行在`3200`端口上
 
 ```ini
 VUE_APP_HOST=localhost
 VUE_APP_PORT=3200
 ```
-
 
 编辑`vue.config.js`和`src/App.vue`
 
@@ -238,7 +226,6 @@ module.exports = defineConfig({
 })
 ```
 
-
 ```vue [App.vue]
 <template>
   <div id="app">
@@ -246,7 +233,6 @@ module.exports = defineConfig({
   </div>
 </template>
 ```
-
 
 :::
 
@@ -258,7 +244,6 @@ module.exports = defineConfig({
 pnpm create vue child-vue3
 ```
 
-
 `vite`默认开启跨域支持，不需要额外配置
 
 新建`.env`文件，添加如下环境变量，让子应用③运行在`3300`端口上
@@ -267,7 +252,6 @@ pnpm create vue child-vue3
 VITE_APP_HOST=localhost
 VITE_APP_PORT=3300
 ```
-
 
 编辑`vite.config.ts`和`src/App.vue`
 
@@ -289,7 +273,6 @@ export default defineConfig(({ mode }) => {
 })
 ```
 
-
 ```vue{4} [App.vue]
 <template>
   <header>
@@ -299,7 +282,6 @@ export default defineConfig(({ mode }) => {
   </header>
 </template>
 ```
-
 
 :::
 
@@ -311,14 +293,12 @@ export default defineConfig(({ mode }) => {
 pnpm create vue child-svelte
 ```
 
-
 新建`.env`文件，添加如下环境变量，让子应用④运行在`3400`端口上
 
 ```ini
 VITE_APP_HOST=localhost
 VITE_APP_PORT=3400
 ```
-
 
 编辑`vite.config.ts`和`src/App.svelte`
 
@@ -340,13 +320,11 @@ export default defineConfig(({ mode }) => {
 })
 ```
 
-
 ```svelte [App.svelte]
 <main>
   <h1>子应用④ -- Svelte@4.0.5</h1>
 </main>
 ```
-
 
 :::
 
@@ -362,7 +340,6 @@ export enum ChildAppName {
   CHILD_SVELTE = 'child-svelte',
 }
 ```
-
 
 在主应用的根目录新建`micro-app-config.ts`
 
@@ -385,7 +362,6 @@ if (process.env.NODE_ENV === 'production') {
 }
 export default Object.freeze(config)
 ```
-
 
 编辑主应用的`.umirc.ts`或`config/config.ts`文件，新增如下路由
 
@@ -413,7 +389,6 @@ export default defineConfig({
 })
 ```
 
-
 新建如下四个页面，用来装载子应用
 
 ::: code-group
@@ -433,7 +408,6 @@ export default function SubReactApp() {
 }
 ```
 
-
 ```tsx [child-vue2.tsx]
 import { ChildAppName } from '../constants'
 import microAppConfig from '../../micro-app-config'
@@ -448,7 +422,6 @@ export default function VueCliApp() {
   )
 }
 ```
-
 
 ```tsx [child-vue3.tsx]
 import { ChildAppName } from '../constants'
@@ -466,7 +439,6 @@ export default function ViteVueApp() {
 }
 ```
 
-
 ```tsx [child-svelte.tsx]
 import { ChildAppName } from '../constants'
 import microAppConfig from '../../micro-app-config'
@@ -482,7 +454,6 @@ export default function ViteSvelteApp() {
   )
 }
 ```
-
 
 :::
 
@@ -536,7 +507,6 @@ export default function SubReactApp() {
 }
 ```
 
-
 ### 渲染优化
 
 子应用的渲染优化写法在不同的框架中写法不同
@@ -580,7 +550,6 @@ if (!window.__MICRO_APP_ENVIRONMENT__) {
 }
 ```
 
-
 ```ts [Vue 2]
 // ...
 declare global {
@@ -616,7 +585,6 @@ if (!window.__MICRO_APP_ENVIRONMENT__) {
   window.mount()
 }
 ```
-
 
 ```ts [Vue 3]
 // ...
@@ -657,7 +625,6 @@ if (!window.__MICRO_APP_ENVIRONMENT__) {
 }
 ```
 
-
 ```ts [Svelte]
 // ...
 declare global {
@@ -691,7 +658,6 @@ if (!window.__MICRO_APP_ENVIRONMENT__) {
   window.mount()
 }
 ```
-
 
 :::
 
@@ -743,7 +709,6 @@ export default function SubReactApp() {
 }
 ```
 
-
 ```tsx [子应用① App.tsx]
 function App() {
   const [data, setData] = React.useState<AnyObj>()
@@ -786,7 +751,6 @@ function App() {
 }
 ```
 
-
 :::
 
 #### child-vue2
@@ -822,7 +786,6 @@ export default function VueCliApp() {
 }
 ```
 
-
 ```ts [子应用② 路由]
 // ...
 const router = new VueRouter({
@@ -831,7 +794,6 @@ const router = new VueRouter({
   routes,
 })
 ```
-
 
 ```vue [子应用② About页面]
 <template>
@@ -879,7 +841,6 @@ export default Vue.extend({
 })
 </script>
 ```
-
 
 :::
 
@@ -931,7 +892,6 @@ export default function ViteVueApp() {
 }
 ```
 
-
 ```vue [子应用③ About页面]
 <template>
   <div class="about">
@@ -970,7 +930,6 @@ const sendData = () => {
 }
 </script>
 ```
-
 
 :::
 
@@ -1017,7 +976,6 @@ export default function ViteSvelteApp() {
 }
 ```
 
-
 ```svelte [子应用④ App.svelte]
 <script lang="ts">
   import { onMount, onDestroy } from 'svelte';
@@ -1060,7 +1018,6 @@ export default function ViteSvelteApp() {
 </main>
 ```
 
-
 :::
 
 ## 常见问题
@@ -1077,13 +1034,11 @@ if (window.__MICRO_APP_ENVIRONMENT__) {
 }
 ```
 
-
 接着在子应用的入口文件的「**最顶部**」引入`public-path.ts`
 
 ```tsx
 import './public-path'
 ```
-
 
 ### React基座无法触发生命周期
 
@@ -1096,7 +1051,6 @@ import './public-path'
 /** @jsx jsxCustomEvent */
 import jsxCustomEvent from '@micro-zoe/micro-app/polyfill/jsx-custom-event'
 ```
-
 
 ## 部署
 
@@ -1177,7 +1131,6 @@ CMD ["nginx", "-g", "daemon off;"]
 
 ```
 
-
 ```yml [docker-compose]
 version: '3.9'
 
@@ -1202,7 +1155,6 @@ services:
       - 8080:80
 ```
 
-
 ```ini [.dockerignore]
 node_modules
 .git
@@ -1210,7 +1162,6 @@ node_modules
 *.md
 dist
 ```
-
 
 ```nginx [nginx.conf]
 server {
@@ -1278,7 +1229,6 @@ server {
   }
 }
 ```
-
 
 :::
 

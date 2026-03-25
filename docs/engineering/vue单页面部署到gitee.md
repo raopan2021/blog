@@ -7,18 +7,14 @@
 内容为空，主要是为了用于自动切换 Nginx 的 404 配置，`Gitee Pages` 服务器的 `Nginx` 规则就会自动变为
 
 ```
-
 try_files $uri $uri.html /index.html $uri/ =404;
 ```
-
 
 当根目录没有 `.spa` 文件的时候，`Gitee Pages` 服务器的 `Nginx` 规则跟原来的一致，为
 
 ```
-
 try_files $uri $uri.html $uri.md $uri/ =404;
 ```
-
 
 ### 2、**`vue.config.js` 配置中的 `publicPath` 配置**
 
@@ -28,7 +24,6 @@ module.exports = {
   publicPath: BASE_URL,
 }
 ```
-
 
 > 解释：当变量 `process.env.NODE_ENV` 为生产环境时，将 `BASE_URL` 设置为项目名称，这是因为使用 gitee pages 部署的应用，默认根路径为 `http://xxx.gitee.io/`，如果不修改 `publicPath` ，则你的应用中的资源请求都将会从根路径去找，结果就是出现 **404**，找不到你的资源，因为你的资源都存放在 `http://xxx.gitee.io/` 下面的项目目录中，比如你在 `gitee` 上的项目名称为 `myblog`，那么上面代码中的 `"/yourProjName/"` 就应为 `"/myblog/"`
 
@@ -41,12 +36,10 @@ module.exports = {
 > 因为我们最终部署上去的应用，就在这里面，所以我们必须将它上传到 gitee
 
 ```
-
 .DS_Store
 node_modules
 # /dist
 ```
-
 
 ### 5、npm run biuld
 

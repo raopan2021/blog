@@ -10,11 +10,9 @@
 pnpm add fs-extra
 ```
 
-
 ```bash [npm]
 npm install fs-extra
 ```
-
 
 :::
 
@@ -76,7 +74,6 @@ fs.copySync('app', 'app2');
 fs.removeSync('app');
 ```
 
-
 ## 读写目录示例
 
 ``` js
@@ -132,4 +129,3 @@ async function create (name,options) {
 
 create('app')
 ```
-

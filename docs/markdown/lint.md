@@ -120,7 +120,6 @@ $ cat foo
 hello world
 ```
 
-
 ## MD018
 
 No space after hash on atx style heading
@@ -221,7 +220,6 @@ Ordered list item prefix
 09.  two
 10.  three
 ```
-
 
 ## MD030
 
@@ -351,7 +349,6 @@ Required heading structure
   "*"
 ]
 ```
-
 
 星号(*)表示对应的标题是可选的，没有强制要求，本条具体可以参照## MD043
 

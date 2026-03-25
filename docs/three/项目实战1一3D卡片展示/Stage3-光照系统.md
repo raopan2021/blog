@@ -13,7 +13,6 @@ const ambientLight = new THREE.AmbientLight(0xffffff, 0.4)
 scene.add(ambientLight)
 ```
 
-
 - 第一个参数：颜色（十六进制）
 - 第二个参数：强度（0~1）
 
@@ -29,7 +28,6 @@ mainLight.shadow.mapSize.set(1024, 1024)  // 阴影贴图分辨率
 scene.add(mainLight)
 ```
 
-
 ### PointLight（点光源）
 
 从一点向所有方向发射，模拟灯泡效果：
@@ -39,7 +37,6 @@ const pointLight = new THREE.PointLight(0x00ffff, 0.5, 20)
 pointLight.position.set(0, 3, 3)
 scene.add(pointLight)
 ```
-
 
 - 第三个参数 `20`：光照最大距离
 
@@ -72,11 +69,9 @@ pointLight.position.set(0, 3, 3)
 scene.add(pointLight)
 ```
 
-
 ## 光照原理图
 
 ```
-
             主方向光（白色，强度1.2）
                   ↓
     +----------[卡片]----------+
@@ -85,7 +80,6 @@ scene.add(pointLight)
   补光(蓝)  环境光(白)    点光源(青)
   (-5,0,5)  (均匀分布)    (0,3,3)→绕Y旋转
 ```
-
 
 ## 为什么需要多种光？
 

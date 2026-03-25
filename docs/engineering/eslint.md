@@ -22,13 +22,11 @@ ESLint 是 JavaScript 代码检查工具。
 npm init
 ```
 
-
 ### 2. 安装 ESLint 包
 
 ```bash
 npm intall eslint
 ```
-
 
 ### 3. 创建 index.js, 编写测试代码
 
@@ -37,7 +35,6 @@ npm intall eslint
 ```js
 const msg = "hello world";
 ```
-
 
 ### 4. 在项目根目录创建.eslintrc.js
 
@@ -56,7 +53,6 @@ module.exports = {
 }
 ```
 
-
 ### 5. 检查代码风格
 
 虽然上面代码格式和 ESLint 要求的格式不一致，但是并没有标志告诉开发者。
@@ -71,7 +67,6 @@ module.exports = {
   "lint": "eslint . "
 }
 ```
-
 
 然后执行 `npm run lint` ，此时会在控制台打印出不符合代码风格的错误信息
 
@@ -93,7 +88,6 @@ module.exports = {
 }
 ```
 
-
 然后执行 `npm run lint`  此时，代码也会自动格式化为符合规范的
 
 ## 二、ESLint 进阶使用
@@ -105,7 +99,6 @@ module.exports = {
 ``` bash
 npm eslint --init
 ```
-
 
 根据提示，可进行个性化定制 ESLint 的初始功能，比如选择将 ESLint 只用来检查代码语法还是语法和风格、是否应用于 typescript 、是否选用流行代码规范还是根据问题自己定义规范。
 
@@ -158,7 +151,6 @@ module.exports = {
 };
 ```
 
-
 解析 Vue3 官方初始化命令 npm init vue@latest 生成的配置文件
 
 ``` js
@@ -183,7 +175,6 @@ module.exports = {
 };
 ```
 
-
 ### 2、ESLint 配置具体规则
 
 ESLint 附带有大量的规则。
@@ -207,7 +198,6 @@ ESLint 附带有大量的规则。
 }
 ```
 
-
 配置定义在插件中的一个规则的时候，必须使用 插件名/规则ID 的形式。比如：
 
 ``` json
@@ -223,7 +213,6 @@ ESLint 附带有大量的规则。
   }
 }
 ```
-
 
 针对特定文件覆盖配置,禁用一组文件的配置文件中的规则，请使用 overrides 和 files。
 
@@ -243,7 +232,6 @@ ESLint 附带有大量的规则。
 }
 ```
 
-
 忽略特定的文件和目录: 在项目根目录创建一个 .eslintignore 文件(类似.gitignore)
 
 告诉 ESLint 去忽略特定的文件和目录
@@ -253,7 +241,6 @@ ESLint 附带有大量的规则。
 ``` txt
 **/*.js
 ```
-
 
 ## 四、深入理解 ESLint 插件
 
@@ -297,7 +284,6 @@ ESLint 支持使用第三方插件。在使用插件之前，你必须使用 npm
 }
 ```
 
-
 使用插件提供的 Environments：确保提前在 plugins 数组里指定了插件名，然后在 env 配置中不带前缀的插件名后跟一个 / ，紧随着环境名。例如：
 
 ``` json {2,4}
@@ -309,7 +295,6 @@ ESLint 支持使用第三方插件。在使用插件之前，你必须使用 npm
 }
 ```
 
-
 使用插件提供的 Environments：由插件名和 processor 名组成的串接字符串加上斜杠。
 
 例如，下面的选项启用插件 a-plugin 提供的processor： a-processor：
@@ -320,7 +305,6 @@ ESLint 支持使用第三方插件。在使用插件之前，你必须使用 npm
     "processor": "a-plugin/a-processor"
 }
 ```
-
 
 要为特定类型的文件指定processor，请使用 overrides 和 processor 的组合。
 
@@ -337,4 +321,3 @@ ESLint 支持使用第三方插件。在使用插件之前，你必须使用 npm
   ]
 }
 ```
-

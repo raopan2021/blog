@@ -49,4 +49,3 @@ docker rm nginx
 # 发现无法删除，因为容器运行中，强制删除容器
 docker rm -f nginx
 ```
-

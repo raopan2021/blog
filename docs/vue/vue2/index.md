@@ -39,7 +39,6 @@ pnpm run build
 pnpm run preview
 ```
 
-
 ::: tip 开发环境
 
 > node v16.13.1（大于 14 版本即可）

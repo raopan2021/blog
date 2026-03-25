@@ -13,7 +13,6 @@ console.log(p)  // Person { name: 'Jack' }
 console.log(p.name)  // Jack
 ```
 
-
 从下面的代码中可以看到，我们没有使用 new 这个关键词，返回的结果就是 undefined。
 
 > js在默认情况下 this 的指向是 window，那么 name 的输出结果就为 Jack，这是一种不存在 new 关键词的情况。
@@ -28,7 +27,6 @@ console.log(name) // Jack
 console.log(p.name) // 'name' of undefined
 ```
 
-
 当构造函数最后 return 出来的是一个和 this 无关的对象时，new 命令会直接返回这个新对象，而不是通过 new 执行步骤生成的 this 对象
 
 ```js
@@ -42,7 +40,6 @@ console.log(p.name) // undefined
 console.log(p.age) // 18
 ```
 
-
 当构造函数中 return 的不是一个对象时，那么它还是会根据 new 关键词的执行逻辑，生成一个新的对象（绑定了最新 this），最后返回出来。
 
 ```js
@@ -54,7 +51,6 @@ var p = new Person();
 console.log(p)  // {name: 'Jack'}
 console.log(p.name) // Jack
 ```
-
 
 
 
@@ -81,5 +77,4 @@ function _new(){
 	return target 
 }
 ```
-
 

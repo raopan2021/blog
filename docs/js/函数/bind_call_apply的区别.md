@@ -21,14 +21,12 @@ var obj = {
 }
 ```
 
-
 ```js
 obj.myFun.call(db,'成都','上海');　　　　 // 德玛 年龄 99  来自 成都去往上海
 obj.myFun.apply(db,['成都','上海']);      // 德玛 年龄 99  来自 成都去往上海  
 obj.myFun.bind(db,'成都','上海')();       // 德玛 年龄 99  来自 成都去往上海
 obj.myFun.bind(db,['成都','上海'])();　　 // 德玛 年龄 99  来自 成都, 上海去往 undefined
 ```
-
 
 Call:传入参数数列
 

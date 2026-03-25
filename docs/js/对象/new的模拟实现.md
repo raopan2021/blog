@@ -37,7 +37,6 @@ console.log(person.strength) // 60
 person.sayYourName(); // I am Kevin
 ```
 
-
 从这个例子中，我们可以看到，实例 person 可以：
 
 1. 访问到 Otaku 构造函数里的属性
@@ -57,7 +56,6 @@ var person = new Otaku(……);
 // 使用 objectFactory
 var person = objectFactory(Otaku, ……)
 ```
-
 
 ## 初步实现
 
@@ -85,7 +83,6 @@ function objectFactory() {
 
 };
 ```
-
 
 在这一版中，我们：
 
@@ -136,7 +133,6 @@ console.log(person.strength) // 60
 person.sayYourName(); // I am Kevin
 ```
 
-
 []\~(￣▽￣)\~**
 
 ## 返回值效果实现
@@ -163,7 +159,6 @@ console.log(person.age) // undefined
 
 ```
 
-
 在这个例子中，构造函数返回了一个对象，在实例 person 中只能访问返回的对象中的属性。
 
 而且还要注意一点，在这里我们是返回了一个对象，假如我们只是返回一个基本类型的值呢？
@@ -185,7 +180,6 @@ console.log(person.habit) // undefined
 console.log(person.strength) // 60
 console.log(person.age) // 18
 ```
-
 
 结果完全颠倒过来，这次尽管有返回值，但是相当于没有返回值进行处理。
 
@@ -209,7 +203,6 @@ function objectFactory() {
 
 };
 ```
-
 
 ## 下一篇文章
 

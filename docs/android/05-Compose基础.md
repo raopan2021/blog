@@ -21,7 +21,6 @@ incrementBtn.setOnClickListener {
 }
 ```
 
-
 声明式 UI（Compose）不需要手动同步状态：
 
 ```kotlin
@@ -37,7 +36,6 @@ fun Counter() {
     }
 }
 ```
-
 
 <!-- more -->
 
@@ -62,7 +60,6 @@ fun UserCard(user: User) {
     }
 }
 ```
-
 
 ::: tip 命名规范
 Composable 函数首字母大写（像类名一样），因为它们代表 UI"组件"。
@@ -99,7 +96,6 @@ fun Counter() {
 }
 ```
 
-
 ### `by` 委托语法
 
 ```kotlin
@@ -120,7 +116,6 @@ fun MyComponent(countState: State<Int>) {
     Text("${countState.value}")
 }
 ```
-
 
 ## 布局组件
 
@@ -145,7 +140,6 @@ fun MyColumn() {
 }
 ```
 
-
 ### Row（水平布局）
 
 ```kotlin
@@ -163,7 +157,6 @@ fun MyRow() {
 }
 ```
 
-
 ### Box（层叠布局）
 
 ```kotlin
@@ -178,7 +171,6 @@ fun MyBox() {
     }
 }
 ```
-
 
 ### 常用修饰符速查
 
@@ -217,7 +209,6 @@ import com.apiapp.api_quota_helper.ui.Icons2
 Icon(Icons2.Add(), contentDescription = "添加")
 ```
 
-
 ### Icons2 实现原理
 
 ```kotlin
@@ -239,7 +230,6 @@ object Icons2 {
 Icon(painter = Icons2.Add(), contentDescription = "添加")
 ```
 
-
 ### vector drawable 图标文件
 
 图标存放在 `app/src/main/res/drawable/` 目录下：
@@ -256,7 +246,6 @@ Icon(painter = Icons2.Add(), contentDescription = "添加")
         android:pathData="M19,13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
 </vector>
 ```
-
 
 ::: tip 图标体积优化技巧
 如果你的应用只需要少量图标，自定义 vector drawable 是很好的选择：
@@ -301,7 +290,6 @@ fun AccountList(accounts: List<AccountWithQuota>) {
 }
 ```
 
-
 ::: tip 为什么用 LazyColumn？
 普通 Column 会一次性创建所有子元素。LazyColumn 只创建屏幕上可见的元素（+缓冲），滚动时动态复用，大列表性能差异巨大。
 :::
@@ -340,7 +328,6 @@ fun MainScreen(viewModel: MainViewModel) {
     }
 }
 ```
-
 
 ## 卡片 Card
 
@@ -415,7 +402,6 @@ fun AccountCard(
 }
 ```
 
-
 ## 对话框 AlertDialog
 
 ```kotlin
@@ -445,7 +431,6 @@ fun DeleteConfirmDialog(
     )
 }
 ```
-
 
 ## 组件通信
 
@@ -483,5 +468,4 @@ fun AccountCard(
     }
 }
 ```
-
 

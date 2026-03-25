@@ -26,7 +26,6 @@ Claude 是由 Anthropic 公司开发的大语言模型，通过官方提供的 A
 pip install anthropic
 ```
 
-
 ### 基础调用
 
 ```python
@@ -50,7 +49,6 @@ message = client.messages.create(
 print(message.content)
 ```
 
-
 ### 响应结构
 
 ```python
@@ -63,7 +61,6 @@ print(message.model)        # 使用的模型
 print(message.stop_reason)  # 停止原因: "end_turn", "stop_sequence", "max_tokens"
 print(message.usage)        # token 使用量
 ```
-
 
 ## 消息内容结构
 
@@ -104,7 +101,6 @@ message = client.messages.create(
 )
 ```
 
-
 ## System Prompt
 
 使用 system 参数设置系统级指令：
@@ -119,7 +115,6 @@ message = client.messages.create(
     ]
 )
 ```
-
 
 ### 带样式的 System Prompt
 
@@ -138,7 +133,6 @@ SYSTEM_PROMPT = """你是一个资深技术作家。
 - 重要术语用 **bold**
 """
 ```
-
 
 ## 多轮对话
 
@@ -160,7 +154,6 @@ messages.append({"role": "assistant", "content": message.content[0].text})
 messages.append({"role": "user", "content": "复杂度是多少？"})
 ```
 
-
 ## 流式输出
 
 ```python
@@ -172,7 +165,6 @@ with client.messages.stream(
     for text in stream.text_stream:
         print(text, end="", flush=True)
 ```
-
 
 ### 完整事件流
 
@@ -188,7 +180,6 @@ with client.messages.stream(
         elif event.type == "message_stop":
             print("\n--- 生成完成 ---")
 ```
-
 
 ## 工具使用（Tool Use）
 
@@ -224,7 +215,6 @@ tools = [
     }
 ]
 ```
-
 
 ### 使用工具
 
@@ -264,7 +254,6 @@ for tool_call in message.tool_calls:
         print(tool_result.content[0].text)
 ```
 
-
 ## 错误处理
 
 ```python
@@ -283,7 +272,6 @@ except APIStatusError as e:
 except APIError as e:
     print(f"API 错误: {e}")
 ```
-
 
 ## Token 计算
 
@@ -305,7 +293,6 @@ messages = [
 count = client.count_tokens(messages)
 print(f"消息 token 数: {count}")
 ```
-
 
 ## 与 OpenAI 兼容调用
 
@@ -333,7 +320,6 @@ response = client.chat.completions.create(
 )
 ```
 
-
 ## 使用 claude-cli（命令行工具）
 
 ```bash
@@ -355,7 +341,6 @@ claude -s "写一个快速排序"
 # 指定模型
 claude -m opus "解释量子计算"
 ```
-
 
 ## 最佳实践
 

@@ -50,12 +50,10 @@ touch tsconfig.json
 touch .gitignore
 ```
 
-
 ```yaml [pnpm-workspace.yaml]
 packages:
   - 'apps/*'
 ```
-
 
 ```json [tsconfig.json]
 {
@@ -82,7 +80,6 @@ packages:
 }
 ```
 
-
 ```ini [.gitignore]
 node_modules/
 .DS_Store
@@ -93,7 +90,6 @@ build/
 *.iml
 ```
 
-
 ### 创建主应用（Vue 3）
 
 ```sh
@@ -103,7 +99,6 @@ cd main-app
 pnpm install
 pnpm add wujie-vue3
 ```
-
 
 编辑`src/main.ts`
 
@@ -116,7 +111,6 @@ const app = createApp(App)
 app.use(router)
 app.mount('#app')
 ```
-
 
 编辑`src/App.vue`
 
@@ -157,7 +151,6 @@ nav a.router-link-active {
 </style>
 ```
 
-
 编辑`src/router/index.ts`
 
 ```ts
@@ -192,7 +185,6 @@ const router = createRouter({
 export default router
 ```
 
-
 创建`src/views/Home.vue`
 
 ```vue
@@ -211,7 +203,6 @@ export default router
 </style>
 ```
 
-
 编辑`vite.config.ts`
 
 ```ts
@@ -226,7 +217,6 @@ export default defineConfig({
 })
 ```
 
-
 ## 子应用构建
 
 ### 子应用① React18
@@ -238,7 +228,6 @@ cd child-react18
 pnpm install
 ```
 
-
 新建`.env`文件
 
 ```ini
@@ -247,7 +236,6 @@ HOST=localhost
 PORT=3100
 PUBLIC_URL='/child-react18'
 ```
-
 
 编辑`src/index.tsx`
 
@@ -288,7 +276,6 @@ export function unmount() {
   ReactDOM.createRoot(document.getElementById('root')!).unmount()
 }
 ```
-
 
 编辑`src/App.tsx`
 
@@ -346,7 +333,6 @@ function App() {
 export default App
 ```
 
-
 编辑`src/index.css`
 
 ```css
@@ -377,7 +363,6 @@ export default App
 }
 ```
 
-
 ### 子应用② Vue2
 
 ```sh
@@ -387,14 +372,12 @@ cd child-vue2
 pnpm install
 ```
 
-
 新建`.env`文件
 
 ```ini
 VUE_APP_HOST=localhost
 VUE_APP_PORT=3200
 ```
-
 
 编辑`vue.config.js`
 
@@ -413,7 +396,6 @@ module.exports = defineConfig({
 })
 ```
 
-
 编辑`public/index.html`
 
 ```html
@@ -427,7 +409,6 @@ module.exports = defineConfig({
   </head>
 </html>
 ```
-
 
 编辑`src/main.js`
 
@@ -468,7 +449,6 @@ if (!window.__POWERED_BY_WUJIE__) {
 }
 ```
 
-
 编辑`src/router/index.js`
 
 ```js
@@ -494,7 +474,6 @@ const router = new VueRouter({
 
 export default router
 ```
-
 
 编辑`src/App.vue`
 
@@ -565,7 +544,6 @@ button {
 </style>
 ```
 
-
 创建`src/components/Home.vue`
 
 ```vue
@@ -588,7 +566,6 @@ export default {
 </style>
 ```
 
-
 ### 子应用③ Vue3
 
 ```sh
@@ -598,14 +575,12 @@ cd child-vue3
 pnpm install
 ```
 
-
 新建`.env`文件
 
 ```ini
 VITE_APP_HOST=localhost
 VITE_APP_PORT=3300
 ```
-
 
 编辑`vite.config.ts`
 
@@ -626,7 +601,6 @@ export default defineConfig({
 })
 ```
 
-
 编辑`index.html`
 
 ```html
@@ -640,7 +614,6 @@ export default defineConfig({
   </head>
 </html>
 ```
-
 
 编辑`src/main.ts`
 
@@ -675,7 +648,6 @@ if (!window.__POWERED_BY_WUJIE__) {
 }
 ```
 
-
 编辑`src/router/index.ts`
 
 ```ts
@@ -698,7 +670,6 @@ export default createRouter({
   routes,
 })
 ```
-
 
 编辑`src/App.vue`
 
@@ -769,7 +740,6 @@ button {
 </style>
 ```
 
-
 创建`src/components/Home.vue`
 
 ```vue
@@ -789,7 +759,6 @@ button {
 }
 </style>
 ```
-
 
 ## 主应用使用 WujieVue
 
@@ -844,7 +813,6 @@ const onMounted = () => {
 </style>
 ```
 
-
 编辑`src/views/ChildVue2App.vue`
 
 ```vue
@@ -888,7 +856,6 @@ const handleChange = (data: any) => {
 }
 </style>
 ```
-
 
 编辑`src/views/ChildVue3App.vue`
 
@@ -934,7 +901,6 @@ const handleChange = (data: any) => {
 </style>
 ```
 
-
 ## setupApp 预加载配置
 
 在主应用入口配置预加载，可以提升子应用首次加载速度
@@ -975,7 +941,6 @@ preloadApp({ name: 'child-react18' }) // [!code ++]
 preloadApp({ name: 'child-vue3' }) // [!code ++]
 ```
 
-
 ## 子应用通信
 
 ### 主应用发送数据给子应用
@@ -994,7 +959,6 @@ preloadApp({ name: 'child-vue3' }) // [!code ++]
 ></WujieVue>
 ```
 
-
 子应用接收
 
 ```ts
@@ -1009,7 +973,6 @@ onMounted(() => {
 })
 ```
 
-
 ### 子应用发送数据给主应用
 
 通过`$wujie.bus`发送事件
@@ -1022,7 +985,6 @@ window.$wujie?.bus?.$emit('child-msg', {
   data: '来自子应用的消息',
 })
 ```
-
 
 主应用监听
 
@@ -1044,7 +1006,6 @@ const handleChildMsg = (data: any) => {
 </script>
 ```
 
-
 ## 降级模式
 
 wujie 默认使用 Web Component 沙箱，在不支持的环境下会自动降级为 iframe
@@ -1061,7 +1022,6 @@ wujie 默认使用 Web Component 沙箱，在不支持的环境下会自动降�
 ></WujieVue>
 ```
 
-
 ### 判断当前模式
 
 ```ts
@@ -1072,7 +1032,6 @@ if (window.__POWERED_BY_WUJIE__) {
   console.log('当前模式:', mode)
 }
 ```
-
 
 ## 生命周期
 
@@ -1112,7 +1071,6 @@ const onUnmounted = () => {
 </script>
 ```
 
-
 ### 子应用生命周期
 
 ```ts
@@ -1130,7 +1088,6 @@ export function unmount() {
 }
 ```
 
-
 ## 常见问题
 
 ### 1. 子应用样式丢失
@@ -1146,7 +1103,6 @@ background: url('./assets/logo.png');
 /* 或使用相对路径 */
 ```
 
-
 ### 2. 子应用静态资源 404
 
 确保子应用的 base 配置正确
@@ -1157,7 +1113,6 @@ export default defineConfig({
   base: '/child-vue3', // 必须与主应用路由一致
 })
 ```
-
 
 ### 3. 跨域问题
 
@@ -1174,7 +1129,6 @@ export default defineConfig({
 })
 ```
 
-
 ### 4. 子应用路由跳转
 
 wujie 支持子应用使用自己的路由系统，确保 base 配置正确
@@ -1189,7 +1143,6 @@ createRouter({
 })
 ```
 
-
 ### 5. 全局变量冲突
 
 wujie 提供了沙箱隔离，但如果仍有冲突，可以在子应用中使用 IIFE 包裹代码
@@ -1201,7 +1154,6 @@ wujie 提供了沙箱隔离，但如果仍有冲突，可以在子应用中使�
   console.log(myVar)
 })()
 ```
-
 
 ## 部署
 
@@ -1248,7 +1200,6 @@ server {
 }
 ```
 
-
 ### Docker 部署
 
 在项目根目录新建`Dockerfile`
@@ -1279,7 +1230,6 @@ COPY nginx.conf /etc/nginx/conf.d/default.conf
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
 ```
-
 
 ---
 

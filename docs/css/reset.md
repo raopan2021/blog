@@ -24,7 +24,6 @@ a,a:hover{color:#333;}
 
 ```
 
-
 ## 去除input默认填充的背景颜色
 
 ```css
@@ -32,7 +31,6 @@ input:-webkit-autofill {
   -webkit-box-shadow: 0 0 0px 1000px white inset;
 }
 ```
-
 
 ## 清除input[type=number]的默认样式
 
@@ -49,14 +47,12 @@ input[type=number]::-webkit-outer-spin-button {
 
 ```
 
-
 ## 清除移动端 a 标签等点击区域变色
 ```css
 *{
   -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
 }
 ```
-
 
 ## 清除移动端 input 样式
 ```css
@@ -70,14 +66,12 @@ input{
 }
 ```
 
-
 ## 避免ios滑动滚动条卡顿
 ```css
 *{
   -webkit-overflow-scrolling : touch
 }
 ```
-
 
 ## 一次搞定
 
@@ -127,4 +121,3 @@ input {
   }
 }
 ```
-

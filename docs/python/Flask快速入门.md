@@ -6,7 +6,6 @@
 pip install flask
 ```
 
-
 ## 最小应用
 
 ```python
@@ -21,7 +20,6 @@ def hello():
 if __name__ == "__main__":
     app.run(debug=True, port=5000)
 ```
-
 
 ## 路由
 
@@ -42,7 +40,6 @@ def post(post_id):
 def catch_all(subpath):
     return f"路径: {subpath}"
 ```
-
 
 ## 请求与响应
 
@@ -78,7 +75,6 @@ def new_url():
     return "新页面"
 ```
 
-
 ## 模板渲染
 
 ```python
@@ -103,7 +99,6 @@ def index():
 # {% endif %}
 ```
 
-
 ## 蓝图（Blueprint）
 
 ```python
@@ -127,7 +122,6 @@ def get_post(post_id):
     return {"id": post_id, "title": "示例文章"}
 ```
 
-
 ## 中间件
 
 ```python
@@ -148,7 +142,6 @@ def after(response):
     return response
 ```
 
-
 ## 错误处理
 
 ```python
@@ -160,7 +153,6 @@ def not_found(e):
 def server_error(e):
     return {"error": "服务器错误"}, 500
 ```
-
 
 ---
 

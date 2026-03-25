@@ -99,7 +99,6 @@ var fooReference = {
 };
 ```
 
-
 再举个例子：
 
 ```js
@@ -118,7 +117,6 @@ var BarReference = {
     strict: false
 };
 ```
-
 
 而且规范中还提供了获取 Reference 组成部分的方法，比如 GetBase 和 IsPropertyReference。
 
@@ -153,7 +151,6 @@ var fooReference = {
 
 GetValue(fooReference) // 1;
 ```
-
 
 GetValue 返回对象属性真正的值，但是要注意：
 
@@ -241,7 +238,6 @@ foo.bar(); // MemberExpression 是 foo.bar
 
 ```
 
-
 所以简单理解 MemberExpression 其实就是()左边的部分。
 
 2.判断 ref 是不是一个 Reference 类型。
@@ -272,7 +268,6 @@ console.log((false || foo.bar)());
 console.log((foo.bar, foo.bar)());
 ```
 
-
 ### foo.bar()
 
 在示例 1 中，MemberExpression 计算的结果是 foo.bar，那么 foo.bar 是不是一个 Reference 呢？
@@ -293,7 +288,6 @@ var Reference = {
 };
 ```
 
-
 接下来按照 2.1 的判断流程走：
 
 >2.1 如果 ref 是 Reference，并且 IsPropertyReference(ref) 是 true, 那么 this 的值为 GetBase(ref)
@@ -310,7 +304,6 @@ base value 为 foo，是一个对象，所以 IsPropertyReference(ref) 结果为
 this = GetBase(ref)，
 ```
 
-
 GetBase 也已经铺垫了，获得 base value 值，这个例子中就是foo，所以 this 的值就是 foo ，示例1的结果就是 2！
 
 唉呀妈呀，为了证明 this 指向foo，真是累死我了！但是知道了原理，剩下的就更快了。
@@ -322,7 +315,6 @@ GetBase 也已经铺垫了，获得 base value 值，这个例子中就是foo，
 ```js
 console.log((foo.bar)());
 ```
-
 
 foo.bar 被 () 包住，查看规范 11.1.6 The Grouping Operator
 
@@ -398,7 +390,6 @@ console.log((foo.bar, foo.bar)()); // 1
 
 ```
 
-
 注意：以上是在非严格模式下的结果，严格模式下因为 this 返回 undefined，所以示例 3 会报错。
 
 ### 补充
@@ -413,7 +404,6 @@ function foo() {
 foo(); 
 ```
 
-
 MemberExpression 是 foo，解析标识符，查看规范 10.3.1 Identifier Resolution，会返回一个 Reference 类型的值：
 
 ```js
@@ -423,7 +413,6 @@ var fooReference = {
     strict: false
 };
 ```
-
 
 接下来进行判断：
 
@@ -456,7 +445,6 @@ var foo = {
 }
 console.log((false || foo.bar)()); // 1
 ```
-
 
 此外，又如何确定调用函数的对象是谁呢？在写文章之初，我就面临着这些问题，最后还是放弃从多个情形下给大家讲解 this 指向的思路，而是追根溯源的从 ECMASciript 规范讲解 this 的指向，尽管从这个角度写起来和读起来都比较吃力，但是一旦多读几遍，明白原理，绝对会给你一个全新的视角看待 this 。而你也就能明白，尽管 foo() 和 (foo.bar = foo.bar)() 最后结果都指向了 undefined，但是两者从规范的角度上却有着本质的区别。
 

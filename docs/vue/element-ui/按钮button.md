@@ -10,11 +10,9 @@
 <el-button id="clearButton" @click="clearAlarm">清除报警</el-button>
 ```
 
-
 ```js
 clearAlarm(){
 	document.getElementById("clearButton").blur(); // 强制给button失焦
 }
 ```
-
 

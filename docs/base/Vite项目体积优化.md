@@ -12,7 +12,6 @@
 npm i rollup-plugin-visualizer -D
 ```
 
-
 ``` js {2,6-8}
 import { defineConfig } from "vite";
 import { visualizer } from "rollup-plugin-visualizer";
@@ -25,7 +24,6 @@ export default defineConfig({
   ],
 });
 ```
-
 
 `npm run build` 后，在项目根目录生成 `stats.html` 文件。
 
@@ -63,7 +61,6 @@ build: {
 }
 ```
 
-
 ## `Gzip` 压缩
 
 `Gzip` 压缩使用 `vite-plugin-compression` 插件， 压缩后减小代码体积，提升加载性能
@@ -73,7 +70,6 @@ build: {
 ``` js
 npm install vite-plugin-compression -D
 ```
-
 
 ::: details 项目配置gzip
 
@@ -91,7 +87,6 @@ viteCompression({
 })
 ```
 
-
 :::
 
 压缩 gz 后缀文件，浏览器正常解析，需要 配置 nginx http 请求，告诉浏览器支持的类型，设置响应头 content-encoding: gzip 。
@@ -107,7 +102,6 @@ http {
 }
 ```
 
-
 :::
 
 ## 图片压缩
@@ -117,7 +111,6 @@ http {
 ``` js
 npm i vite-plugin-imagemin -D
 ```
-
 
 ::: details vite.config.ts
 
@@ -158,7 +151,6 @@ export default  ({ mode }) => defineConfig({
 })
 ```
 
-
 :::
 
 使用后，可以看到图片的压缩比例
@@ -176,7 +168,6 @@ import { cloneDeep } from 'lodash'
 const obj = cloneDeep({})
 ```
 
-
 上面 lodash 是使用 CommonJS 规范的模块，所以无法进行 treeshaking ，Vue 会把整个 lodash 依赖打包进来，整个文件会特别大。
 
 所以，需要更改为使用 ESM 版的 loadsh ，实现按需引入
@@ -185,7 +176,6 @@ const obj = cloneDeep({})
 import { cloneDeep } from 'lodash-es'
 const obj = cloneDeep({})
 ```
-
 
 # 删除不被使用的图片资源
 
@@ -244,7 +234,6 @@ function searchFileInDirectory(directory, searchTerm) {
 findUnusedImages(imageDir);
 ```
 
-
 ## CDN 加速
 
 通过配置 CDN 让用户从最近的服务器请求资源，提升网络请求的响应速度。
@@ -274,7 +263,6 @@ module.exports = {
 }
 ```
 
-
 2）在 index.html 中使用 CDN 引入依赖
 
 ``` html
@@ -285,7 +273,6 @@ module.exports = {
   <script src="http://lib.baomitu.com/echarts/5.3.2/echarts.min.js"></script>
 </body>
 ```
-
 
 缺点：直接在html内引入的，失去了按需引入的功能，只能引入组件库完整的js和css
 
@@ -315,14 +302,12 @@ export default defineConfig({
 })
 ```
 
-
 在代码中使用lodash
 
 ``` js
 import _ from 'lodash'
 const obj = _.cloneDeep({})
 ```
-
 
 构建成功后，Vite 会自动帮我们将 cdn 资源通过 script 标签插入到 html 中
 :::
@@ -343,7 +328,6 @@ const router = createRouter({
 })
 ```
 
-
 ## 开启HTTP2
 
 浏览器有请求并发限制，一般是 6 个，超过限制请求需要排队，之前可以通过域名分发、资源合并来解决
@@ -360,7 +344,6 @@ listen 443 http2;
 nginx -s stop && nginx
 ```
 
-
 <img src="/Vite项目体积优化/1.webp">
 
 ## 去除debugger 和 console
@@ -375,13 +358,11 @@ build: {
 }
 ```
 
-
 ::: details 第二种方法，使用 terser 插件
 
 ``` js
 npm i terser -D
 ```
-
 
 在 `vite.config.ts` 中配置插件
 
@@ -398,7 +379,6 @@ build: {
   }
 }
 ```
-
 
 :::
 
@@ -609,7 +589,6 @@ export default defineConfig(({ command, mode }) => {
 })
 ```
 
-
 :::
 
 ## Vite 常用配置解释
@@ -740,6 +719,5 @@ export default defineConfig(({ command, mode }) => {
   }
 }
 ```
-
 
 :::

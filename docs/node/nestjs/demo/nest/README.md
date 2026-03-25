@@ -8,7 +8,6 @@
 pnpm install
 ```
 
-
 ## 运行
 
 ```bash
@@ -22,7 +21,6 @@ pnpm run start:dev
 pnpm run start:prod
 ```
 
-
 ## 项目目录
 
 ```txt
@@ -31,6 +29,5 @@ pnpm run start:prod
     | --- user 模块
 
 ```
-
 
 这是一个`nestjs`上手项目，可以参考 [文档](https://raopan2021.github.io/NESTJS/modules/)

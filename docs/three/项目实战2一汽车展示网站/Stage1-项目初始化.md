@@ -11,11 +11,9 @@ mkdir -p projects/car-showcase-su7
 cd projects/car-showcase-su7
 ```
 
-
 ## 1.2 目录结构
 
 ```
-
 car-showcase-su7/
 ├── index.html              # 入口 HTML 页面
 ├── package.json           # 依赖配置文件
@@ -48,7 +46,6 @@ car-showcase-su7/
 └── src/
     └── main.js           # 主入口文件（约 650 行）
 ```
-
 
 ## 1.3 资源来源
 
@@ -89,13 +86,11 @@ car-showcase-su7/
 }
 ```
 
-
 安装：
 
 ```bash
 pnpm install
 ```
-
 
 ## 1.5 Vite 配置
 
@@ -120,7 +115,6 @@ export default defineConfig({
   },
 })
 ```
-
 
 ## 1.6 依赖说明
 
@@ -149,13 +143,11 @@ pnpm build
 pnpm preview
 ```
 
-
 ## 1.8 资源加载顺序
 
 本项目的资源较多（3D 模型 + HDR + 贴图），加载顺序如下：
 
 ```
-
 1. HDR 环境贴图（2个）
    ↓
 2. GLTF 模型（3个：汽车、展厅、加速特效）
@@ -168,7 +160,6 @@ pnpm preview
    ↓
 6. 播放 LOADING → 进场动画
 ```
-
 
 > 💡 **Tip**：由于资源较大（15MB+），实际项目可以添加加载进度条显示百分比。本项目的简化版本直接等待固定时间后切换。
 

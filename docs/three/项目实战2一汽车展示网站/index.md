@@ -79,13 +79,11 @@ graph TD
     style C fill:#10b981,color:#fff
 ```
 
-
 ## 项目结构
 
 重构后的项目采用 TypeScript 模块化架构，`src/` 目录结构如下：
 
 ```
-
 car-showcase/
 ├── index.html              # 入口 HTML（LOADING 动画 CSS）
 ├── package.json           # 依赖
@@ -126,11 +124,9 @@ car-showcase/
     │       └── Furina.ts    # 芙宁插件（待用）
 ```
 
-
 ### 架构设计思路
 
 ```
-
 main.ts
   └── Experience（主体验类）
         ├── Debug（调试面板）
@@ -143,7 +139,6 @@ main.ts
         │     └── CameraShake（相机抖动）
         └── resources（资源清单）
 ```
-
 
 采用这种分层设计的好处：
 - **Experience** 是所有效果的协调者，不直接操作 3D 对象
@@ -202,7 +197,6 @@ pnpm dev
 pnpm build
 ```
 
-
 ## 下载项目
 
 > ⚠️ 汽车展示项目含外部资源（GLTF/HDR/音频），部署时需将 dist 下的所有文件一起部署
@@ -221,7 +215,6 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 const controls = new OrbitControls(camera, renderer.domElement)
 controls.enableDamping = true
 ```
-
 
 ### 练习 2：参数 HUD 面板
 用 lil-gui 实时调节 Bloom 强度、相机抖动幅度等参数。

@@ -10,7 +10,6 @@
 npm install @microsoft/fetch-event-source
 ```
 
-
 ::: code-group
 
 ```vue [demo.vue]
@@ -55,7 +54,6 @@ const stopFetch = ()=>{
 </template>
 ```
 
-
 ```js [node.js]
 // const http = require('http');
 import http from 'http';
@@ -96,6 +94,5 @@ server.listen(3000,() => {
 });
 
 ```
-
 
 :::

@@ -23,7 +23,6 @@ const buf6 = Buffer.alloc(10, 'a')
 const buf7 = Buffer.alloc(10, 0x41) // 十六进制
 ```
 
-
 ## Buffer 与 String 互转
 
 ```js
@@ -40,7 +39,6 @@ console.log(bufGbk.toString('gbk')) // '你好'
 
 // 支持的编码: utf8, hex, base64, latin1, gbk, ...
 ```
-
 
 ## Buffer 常用操作
 
@@ -82,7 +80,6 @@ console.log(buf.includes(104)) // true（包含 'h' 的字节值）
 console.log(buf.includes('hello')) // false（不能直接用字符串）
 ```
 
-
 ## Buffer 与 JSON
 
 ```js
@@ -97,7 +94,6 @@ console.log(json)
 const restored = Buffer.from(json.data)
 console.log(restored.toString()) // 'hello'
 ```
-
 
 ## 进制转换
 
@@ -117,7 +113,6 @@ console.log(buf.toString('base64'))
 // aGVsbG8=
 ```
 
-
 ## 处理文件数据
 
 ```js
@@ -134,7 +129,6 @@ await writeFile('./output.png', buf)
 // 写入时指定编码（会进行编码转换）
 await writeFile('./text.txt', '你好世界', 'utf-8')
 ```
-
 
 ## 处理网络数据
 
@@ -162,7 +156,6 @@ const server = http.createServer((req, res) => {
 server.listen(3000)
 ```
 
-
 ## TypedArray 互转
 
 ```js
@@ -180,7 +173,6 @@ const arrayBuffer = buf.buffer.slice(
   buf.byteOffset + buf.byteLength
 )
 ```
-
 
 ## Buffer.split（分割）
 
@@ -210,7 +202,6 @@ parts.forEach(p => console.log(p.toString()))
 // world
 // node
 ```
-
 
 ## 注意事项
 

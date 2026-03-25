@@ -67,7 +67,6 @@ npm install <package>@latest   # 最新版
 npm install <package>@next    # 下一个大版本
 ```
 
-
 ## yarn 常用命令
 
 ```bash
@@ -104,7 +103,6 @@ yarn why <package>
 yarn cache clean
 ```
 
-
 ## pnpm 常用命令
 
 > pnpm 是新一代高性能包管理器，安装更快、磁盘空间利用率更高
@@ -137,7 +135,6 @@ pnpm config get registry
 pnpm config set registry https://registry.npmmirror.com
 ```
 
-
 ## 国内镜像配置
 
 ### npm 切换镜像
@@ -153,7 +150,6 @@ npm config set registry https://registry.npmmirror.com
 npm config set registry https://registry.npmjs.org
 ```
 
-
 ### pnpm 切换镜像
 
 ```bash
@@ -163,7 +159,6 @@ pnpm config get registry
 # 设置镜像
 pnpm config set registry https://registry.npmmirror.com
 ```
-
 
 ### 使用 nrm 快速切换镜像
 
@@ -181,7 +176,6 @@ nrm use npm
 # 测试镜像速度
 nrm test
 ```
-
 
 ## package.json 字段说明
 
@@ -212,7 +206,6 @@ nrm test
 }
 ```
 
-
 ## 语义化版本号
 
 版本格式：`主版本.次版本.修订号`
@@ -227,4 +220,3 @@ npm install vue@^3.0.0   # 安装 3.x.x 中最新版本
 npm install vue@~3.2.0   # 安装 3.2.x 中最新版本
 npm install vue@3.2.1    # 精确版本
 ```
-

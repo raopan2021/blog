@@ -36,22 +36,18 @@ public class ThreadDemo {
 }
 ```
 
-
 ## 线程状态
 
 ```
-
 NEW → RUNNABLE → BLOCKED/WAITING/TIMED_WAITING → TERMINATED
                         ↑         ↓
                    join()/wait()   notify()
 ```
 
-
 ```java
 Thread.State[] states = Thread.State.values();
 // NEW, RUNNABLE, BLOCKED, WAITING, TIMED_WAITING, TERMINATED
 ```
-
 
 ## synchronized 关键字
 
@@ -82,7 +78,6 @@ public void increment() {
 }
 ```
 
-
 ## synchronized 原理
 
 ```java
@@ -93,7 +88,6 @@ javap -c MyClass
 // 每个对象有一个 monitor，锁升级过程：
 // 偏向锁 → 自旋锁 → 重量级锁（OSmutex，不可interruptible）
 ```
-
 
 ## volatile 关键字
 
@@ -108,7 +102,6 @@ private volatile boolean flag = false;
 // - 写入时不依赖当前值（如初始化完成标记）
 // - 计数器不行（count++ 不是原子操作）
 ```
-
 
 ## CAS（Compare And Swap）
 
@@ -125,7 +118,6 @@ count.incrementAndGet();
 // 如果 V == expected，则 V = newValue，否则重试
 ```
 
-
 ### 常用原子类
 
 ```java
@@ -134,7 +126,6 @@ AtomicIntegerArray, AtomicLongArray
 AtomicReference<V>
 AtomicStampedReference  // 带版本号，防 ABA 问题
 ```
-
 
 ## JUC 并发工具包
 
@@ -170,7 +161,6 @@ if (lock.tryLock(5, TimeUnit.SECONDS)) {
 }
 ```
 
-
 ### CountDownLatch（倒计时门闩）
 
 ```java
@@ -192,7 +182,6 @@ latch.await();  // 阻塞，直到计数为0
 System.out.println("全部任务完成");
 ```
 
-
 ### CyclicBarrier（循环栅栏）
 
 ```java
@@ -211,7 +200,6 @@ for (int i = 0; i < 3; i++) {
     }).start();
 }
 ```
-
 
 ### Semaphore（信号量）
 
@@ -233,7 +221,6 @@ for (int i = 0; i < 10; i++) {
 }
 ```
 
-
 ### ConcurrentHashMap
 
 ```java
@@ -245,7 +232,6 @@ map.putIfAbsent("a", 2);  // 键不存在才插入
 map.computeIfAbsent("b", k -> 1);  // 懒计算
 map.getOrDefault("c", 0);  // 获取或默认值
 ```
-
 
 ## 线程池
 
@@ -273,7 +259,6 @@ pool.shutdown();      // 等待任务完成
 pool.shutdownNow();   // 立即中断
 ```
 
-
 ### 拒绝策略
 
 ```java
@@ -282,7 +267,6 @@ pool.shutdownNow();   // 立即中断
 // DiscardPolicy：丢弃
 // DiscardOldestPolicy：丢弃最老的
 ```
-
 
 ## 生产者-消费者模式
 
@@ -314,7 +298,6 @@ public class ProducerConsumer {
 }
 ```
 
-
 ## ThreadLocal
 
 ```java
@@ -326,6 +309,5 @@ tl.remove();               // 清理（重要！）
 
 // 常见用途：保存用户上下文、数据库连接、事务等
 ```
-
 
 [[返回 Java 首页|../index]]

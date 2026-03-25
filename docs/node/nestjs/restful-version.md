@@ -24,7 +24,6 @@ async function bootstrap() {
 bootstrap();
 ```
 
-
 然后在 user.controller 配置版本
 
 Controller 变成一个对象 通过 version 配置版本
@@ -44,7 +43,6 @@ export class UserController {
  ...
 }
 ```
-
 
 浏览器访问：http://localhost:3000/v1/user
 

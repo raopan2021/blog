@@ -8,13 +8,11 @@
 cp /etc/yum.repos.d/*.repo /etc/yum.repos.d/backup/
 ```
 
-
 ### 删除原有YUM仓库文件
 
 ```shell
 rm -rf /etc/yum.repos.d/CentOS-Base.repo
 ```
-
 
 ### 创建新的YUM源文件
 
@@ -23,7 +21,6 @@ rm -rf /etc/yum.repos.d/CentOS-Base.repo
 ```shell
 vi /etc/yum.repos.d/CentOS-Base.repo
 ```
-
 
 ### 添加YUM源配置
 
@@ -55,7 +52,6 @@ gpgcheck=1
 gpgkey=http://mirrors.aliyun.com/centos/RPM-GPG-Key-CentOS7
 ```
 
-
 ```shell [华为云的源]
 [base]
 name=CentOS-$releasever - Base - mirrors.huaweicloud.com
@@ -82,7 +78,6 @@ gpgcheck=1
 gpgkey=https://mirrors.huaweicloud.com/repository/centos/RPM-GPG-KEY
 ```
 
-
 :::
 
 ### 保存文件并退出
@@ -95,20 +90,17 @@ gpgkey=https://mirrors.huaweicloud.com/repository/centos/RPM-GPG-KEY
 yum clean all
 ```
 
-
 重新生成YUM缓存：
 
 ``` bash
 yum makecache
 ```
 
-
 验证YUM源是否更换成功：可以通过运行以下命令检查当前YUM源状态。
 
 ``` bash
 yum repolist
 ```
-
 
 您应该会看到使用的新源的名称以及可用的包数量。
 
@@ -119,4 +111,3 @@ yum install wget -y
 yum install curl -y
 yum install git -y
 ```
-

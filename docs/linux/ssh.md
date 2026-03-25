@@ -25,7 +25,6 @@ Host CentOS7
     IdentityFile C:\Users\raopan\.ssh\id_rsa
 ```
 
-
 ## 服务器centos开启ssh
 
 修改 /etc/ssh/sshd_config 文件以调整配置
@@ -45,7 +44,6 @@ PubkeyAuthentication yes
 AuthorizedKeysFile .ssh/authorized_keys
 ```
 
-
 重启ssh服务
 
 ```bash {6}
@@ -64,13 +62,11 @@ systemctl status sshd.service
 #            └─972 /usr/sbin/sshd -D
 ```
 
-
 配置ssh服务开机自启动
 
 ```bash
 systemctl enable sshd.service
 ```
-
 
 ## 免密登录
 
@@ -79,7 +75,6 @@ systemctl enable sshd.service
 ```bash
 ssh-keygen -t rsa
 ```
-
 
 ```bash
 # 一直回车，生成在 C:\Users\raopan\.ssh 目录下
@@ -106,7 +101,6 @@ The key's randomart image is:
 +----[SHA256]-----+
 ```
 
-
 ### 将公钥复制到服务器上
 
 在 linux root/.ssh目录下，生成authorized_keys文件
@@ -115,17 +109,14 @@ The key's randomart image is:
 touch ~/.ssh/authorized_keys
 ```
 
-
 将 id_rsa.pub 复制到 linux root/.ssh 目录下，copy到authorized_keys文件
 
 ```bash
 cat id_rsa.pub >> authorized_keys
 ```
 
-
 将文件权限修改 600
 
 ```bash
 chmod 600 .ssh/authorized_keys
 ```
-

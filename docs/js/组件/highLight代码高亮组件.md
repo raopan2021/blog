@@ -10,14 +10,12 @@
 <highlightjs v-show="code !=''" autodetect :code="code" />
 ```
 
-
 ```json [package.json]
 "dependencies": {
   "highlight.js":"^11.8.0",
   "@highlightjs/vue-plugin":"^2.1.0",
 }
 ```
-
 
 ```js [main.js]
 // highlight 的样式，依赖包，组件
@@ -53,6 +51,5 @@ hljs.registerLanguage('php', php);
 
 app.use(router).use(DevUl).use(pinia).use(hljsVuePlugin)
 ```
-
 
 :::

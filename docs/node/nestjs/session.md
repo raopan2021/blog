@@ -10,13 +10,11 @@ session 模块用于管理用户会话，包括登录、登出、获取用户信
 npm i express-session --save
 ```
 
-
 需要智能提示可以装一个声明依赖
 
 ```bash
 npm i @types/express-session -D
 ```
-
 
 然后在 main.ts 引入 通过 app.use 注册 session
 
@@ -25,7 +23,6 @@ import * as session from 'express-session'
 
 app.use(session())
 ```
-
 
 ## 参数配置详解
 
@@ -55,7 +52,6 @@ async function bootstrap() {
     ...
 }
 ```
-
 
 ## 使用
 
@@ -104,4 +100,3 @@ export class UserController {
     ...
 }
 ```
-

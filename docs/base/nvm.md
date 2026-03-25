@@ -20,13 +20,11 @@
 nvm version
 ```
 
-
 显示可下载版本的部分列表
 
 ```js
 nvm list available 
 ```
-
 
 下载14.0.0版本的node
 
@@ -34,20 +32,17 @@ nvm list available
 nvm install 14.0.0
 ```
 
-
 使用14.0.0版本的node
 
 ```js
 nvm use 14.0.0 
 ```
 
-
 列出所有安装的node版本
 
 ```js
 nvm list
 ```
-
 
 ## nvm 和 npm 切换国内镜像
 
@@ -57,13 +52,11 @@ nvm list
 curl -L https://gitee.com/RubyMetric/chsrc/releases/download/preview/chsrc-x64-windows.exe -o chsrc.exe
 ```
 
-
 2、检测用户网络最快的npm源
 
 ``` bash
 chsrc set node
 ```
-
 
 结果：
 
@@ -79,20 +72,17 @@ chsrc: 运行 npm config set registry https://mirrors.zju.edu.cn/npm
 chsrc: 感谢镜像提供方: 浙江大学开源软件镜像站
 ```
 
-
 3、切换源
 
 ``` bash
 npm config set registry https://mirrors.zju.edu.cn/npm
 ```
 
-
 3、查看源
 
 ``` bash
 npm config get registry
 ```
-
 
 结果：
 <https://mirrors.zju.edu.cn/npm>

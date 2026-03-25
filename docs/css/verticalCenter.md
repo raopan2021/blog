@@ -56,7 +56,6 @@ import demo6 from './components/verticalCenter/demo6.vue'
 }
 ```
 
-
 ::: danger warning
 横向居中不会
 :::
@@ -88,7 +87,6 @@ import demo6 from './components/verticalCenter/demo6.vue'
     }
 }
 ```
-
 ::: details 详细代码
 <<< ./components/verticalCenter/demo5.vue
 :::
@@ -115,7 +113,6 @@ import demo6 from './components/verticalCenter/demo6.vue'
     }
 }
 ```
-
 ::: details 详细代码
 <<< ./components/verticalCenter/demo5.vue
 :::
@@ -144,7 +141,6 @@ import demo6 from './components/verticalCenter/demo6.vue'
     }
 }
 ```
-
 
 ::: tip 不太好用的亚子
 :::

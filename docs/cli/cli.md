@@ -45,7 +45,6 @@
       |--- template-vue
 ```
 
-
 <<< ./demo/pkg.json {6-9,16-23} [package.json]
 <<< ./demo/addversion.js
 <<< ./demo/create.js

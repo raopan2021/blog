@@ -10,7 +10,6 @@ const fs = require('fs')
 import fs from 'fs'
 ```
 
-
 ## 常用 API
 
 ### 同步 vs 异步 vs 回调
@@ -30,7 +29,6 @@ fs.readFile('./test.txt', 'utf-8', (err, data) => {
 import { readFile } from 'fs/promises'
 const data = await readFile('./test.txt', 'utf-8')
 ```
-
 
 ### 读取文件
 
@@ -54,7 +52,6 @@ import { readFile } from 'fs/promises'
 const data = await readFile('test.txt', 'utf-8')
 ```
 
-
 ### 写入文件
 
 ```js
@@ -75,7 +72,6 @@ appendFile('test.txt', '\n追加的内容', 'utf-8')
 // 同步方式
 fs.writeFileSync('test.txt', 'hello', 'utf-8')
 ```
-
 
 ### 判断文件/目录是否存在
 
@@ -106,7 +102,6 @@ try {
 }
 ```
 
-
 ### 复制文件
 
 ```js
@@ -123,7 +118,6 @@ import { copyFile } from 'fs/promises'
 await copyFile('source.txt', 'dest.txt')
 ```
 
-
 ### 删除文件
 
 ```js
@@ -139,7 +133,6 @@ unlink('test.txt', (err) => {
 import { unlink } from 'fs/promises'
 await unlink('test.txt')
 ```
-
 
 ### 目录操作
 
@@ -171,7 +164,6 @@ import { rm } from 'fs/promises'
 await rm('./dir', { recursive: true, force: true })
 ```
 
-
 ### 获取文件信息
 
 ```js
@@ -192,7 +184,6 @@ const stats = await stat('test.txt')
 console.log(stats.size)
 ```
 
-
 ### 重命名/移动
 
 ```js
@@ -208,7 +199,6 @@ rename('./old/dir/file.txt', './new/dir/file.txt', (err) => {
   if (err) throw err
 })
 ```
-
 
 ## 监听文件变化（chokidar）
 
@@ -226,7 +216,6 @@ watcher
   .on('change', (path) => console.log(`修改: ${path}`))
   .on('unlink', (path) => console.log(`删除: ${path}`))
 ```
-
 
 ## 路径问题
 
@@ -248,4 +237,3 @@ readFile(join(__dirname, 'test.txt'), 'utf-8', callback)
 import { dirname, join } from 'path'
 const __dirname = dirname(fileURLToPath(import.meta.url))
 ```
-

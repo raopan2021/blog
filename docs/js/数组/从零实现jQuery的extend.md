@@ -18,7 +18,6 @@ jQuery 的 extend 是 jQuery 中应用非常多的一个函数，今天我们一
 jQuery.extend( target [, object1 ] [, objectN ] )
 ```
 
-
 第一个参数 target，表示要拓展的目标，我们就称它为目标对象吧。
 
 后面的参数，都传入对象，内容都会复制到目标对象中，我们就称它们为待复制对象吧。
@@ -50,7 +49,6 @@ console.log($.extend(obj1, obj2, obj3));
 // }
 ```
 
-
 当两个对象出现相同字段的时候，后者会覆盖前者，而不会进行深层次的覆盖。
 
 ## extend 第一版
@@ -81,7 +79,6 @@ function extend() {
 };
 ```
 
-
 ## extend 深拷贝
 
 那如何进行深层次的复制呢？jQuery v1.1.4 加入了一个新的用法：
@@ -89,7 +86,6 @@ function extend() {
 ```js
 jQuery.extend( [deep], target, object1 [, objectN ] )
 ```
-
 
 也就是说，函数的第一个参数可以传一个布尔值，如果为 true，我们就会进行深拷贝，false 依然当做浅拷贝，这个时候，target 就往后移动到第二个参数。
 
@@ -119,7 +115,6 @@ console.log($.extend(true, obj1, obj2, obj3));
 //    d: 4
 // }
 ```
-
 
 因为采用了深拷贝，会遍历到更深的层次进行添加和覆盖。
 
@@ -179,7 +174,6 @@ function extend() {
 };
 ```
 
-
 在实现上，核心的部分还是跟上篇实现的深浅拷贝函数一致，如果要复制的对象的属性值是一个对象，就递归调用 extend。不过 extend 的实现中，多了很多细节上的判断，比如第一个参数是否是布尔值，target 是否是一个对象，不传参数时的默认值等。
 
 接下来，我们看几个 jQuery 的 extend 使用效果：
@@ -200,7 +194,6 @@ a.target = 'b';
 console.log(a.target); // b
 ```
 
-
 实际上，在 underscore 的实现中，underscore 的各种方法便是挂在了函数上！
 
 所以在这里我们还要判断是不是函数，这时候我们便可以使用[《JavaScript专题之类型判断(上)》](https://github.com/mqyqingfeng/Blog/issues/28)中写得 isFunction 函数
@@ -212,7 +205,6 @@ if (typeof target !== "object" && !isFunction(target)) {
     target = {};
 }
 ```
-
 
 ## 类型不一致
 
@@ -237,7 +229,6 @@ var d = extend(true, obj1, obj2)
 console.log(d);
 ```
 
-
 我们预期会返回这样一个对象：
 
 ```js
@@ -248,7 +239,6 @@ console.log(d);
     }
 }
 ```
-
 
 然而返回了这样一个对象:
 
@@ -262,7 +252,6 @@ console.log(d);
     }
 }
 ```
-
 
 让我们细细分析为什么会导致这种情况：
 
@@ -278,7 +267,6 @@ target[name] = extend(true, src, copy);
 
 ```
 
-
 第二遍执行到递归调用时：
 
 ```js
@@ -288,7 +276,6 @@ var copy = [5];
 target[name] = extend(true, src, copy);
 
 ```
-
 
 第三遍进行最终的赋值，因为 src 是一个基本类型，我们默认使用一个空对象作为目标值，所以最终的结果就变成了对象的属性！
 
@@ -326,7 +313,6 @@ if (deep && copy && (isPlainObject(copy) ||
 }
 ```
 
-
 ## 循环引用
 
 实际上，我们还可能遇到一个循环引用的问题，举个例子：
@@ -337,7 +323,6 @@ var b = {name : a}
 var c = extend(a, b);
 console.log(c);
 ```
-
 
 我们会得到一个可以无限展开的对象，类似于这样：
 
@@ -356,13 +341,11 @@ if (target === copy) {
 ...
 ```
 
-
 如果加上这句，结果就会是：
 
 ```js
 {name: undefined}
 ```
-
 
 ## 最终代码
 
@@ -429,7 +412,6 @@ function extend() {
 };
 ```
 
-
 ## 思考题
 
 如果觉得看明白了上面的代码，想想下面两个 demo 的结果：
@@ -438,7 +420,6 @@ function extend() {
 var a = extend(true, [4, 5, 6, 7, 8, 9], [1, 2, 3]);
 console.log(a) // ???
 ```
-
 
 ```js
 var obj1 = {
@@ -455,4 +436,3 @@ var obj2 = {
 var b = extend(true, obj1, obj2) // ???
 var c = extend(true, obj2, obj1) // ???
 ```
-

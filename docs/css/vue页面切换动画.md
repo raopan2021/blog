@@ -33,7 +33,6 @@ var router = new VueRouter({
 });
 ```
 
-
 ### 监控路由跳转
 
 判断切换页面之间的层级关系,并以此来判断路由前进或者后退.
@@ -72,7 +71,6 @@ export default {
 
 
 
-
 ### 动画
 
 ### app.vue
@@ -103,5 +101,4 @@ export default {
   transform: translate3d(-100%, 0, 0);
 }
 ```
-
 

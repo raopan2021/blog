@@ -45,7 +45,6 @@ grep "error" file         # 搜索内容
 which command             # 查找命令路径
 ```
 
-
 ### 权限管理
 
 ```bash
@@ -56,7 +55,6 @@ chmod 755 file       # 设置权限
 chown user:group file  # 修改所有者
 sudo command         # 以管理员身份运行
 ```
-
 
 ### 系统管理
 
@@ -79,7 +77,6 @@ ping host          # 测试连接
 curl url           # 发请求
 ```
 
-
 ### 压缩解压
 
 ```bash
@@ -92,11 +89,9 @@ zip -r file.zip dir/           # 压缩
 unzip file.zip                 # 解压
 ```
 
-
 ## 目录结构
 
 ```
-
 /           # 根目录
 ├── bin/    # 常用命令
 ├── sbin/   # 系统管理命令
@@ -109,7 +104,6 @@ unzip file.zip                 # 解压
 ├── proc/   # 虚拟文件系统
 └── dev/    # 设备文件
 ```
-
 
 ## Vim 编辑器
 
@@ -132,7 +126,6 @@ u          # 撤销
 /keyword   # 搜索
 ```
 
-
 ## 服务管理
 
 ```bash
@@ -148,7 +141,6 @@ systemctl disable nginx   # 关闭自启
 service nginx start
 chkconfig nginx on
 ```
-
 
 ## 用户管理
 
@@ -168,7 +160,6 @@ whoami
 who
 ```
 
-
 ## 安装软件
 
 ```bash
@@ -187,7 +178,6 @@ make
 make install
 ```
 
-
 ## 实用技巧
 
 ### 查看系统信息
@@ -199,7 +189,6 @@ uptime            # 运行时间
 hostname          # 主机名
 ```
 
-
 ### 定时任务（cron）
 
 ```bash
@@ -210,7 +199,6 @@ crontab -e        # 编辑定时任务
 0 3 * * * /path/to/command
 ```
 
-
 ### 远程复制
 
 ```bash
@@ -218,4 +206,3 @@ scp file user@host:/path   # 复制文件到远程
 scp -r dir user@host:/path # 复制目录
 rsync -avz src/ dst/       # 增量同步
 ```
-

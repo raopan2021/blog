@@ -20,7 +20,6 @@
 ...
 ```
 
-
 ​    在讲transition的时候讲过将需要进行动画效果的内容进行 `<transition>` 包裹起来，而 `<keep-alive>` 是缓存组件，应该将谁包裹起来呢？谁变化就包谁，`<keep-alive>` 组件并不发生变化，而是通过 `<component>` 进行不同组件的动态切换，所以应该这样来写：
 
 ```html
@@ -30,7 +29,6 @@
     <transition>
 </keep-alive>
 ```
-
 
 **css class**
 
@@ -53,7 +51,6 @@
 }
 ```
 
-
 **页面：**
 
 ```html
@@ -63,6 +60,5 @@
     </transition>
 </keep-alive>
 ```
-
 
 ![img](https://img-blog.csdnimg.cn/989740c4aae549de8bb962c7d3adc0ef.png)    这样就能够实现组件的过渡动画效果！

@@ -10,11 +10,9 @@
 pnpm add ora
 ```
 
-
 ```bash [npm]
 npm install ora
 ```
-
 
 :::
 
@@ -37,4 +35,3 @@ setTimeout(() => {
     // ✔ Loading complete
 },8000)
 ```
-

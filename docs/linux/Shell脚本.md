@@ -12,14 +12,12 @@ title: Shell 脚本编程
 echo "Hello, World!"
 ```
 
-
 执行方式：
 ```bash
 chmod +x script.sh     # 添加执行权限
 ./script.sh             # 方式一
 bash script.sh           # 方式二
 ```
-
 
 ## 1.2 变量
 
@@ -45,7 +43,6 @@ echo "所有参数: $@"
 echo "进程ID: $$"
 ```
 
-
 ## 1.3 字符串
 
 ```bash
@@ -66,7 +63,6 @@ echo ${str#*o}      # 从左边删除到第一个o: World!
 # 替换
 echo ${str/World/Linux}  # Hello, Linux!
 ```
-
 
 ## 1.4 数组
 
@@ -89,7 +85,6 @@ for item in ${arr[@]}; do
     echo $item
 done
 ```
-
 
 ## 1.5 运算符
 
@@ -118,7 +113,6 @@ if [ -d "/path/to/dir" ]; then
     echo "是目录"
 fi
 ```
-
 
 常用文件测试：
 
@@ -152,7 +146,6 @@ case $grade in
 esac
 ```
 
-
 ## 1.7 循环
 
 ```bash
@@ -185,7 +178,6 @@ for f in *.txt; do
 done
 ```
 
-
 ## 1.8 函数
 
 ```bash
@@ -206,7 +198,6 @@ function getSum() {
 getSum 3 5
 echo "Result: $?"    # $? 是返回值
 ```
-
 
 ## 1.9 输入输出
 
@@ -235,7 +226,6 @@ read -t 5 -p "5秒内输入: " input
 read -sp "Password: " pwd
 ```
 
-
 ## 1.10 重定向与管道
 
 ```bash
@@ -256,7 +246,6 @@ cat file | grep "keyword" | sort | uniq
 # xargs（将管道输出作为参数）
 find . -name "*.txt" | xargs rm
 ```
-
 
 ## 1.11 常用命令
 
@@ -280,6 +269,5 @@ grep -E "error|warning" log    # ERE
 cut -d: -f1 /etc/passwd        # 以:分隔，取第1列
 cut -c1-10 file.txt           # 取第1-10字符
 ```
-
 
 [[返回 Linux 首页|../index]]

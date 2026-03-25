@@ -34,19 +34,16 @@ Path变量添加： `%JAVA_HOME%\bin;%JAVA_HOME%\jre\bin`
 java
 ```
 
-
 > 用法: java [-options] class [args...] ......
 
 ```txt
 java -version
 ```
 
-
 > java version "1.8.0_202" ......
 
 ```txt
 javac
 ```
-
 
 > 用法: javac `<options> <source files>`......

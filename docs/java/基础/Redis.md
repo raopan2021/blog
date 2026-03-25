@@ -63,7 +63,6 @@ DECR count        # count = 5
 STRLEN name
 ```
 
-
 Java 操作：
 
 ```java
@@ -79,7 +78,6 @@ stringRedisTemplate.opsForValue().set("name", "张三");
 String name = stringRedisTemplate.opsForValue().get("name");
 stringRedisTemplate.opsForValue().increment("count");
 ```
-
 
 ### 2.2 Hash（哈希）
 
@@ -115,7 +113,6 @@ HINCRBY user:1 age 1   # age 增加 1
 HINCRBYFLOAT user:1 score 0.5  # 浮点数增加
 ```
 
-
 Java 操作：
 
 ```java
@@ -136,7 +133,6 @@ hashOps.put("user:1", "age", "25");
 String name = hashOps.get("user:1", "name");
 Map<String, String> all = hashOps.entries("user:1");
 ```
-
 
 ### 2.3 List（列表）
 
@@ -171,7 +167,6 @@ LTRIM list1 0 1         # 只保留前2个元素
 BLPOP list1 0            # 阻塞等待，直到有元素可弹
 ```
 
-
 Java 操作：
 
 ```java
@@ -188,7 +183,6 @@ listOps.leftPush("queue:tasks", "task1");
 listOps.rightPush("queue:tasks", "task2");
 String task = listOps.rightPop("queue:tasks");
 ```
-
 
 ### 2.4 Set（集合）
 
@@ -223,7 +217,6 @@ SDIFF set1 set2       # 差集：["A"]（set1 有 set2 没有的）
 SINTERSTORE result set1 set2  # 交集并存储到 result
 ```
 
-
 Java 操作：
 
 ```java
@@ -241,7 +234,6 @@ setOps.add("tags", "java", "spring", "redis");
 Set<String> allTags = setOps.members("tags");
 Boolean isMember = setOps.isMember("tags", "java");
 ```
-
 
 ### 2.5 ZSet（有序集合）
 
@@ -276,7 +268,6 @@ ZINCRBY leaderboard 5 "李四"
 ZREM leaderboard "王五"
 ```
 
-
 Java 操作：
 
 ```java
@@ -306,7 +297,6 @@ Set<ZSetOperations.TypedTuple<String>> top10 =
     zsetOps.reverseRangeWithScores("leaderboard", 0, 9);
 ```
 
-
 ## 3. 过期时间和 TTL
 
 ```bash
@@ -330,7 +320,6 @@ PEXPIREAT key 1735689600000  # Unix 时间戳（毫秒）
 PERSIST key
 ```
 
-
 ## 4. Jedis 客户端
 
 Jedis 是 Redis 的 Java 客户端之一，API 与 Redis 命令一一对应。
@@ -344,7 +333,6 @@ Jedis 是 Redis 的 Java 客户端之一，API 与 Redis 命令一一对应。
     <version>5.0.0</version>
 </dependency>
 ```
-
 
 ### 基本使用
 
@@ -375,7 +363,6 @@ public class JedisDemo {
 }
 ```
 
-
 ### 连接池配置
 
 ```java
@@ -398,7 +385,6 @@ try (Jedis jedis = jedisPool.getResource()) {
 // 关闭连接池
 jedisPool.close();
 ```
-
 
 ## 5. Lettuce 客户端
 
@@ -426,7 +412,6 @@ spring:
         min-idle: 2
         max-wait: -1ms
 ```
-
 
 ```java
 @Service
@@ -481,7 +466,6 @@ public class RedisService {
 }
 ```
 
-
 ### RedisTemplate 序列化配置
 
 默认使用 JDK 序列化，可自定义为 JSON 序列化：
@@ -513,7 +497,6 @@ public class RedisConfig {
     }
 }
 ```
-
 
 ## 6. 缓存应用实战
 
@@ -572,7 +555,6 @@ public class UserService {
     }
 }
 ```
-
 
 ## 总结
 

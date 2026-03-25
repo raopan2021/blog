@@ -22,7 +22,6 @@ dragControls.addEventListener('dragend', (event) => {
 })
 ```
 
-
 ### 练习 2：卡片展开态
 
 点击后卡片放大到屏幕中央：
@@ -36,7 +35,6 @@ function expandCard(card) {
 }
 ```
 
-
 ### 练习 3：3D 卡片画廊
 
 加载真实图片作为纹理：
@@ -49,7 +47,6 @@ textureLoader.load('/path/to/image.jpg', (texture) => {
   // 应用到卡片正面...
 })
 ```
-
 
 ### 练习 4：多状态切换
 
@@ -65,7 +62,6 @@ function nextState() {
 }
 ```
 
-
 ### 练习 5：音效反馈
 
 点击时播放音效：
@@ -77,7 +73,6 @@ window.addEventListener('click', () => {
   audio.play()
 })
 ```
-
 
 ## 项目总结
 

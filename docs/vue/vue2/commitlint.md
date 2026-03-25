@@ -29,7 +29,6 @@ feat(eslint): 集成 eslint - xcder - 2022.07.01
 pnpm add @commitlint/cli @commitlint/config-conventional -D
 ```
 
-
 ### 2.  创建 commitlint 配置
 
 在根目录添加一个 `.commitlintrc.js` 文件，内容如下：
@@ -40,7 +39,6 @@ module.exports = {
 }
 ```
 
-
 ### 3.  在 git `commit-msg` 时进行检查
 
 执行下面这条命令即可：
@@ -48,7 +46,6 @@ module.exports = {
 ```bash
 pnpm husky add .husky/commit-msg "pnpm commitlint --edit $1"
 ```
-
 
 ## 格式
 
@@ -62,7 +59,6 @@ pnpm husky add .husky/commit-msg "pnpm commitlint --edit $1"
 <type>(<scope>): <subject>
 ```
 
-
 ### 2.  多行信息
 
 用于提交一些不经常更改的功能型代码时使用，如：某个功能函数的新增、修改或重构，目录结构的调整（工程化调整），架构的更改等，这些我们需要进行详细说明防止出现遗忘。
@@ -74,7 +70,6 @@ pnpm husky add .husky/commit-msg "pnpm commitlint --edit $1"
 <BLANK LINE>
 <footer>
 ```
-
 
 ### 字段描述
 

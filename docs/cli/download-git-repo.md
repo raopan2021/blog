@@ -16,11 +16,9 @@
 pnpm add download-git-repo
 ```
 
-
 ```bash [npm]
 npm install download-git-repo
 ```
-
 
 :::
 
@@ -35,7 +33,6 @@ download('https://gitee.com/yangdan1028/yd_cli_vue', 'test', function (err) {
   else console.log('Downloaded successfully!');
 });
 ```
-
 
 ## 参数
 
@@ -62,4 +59,3 @@ download(
     }
 );
 ```
-

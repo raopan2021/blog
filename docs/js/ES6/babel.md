@@ -16,7 +16,6 @@ input.map(function (item) {
 });
 ```
 
-
 原始代码用了箭头函数，Babel 将其转为普通函数，就能在不支持箭头函数的 JavaScript 环境执行了。
 
 但是通常ide和浏览器都是支持ED6的
@@ -26,7 +25,6 @@ input.map(function (item) {
 ``` bash
 npm install --save-dev @babel/core
 ```
-
 
 ## 配置文件.babelrc
 
@@ -43,7 +41,6 @@ Babel 的配置文件是`.babelrc`，存放在项目的根目录下。
 }
 ```
 
-
 presets字段设定转码规则，官方提供以下的规则集，你可以根据需要安装。
 
 ``` bash
@@ -53,7 +50,6 @@ npm install --save-dev @babel/preset-env
 # react 转码规则
 npm install --save-dev @babel/preset-react
 ```
-
 
 然后，将这些规则加入`.babelrc`。
 
@@ -67,7 +63,6 @@ npm install --save-dev @babel/preset-react
 }
 ```
 
-
 注意，以下所有 Babel 工具和模块的使用，都必须先写好`.babelrc`。
 
 ## 命令行转码
@@ -79,7 +74,6 @@ Babel 提供命令行工具@babel/cli，用于命令行转码。
 ``` bash
 npm install --save-dev @babel/cli
 ```
-
 
 基本用法如下。
 
@@ -102,6 +96,5 @@ npx babel src -d lib
 # -s 参数生成source map文件
 npx babel src -d lib -s
 ```
-
 
 ## 更多详见 [ECMAScript 6 入门](https://es6.ruanyifeng.com/#docs/intro#babel-node)

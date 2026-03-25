@@ -24,7 +24,6 @@ Maven的作用：
 <localRepository>D:\APP\Java\maven-repo</localRepository>
 ```
 
-
 2、远程仓库配置
 
 maven默认连接的远程仓库位置并不在国内，因此有时候下载速度非常慢
@@ -41,4 +40,3 @@ maven默认连接的远程仓库位置并不在国内，因此有时候下载速
   <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
 </mirror>
 ```
-

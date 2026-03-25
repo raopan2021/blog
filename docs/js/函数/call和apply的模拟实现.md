@@ -22,7 +22,6 @@ function bar() {
 bar.call(foo); // 1
 ```
 
-
 注意两点：
 
 1. call 改变了 this 的指向，指向到 foo
@@ -44,7 +43,6 @@ var foo = {
 
 foo.bar(); // 1
 ```
-
 
 这个时候 this 就指向了 foo，是不是很简单呢？
 
@@ -68,7 +66,6 @@ foo.fn()
 // 第三步
 delete foo.fn
 ```
-
 
 fn 是对象的属性名，反正最后也要删除它，所以起成什么都无所谓。
 
@@ -95,7 +92,6 @@ function bar() {
 bar.call2(foo); // 1
 ```
 
-
 正好可以打印 1 哎！是不是很开心！(～￣▽￣)～
 
 ## 模拟实现第二步
@@ -120,7 +116,6 @@ bar.call(foo, 'kevin', 18);
 
 ```
 
-
 注意：传入的参数并不确定，这可咋办？
 
 不急，我们可以从 Arguments 对象中取值，取出第二个到最后一个参数，然后放到一个数组里。
@@ -144,7 +139,6 @@ for(var i = 1, len = arguments.length; i < len; i++) {
 // 执行后 args为 ["arguments[1]", "arguments[2]", "arguments[3]"]
 ```
 
-
 不定长的参数问题解决了，我们接着要把这个参数数组放到要执行的函数的参数里面去。
 
 ```js
@@ -154,13 +148,11 @@ context.fn(args.join(','))
 // 这个方法肯定是不行的啦！！！
 ```
 
-
 也许有人想到用 ES6 的方法，不过 call 是 ES3 的方法，我们为了模拟实现一个 ES3 的方法，要用到ES6的方法，好像……，嗯，也可以啦。但是我们这次用 eval 方法拼成一个函数，类似于这样：
 
 ```js
 eval('context.fn(' + args +')')
 ```
-
 
 这里 args 会自动调用 Array.toString() 这个方法。
 
@@ -195,7 +187,6 @@ bar.call2(foo, 'kevin', 18);
 // 1
 ```
 
-
 (๑•̀ㅂ•́)و✧
 
 ## 模拟实现第三步
@@ -216,7 +207,6 @@ function bar() {
 
 bar.call(null); // 1
 ```
-
 
 虽然这个例子本身不使用 call，结果依然一样。
 
@@ -245,7 +235,6 @@ console.log(bar.call(obj, 'kevin', 18));
 //    age: 18
 // }
 ```
-
 
 不过都很好解决，让我们直接看第三版也就是最后一版的代码：
 
@@ -293,7 +282,6 @@ console.log(bar.call2(obj, 'kevin', 18));
 // }
 ```
 
-
 到此，我们完成了 call 的模拟实现，给自己一个赞 ｂ（￣▽￣）ｄ
 
 ## apply的模拟实现
@@ -321,7 +309,6 @@ Function.prototype.apply = function (context, arr) {
     return result;
 }
 ```
-
 
 ## 下一篇文章
 

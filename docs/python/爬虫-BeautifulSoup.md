@@ -10,7 +10,6 @@ BeautifulSoup（简称 BS4）是 Python 中最常用的 HTML/XML 解析库，配
 pip install beautifulsoup4 lxml
 ```
 
-
 - `beautifulsoup4`：主库
 - `lxml`：推荐的高性能 HTML/XML 解析器
 
@@ -29,7 +28,6 @@ soup = BeautifulSoup(html, "lxml")  # 指定解析器
 print(soup.prettify()[:500])
 ```
 
-
 ## 解析器选择
 
 BeautifulSoup 支持多种解析器：
@@ -45,7 +43,6 @@ soup_lxml = BeautifulSoup(html, "lxml")
 soup_parser = BeautifulSoup(html, "html.parser")
 soup_html5lib = BeautifulSoup(html, "html5lib")
 ```
-
 
 ## 查找元素：find 与 find_all
 
@@ -64,7 +61,6 @@ print(title.get_text(strip=True))
 main = soup.find(id="main")
 ```
 
-
 ### find_all - 返回所有匹配的列表
 
 ```python
@@ -82,7 +78,6 @@ lis = soup.find_all("li", limit=10)
 tags = soup.find_all(["h1", "h2", "h3"])  # 所有标题
 ```
 
-
 ### 按属性查找
 
 ```python
@@ -95,7 +90,6 @@ news_links = soup.find_all("a", href=lambda x: x and x.startswith("/news/"))
 # 查找 data-status="active" 的标签
 active = soup.find_all(attrs={"data-status": "active"})
 ```
-
 
 ## CSS 选择器
 
@@ -124,7 +118,6 @@ for item in soup.select(".item"):
     print(f"{title} -> {link}")
 ```
 
-
 ## 提取数据
 
 ### 获取标签属性
@@ -142,7 +135,6 @@ for tag in soup.find_all("img"):
     print(f"{alt}: {src}")
 ```
 
-
 ### 获取文本
 
 ```python
@@ -157,7 +149,6 @@ print(article.get_text(strip=True))
 lines = article.get_text(separator="\n", strip=True)
 ```
 
-
 ### 获取 HTML 内容
 
 ```python
@@ -168,7 +159,6 @@ inner_html = tag.decode_contents()
 # prettify() 格式化输出
 print(tag.prettify())
 ```
-
 
 ## 遍历文档树
 
@@ -207,7 +197,6 @@ p2 = soup.find_all("p")[1]
 print(p2.find_previous_sibling("p").text)  # "这是第一段。"
 ```
 
-
 ## 实战案例
 
 ### 案例1：爬取简书文章列表
@@ -231,7 +220,6 @@ for article in articles[:10]:
     link = "https://www.jianshu.com" + article.get("href", "")
     print(f"{title}\n{link}\n")
 ```
-
 
 ### 案例2：解析表格数据
 
@@ -265,7 +253,6 @@ for item in data:
     print(item)
 ```
 
-
 ### 案例3：提取 JSON 数据中的 HTML
 
 ```python
@@ -286,7 +273,6 @@ titles = soup.select(".news-title")
 for title in titles:
     print(title.get_text(strip=True))
 ```
-
 
 ## 注意事项
 

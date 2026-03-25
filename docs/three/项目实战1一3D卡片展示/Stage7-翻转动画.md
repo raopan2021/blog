@@ -18,7 +18,6 @@ function flipCard(card) {
 }
 ```
 
-
 ## Lerp 插值动画
 
 不是瞬间旋转到目标角度，而是每帧向目标靠近一部分：
@@ -32,13 +31,11 @@ card.userData.currentRotationY += (
 card.rotation.y = card.userData.currentRotationY
 ```
 
-
 ## Lerp 工作原理
 
 以 `t = 0.1` 为例，从 `0` 旋转到 `π` 的过程：
 
 ```
-
 帧数    currentRotationY    target    差值 * 0.1    新 current
 0       0.000               π         0.314        0.314
 1       0.314               π         0.283        0.597
@@ -47,7 +44,6 @@ card.rotation.y = card.userData.currentRotationY
 ...     ...                  ...       ...          ...
 ∞       3.142 (=π)          π         0.000        3.142
 ```
-
 
 **特点**：
 - 初始快（差值大），后期慢（逐渐逼近目标）
@@ -61,7 +57,6 @@ card.rotation.y = card.userData.currentRotationY
 ```js
 card.rotation.y = card.userData.currentRotationY + mouse.x * 0.3
 ```
-
 
 这意味着：
 - 卡片翻转后，鼠标左右移动仍然可以让它微微倾斜
@@ -80,7 +75,6 @@ graph LR
     F --> E
     E -->|是| G[翻转完成]
 ```
-
 
 ## 关键参数
 

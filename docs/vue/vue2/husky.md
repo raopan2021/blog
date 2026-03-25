@@ -12,13 +12,11 @@ husky Git Hook 工具，为 git 提供一系列钩子函数，在提交前（pre
 pnpm add husky -D
 ```
 
-
 2. 初始化 husky
 
 ```bash
 pnpm husky install
 ```
-
 
 并在 package.json 中添加如下内容
 
@@ -31,13 +29,11 @@ pnpm husky install
 }
 ```
 
-
 3. 添加 git hook
 
 ```bash
 pnpm husky add .husky/pre-commit
 ```
-
 
 到这里之后我们还需要使用另外一个工具： [`lint-staged`](https://www.npmjs.com/package/lint-staged)，它是对 git 暂存区文件进行 lint 检查的工具。
 
@@ -46,7 +42,6 @@ pnpm husky add .husky/pre-commit
 ```bash
 pnpm add lint-staged -D
 ```
-
 
 5. 在 `package.json` 中添加如下配置
 
@@ -71,7 +66,6 @@ pnpm add lint-staged -D
 }
 ```
 
-
 6. 在 `.husky/pre-commit` 文件中写入以下内容
 
 ```shell
@@ -80,7 +74,6 @@ pnpm add lint-staged -D
 
 pnpm lint-staged
 ```
-
 
 经过以上配置之后，我们就可以在每次提交之前对所有代码进行格式化，保证线上代码的规范性。
 

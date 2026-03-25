@@ -19,11 +19,9 @@
 pnpm add commander
 ```
 
-
 ```sh [npm]
 npm install commander
 ```
-
 
 :::
 
@@ -50,7 +48,6 @@ console.log(options,limit);
 console.log(program.args[0].split(options.separator, limit));
 ```
 
-
 ```console
 $ node index.js -s / --fits a/b/c
 error: unknown option '--fits'
@@ -60,7 +57,6 @@ $ node index.js -s / --first a/b/c
 { separator: '/', first: true } 1
 [ 'a' ]
 ```
-
 
 这是一个使用子命令并带有帮助描述的更完整的程序。在多命令程序中，每个命令（或命令的独立可执行文件）都有一个操作处理程序。
 
@@ -98,7 +94,6 @@ program.command('split')
 program.parse();
 ```
 
-
 ```console
 $ node string-util.js help split
 Usage: 我的脚手架 split [options] <string>
@@ -127,7 +122,6 @@ a/b/c { separator: '/', first: true }
 [ 'a' ]
 ```
 
-
 更多示例可以在 [examples](https://github.com/tj/commander.js/tree/master/examples) 目录中找到。
 
 ## 声明 program 变量
@@ -139,7 +133,6 @@ a/b/c { separator: '/', first: true }
 const { program } = require('commander');
 ```
 
-
 如果程序较为复杂，用户需要以多种方式来使用 Commander，如单元测试等。创建本地 Command 对象是一种更好的方式：
 
 ```js
@@ -148,20 +141,17 @@ const { Command } = require('commander');
 const program = new Command();
 ```
 
-
 ```js
 // ECMAScript (.mjs)
 import { Command } from 'commander';
 const program = new Command();
 ```
 
-
 ```ts
 // TypeScript (.ts)
 import { Command } from 'commander';
 const program = new Command();
 ```
-
 
 ::: danger 看到这就差不多够用了
 :::
@@ -182,7 +172,6 @@ serve -p80
 serve --port 80
 serve --port=80
 ```
-
 
 `--`可以标记选项的结束，后续的参数均不会被命令解释，可以正常使用。
 
@@ -223,7 +212,6 @@ if (options.small) console.log('- small pizza size');
 if (options.pizzaType) console.log(`- ${options.pizzaType}`);
 ```
 
-
 ```console
 PS D:\Code\blog\test> node index.js
 pizza details:
@@ -237,7 +225,6 @@ pizza details:
 - small pizza size
 - vegetarian
 ```
-
 
 多个布尔短选项可以在破折号之后组合在一起，并且可以跟一个取值的单一选项。
 例如 `-d -s -p cheese` 可以写成 `-ds -p cheese` 甚至 `-dsp cheese`。
@@ -264,7 +251,6 @@ console.log(program.opts());
 console.log(program.opts().cheese);
 ```
 
-
 ```console
 PS D:\Code\blog\test> node index.js
 { cheese: 'blue' }
@@ -278,7 +264,6 @@ PS D:\Code\blog\test> node index.js -c yellow
 { cheese: 'yellow' }
 yellow
 ```
-
 
 ### 其他的选项类型，取反选项，以及可选参数的选项
 
@@ -299,7 +284,6 @@ const cheeseStr = (options.cheese === false) ? 'no cheese' : `${options.cheese} 
 console.log(`You ordered a pizza with ${sauceStr} and ${cheeseStr}`);
 ```
 
-
 ```console
 $ pizza-options
 You ordered a pizza with sauce and mozzarella cheese
@@ -313,7 +297,6 @@ You ordered a pizza with sauce and blue cheese
 $ pizza-options --no-sauce --no-cheese
 You ordered a pizza with no sauce and no cheese
 ```
-
 
 选项的参数使用方括号声明表示参数是可选参数（如`--optional [value]`）。该选项在不带参数时可用作 boolean 选项，在带有参数时则从参数中得到值。
 
@@ -329,7 +312,6 @@ else if (options.cheese === true) console.log('add cheese');
 else console.log(`add cheese type ${options.cheese}`);
 ```
 
-
 ```console
 $ pizza-options
 no cheese
@@ -338,7 +320,6 @@ add cheese
 $ pizza-options --cheese mozzarella
 add cheese type mozzarella
 ```
-
 
 带有可选选项参数的选项不是贪婪的，并且会忽略以破折号开头的参数。因此对于`--id -5`，`id`表现为布尔选项，但如果需要，您可以使用组合形式，例如 `--id=-5`。
 
@@ -353,12 +334,10 @@ program
 program.parse();
 ```
 
-
 ```console
 $ pizza
 error: required option '-c, --cheese <type>' not specified
 ```
-
 
 ### 变长参数选项
 
@@ -375,7 +354,6 @@ console.log('Options: ', program.opts());
 console.log('Remaining arguments: ', program.args);
 ```
 
-
 ```console
 $ collect -n 1 2 3 --letter a b c
 Options:  { number: [ '1', '2', '3' ], letter: [ 'a', 'b', 'c' ] }
@@ -387,7 +365,6 @@ $ collect --letter -n 1 -n 2 3 -- operand
 Options:  { number: [ '1', '2', '3' ], letter: true }
 Remaining arguments:  [ 'operand' ]
 ```
-
 
 ### 版本选项
 
@@ -402,7 +379,6 @@ program.version('0.0.1', '-v, -V, --vers, --version');
 program.parse();
 ```
 
-
 ```console
 PS D:\Code\blog\test> node index.js -v
 0.0.1
@@ -412,13 +388,11 @@ PS D:\Code\blog\test> node index.js -version
 0.0.1
 ```
 
-
 版本选项也支持自定义设置选项名称，可以在`.version()`方法里再传递一些参数（长选项名称、描述信息），用法与`.option()`方法类似。
 
 ```bash
 program.version('0.0.1', '-v, --vers', 'output the current version');
 ```
-
 
 ### 其他选项配置
 
@@ -434,7 +408,6 @@ program
   .addOption(new Option('--disable-server', 'disables the server').conflicts('port'))
   .addOption(new Option('--free-drink', 'small drink included free ').implies({ drink: 'small' }));
 ```
-
 
 ```console
 $ extra --help
@@ -458,7 +431,6 @@ Options:  { timeout: 60, donate: 20, port: '80', freeDrink: true, drink: 'small'
 $ extra --disable-server --port 8000
 error: option '--disable-server' cannot be used with option '-p, --port <number>'
 ```
-
 
 ### 自定义选项处理
 
@@ -508,7 +480,6 @@ if (options.collect.length > 0) console.log(options.collect);
 if (options.list !== undefined) console.log(options.list);
 ```
 
-
 ```console
 $ custom -f 1e2
 float: 100
@@ -521,7 +492,6 @@ $ custom -c a -c b -c c
 $ custom --list x,y,z
 [ 'x', 'y', 'z' ]
 ```
-
 
 ## 命令
 
@@ -555,7 +525,6 @@ program
   .addCommand(build.makeBuildCommand());
 ```
 
-
 使用`.command()`和`addCommand()`来指定选项的相关设置。当设置`hidden: true`时，该命令不会打印在帮助信息里。当设置`isDefault: true`时，若没有指定其他子命令，则会默认执行这个命令（[样例](./examples/defaultCommand.js)）。
 
 ### 命令参数
@@ -575,7 +544,6 @@ program
   });
 ```
 
-
 在参数名后加上`...`来声明可变参数，且只有最后一个参数支持这种用法。可变参数会以数组的形式传递给处理函数。例如：
 
 ```js
@@ -590,14 +558,12 @@ program
   });
 ```
 
-
 有一种便捷方式可以一次性指定多个参数，但不包含参数描述：
 
 ```js
 program
   .arguments('<username> <password>');
 ```
-
 
 #### 其他参数配置
 
@@ -608,7 +574,6 @@ program
   .addArgument(new commander.Argument('<drink-size>', 'drink cup size').choices(['small', 'medium', 'large']))
   .addArgument(new commander.Argument('[timeout]', 'timeout in seconds').default(60, 'one minute'))
 ```
-
 
 #### 自定义参数处理
 
@@ -629,7 +594,6 @@ program
 ;
 ```
 
-
 ### 处理函数
 
 命令处理函数的参数，为该命令声明的所有参数，除此之外还会附加两个额外参数：一个是解析出的选项，另一个则是该命令对象自身。
@@ -648,7 +612,6 @@ program
   });
 ```
 
-
 如果你愿意，你可以跳过为处理函数声明参数直接使用 command。 `this` 关键字设置为运行命令，可以在函数表达式中使用（但不能从箭头函数中使用）。
 
 ```js
@@ -660,7 +623,6 @@ program
     console.error('Run script %s on port %s', this.args[0], this.opts().port);
   });
 ```
-
 
 处理函数支持`async`，相应的，需要使用`.parseAsync`代替`.parse`。
 
@@ -674,7 +636,6 @@ async function main() {
   await program.parseAsync(process.argv);
 }
 ```
-
 
 使用命令时，所给的选项和命令参数会被验证是否有效。凡是有未知的选项，或缺少所需的命令参数，都会报错。
 如要允许使用未知的选项，可以调用`.allowUnknownOption()`。默认情况下，传入过多的参数并不报错，但也可以通过调用`.allowExcessArguments(false)`来启用过多参数的报错。
@@ -700,7 +661,6 @@ program
 program.parse(process.argv);
 ```
 
-
 如果该命令需要支持全局安装，请确保有对应的权限，例如`755`。
 
 ### 生命周期钩子
@@ -718,7 +678,6 @@ program
     }
   });
 ```
-
 
 钩子函数支持`async`，相应的，需要使用`.parseAsync`代替`.parse`。一个事件上可以添加多个钩子。
 
@@ -746,7 +705,6 @@ Options:
   -h, --help           display help for command
 ```
 
-
 如果你的命令中包含了子命令，会默认添加`help`命令，它可以单独使用，也可以与子命令一起使用来提示更多帮助信息。用法与`shell`程序类似：
 
 ```sh
@@ -756,7 +714,6 @@ shell --help
 shell help spawn
 shell spawn --help
 ```
-
 
 ### 自定义帮助
 
@@ -772,7 +729,6 @@ Example call:
   $ custom-help --help`);
 ```
 
-
 将会输出以下的帮助信息：
 
 ```Text
@@ -785,7 +741,6 @@ Options:
 Example call:
   $ custom-help --help
 ```
-
 
 位置参数对应的展示方式如下：
 
@@ -811,13 +766,11 @@ program.showHelpAfterError();
 program.showHelpAfterError('(add --help for additional information)');
 ```
 
-
 ```console
 $ pizza --unknown
 error: unknown option '--unknown'
 (add --help for additional information)
 ```
-
 
 默认行为是在出现未知命令或选项错误后建议正确拼写。你可以禁用此功能。
 
@@ -825,13 +778,11 @@ error: unknown option '--unknown'
 program.showSuggestionAfterError(false);
 ```
 
-
 ```console
 $ pizza --hepl
 error: unknown option '--hepl'
 (Did you mean --help?)
 ```
-
 
 ### 使用代码展示帮助信息
 
@@ -852,7 +803,6 @@ program.name('pizza');
 const pm = new Command('pm');
 ```
 
-
 使用 `.command()` 指定时，子命令会获得名称。如果您自己创建子命令以与 `.addCommand()` 一起使用，则使用 `.name()` 或在 Command 构造函数中设置名称。
 
 ### .usage
@@ -865,13 +815,11 @@ program
   .usage("[global options] command")
 ```
 
-
 帮助信息开头如下：
 
 ```Text
 Usage: my-command [global options] command
 ```
-
 
 ### .description 和 .summary
 
@@ -886,7 +834,6 @@ This may require additional disk space.
   `);
 ```
 
-
 ### .helpOption(flags, description)
 
 每一个命令都带有一个默认的帮助选项。你可以改变 `flags` 和 `description` 参数。传入 `false` 则会禁用内建的帮助信息。
@@ -895,7 +842,6 @@ This may require additional disk space.
 program
   .helpOption('-e, --HELP', 'read more information');
 ```
-
 
 ### .addHelpCommand()
 
@@ -906,7 +852,6 @@ program
 ```js
 program.addHelpCommand('assist [command]', 'show assistance');
 ```
-
 
 ### 其他帮助配置
 
@@ -927,7 +872,6 @@ program.configureHelp({
 });
 ```
 
-
 ## 自定义事件监听
 
 监听命令和选项可以执行自定义函数。
@@ -937,7 +881,6 @@ program.on('option:verbose', function () {
   process.env.VERBOSE = this.opts().verbose;
 });
 ```
-
 
 ## 零碎知识
 
@@ -959,7 +902,6 @@ program.parse(); // 默认，自动识别 electron
 program.parse(['-f', 'filename'], { from: 'user' });
 ```
 
-
 ### 解析配置
 
 当默认的解析方式无法满足需要，Commander 也提供了其他的解析行为。
@@ -973,7 +915,6 @@ program -b subcommand
 program subcommand -b
 ```
 
-
 默认情况下，选项在命令参数前后均可被识别。如要使选项仅在命令参数前被识别，可以使用`.passThroughOptions()`。这样可以把参数和跟随的选项传递给另一程序，而无需使用`--`来终止选项解析。
 如要在子命令中使用此功能，必须首先启用带顺序的选项解析。
 
@@ -983,7 +924,6 @@ program subcommand -b
 program --port=80 arg
 program arg --port=80
 ```
-
 
 默认情况下，使用未知选项会提示错误。如要将未知选项视作普通命令参数，并继续处理其他部分，可以使用`.allowUnknownOption()`。这样可以混用已知和未知的选项。
 
@@ -1005,7 +945,6 @@ program
   });
 ```
 
-
 ### TypeScript
 
 如果你使用 ts-node，并有`.ts`文件作为独立可执行文件，那么需要用 node 运行你的程序以使子命令能正确调用，例如：
@@ -1013,7 +952,6 @@ program
 ```sh
 node -r ts-node/register pm.ts
 ```
-
 
 ### createCommand()
 
@@ -1023,7 +961,6 @@ node -r ts-node/register pm.ts
 const { createCommand } = require('commander');
 const program = createCommand();
 ```
-
 
 `createCommand`同时也是`Command`对象的一个方法，可以创建一个新的命令（而非子命令），使用`.command()`创建子命令时内部会调用该方法，具体使用方式可参考 [custom-command-class.js](./examples/custom-command-class.js)。
 
@@ -1053,7 +990,6 @@ program.error('Password must be longer than four characters');
 program.error('Custom processing has failed', { exitCode: 2, code: 'my.custom.error' });
 ```
 
-
 ### 重写退出和输出
 
 默认情况下，在检测到错误、打印帮助信息或版本信息时 Commander 会调用`process.exit`方法。其默认实现会抛出一个`CommanderError`，可以重写该方法并提供一个回调函数（可选）。
@@ -1069,7 +1005,6 @@ try {
   // 自定义处理...
 }
 ```
-
 
 Commander 默认用作命令行应用，其输出写入 stdout 和 stderr。
 对于其他应用类型，这一行为可以修改。并且可以修改错误信息的展示方式。
@@ -1089,4 +1024,3 @@ program
     outputError: (str, write) => write(errorColor(str))
   });
 ```
-

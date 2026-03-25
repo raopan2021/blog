@@ -21,7 +21,6 @@ var arrayLike = {
 }
 ```
 
-
 即便如此，为什么叫做类数组对象呢？
 
 那让我们从读写、获取长度、遍历三个方面看看这两个对象。
@@ -36,14 +35,12 @@ array[0] = 'new name';
 arrayLike[0] = 'new name';
 ```
 
-
 ## 长度
 
 ```js
 console.log(array.length); // 3
 console.log(arrayLike.length); // 3
 ```
-
 
 ## 遍历
 
@@ -56,7 +53,6 @@ for(var i = 0, len = arrayLike.length; i < len; i++) {
 }
 ```
 
-
 是不是很像？
 
 那类数组对象可以使用数组的方法吗？比如：
@@ -64,7 +60,6 @@ for(var i = 0, len = arrayLike.length; i < len; i++) {
 ```js
 arrayLike.push('4');
 ```
-
 
 然而上述代码会报错: arrayLike.push is not a function
 
@@ -90,7 +85,6 @@ Array.prototype.map.call(arrayLike, function(item){
 // ["NAME", "AGE", "SEX"]
 ```
 
-
 ## 类数组转对象
 
 在上面的例子中已经提到了一种类数组转数组的方法，再补充三个：
@@ -106,7 +100,6 @@ Array.from(arrayLike); // ["name", "age", "sex"]
 // 4. apply
 Array.prototype.concat.apply([], arrayLike)
 ```
-
 
 那么为什么会讲到类数组对象呢？以及类数组有什么应用吗？
 
@@ -127,7 +120,6 @@ function foo(name, age, sex) {
 
 foo('name', 'age', 'sex')
 ```
-
 
 打印结果如下：
 
@@ -152,7 +144,6 @@ foo(1)
 // 实参的长度为：1
 ```
 
-
 ## callee属性
 
 Arguments 对象的 callee 属性，通过它可以调用函数自身。
@@ -176,7 +167,6 @@ data[2]();
 // 1
 // 2
 ```
-
 
 接下来讲讲 arguments 对象的几个注意要点：
 
@@ -213,7 +203,6 @@ function foo(name, age, sex, hobbit) {
 foo('name', 'age')
 ```
 
-
 传入的参数，实参和 arguments 的值会共享，当没有传入时，实参与 arguments 值不会共享
 
 除此之外，以上是在非严格模式下，如果是在严格模式下，实参和 arguments 是不会共享的。
@@ -234,7 +223,6 @@ function bar(a, b, c) {
 foo(1, 2, 3)
 ```
 
-
 ## 强大的ES6
 
 使用ES6的 ... 运算符，我们可以轻松转成数组。
@@ -246,7 +234,6 @@ function func(...arguments) {
 
 func(1, 2, 3);
 ```
-
 
 ## 应用
 

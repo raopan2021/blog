@@ -169,10 +169,8 @@ TCP报文格式
 如何使用紧急URG控制位，在socket编程中send函数flag参数
 
 ```
-
 send(int socket, const void *buffer, size_t length, int flags);
 ```
-
 
 flags参数传MSG_OOB宏时，表示此时有紧急数据。MSG_OOB是个宏，
 
@@ -307,7 +305,6 @@ int main(int argc, char **argv)
 }
 ```
 
-
 复制
 
 S端socket编程代码
@@ -344,7 +341,6 @@ int main(int argc, char **argv)
     return 0;
 }
 ```
-
 
 复制
 

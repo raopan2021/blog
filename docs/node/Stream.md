@@ -31,7 +31,6 @@ readable.on('end', () => {
 })
 ```
 
-
 ### 两种读取模式
 
 ```js
@@ -53,7 +52,6 @@ stream2.on('readable', () => {
   }
 })
 ```
-
 
 ## Writable 流（可写流）
 
@@ -77,7 +75,6 @@ writeStream.on('error', (err) => {
 })
 ```
 
-
 ## pipe（管道）
 
 > pipe 是连接可读流和可写流的最简单方式
@@ -96,7 +93,6 @@ writeStream.on('finish', () => {
   console.log('复制完成')
 })
 ```
-
 
 ### 常用 pipe 操作
 
@@ -120,7 +116,6 @@ fs.createReadStream('./input.txt.gz')
   .pipe(zlib.createDeflate())
   .pipe(fs.createWriteStream('./output.txt.gz'))
 ```
-
 
 ## Transform 流（转换流）
 
@@ -147,7 +142,6 @@ fs.createReadStream('./input.txt')
 upperCase.write('hello')
 upperCase.push('WORLD')
 ```
-
 
 ## HTTP 中的 Stream
 
@@ -183,7 +177,6 @@ http.get('http://localhost:3000/file', (res) => {
 })
 ```
 
-
 ## Stream 事件
 
 ```js
@@ -206,7 +199,6 @@ writable.on('pipe', (src) => { /* 开始 pipe */ })
 writable.on('unpipe', (src) => { /* 取消 pipe */ })
 ```
 
-
 ## backpressure（背压）
 
 > 当写入速度跟不上读取速度时，pipe 会自动暂停读取，避免内存溢出
@@ -223,7 +215,6 @@ readable.on('data', (chunk) => {
   }
 })
 ```
-
 
 ## 流式处理大文件示例
 
@@ -252,7 +243,6 @@ async function processLargeFile(filePath) {
 processLargeFile('./large-file.txt')
 ```
 
-
 ## 判断是否为 Stream
 
 ```js
@@ -264,7 +254,6 @@ console.log(isStream(readable))      // true
 console.log(isReadable(readable))    // true
 console.log(isWritable(readable))     // false
 ```
-
 
 ## 实用场景
 

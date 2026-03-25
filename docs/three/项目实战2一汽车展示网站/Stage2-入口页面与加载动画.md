@@ -41,7 +41,6 @@
 </html>
 ```
 
-
 ## 2.2 CSS 样式
 
 ```css
@@ -142,11 +141,9 @@ body {
 }
 ```
 
-
 ## 2.3 动画时序
 
 ```
-
 t=0s      ：页面打开，加载屏幕显示
 t=0s      ：字母 L 首先开始跳动（--i:0, delay=0s）
 t=0.15s   ：字母 O 开始跳动
@@ -162,11 +159,9 @@ t≈2.5s    ：加载屏幕完全消失，Three.js 场景可见
 t≈3s      ：开始播放进场动画（相机推进 + 灯光渐亮）
 ```
 
-
 ## 2.4 CSS 动画原理
 
 ```
-
 animation-delay = calc(var(--i) * 0.15s)
 
 var(--i) 是 CSS 自定义属性（在 HTML 中设置）：
@@ -179,7 +174,6 @@ var(--i) 是 CSS 自定义属性（在 HTML 中设置）：
   L 先亮 → 0.15s 后 O 也亮 → 0.30s 后 A 也亮 → ...
   看起来像是波浪依次亮起
 ```
-
 
 ## 2.5 加载屏幕的 JS 控制
 
@@ -199,7 +193,6 @@ setTimeout(() => {
 }, 3000)
 ```
 
-
 ## 2.6 Three.js Canvas 挂载
 
 ```js
@@ -212,7 +205,6 @@ const sketchEl = document.getElementById('sketch')
 // renderer = new THREE.WebGLRenderer({ canvas: ... })
 // this.container.appendChild(renderer.domElement)
 ```
-
 
 ## 2.7 为什么需要加载屏幕？
 
@@ -248,7 +240,6 @@ function updateProgress() {
 
 updateProgress()
 ```
-
 
 ---
 

@@ -21,4 +21,3 @@ Choose starter service URL:
 Default: https://start.spring.io
 Custom: https://start.aliyun.com/
 ```
-

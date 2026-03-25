@@ -24,7 +24,6 @@ match = re.search(pattern, text)
 print(match.group())  # 138-1234-5678
 ```
 
-
 ## 应用场景
 
 | 场景 | 示例 |

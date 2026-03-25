@@ -7,7 +7,6 @@
 后处理（Post-processing）是指在场景渲染完成后、对画面进行额外处理的技术：
 
 ```
-
 渲染流程：
 
 1. 渲染场景 → 2D 图像（基础渲染）
@@ -16,7 +15,6 @@
                     ↓
 3. 输出到屏幕
 ```
-
 
 ## 5.2 EffectComposer
 
@@ -68,13 +66,11 @@ class Postprocessing {
 }
 ```
 
-
 ## 5.3 Bloom 原理
 
 Bloom（泛光）效果让画面中「亮的地方」向周围「溢出」：
 
 ```
-
 原理步骤：
 
 原始画面          高亮检测           高斯模糊          混合输出
@@ -90,7 +86,6 @@ Bloom（泛光）效果让画面中「亮的地方」向周围「溢出」：
 █ = 原图亮点（车灯）
 ▒ = 模糊后的光晕
 ```
-
 
 ## 5.4 UnrealBloomPass 参数详解
 
@@ -118,7 +113,6 @@ new UnrealBloomPass(
 )
 ```
 
-
 ## 5.5 为什么要用 emissive 材质？
 
 要让 Bloom 生效，物体必须使用「自发光材质」：
@@ -138,7 +132,6 @@ const emissiveMat = new THREE.MeshStandardMaterial({
   toneMapped: false,         // 不经过色调映射（保持发光）
 })
 ```
-
 
 本项目中的发光物体：
 
@@ -164,7 +157,6 @@ const emissiveMat = new THREE.MeshStandardMaterial({
 emissiveMaterial.toneMapped = false
 ```
 
-
 ## 5.7 动态调整 Bloom
 
 在加速模式中，Bloom 参数会动态变化：
@@ -178,7 +170,6 @@ bloomPass.luminanceMaterial.smoothing = 1.6  // 平滑
 bloomPass.strength = 2.0       // 强烈发光
 bloomPass.luminanceMaterial.smoothing = 0.4  // 更锐利
 ```
-
 
 ## 5.8 后处理链
 
@@ -195,7 +186,6 @@ composer.addPass(outputPass)       // 3. 色彩输出
 // composer.addPass(new GlitchPass())               // 故障艺术
 ```
 
-
 ## 5.9 性能考虑
 
 | 问题 | 解决方案 |
@@ -211,7 +201,6 @@ const bloomPass = new UnrealBloomPass(
   0.8, 0.4, 0.85
 )
 ```
-
 
 ---
 

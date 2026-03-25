@@ -9,7 +9,6 @@ title: DNS 与域名
 DNS（Domain Name System）将域名解析为 IP 地址。
 
 ```
-
 用户输入 example.com
        ↓
 浏览器检查自身 DNS 缓存
@@ -23,32 +22,25 @@ DNS 服务器递归/迭代查询
 返回 IP 地址
 ```
 
-
 ## DNS 查询流程
 
 ```
-
 浏览器 → 递归 DNS 服务器 → 根域名服务器 → .com 顶级域名 →权威域名服务器
 ```
-
 
 ### 递归查询
 
 ```
-
 客户端 → 本地 DNS 服务器 → 其他 DNS 服务器
 （只拿最终结果）
 ```
 
-
 ### 迭代查询
 
 ```
-
 根 DNS → .com DNS → example.com DNS
 （每一步都告诉你下一步去哪）
 ```
-
 
 ## 记录类型
 
@@ -77,11 +69,9 @@ traceroute example.com    # Linux
 tracert example.com       # Windows
 ```
 
-
 ## CDN 原理
 
 ```
-
 用户请求内容
        ↓
 CDN DNS 返回最近节点的 IP
@@ -91,16 +81,13 @@ CDN DNS 返回最近节点的 IP
 节点无缓存 → 回源站拉取 → 缓存 → 返回
 ```
 
-
 ```
-
 CDN 优势：
 - 就近访问（速度快）
 - 隐藏真实 IP
 - 减轻源站压力
 - 抗 DDoS
 ```
-
 
 ## 常用公共 DNS
 
@@ -126,7 +113,6 @@ nameserver 1.1.1.1
 systemd-resolve --status
 ```
 
-
 ## HTTP DNS
 
 ```javascript
@@ -139,7 +125,6 @@ systemd-resolve --status
 // 预连接（DNS + TCP 握手）
 <link rel="preconnect" href="https://cdn.example.com">
 ```
-
 
 ## 常见 DNS 攻击
 

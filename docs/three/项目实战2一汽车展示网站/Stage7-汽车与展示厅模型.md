@@ -39,7 +39,6 @@ gltf.scene.traverse((child) => {
 })
 ```
 
-
 ## 7.3 汽车模型配置
 
 ```js
@@ -79,13 +78,11 @@ function configureCar() {
 }
 ```
 
-
 ## 7.4 展示厅模型配置
 
 展示厅包含两种重要物体：
 
 ```
-
 展示厅结构：
 ├── 地面（PlaneGeometry）
 │   └── MeshPhysicalMaterial
@@ -100,7 +97,6 @@ function configureCar() {
         ├── emissive（自发光）
         └── toneMapped = false（不经过色调映射）
 ```
-
 
 ```js
 /**
@@ -157,7 +153,6 @@ function configureStartRoom() {
 }
 ```
 
-
 ## 7.5 MeshPhysicalMaterial vs MeshStandardMaterial
 
 | 属性 | MeshStandardMaterial | MeshPhysicalMaterial |
@@ -179,7 +174,6 @@ function configureStartRoom() {
 ### AO 贴图（Ambient Occlusion）
 
 ```
-
 作用：模拟物体凹陷处的阴影
 
 原理：
@@ -193,11 +187,9 @@ function configureStartRoom() {
 效果：增加层次感和立体感
 ```
 
-
 ### 法线贴图（Normal Map）
 
 ```
-
 作用：用 RGB 值存储法线方向，让平面看起来有凹凸
 
 原理：
@@ -214,11 +206,9 @@ function configureStartRoom() {
 效果：看起来有凹凸，但实际几何体是平的
 ```
 
-
 ### 粗糙度/金属度贴图
 
 ```
-
 粗糙度（Roughness）：表面有多「粗糙」
   白色 = 光滑（镜子）→ 强反射
   黑色 = 粗糙（石头）→ 漫反射
@@ -227,7 +217,6 @@ function configureStartRoom() {
   白色 = 金属 → 反射强，颜色随视角变化
   黑色 = 非金属 → 反射弱，颜色固定
 ```
-
 
 ## 7.7 地面反射实现
 
@@ -241,7 +230,6 @@ mat.envMapIntensity = 0 // 初始为 0，进场动画中渐增到 25
 // scene.environment = dynamicEnv.envmap
 // 所以地面反射的是 DynamicEnv 输出的混合 HDR
 ```
-
 
 ---
 

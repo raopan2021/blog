@@ -26,7 +26,6 @@ findAll(@Request() req) {
 }
 ```
 
-
 浏览器访问 http://localhost:3000/v1/user?name=sm
 
 也可以使用 Query 直接获取 不需要在通过 req.query 了
@@ -38,7 +37,6 @@ findAll(@Query() query) {
     return { code: 200 };
 }
 ```
-
 
 ## post 获取参数
 
@@ -52,7 +50,6 @@ create(@Request() req) {
 }
 ```
 
-
 或者直接使用 Body 装饰器
 
 ```ts
@@ -62,7 +59,6 @@ create(@Body() body) {
     return { code: 200 };
 }
 ```
-
 
 ## 动态路由
 
@@ -75,7 +71,6 @@ findOne(@Request() req) {
     return { code: 200 };
 }
 ```
-
 
 浏览器访问 http://localhost:3000/v1/user/1
 
@@ -99,7 +94,6 @@ findOne(@Headers() headers) {
     // }
 ```
 
-
 ## 状态码
 
 使用 HttpCode 装饰器 控制接口返回的状态码
@@ -113,4 +107,3 @@ findId (@Headers() header) {
     }
 }
 ```
-

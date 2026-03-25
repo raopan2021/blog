@@ -47,7 +47,6 @@ message = client.messages.create(
 print(message.content)
 ```
 
-
 ### 国产模型
 
 近年来国产大模型发展迅速：
@@ -76,7 +75,6 @@ response = client.chat.completions.create(
 print(response.choices[0].message.content)
 ```
 
-
 ## 如何选择大模型
 
 选择大模型需要考虑以下因素：
@@ -91,12 +89,10 @@ print(response.choices[0].message.content)
 ### 2. API 成本对比
 
 ```
-
 GPT-4o:      $5/1M输入  $15/1M输出
 Claude 3.5:  $3/1M输入  $15/1M输出  
 DeepSeek V3: $0.27/1M输入 $1.1/1M输出
 ```
-
 
 ### 3. 部署方式
 
@@ -110,7 +106,6 @@ DeepSeek V3: $0.27/1M输入 $1.1/1M输出
 ollama pull qwen2.5:14b
 ollama run qwen2.5:14b
 ```
-
 
 ## API 调用基础
 
@@ -142,7 +137,6 @@ response = client.chat.completions.create(
 print(response.choices[0].message.content)
 ```
 
-
 ## 流式输出
 
 对于需要实时展示的场景，使用流式输出：
@@ -159,7 +153,6 @@ for chunk in stream:
         print(chunk.choices[0].delta.content, end="", flush=True)
 ```
 
-
 ## Token 计算
 
 Token 是模型处理文本的基本单位。英文大约 1 token = 4 个字符，中文约 1 token = 1-2 个汉字。
@@ -175,7 +168,6 @@ print(f"文本: {text}")
 print(f"Token数: {len(tokens)}")
 print(f"Token IDs: {tokens}")
 ```
-
 
 ## 常见错误处理
 
@@ -195,7 +187,6 @@ except APIError as e:
 except Exception as e:
     print(f"未知错误: {e}")
 ```
-
 
 ## 最佳实践
 

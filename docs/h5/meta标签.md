@@ -15,7 +15,6 @@ meta属性包括：必选属性content—进行描述说明的，相当于键值
 <meta http-euiqv="Content-Type" content="text/html;charset=utf-8">
 ```
 
-
 ②SEO
 
 ```html
@@ -24,11 +23,9 @@ meta属性包括：必选属性content—进行描述说明的，相当于键值
 <meta name="description" content="we are world">#网页描述
 ```
 
-
 ③viewport 
 
 ```html
 <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0">
 ```
-
 

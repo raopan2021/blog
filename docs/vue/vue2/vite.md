@@ -16,7 +16,6 @@
 └── vite.config.js # vite 配置
 ```
 
-
 ## 基础配置
 
 完整的 vite 配置如下所示，配置了大概有以下的功能：
@@ -101,7 +100,6 @@ export default ({ mode, command }) => {
 }
 ```
 
-
 ## 跨域配置
 
 这里我们使用的是 vite 自带的 [http-proxy](https://github.com/http-party/node-http-proxy) 来解决跨域，这也是我们在开发中比较常见的解决跨域的一种方式。
@@ -130,7 +128,6 @@ const proxyList = [
    }
 }
 ```
-
 
 ## 环境变量
 
@@ -162,7 +159,6 @@ export function isProd() {
 
 ```
 
-
 但是如果需要在 `vite.config.js` 中使用的话，需要用到 `loadEnv` 这个方法：
 
 ```javascript
@@ -178,4 +174,3 @@ export default ({ mode }) => {
   })
 }
 ```
-

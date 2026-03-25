@@ -17,4 +17,3 @@ docker run -d -p 27017:27017 -n mongo8 mongo
 # 重启容器
 docker restart mongo
 ```
-

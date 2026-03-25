@@ -54,7 +54,6 @@ function binarySearch(arr, target) {
 }
 ```
 
-
 ### 双指针
 ```js
 // 有序数组两数之和
@@ -78,7 +77,6 @@ function twoSum(nums, target) {
 }
 ```
 
-
 ### 滑动窗口
 ```js
 // 最大子序和（滑动窗口）
@@ -94,4 +92,3 @@ function maxSubArray(nums) {
   return maxSum
 }
 ```
-

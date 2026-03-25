@@ -10,11 +10,9 @@
 pnpm add chalk
 ```
 
-
 ```bash [npm]
 npm install chalk
 ```
-
 
 :::
 
@@ -25,7 +23,6 @@ const chalk = require('chalk');
 
 console.log(chalk.blue('Hello world!')); // Hello world! (蓝色)
 ```
-
 
 ## API
 
@@ -40,7 +37,6 @@ chalk.level = 2;
 chalk.level = 3; // 蓝色
 ```
 
-
 ### chalk.supportsColor
 
 > 检查当前环境是否支持颜色。
@@ -48,7 +44,6 @@ chalk.level = 3; // 蓝色
 ```js
 chalk.supportsColor;
 ```
-
 
 ### chalk.reset
 
@@ -58,7 +53,6 @@ chalk.supportsColor;
 chalk.reset('Hello world!');
 ```
 
-
 ### chalk.bold
 
 > 加粗。
@@ -66,7 +60,6 @@ chalk.reset('Hello world!');
 ```js
 chalk.bold('Hello world!');
 ```
-
 
 ### chalk.dim
 
@@ -76,7 +69,6 @@ chalk.bold('Hello world!');
 chalk.dim('Hello world!');
 ```
 
-
 ### chalk.italic
 
 > 斜体。
@@ -84,7 +76,6 @@ chalk.dim('Hello world!');
 ```js
 chalk.italic('Hello world!');
 ```
-
 
 ### chalk.underline
 
@@ -94,7 +85,6 @@ chalk.italic('Hello world!');
 chalk.underline('Hello world!');
 ```
 
-
 ### chalk.inverse
 
 > 反转颜色。
@@ -102,7 +92,6 @@ chalk.underline('Hello world!');
 ```js
 chalk.inverse('Hello world!');
 ```
-
 
 ### chalk.hidden
 
@@ -112,7 +101,6 @@ chalk.inverse('Hello world!');
 chalk.hidden('Hello world!');
 ```
 
-
 ### chalk.strikethrough
 
 > 删除线。
@@ -121,7 +109,6 @@ chalk.hidden('Hello world!');
 chalk.strikethrough('Hello world!');
 ```
 
-
 ### chalk.bgGreen
 
 > 背景绿色。
@@ -129,4 +116,3 @@ chalk.strikethrough('Hello world!');
 ```js
 chalk.bgGreen('Hello world!');
 ```
-

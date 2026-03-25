@@ -21,7 +21,6 @@
 pnpm add less -D
 ```
 
-
 > 如果需要使用 sass 则把 less 换成 sass 就行。
 
 安装完成之后，无需多余配置，vite 即可对 less 样式进行解析。
@@ -38,7 +37,6 @@ pnpm add less -D
 }
 </style>
 ```
-
 
 > 这里 CSS 命名规范推荐 BEM 命名规范，具体可以自行搜索了解。
 
@@ -80,7 +78,6 @@ export default defineConfig({
   }
 })
 ```
-
 
 ## Vue 样式穿透
 

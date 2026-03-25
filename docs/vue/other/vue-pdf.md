@@ -16,7 +16,6 @@
 npm install vue-pdf-embed
 ```
 
-
 ## 使用
 
 ### import导入
@@ -39,4 +38,3 @@ import pdfSource from '/pdf/01_深入JavaScript运行原理.pdf'
 	<VuePdfEmbed annotation-layer text-layer :source="pdfSource" />
 </template>
 ```
-

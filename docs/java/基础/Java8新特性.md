@@ -34,7 +34,6 @@ Function<Integer, Integer> f = n -> {
 };
 ```
 
-
 ### 函数式接口
 
 ```java
@@ -63,7 +62,6 @@ UnaryOperator<Integer> uo = n -> n * 2;
 BinaryOperator<Integer> bo = (a, b) -> a + b;
 ```
 
-
 ## Stream API
 
 ```java
@@ -75,7 +73,6 @@ Arrays.asList(1, 2, 3).stream();
 Stream.generate(() -> new Random().nextInt()).limit(10);
 Stream.iterate(1, n -> n + 1).limit(10);
 ```
-
 
 ### 中间操作
 
@@ -118,7 +115,6 @@ list.stream()
     .collect(Collectors.toList());  // [2, 3, 4]
 ```
 
-
 ### 终端操作
 
 ```java
@@ -159,7 +155,6 @@ Optional<Integer> first = list.stream().findFirst();  // Optional[1]
 Optional<Integer> any_ = list.stream().findAny();  // Optional[1]
 ```
 
-
 ## 方法引用
 
 ```java
@@ -179,7 +174,6 @@ Function<String, String> f2 = String::toUpperCase;
 Supplier<ArrayList> s2 = ArrayList::new;
 Function<Integer, ArrayList> f3 = ArrayList::new;
 ```
-
 
 ## Optional 容器
 
@@ -213,7 +207,6 @@ Optional<Optional<Integer>> nested = opt2.map(s -> Optional.of(s.length()));
 Optional<Integer> flat = opt2.flatMap(s -> Optional.of(s.length()));
 ```
 
-
 ## 函数组合
 
 ```java
@@ -237,7 +230,6 @@ p.and(s -> s.startsWith("a"));
 p.or(s -> s.endsWith("z"));
 p.negate();
 ```
-
 
 ## 实战示例
 
@@ -264,6 +256,5 @@ IntSummaryStatistics stats = list.stream()
 System.out.println("sum=" + stats.getSum());
 System.out.println("avg=" + stats.getAverage());
 ```
-
 
 [[返回 Java 首页|../index]]

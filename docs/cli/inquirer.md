@@ -10,11 +10,9 @@
 pnpm add inquirer
 ```
 
-
 ```bash [npm]
 npm install inquirer
 ```
-
 
 :::
 
@@ -56,7 +54,6 @@ inquirer.prompt([
 // ? Select a variant:  TypeScript
 // { project: 'q', framework: 'Vue', variant: 'TypeScript' }
 ```
-
 
 ::: details 在终端实现一个简单的计算器功能
 
@@ -109,7 +106,6 @@ inquirer
 // ? 请输入第二个数字： 2
 // 运算结果为：3
 ```
-
 
 :::
 

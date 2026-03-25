@@ -5,7 +5,6 @@
   步骤三：v-el-drag-dialog
 
 ```
-
 <el-dialog
   title="新增设备信息"  width="45%"
   :visible.sync="MessageDialogVisible"
@@ -14,16 +13,13 @@
 ></el-dialog>
 ```
 
-
 步骤二：main.js文件内引入、挂载elDragDialog
 
 ```
-
 import elDragDialog from "@/directive/el-dragDialog";
 // 挂载
 Vue.use(elDragDialog) // el-dialog可移动
 ```
-
 
 步骤一：在assets的同级目录，建立/directive/el-dragDialog目录，内含2个js文件：
 
@@ -109,7 +105,6 @@ export default{
 }
 ```
 
-
 根目录（src）/directive/el-dragDialog/index.js
 
 ```js
@@ -127,4 +122,3 @@ if (window.Vue) {
 drag.install = install
 export default drag
 ```
-

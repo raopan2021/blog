@@ -8,11 +8,9 @@
 pnpm add figlet
 ```
 
-
 ```bash [npm]
 npm install figlet
 ```
-
 
 :::
 
@@ -27,7 +25,6 @@ console.log(figlet.textSync('Hello!',{
     verticalLayout: 'default'
 }));
 ```
-
 
 ```bash
 PS D:\Code\blog\test> node .\index.js
@@ -45,4 +42,3 @@ PS D:\Code\blog\test> node .\index.js
 (___)(___)  `.__.'  (___) (___)  `.__.'  (   )
                                           '-'
 ```
-

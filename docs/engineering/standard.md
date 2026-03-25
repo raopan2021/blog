@@ -24,7 +24,6 @@ const SmallObject = {} // 帕斯卡式，首字母大写
 const strName = 'strName' // 匈牙利式，前缀表示了变量是什么。这个前缀 str 表示了是一个字符串
 ```
 
-
 ```js
 // 变量命名示例
 const appleNum = 1
@@ -34,7 +33,6 @@ const sum = 10
 function formatDate() { ... }
 function toArray() { ... }
 ```
-
 
 由于拼音同音字太多，千万不要使用拼音来命名！
 
@@ -58,7 +56,6 @@ function add(a, b) {
 // 单行注释
 const active = true
 ```
-
 
 ## JavaScript 代码规范参考
 

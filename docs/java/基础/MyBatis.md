@@ -33,7 +33,6 @@ MyBatis 是一个半自动的 ORM（Object Relational Mapping）框架。与 Hib
 </dependency>
 ```
 
-
 ## 2. 第一个 MyBatis 程序
 
 ### 配置文件 mybatis-config.xml
@@ -67,7 +66,6 @@ MyBatis 是一个半自动的 ORM（Object Relational Mapping）框架。与 Hib
 
 </configuration>
 ```
-
 
 ### 实体类
 
@@ -109,7 +107,6 @@ public class User {
 }
 ```
 
-
 ### Mapper 接口
 
 ```java
@@ -134,7 +131,6 @@ public interface UserMapper {
     List<User> searchByName(String keyword);
 }
 ```
-
 
 ### 映射文件 UserMapper.xml
 
@@ -190,7 +186,6 @@ public interface UserMapper {
 
 </mapper>
 ```
-
 
 ### 测试代码
 
@@ -265,7 +260,6 @@ public class MyBatisTest {
 }
 ```
 
-
 ## 3. Mapper 注解方式
 
 对于简单场景，可以不用 XML，直接用注解写 SQL：
@@ -293,7 +287,6 @@ public interface UserMapper {
 }
 ```
 
-
 ## 4. 核心配置详解
 
 ### TypeAlias（类型别名）
@@ -307,7 +300,6 @@ public interface UserMapper {
     <package name="com.example.entity"/>
 </typeAliases>
 ```
-
 
 ### resultMap（结果映射）
 
@@ -331,7 +323,6 @@ public interface UserMapper {
 </select>
 ```
 
-
 ### 关联查询（嵌套结果）
 
 ```java
@@ -344,7 +335,6 @@ public class Order {
     // getters and setters
 }
 ```
-
 
 ```xml
 <resultMap id="OrderResultMap" type="Order">
@@ -368,7 +358,6 @@ public class Order {
 </select>
 ```
 
-
 ### 一对多查询（嵌套查询）
 
 ```java
@@ -380,7 +369,6 @@ public class User {
     // getters and setters
 }
 ```
-
 
 ```xml
 <resultMap id="UserWithOrdersMap" type="User">
@@ -400,7 +388,6 @@ public class User {
     WHERE u.id = #{id}
 </select>
 ```
-
 
 ## 5. 动态 SQL
 
@@ -424,7 +411,6 @@ public class User {
 </select>
 ```
 
-
 ### 5.2 where（智能where）
 
 ```xml
@@ -442,7 +428,6 @@ public class User {
 </select>
 ```
 
-
 ### 5.3 set（更新时智能处理）
 
 ```xml
@@ -458,7 +443,6 @@ public class User {
 </update>
 ```
 
-
 ### 5.4 trim（自定义前后缀）
 
 ```xml
@@ -472,7 +456,6 @@ public class User {
     <if test="...">name = #{name},</if>
 </trim>
 ```
-
 
 ### 5.5 choose/when/otherwise（多条件分支）
 
@@ -494,7 +477,6 @@ public class User {
     </where>
 </select>
 ```
-
 
 ### 5.6 foreach（循环遍历）
 
@@ -522,7 +504,6 @@ public class User {
 </insert>
 ```
 
-
 ### 5.7 bind（变量绑定）
 
 ```xml
@@ -533,7 +514,6 @@ public class User {
     WHERE name LIKE #{pattern}
 </select>
 ```
-
 
 ## 6. Spring 整合 MyBatis
 
@@ -546,7 +526,6 @@ public class User {
     <version>3.0.3</version>
 </dependency>
 ```
-
 
 ### application.yml 配置
 
@@ -568,7 +547,6 @@ mybatis:
     map-underscore-to-camel-case: true
 ```
 
-
 ### MapperScan 注解
 
 在启动类或配置类上添加扫描注解：
@@ -582,7 +560,6 @@ public class Application {
     }
 }
 ```
-
 
 ### Service 层调用
 
@@ -606,7 +583,6 @@ public class UserServiceImpl implements UserService {
 }
 ```
 
-
 ## 7. 分页插件
 
 ### PageHelper 使用
@@ -618,7 +594,6 @@ public class UserServiceImpl implements UserService {
     <version>2.1.0</version>
 </dependency>
 ```
-
 
 ```java
 @Service
@@ -635,7 +610,6 @@ public class UserService {
     }
 }
 ```
-
 
 ## 总结
 

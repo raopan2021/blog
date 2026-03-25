@@ -21,7 +21,6 @@ eslint-config-airbnb-base 使用 airbnb 代码规范
 npm i -D babel-eslint eslint eslint-config-airbnb-base eslint-plugin-import
 ```
 
-
 2. 配置 `.eslintrc` 文件
 
 ```json
@@ -36,7 +35,6 @@ npm i -D babel-eslint eslint eslint-config-airbnb-base eslint-plugin-import
     "extends": "airbnb-base",
 }
 ```
-
 
 3. 在 `package.json` 的 `scripts` 加上这行代码 `"lint": "eslint --ext .js test/ src/"`。
 
@@ -76,13 +74,11 @@ npm i -D babel-eslint eslint eslint-config-airbnb-base eslint-plugin-import
 ],
 ```
 
-
 同时要确保 VSCode 右下角的状态栏 ESlint 是处于工作状态的。如果右下角看不到 Eslint 的标识，请按照上面讲过的步骤打开 `setting.json`，加上这行代码：
 
 ```js
 "eslint.alwaysShowStatus": true,
 ```
-
 
 配置完之后，VSCode 会根据你当前项目下的 `.eslintrc` 文件的规则来验证和格式化代码。
 
@@ -91,7 +87,6 @@ npm i -D babel-eslint eslint eslint-config-airbnb-base eslint-plugin-import
 ``` bash
 npm i -D eslint eslint-config-airbnb-vue3-ts
 ```
-
 
 添加 `.eslintrc` 文件，具体配置项为：
 
@@ -111,7 +106,6 @@ module.exports = {
 }
 ```
 
-
 在根目录下的 `package.json` 文件的 `scripts` 选项里添加以下配置项：
 
 ```json
@@ -119,7 +113,6 @@ module.exports = {
   "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
 },
 ```
-
 
 修改完后，现在 js ts vue 文件都可以自动格式化了。
 
@@ -130,7 +123,6 @@ module.exports = {
 ``` bash
 npm i -D sass stylelint stylelint-config-standard-scss stylelint-scss
 ```
-
 
 在项目根目录下新建一个 `.stylelintrc.js` 文件，并输入以下内容：
 
@@ -165,7 +157,6 @@ module.exports = {
 };
 ```
 
-
 ### VSCode 添加 `stylelint` 插件
 
 然后就可以看到效果了。
@@ -190,13 +181,11 @@ module.exports = {
 /* eslint-disable max-len */
 ```
 
-
 注意，以上这行忽略验证的代码是不会生效的，因为这个注释是 JavaScript 注释，我们需要将注释改为 HTML 格式，这样忽略验证才会生效：
 
 ``` html
 <!-- eslint-disable max-len -->
 ```
-
 
 ## Code Review 代码审查
 

@@ -15,13 +15,11 @@ let age = user.age;
 // 但是通过解构赋值，我们可以更简洁地实现同样的目的：
 ```
 
-
 ``` js
 let { name, age } = user;
 // 这样，我们就能直接从 user 对象中提取 name 和 age 属性的值，并将它们分别赋给同名的变量。
 // 这种方法不仅代码更加简洁，而且提高了代码的可读性。
 ```
-
 
 ## 展开语法 [...array1, ...array2]
 
@@ -34,20 +32,17 @@ let array1 = [1, 2, 3];
 let array2 = [4, 5, 6];
 ```
 
-
 使用传统的方法，我们可能会使用 concat 方法：
 
 ``` js
 let combinedArray = array1.concat(array2);
 ```
 
-
 但是通过使用展开语法，我们可以更简洁地实现相同的目的：
 
 ``` js
 let combinedArray = [...array1, ...array2];
 ```
-
 
 这样，array1 和 array2 中的元素就被展开，并组成了一个新的数组 combinedArray。这种方法不仅代码更加简洁，而且更直观易懂。
 
@@ -71,7 +66,6 @@ function fetchData() {
 }
 ```
 
-
 使用 Promises 的方法，我们可以这样处理成功或失败的情况：
 
 ``` js
@@ -83,7 +77,6 @@ fetchData()
         console.error(error);
     });
 ```
-
 
 但是，使用 Async/Await，我们可以以更同步的方式写出这段代码：
 
@@ -99,7 +92,6 @@ async function getData() {
 
 getData();
 ```
-
 
 在这个例子中，Async/Await 使得异步代码的结构更清晰，更接近于传统的同步代码结构，从而提高了代码的可读性和可维护性。
 
@@ -118,7 +110,6 @@ function fibonacci(n) {
 }
 ```
 
-
 在不使用备忘录化的情况下，这个函数会进行大量的重复计算。现在，我们引入 Memoization：
 
 ``` js
@@ -135,7 +126,6 @@ function fibonacciMemoized(n) {
     return memo[n];
 }
 ```
-
 
 在这个改进的版本中，我们使用一个对象 memo 来缓存已经计算过的斐波那契数。这样，每次调用 fibonacciMemoized 时，如果结果已经在缓存中，就可以直接返回，避免了不必要的重复计算。这极大地提高了函数的性能
 
@@ -155,7 +145,6 @@ function fibonacciMemoized(n) {
 </ul>
 ```
 
-
 在不使用事件委托的情况下，我们可能需要为每个新增的列表项单独添加事件监听器。但是使用事件委托，我们只需在父元素上设置一次监听器：
 
 ``` js
@@ -165,7 +154,6 @@ document.getElementById('myList').addEventListener('click', function(e) {
     }
 });
 ```
-
 
 在这个例子中，我们给整个列表 myList 添加了一个点击事件监听器。当点击事件发生时，我们检查事件目标 e.target 是否是列表项（即 LI 元素）。如果是，我们就执行相应的操作。
 

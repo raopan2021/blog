@@ -15,7 +15,6 @@ function animate() {
 animate()
 ```
 
-
 ## THREE.Clock 计时器
 
 获取自程序启动以来的总运行时间：
@@ -30,7 +29,6 @@ function animate() {
 }
 ```
 
-
 ## 正弦波浮动
 
 每张卡片在 Y 轴上做轻微的上下浮动，使用正弦波实现平滑往复：
@@ -41,7 +39,6 @@ cards.forEach((card, index) => {
   card.position.y += Math.sin(elapsed * 2 + index) * 0.001
 })
 ```
-
 
 **原理**：
 - `Math.sin(time)` 输出 [-1, 1] 的平滑周期值
@@ -56,7 +53,6 @@ cards.forEach((card, index) => {
 pointLight.position.x = Math.sin(elapsed * 0.5) * 3
 pointLight.position.z = Math.cos(elapsed * 0.5) * 3
 ```
-
 
 - 旋转速度：`0.5`（可调整）
 - 旋转半径：`3`（与 pointLight 创建时的距离一致）
@@ -105,7 +101,6 @@ function animate() {
 
 animate()
 ```
-
 
 ## 性能考虑
 
