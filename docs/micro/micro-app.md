@@ -9,6 +9,8 @@ head:
       content: micro-app 微前端 vue react svelte 主应用 子应用 应用通信 pnpm
 ---
 
+# 京东Micro-App微前端学习
+
 ::: tip ✨ 京东Micro-App微前端学习
 
 此 Demo 以`UmiJS 4`作为基座主应用，子应用分别为使用了`create-react-app`、`vue-cli`、`vite`创建的`React 18`、`Vue2`、`Vue3`和`Svelte`项目
