@@ -7,7 +7,7 @@ export function EngineeringSidebar(): DefaultTheme.SidebarItem[] {
 			link: 'index',
 			base: '/engineering/',
 			items: [
-				
+				{ text: '首页', link: 'index' },
 				{ text: '代码规范简介', link: 'standard' },
 				{ text: 'ESLint 基本配置与使用', link: 'eslint' },
 				{ text: '代码格式化', link: 'format' },

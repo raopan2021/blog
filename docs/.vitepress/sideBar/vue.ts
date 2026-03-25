@@ -12,7 +12,7 @@ export function VueSidebar(): DefaultTheme.SidebarItem[] {
 					collapsed: false,
 					base: '/vue/',
 					items: [
-						
+						{ text: '首页', link: 'index' },
 						{ text: 'NProgress 进度条', link: 'NProgress进度条' },
 						{ text: 'SPA 单页面的理解与优缺点', link: 'SPA单页面的理解优缺点' },
 						{ text: 'computed & watch', link: 'computed和watch' },

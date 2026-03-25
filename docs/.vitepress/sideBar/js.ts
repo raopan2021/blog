@@ -6,7 +6,7 @@ export function JsSidebar(): DefaultTheme.SidebarItem[] {
 			text: 'JS进阶',
 			link: 'index',
 			items: [
-				
+				{ text: '首页', link: 'index' },
 				{
 					text: '基础',
 					collapsed: false,
@@ -158,6 +158,7 @@ export function JsSidebar(): DefaultTheme.SidebarItem[] {
 						{ text: '15_ES6~ES12-三', link: '15_ES6~ES12-三' },
 						{ text: '17_Proxy-Reflect-响应式', link: '17_Proxy-Reflect-响应式' },
 						{ text: '18_Promise使用详解', link: '18_Promise使用详解' },
+						{ text: '19_Promise使用详解的副本', link: '19_Promise使用详解的副本' },
 						{ text: '20_Iterator-Generator', link: '20_Iterator-Generator' },
 						{ text: '21_await-async-事件循环', link: '21_await-async-事件循环' },
 						{ text: '22_await-async-事件循环', link: '22_await-async-事件循环' },

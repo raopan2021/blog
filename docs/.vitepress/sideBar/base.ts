@@ -7,6 +7,7 @@ export function BaseSidebar(): DefaultTheme.SidebarItem[] {
 			link: 'index',
 			base: '/base/',
 			items: [
+				{ text: '首页', link: 'index' },
 				{ text: 'git', link: 'git' },
 				{ text: 'nvm', link: 'nvm' },
 				{ text: 'pnpm', link: 'pnpm' },

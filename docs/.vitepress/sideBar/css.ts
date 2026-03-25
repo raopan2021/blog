@@ -6,6 +6,7 @@ export function CssSidebar(): DefaultTheme.SidebarItem[] {
 			text: 'CSS进阶',
 			link: 'index',
 			items: [
+				{ text: '首页', link: 'index' },
 				{ text: '清除默认样式', link: 'reset' },
 				{
 					text: '基础',
