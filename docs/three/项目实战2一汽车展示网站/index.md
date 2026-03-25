@@ -40,17 +40,17 @@
 
 | 阶段 | 名称 | 内容 |
 |------|------|------|
-| Stage 1 | [[项目初始化与结构\|Stage1-项目初始化]] | 目录结构、依赖安装、Vite 配置 |
-| Stage 2 | [[入口页面与加载动画\|Stage2-入口页面与加载动画]] | HTML 结构、CSS 动画原理 |
-| Stage 3 | [[Three.js 基础场景\|Stage3-ThreeJS基础场景]] | 场景、相机、渲染器、坐标系统 |
-| Stage 4 | [[资源加载系统\|Stage4-资源加载系统]] | AssetManager、HDR、纹理预处理 |
-| Stage 5 | [[后处理 Bloom 发光\|Stage5-后处理Bloom发光]] | EffectComposer、Bloom 原理、emissive 材质 |
-| Stage 6 | [[动态环境贴图\|Stage6-动态环境贴图]] | FBO、两个 HDR 混合、着色器 |
-| Stage 7 | [[汽车与展示厅模型\|Stage7-汽车与展示厅模型]] | GLTF 加载、材质配置、贴图详解 |
-| Stage 8 | [[GSAP 动画系统\|Stage8-GSAP动画系统]] | Timeline、缓动函数、进场动画 |
-| Stage 9 | [[加速模式\|Stage9-加速模式]] | rush/rushDone、完整时间线 |
-| Stage 10 | [[相机抖动\|Stage10-相机抖动]] | Simplex Noise、Lerp 平滑 |
-| Stage 11 | [[交互与完整流程\|Stage11-交互与完整流程]] | 射线检测、背景音乐、初始化流程 |
+| Stage 1 | 项目初始化与结构\|Stage1-项目初始化 | 目录结构、依赖安装、Vite 配置 |
+| Stage 2 | 入口页面与加载动画\|Stage2-入口页面与加载动画 | HTML 结构、CSS 动画原理 |
+| Stage 3 | Three.js 基础场景\|Stage3-ThreeJS基础场景 | 场景、相机、渲染器、坐标系统 |
+| Stage 4 | 资源加载系统\|Stage4-资源加载系统 | AssetManager、HDR、纹理预处理 |
+| Stage 5 | 后处理 Bloom 发光\|Stage5-后处理Bloom发光 | EffectComposer、Bloom 原理、emissive 材质 |
+| Stage 6 | 动态环境贴图\|Stage6-动态环境贴图 | FBO、两个 HDR 混合、着色器 |
+| Stage 7 | 汽车与展示厅模型\|Stage7-汽车与展示厅模型 | GLTF 加载、材质配置、贴图详解 |
+| Stage 8 | GSAP 动画系统\|Stage8-GSAP动画系统 | Timeline、缓动函数、进场动画 |
+| Stage 9 | 加速模式\|Stage9-加速模式 | rush/rushDone、完整时间线 |
+| Stage 10 | 相机抖动\|Stage10-相机抖动 | Simplex Noise、Lerp 平滑 |
+| Stage 11 | 交互与完整流程\|Stage11-交互与完整流程 | 射线检测、背景音乐、初始化流程 |
 
 ## 项目架构
 
