@@ -6,7 +6,7 @@ export function SvgSidebar(): DefaultTheme.SidebarItem[] {
 			text: 'SVG学习',
 			link: 'index',
 			items: [
-				{ text: '首页', link: 'index' },
+				
 				{
 					text: '练习demo',
 					collapsed: false,

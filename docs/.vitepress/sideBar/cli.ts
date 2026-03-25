@@ -7,7 +7,6 @@ export function CliSidebar(): DefaultTheme.SidebarItem[] {
 			link: 'index',
 			base: '/cli/',
 			items: [
-				{ text: '介绍', link: 'index' },
 				{ text: 'chalk', link: 'chalk' },
 				{ text: 'ora', link: 'ora' },
 				{ text: 'figlet', link: 'figlet' },

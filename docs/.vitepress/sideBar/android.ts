@@ -7,7 +7,6 @@ export function AndroidSidebar(): DefaultTheme.SidebarItem[] {
 			link: 'index',
 			base: '/android/',
 			items: [
-				{ text: '首页', link: 'index' },
 				{
 					text: '第一阶段：入门',
 					collapsed: false,

@@ -7,7 +7,6 @@ export function AlgorithmSidebar(): DefaultTheme.SidebarItem[] {
 				collapsed: false,
 				base: '/algorithm/',
 				items: [
-					{ text: '首页', link: 'index' },
 				],
 			},
 			{
