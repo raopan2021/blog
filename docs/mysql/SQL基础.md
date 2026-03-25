@@ -22,6 +22,7 @@ SHOW DATABASES;
 DROP DATABASE IF EXISTS old_db;
 ```
 
+
 ### 创建表
 
 ```sql
@@ -36,6 +37,7 @@ CREATE TABLE users (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户表';
 ```
+
 
 ### 修改表结构
 
@@ -57,6 +59,7 @@ ALTER TABLE users ADD UNIQUE INDEX idx_username (username);
 RENAME TABLE users TO user_info;
 ```
 
+
 ### 删除表
 
 ```sql
@@ -66,6 +69,7 @@ DROP TABLE IF EXISTS users;
 -- 清空表（保留结构，自增重置）
 TRUNCATE TABLE users;
 ```
+
 
 ## SELECT 查询
 
@@ -91,6 +95,7 @@ SELECT * FROM users LIMIT 5, 10;         -- 从第6条开始，取10条
 SELECT * FROM users ORDER BY id DESC LIMIT 10;  -- 最新10条
 ```
 
+
 ### 条件查询
 
 ```sql
@@ -111,6 +116,7 @@ IN       -- 在列表中
 IS NULL  -- 为空
 ```
 
+
 ### 排序与分页
 
 ```sql
@@ -122,6 +128,7 @@ SELECT * FROM users ORDER BY status ASC, id DESC;       -- 多字段排序
 SELECT * FROM users LIMIT 10 OFFSET 20;  -- 第3页，每页10条
 -- 公式：(page-1) * page_size
 ```
+
 
 ### 聚合函数
 
@@ -143,6 +150,7 @@ SELECT MAX(age), MIN(age) FROM users;
 SELECT status, GROUP_CONCAT(username) FROM users GROUP BY status;
 ```
 
+
 ### 分组查询
 
 ```sql
@@ -162,6 +170,7 @@ WHERE status = 1
 GROUP BY status
 HAVING avg_age > 25;
 ```
+
 
 ### 多表查询
 
@@ -196,6 +205,7 @@ SELECT * FROM users
 WHERE id IN (SELECT user_id FROM orders WHERE total > 1000);
 ```
 
+
 ### UNION 联合
 
 ```sql
@@ -209,6 +219,7 @@ SELECT username FROM users
 UNION ALL
 SELECT username FROM admin_users;
 ```
+
 
 ## INSERT 插入
 
@@ -227,6 +238,7 @@ INSERT INTO users (username, email, password_hash)
 VALUES ('bob', 'bob@example.com', 'hash789');
 ```
 
+
 ### 批量插入
 
 ```sql
@@ -244,6 +256,7 @@ password_hash = 'hash',
 age = 28;
 ```
 
+
 ### 查询结果插入
 
 ```sql
@@ -251,6 +264,7 @@ age = 28;
 INSERT INTO users_backup (username, email)
 SELECT username, email FROM users WHERE status = 1;
 ```
+
 
 ## UPDATE 更新
 
@@ -272,6 +286,7 @@ UPDATE users SET age = age + 1 WHERE status = 1;
 UPDATE users SET status = 0;  -- 危险！所有用户都被禁用
 ```
 
+
 ### 条件更新
 
 ```sql
@@ -292,6 +307,7 @@ SET age = (
 WHERE status = 2;
 ```
 
+
 ## DELETE 删除
 
 ### 基本删除
@@ -308,6 +324,7 @@ DELETE FROM users;  -- 逐行删除，记录日志，可以回滚
 TRUNCATE TABLE users;  -- 整表删除，效率高，不能回滚
 ```
 
+
 ### 级联删除
 
 ```sql
@@ -316,6 +333,7 @@ DELETE o, od FROM orders o
 INNER JOIN order_details od ON o.id = od.order_id
 WHERE o.user_id = 1;
 ```
+
 
 ## 其他重要语句
 
@@ -332,6 +350,7 @@ SELECT * FROM users ORDER BY created_at DESC;
 SELECT * FROM users ORDER BY status ASC, age DESC;
 ```
 
+
 ### 模糊匹配 LIKE
 
 ```sql
@@ -345,6 +364,7 @@ SELECT * FROM users WHERE username LIKE 'j_hn';  -- john, jahn 等
 -- ESCAPE 转义
 SELECT * FROM tags WHERE name LIKE '%100%%' ESCAPE '\\';
 ```
+
 
 ### 常用函数
 
@@ -366,6 +386,7 @@ SELECT IFNULL(age, 0) FROM users;
 SELECT CASE status WHEN 1 THEN '正常' ELSE '禁用' END FROM users;
 ```
 
+
 ## 事务控制
 
 ```sql
@@ -385,5 +406,6 @@ ROLLBACK;
 -- 自动提交关闭
 SET autocommit = 0;
 ```
+
 
 [[返回 MySQL 首页|mysql/index]]

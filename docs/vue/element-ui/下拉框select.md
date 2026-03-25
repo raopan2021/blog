@@ -1,6 +1,7 @@
 # 选择器select下拉框
 
 ```
+
 ::v-deep .el-select-dropdown {
     //下拉框
     background  : #002450;
@@ -16,16 +17,20 @@
 }
 ```
 
+
 ```
+
 .el-select-dropdown__item {
     background  : #002450;
     border-color: #0F90ED;
 }
 ```
 
+
 #### hover背景颜色
 
 ```
+
     .el-select-dropdown__item.hover,
     .el-select-dropdown__item:hover {
         //下拉框选项鼠标悬浮背景颜色
@@ -33,10 +38,13 @@
     }
 ```
 
+
 #### 下拉框最后一个显示不完全
 
 ```
+
 .el-select-dropdown__wrap.el-scrollbar__wrap {
     margin-bottom: 0 !important;
 }
 ```
+

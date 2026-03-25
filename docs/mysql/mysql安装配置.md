@@ -39,6 +39,7 @@ owners.
 Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
 ```
 
+
 ## 配置my.ini文件
 
 在你的mysql目录下新建my.ini文件，内容为：
@@ -64,6 +65,7 @@ sql_mode=NO_ENGINE_SUBSTITUTION,STRICT_TRANS_TABLES
 #编码
 default-character-set=utf8
 ```
+
 
 ## 安装MySQL
 

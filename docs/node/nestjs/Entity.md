@@ -48,6 +48,7 @@ export class User {
 }
 ```
 
+
 ```sql [user.sql]
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user`  (
@@ -60,5 +61,6 @@ CREATE TABLE `user`  (
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 ```
+
 
 :::

@@ -53,6 +53,7 @@ java -version
 jar -cvf myapp.jar -C out/ .
 ```
 
+
 ## 数据类型
 
 | 类型 | 说明 | 示例 |
@@ -83,6 +84,7 @@ map.put("Java", 1);
 map.put("Python", 2);
 ```
 
+
 ## 常用框架
 
 ### Spring Boot 快速入门
@@ -104,6 +106,7 @@ public class HelloController {
     }
 }
 ```
+
 
 ## 推荐的 Java 学习路线
 

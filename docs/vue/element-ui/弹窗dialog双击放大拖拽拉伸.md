@@ -20,6 +20,7 @@
 import "@/directive/el-dragDialog/dialogDrag.js"
 ```
 
+
 ### 页面使用
 
 ```html
@@ -33,6 +34,7 @@ import "@/directive/el-dragDialog/dialogDrag.js"
   </el-dialog>
 </template>  
 ```
+
 
 ### 复制以下代码到 src/directive/el-dragDialog/dialogDrag.js
 
@@ -271,4 +273,5 @@ Vue.directive('dialogDrags', { //属性名称dialogDrags，前面加v- 使用
   })
 
 ```
+
 

@@ -16,6 +16,7 @@ this.$router.push({
 });
 ```
 
+
 **传值路由第二种写法**
 
 ```javascript
@@ -27,6 +28,7 @@ this.$router.push({
   }
 });
 ```
+
 
 **接收值的路由**
 
@@ -43,9 +45,11 @@ watch: {
 },
 ```
 
+
 ```javascript
 console.log("接收过来的值为：" + this.$route.query.alarmDeviceID); //这里是$route 没有r
 ```
+
 
 ------
 
@@ -63,6 +67,7 @@ this.$router.push({
 });
 ```
 
+
 **传值路由的第二种写法**（不会将参数显示在地址栏中）
 
 ```javascript
@@ -74,11 +79,13 @@ this.$router.push({
 });
 ```
 
+
 **接收值的路由**
 
 ```javascript
 console.log("接收过来的值为：" + this.$route.params.uname);
 ```
+
 
 **注意**：在使用params传递参数的时候，我们需要在router的对象里面，找到当前的这个路由，然后去更改它的`path`
 
@@ -89,6 +96,7 @@ console.log("接收过来的值为：" + this.$route.params.uname);
      name: "login" //给当前路由取一个别名
  }
 ```
+
 
 > 上面的path后面是`/login/:uname`,这一个是我们的一个路径变量，前面的login代表路由，而后面`:uname`代表的是变量
 
@@ -109,6 +117,7 @@ this.$router.push({
 //现在上面的方法就不可用了，而必须使用下面的方法 
 ```
 
+
 ```javascript
 this.$router.push({
     name: "login",
@@ -117,6 +126,7 @@ this.$router.push({
     }
 });
 ```
+
 
 > 下面的这种写法，变量没有显示在路径里面，只是通过params存储，params传递，不再经过url了，这个时候，我们就可以传递数据，同时，也可以保证数据安全
 >

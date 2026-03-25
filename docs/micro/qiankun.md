@@ -43,10 +43,12 @@ touch tsconfig.json
 touch .gitignore
 ```
 
+
 ```yaml [pnpm-workspace.yaml]
 packages:
   - 'apps/*'
 ```
+
 
 ```json [tsconfig.json]
 {
@@ -75,6 +77,7 @@ packages:
 }
 ```
 
+
 ```ini [.gitignore]
 node_modules/
 .DS_Store
@@ -85,6 +88,7 @@ build/
 *.iml
 ```
 
+
 ### 创建主应用（Vue 3）
 
 ```sh
@@ -94,6 +98,7 @@ cd main-app
 pnpm install
 pnpm add qiankun
 ```
+
 
 编辑`src/main.ts`，初始化 qiankun
 
@@ -163,6 +168,7 @@ start({ // [!code ++]
 }) // [!code ++]
 ```
 
+
 编辑`src/App.vue`，添加导航和子应用容器
 
 ```vue
@@ -209,6 +215,7 @@ nav a.router-link-active {
 </style>
 ```
 
+
 编辑`src/router/index.ts`，添加子应用路由
 
 ```ts
@@ -243,6 +250,7 @@ const router = createRouter({
 export default router
 ```
 
+
 创建占位组件`src/views/ChildReactApp.vue`、`src/views/ChildVue2App.vue`、`src/views/ChildVue3App.vue`
 
 ```vue
@@ -276,6 +284,7 @@ export default router
 </style>
 ```
 
+
 编辑`vite.config.ts`，确保主应用运行在合适端口
 
 ```ts
@@ -294,6 +303,7 @@ export default defineConfig({
 })
 ```
 
+
 ## 子应用构建
 
 ### 子应用① React18
@@ -307,6 +317,7 @@ cd child-react18
 pnpm install
 ```
 
+
 新建`.env`文件
 
 ```ini
@@ -315,6 +326,7 @@ HOST=localhost
 PORT=3100
 PUBLIC_URL='/child-react18'
 ```
+
 
 编辑`src/index.tsx`
 
@@ -362,6 +374,7 @@ if (!window.__POWERED_BY_QIANKUN__) {
 }
 ```
 
+
 编辑`public/index.html`
 
 ```html
@@ -378,6 +391,7 @@ if (!window.__POWERED_BY_QIANKUN__) {
   </head>
 </html>
 ```
+
 
 编辑`src/App.tsx`
 
@@ -426,6 +440,7 @@ function App({ name }: Props) {
 export default App
 ```
 
+
 编辑`src/index.css`添加简单样式
 
 ```css
@@ -455,6 +470,7 @@ export default App
 }
 ```
 
+
 ### 子应用② Vue2
 
 使用`vue-cli`创建
@@ -466,12 +482,14 @@ cd child-vue2
 pnpm install
 ```
 
+
 新建`.env`文件
 
 ```ini
 VUE_APP_HOST=localhost
 VUE_APP_PORT=3200
 ```
+
 
 编辑`vue.config.js`
 
@@ -490,6 +508,7 @@ module.exports = defineConfig({
 })
 ```
 
+
 编辑`public/index.html`
 
 ```html
@@ -503,6 +522,7 @@ module.exports = defineConfig({
   </head>
 </html>
 ```
+
 
 编辑`src/main.js`
 
@@ -552,6 +572,7 @@ if (!window.__POWERED_BY_QIANKUN__) {
 }
 ```
 
+
 编辑`src/router/index.js`
 
 ```js
@@ -577,6 +598,7 @@ const router = new VueRouter({
 
 export default router
 ```
+
 
 编辑`src/App.vue`
 
@@ -631,6 +653,7 @@ button {
 </style>
 ```
 
+
 创建`src/components/Home.vue`
 
 ```vue
@@ -653,6 +676,7 @@ export default {
 </style>
 ```
 
+
 ### 子应用③ Vue3
 
 使用`vite`创建
@@ -664,12 +688,14 @@ cd child-vue3
 pnpm install
 ```
 
+
 新建`.env`文件
 
 ```ini
 VITE_APP_HOST=localhost
 VITE_APP_PORT=3300
 ```
+
 
 编辑`vite.config.ts`
 
@@ -691,6 +717,7 @@ export default defineConfig({
 })
 ```
 
+
 编辑`index.html`
 
 ```html
@@ -704,6 +731,7 @@ export default defineConfig({
   </head>
 </html>
 ```
+
 
 编辑`src/main.ts`
 
@@ -750,6 +778,7 @@ if (!window.__POWERED_BY_QIANKUN__) {
 }
 ```
 
+
 编辑`src/router/index.ts`
 
 ```ts
@@ -772,6 +801,7 @@ export default createRouter({
   routes,
 })
 ```
+
 
 编辑`src/App.vue`
 
@@ -839,6 +869,7 @@ button {
 </style>
 ```
 
+
 创建`src/components/Home.vue`
 
 ```vue
@@ -858,6 +889,7 @@ button {
 }
 </style>
 ```
+
 
 ## 主应用子应用通信
 
@@ -899,6 +931,7 @@ export function getGlobalState() {
 export { actions }
 ```
 
+
 在组件中使用
 
 ```vue
@@ -920,6 +953,7 @@ const sendToChild = () => {
 </script>
 ```
 
+
 ### 子应用接收主应用数据
 
 在子应用的 mount 生命周期中接收数据
@@ -939,6 +973,7 @@ export async function mount(props) {
 }
 ```
 
+
 ### 子应用发送数据给主应用
 
 子应用通过`props`获取主应用的方法来发送数据
@@ -953,6 +988,7 @@ export async function mount(props) {
   })
 }
 ```
+
 
 ## 样式隔离
 
@@ -974,6 +1010,7 @@ start({
 })
 ```
 
+
 ### 实验性样式隔离（experimentalStyleIsolation）
 
 启用后，qiankun 会自动给子应用的样式添加前缀
@@ -988,6 +1025,7 @@ start({
 })
 ```
 
+
 ### 子应用添加命名空间
 
 在子应用的 CSS 中添加统一的类名前缀
@@ -1000,6 +1038,7 @@ start({
   color: #42b983;
 }
 ```
+
 
 ## 常见问题
 
@@ -1014,12 +1053,14 @@ module.exports = defineConfig({
 })
 ```
 
+
 ```ts
 // vite.config.ts
 export default defineConfig({
   base: '/child-vue3',
 })
 ```
+
 
 ### 2. 子应用路由跳转丢失
 
@@ -1041,6 +1082,7 @@ createRouter({
 })
 ```
 
+
 ### 3. 子应用获取不到主应用数据
 
 确保在 mount 生命周期后再调用`onGlobalStateChange`
@@ -1053,6 +1095,7 @@ export async function mount(props) {
   }, true)
 }
 ```
+
 
 ### 4. 子应用全局变量冲突
 
@@ -1106,6 +1149,7 @@ server {
 }
 ```
 
+
 ### Docker 部署
 
 在项目根目录新建`Dockerfile`
@@ -1138,6 +1182,7 @@ COPY nginx.conf /etc/nginx/conf.d/default.conf
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
 ```
+
 
 ---
 

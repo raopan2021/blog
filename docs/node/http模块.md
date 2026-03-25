@@ -41,6 +41,7 @@ server.listen(3000, () => {
 })
 ```
 
+
 ## 获取请求体数据
 
 ```js
@@ -68,6 +69,7 @@ const server = http.createServer((req, res) => {
   }
 })
 ```
+
 
 ## 创建 HTTP 客户端（发起请求）
 
@@ -116,6 +118,7 @@ req.write(data)
 req.end()
 ```
 
+
 ## 使用 Axios（推荐）
 
 > 实际开发中更推荐使用 axios 或其他 HTTP 库
@@ -123,6 +126,7 @@ req.end()
 ```bash
 pnpm add axios
 ```
+
 
 ```js
 import axios from 'axios'
@@ -147,6 +151,7 @@ const res = await axios.get('http://localhost:3000/api', {
   }
 })
 ```
+
 
 ## 常用状态码
 
@@ -189,11 +194,13 @@ const server = http.createServer((req, res) => {
 })
 ```
 
+
 ## Express 框架（更便捷）
 
 ```bash
 pnpm add express
 ```
+
 
 ```js
 import express from 'express'
@@ -220,3 +227,4 @@ app.listen(3000, () => {
   console.log('服务器运行在 http://localhost:3000')
 })
 ```
+

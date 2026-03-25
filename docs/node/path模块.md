@@ -10,6 +10,7 @@ const path = require('path')
 import path from 'path'
 ```
 
+
 ## 核心方法
 
 ### 路径拼接
@@ -30,6 +31,7 @@ path.resolve('index.html')
 // 配合 __dirname 使用
 path.join(__dirname, 'public', 'index.html')
 ```
+
 
 ### 获取路径信息
 
@@ -54,6 +56,7 @@ path.basename('/foo/bar/index.html', path.extname('/foo/bar/index.html'))
 // 结果: 'index'
 ```
 
+
 ### 路径解析
 
 ```js
@@ -71,6 +74,7 @@ path.relative('/foo/bar/baz', '/foo/bar/qux')
 // 结果: '../qux'
 ```
 
+
 ### 路径分隔符
 
 ```js
@@ -86,6 +90,7 @@ path.join('foo', 'bar')
 path.sep === '\\' ? path.replace('\\', '/') : p
 ```
 
+
 ## Windows vs POSIX
 
 ```js
@@ -97,6 +102,7 @@ path.win32.join('foo', 'bar')
 path.posix.join('foo', 'bar')
 // 结果: 'foo/bar'
 ```
+
 
 ## 实际应用示例
 
@@ -114,6 +120,7 @@ const __dirname = dirname(__filename)
 const projectRoot = path.resolve(__dirname, '..')
 ```
 
+
 ### 拼接资源路径
 
 ```js
@@ -123,6 +130,7 @@ const indexPath = path.join(publicPath, 'index.html')
 // 或使用 resolve
 const indexPath = path.resolve(__dirname, 'public', 'index.html')
 ```
+
 
 ### 处理文件扩展名
 
@@ -135,6 +143,7 @@ function getFileNameWithoutExt(filePath) {
 getFileNameWithoutExt('/foo/bar/index.html')
 // 结果: 'index'
 ```
+
 
 ## 与 URL 的转换
 
@@ -150,3 +159,4 @@ const filePath = fileURLToPath('file:///foo/bar/index.html')
 const url = pathToFileURL('/foo/bar/index.html')
 // 结果: 'file:///foo/bar/index.html'
 ```
+

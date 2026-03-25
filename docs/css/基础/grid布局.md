@@ -53,6 +53,7 @@
 
 
 
+
 ![img](https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2020/7/26/173895918bfd94e9~tplv-t2oaga2asx-zoom-in-crop-mark:3024:0:0:0.awebp)
 
 
@@ -97,6 +98,7 @@
 
 
 
+
 ![块级元素](https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2020/7/26/17389591baa442ef~tplv-t2oaga2asx-zoom-in-crop-mark:3024:0:0:0.awebp)
 
 
@@ -106,6 +108,7 @@
   display: inline-grid;
 }
 ```
+
 
 
 
@@ -132,6 +135,7 @@
 }
 ```
 
+
 以上表示固定列宽为 200px 100px 200px，行高为 50px 50px
 
 
@@ -152,6 +156,7 @@
 }
 ```
 
+
 **auto-fill 关键字**：表示自动填充，让一行（或者一列）中尽可能的容纳更多的单元格。`grid-template-columns: repeat(auto-fill, 200px)` 表示列宽是 200 px，但列的数量是不固定的，只要浏览器能够容纳得下，就可以放置元素，代码以及效果如下图所示：
 
 ``` css
@@ -162,6 +167,7 @@
   grid-auto-rows: 50px;
 }
 ```
+
 
 
 
@@ -182,6 +188,7 @@
 
 
 
+
 ![image](https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2020/7/26/17389591ccc256d1~tplv-t2oaga2asx-zoom-in-crop-mark:3024:0:0:0.awebp)
 
 
@@ -199,6 +206,7 @@
 
 
 
+
 ![image](https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2020/7/26/17389591dc05edac~tplv-t2oaga2asx-zoom-in-crop-mark:3024:0:0:0.awebp)
 
 
@@ -213,6 +221,7 @@
   grid-auto-rows: 50px;
 }
 ```
+
 
 
 
@@ -244,6 +253,7 @@
 }
 ```
 
+
 以上两种写法效果是一样的。
 
 
@@ -273,6 +283,7 @@
 }
 ```
 
+
 上面代码表示划分出 6 个单元格，其中值得注意的是 `.` 符号代表空的单元格，也就是没有用到该单元格。
 
 ```css
@@ -288,6 +299,7 @@
   grid-area: header;
 }
 ```
+
 
 以上代码表示将类 `.sidebar` `.content` `.header`所在的元素放在上面 `grid-template-areas` 中定义的 `sidebar` `content` `header` 区域中
 
@@ -315,6 +327,7 @@
 
 
 
+
 ![img](https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2020/7/26/173895921548265c~tplv-t2oaga2asx-zoom-in-crop-mark:3024:0:0:0.awebp)
 
 
@@ -339,6 +352,7 @@
 
 
 
+
 ![image](https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2020/7/26/173895923612a19b~tplv-t2oaga2asx-zoom-in-crop-mark:3024:0:0:0.awebp)
 
 
@@ -354,6 +368,7 @@
   grid-template-rows:  50px 50px;
 }
 ```
+
 
 
 
@@ -376,6 +391,7 @@
 }
 ```
 
+
 其代码实现以及效果如下：
 
 ``` css
@@ -396,6 +412,7 @@
   justify-items: stretch;
 }
 ```
+
 
 - start：对齐单元格的起始边缘
 
@@ -442,6 +459,7 @@
 }
 ```
 
+
 下面以 `justify-content` 属性为例进行讲解，`align-content` 属性同理，只是方向为垂直方向
 
 - start - 对齐容器的起始边框
@@ -463,6 +481,7 @@
   justify-content: center;
 }
 ```
+
 
 
 
@@ -492,6 +511,7 @@
 
 
 
+
 ![image](https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2020/7/26/173895927ba770c4~tplv-t2oaga2asx-zoom-in-crop-mark:3024:0:0:0.awebp)
 
 
@@ -516,6 +536,7 @@
   grid-auto-rows: 50px;
 }
 ```
+
 
 `grid-template-columns` 属性和 `grid-template-rows` 属性只是指定了两行两列，但实际有九个元素，就会产生隐式网格。通过 `grid-auto-rows` 可以指定隐式网格的行高为 50px
 
@@ -587,6 +608,7 @@
 }
 ```
 
+
 上面代码中，类 `.two` 所在的网格项目，垂直网格线是从 2 到 4，水平网格线是从 1 到 2。其中它跟 `.three` （垂直网格线是从3 到 4，水平网格线是从 1 到 4） 是有冲突的。可以设置 `z-index` 去决定它们的层级关系
 
 
@@ -629,6 +651,7 @@
   justify-self: stretch;
 }
 ```
+
 
 - start：对齐单元格的起始边缘
 
@@ -680,6 +703,7 @@
 
 
 
+
 ![image](https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2020/7/26/17389592bf7e44dd~tplv-t2oaga2asx-zoom-in-crop-mark:3024:0:0:0.awebp)
 
 
@@ -701,6 +725,7 @@
   grid-auto-rows: 50px;
 }
 ```
+
 
 
 
@@ -726,6 +751,7 @@
 
 
 
+
 ![auto-auto-minmax.gif](https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2020/7/26/17389592cc3c2bf9~tplv-t2oaga2asx-zoom-in-crop-mark:3024:0:0:0.awebp)
 
 
@@ -739,6 +765,7 @@
   grid-column-start: span 3;
 }
 ```
+
 
 [演示地址](https://link.juejin.cn/?target=https%3A%2F%2Fcodepen.io%2Fgpingfeng%2Fpen%2FBajEoxy%3Feditors%3D1100)
 
@@ -763,6 +790,7 @@
   grid-auto-flow: row dense;
 }
 ```
+
 
 
 

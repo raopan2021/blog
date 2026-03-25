@@ -21,6 +21,7 @@ pnpm add three
 pnpm add -D vite vite-plugin-singlefile
 ```
 
+
 ## package.json 配置
 
 ```json
@@ -42,6 +43,7 @@ pnpm add -D vite vite-plugin-singlefile
   }
 }
 ```
+
 
 ## vite.config.js 配置
 
@@ -67,6 +69,7 @@ export default defineConfig({
   },
 })
 ```
+
 
 ## index.html 入口文件
 
@@ -110,9 +113,11 @@ export default defineConfig({
 </html>
 ```
 
+
 ## 目录结构
 
 ```
+
 3d-card-showcase/
 ├── index.html              # 入口 HTML
 ├── package.json           # 依赖配置
@@ -121,6 +126,7 @@ export default defineConfig({
 └── src/
     └── main.js            # 主逻辑（后续各 Stage 逐步完善）
 ```
+
 
 ## 运行项目
 
@@ -134,6 +140,7 @@ pnpm dev
 # 构建生产版本（生成 dist/index.html）
 pnpm build
 ```
+
 
 ## 下一步
 

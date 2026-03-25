@@ -37,6 +37,7 @@ is_active = True
 # int, float, str, bool, list, tuple, dict, set
 ```
 
+
 ### 条件判断
 
 ```python
@@ -47,6 +48,7 @@ elif age >= 6:
 else:
     print("童年")
 ```
+
 
 ### 循环
 
@@ -64,6 +66,7 @@ while count < 5:
 # 列表推导式
 squares = [x**2 for x in range(10)]
 ```
+
 
 ### 函数
 
@@ -83,6 +86,7 @@ def func(*args, **kwargs):
     print(args, kwargs)
 ```
 
+
 ### 类与对象
 
 ```python
@@ -98,6 +102,7 @@ p = Person("张三", 18)
 print(p.say_hello())
 ```
 
+
 ## 常用数据结构
 
 ### 列表（List）
@@ -110,6 +115,7 @@ fruits.remove("香蕉")       # 删除
 print(fruits[0])           # 索引访问
 ```
 
+
 ### 字典（Dict）
 
 ```python
@@ -118,6 +124,7 @@ person["city"] = "北京"    # 添加
 print(person.get("name"))  # 获取
 ```
 
+
 ### 集合（Set）
 
 ```python
@@ -125,6 +132,7 @@ s = {1, 2, 3, 3, 3}  # 自动去重
 s.add(4)              # 添加
 s.remove(1)           # 删除
 ```
+
 
 ## 常用标准库
 
@@ -155,6 +163,7 @@ def index():
 app.run(debug=True)
 ```
 
+
 ### Django（全功能）
 
 ```bash
@@ -162,6 +171,7 @@ pip install django
 django-admin startproject mysite
 python manage.py runserver
 ```
+
 
 ## 数据处理
 
@@ -175,6 +185,7 @@ print(arr * 2)  # [2, 4, 6, 8, 10]
 print(arr.mean())  # 3.0
 ```
 
+
 ### Pandas
 
 ```python
@@ -186,6 +197,7 @@ df = pd.DataFrame({
 })
 print(df.describe())
 ```
+
 
 ## 环境管理
 
@@ -205,6 +217,7 @@ pyenv install 3.11.0
 pyenv global 3.11.0
 ```
 
+
 ### conda
 
 ```bash
@@ -217,3 +230,4 @@ conda activate myenv
 # 退出环境
 conda deactivate
 ```
+

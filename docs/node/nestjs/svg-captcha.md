@@ -6,6 +6,7 @@
 pnpm install svg-captcha -S
 ```
 
+
 ```ts
 import * as svgCaptcha from 'svg-captcha';
 
@@ -26,3 +27,4 @@ export class UserController {
     ...
 }
 ```
+

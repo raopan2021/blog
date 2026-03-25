@@ -12,6 +12,7 @@
 start /w "" "Docker Desktop Installer.exe" install --installation-dir=D:\IDEs\Docker
 ```
 
+
 启动
 
 ## 修改软件为中文
@@ -40,5 +41,6 @@ start /w "" "Docker Desktop Installer.exe" install --installation-dir=D:\IDEs\Do
     ]
 }
 ```
+
 
 - 点击Apply & Restart

@@ -5,6 +5,7 @@
 ## 4.1 为什么需要资源管理器？
 
 ```
+
 传统方式（不推荐）：
   loadGLTF('car', () => { ... })
   loadGLTF('room', () => {
@@ -24,6 +25,7 @@ am.onReady(() => {
   init()
 })
 ```
+
 
 ## 4.2 AssetManager 类
 
@@ -121,6 +123,7 @@ class AssetManager {
 }
 ```
 
+
 ## 4.3 资源路径配置
 
 ```js
@@ -158,6 +161,7 @@ const ASSETS = {
 }
 ```
 
+
 ## 4.4 使用方式
 
 ```js
@@ -190,6 +194,7 @@ am.onReady(() => {
   initScene()
 })
 ```
+
 
 ## 4.5 纹理预处理
 
@@ -250,9 +255,11 @@ function preprocessTextures() {
 }
 ```
 
+
 ## 4.6 纹理过滤方式对比
 
 ```
+
 NearestFilter（最近邻）:
   每个像素直接取最近的一个纹理像素
   ✓ 优点：锐利、清晰
@@ -269,6 +276,7 @@ Mipmap（多级渐远）:
   自动生成缩小后的版本（1/2, 1/4, 1/8...）
   优点：远处不会闪烁，性能好
 ```
+
 
 ## 4.7 从 HDR 创建环境贴图
 
@@ -297,6 +305,7 @@ function createEnvmap(hdrTexture) {
   return envmap
 }
 ```
+
 
 ## 4.8 资源清单
 

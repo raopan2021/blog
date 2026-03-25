@@ -7,6 +7,7 @@
 射线检测 = 从相机发射一条「射线」，检测它与哪些物体相交：
 
 ```
+
 原理：
 
 相机
@@ -26,6 +27,7 @@ Three.js 会返回：
 3. 交点的物体
 4. 交点的 UV 坐标
 ```
+
 
 ```js
 /**
@@ -58,6 +60,7 @@ function setupInteraction() {
 }
 ```
 
+
 ## 11.2 背景音乐
 
 ```js
@@ -79,6 +82,7 @@ function playBGM() {
   }
 }
 ```
+
 
 ## 11.3 完整初始化流程
 
@@ -212,9 +216,11 @@ class App {
 new App()
 ```
 
+
 ## 11.4 整体架构图
 
 ```
+
 ┌─────────────────────────────────────────────────────────┐
 │                        App                              │
 │  (主应用，协调所有组件)                                  │
@@ -263,6 +269,7 @@ new App()
               Speed Up               Bloom Up            Shake Start
 ```
 
+
 ## 11.5 状态机
 
 ```js
@@ -277,6 +284,7 @@ params.isRushing = true   // 加速中
 params.disableInteract = true  // 动画进行中，不响应点击
 params.disableInteract = false // 可交互
 ```
+
 
 ---
 

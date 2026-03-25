@@ -29,6 +29,7 @@ BFC全称：块级格式化上下文（block formatting context）
 </style>
 ```
 
+
 ![img](https://pic4.zhimg.com/80/v2-0a9ca8952c83141250a2d9002e6d2047_720w.webp)
 
 从效果上看，因为两个 div 元素都处于同一个 BFC 容器下 (这里指 body 元素) 
@@ -58,6 +59,7 @@ p {
 </style>
 ```
 
+
 这时候，两个盒子边距就变成了 200px
 
 ![img](https://pic2.zhimg.com/80/v2-5b8d6e8b2b507352900c1ece00018855_720w.webp)
@@ -72,6 +74,7 @@ p {
 </div>
 ```
 
+
 ![img](https://pic4.zhimg.com/80/v2-371eb702274af831df909b2c55d6a14b_720w.webp)
 
 由于容器内元素浮动，脱离了文档流，所以容器只剩下 2px 的边距高度。如果使触发容器的 BFC，那么容器将会包裹着浮动元素。
@@ -81,6 +84,7 @@ p {
     <div style="width: 100px;height: 100px;background: #eee;float: left;"></div>
 </div>
 ```
+
 
 ![img](https://pic4.zhimg.com/80/v2-cc8365db5c9cc5ca003ce9afe88592e7_720w.webp)
 
@@ -98,6 +102,7 @@ p {
     我是一个没有设置浮动, 也没有触发 BFC 元素, width: 200px; height:200px; background: #eee;
 </div>
 ```
+
 
 ![img](https://pic4.zhimg.com/80/v2-dd3e636d73682140bf4a781bcd6f576b_720w.webp)
 

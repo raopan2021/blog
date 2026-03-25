@@ -58,9 +58,11 @@ graph TD
     style K fill:#10b981,color:#fff
 ```
 
+
 ## 项目结构
 
 ```
+
 3d-card-showcase/
 ├── index.html              # 入口 HTML（标题、canvas画布）
 ├── package.json           # 依赖：three.js ^0.170.0, vite ^5.4.0
@@ -69,6 +71,7 @@ graph TD
 └── src/
     └── main.js            # 全部逻辑（约 340 行）
 ```
+
 
 ## 核心代码详解
 
@@ -104,6 +107,7 @@ renderer.shadowMap.enabled = true
 renderer.shadowMap.type = THREE.PCFSoftShadowMap  // 柔和阴影
 ```
 
+
 ### ② 光照系统
 
 ```js
@@ -128,6 +132,7 @@ const pointLight = new THREE.PointLight(0x00ffff, 0.5, 20)
 pointLight.position.set(0, 3, 3)
 scene.add(pointLight)
 ```
+
 
 ### ③ Canvas 纹理生成
 
@@ -162,6 +167,7 @@ function createCardFrontTexture(title, subtitle, gradientStart, gradientEnd, ico
   return new THREE.CanvasTexture(canvas)
 }
 ```
+
 
 ### ④ 卡片创建逻辑
 
@@ -218,6 +224,7 @@ function createCard(config, index) {
 }
 ```
 
+
 ### ⑤ 鼠标交互
 
 ```js
@@ -245,6 +252,7 @@ function flipCard(card) {
   card.userData.targetRotationY = card.userData.isFlipped ? Math.PI : 0
 }
 ```
+
 
 ### ⑥ 动画循环
 
@@ -284,6 +292,7 @@ function animate() {
 
 animate()
 ```
+
 
 ## 关键参数配置表
 
@@ -334,6 +343,7 @@ pnpm dev
 pnpm build
 ```
 
+
 ## 扩展练习
 
 ### 练习 1：添加拖拽排序
@@ -351,6 +361,7 @@ function updateLayout() {
   // 重新计算每张卡片的位置
 }
 ```
+
 
 ### 练习 4：3D 卡片画廊
 在卡片中加载真实图片纹理，并添加图片切换的过渡动画。

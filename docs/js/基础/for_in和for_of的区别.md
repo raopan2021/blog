@@ -18,13 +18,16 @@ for (let s of str) console.log(s)
 //c
 ```
 
+
 ```
+
 const arr = [10,20,30]
 for (let n in arr) console.log(n) // 0   //1   //2
 
 const str = 'abc'
 for (let s in str) console.log(s)
 ```
+
 
 
 
@@ -41,6 +44,7 @@ for (let p of pList) {
     console.log(p) // for...of 可以获取 value ，而 for...in 获取 key
 }
 ```
+
 
 
 
@@ -70,6 +74,7 @@ for (let n of map1) {
 
 
 
+
 ### 遍历 generator
 
 for...of 可遍历 generator ，for...in 不可以
@@ -84,6 +89,7 @@ for (let o of foo()) {
   console.log(o)
 }
 ```
+
 
 
 
@@ -138,6 +144,7 @@ function createTimeoutPromise(val) {
 }
 ```
 
+
 如果你明确知道有几个 promise 对象，那直接处理即可
 
 ```js
@@ -151,6 +158,7 @@ function createTimeoutPromise(val) {
     console.log(v2)
 })()
 ```
+
 
 如果你有一个对象，里面有 N 个 promise 对象，你可以这样处理
 
@@ -173,6 +181,7 @@ function createTimeoutPromise(val) {
 })()
 ```
 
+
 【注意】如果你想顺序执行，只能延迟创建 promise 对象，而不能及早创建。<br>
 即，你创建了 promise 对象，它就立刻开始执行逻辑。
 
@@ -189,3 +198,4 @@ function createTimeoutPromise(val) {
     }
 })()
 ```
+

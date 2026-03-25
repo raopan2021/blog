@@ -15,6 +15,7 @@ btn.onclick = function(){
 // 你好222
 ```
 
+
 ### 事件绑定（addEventListener）
 
 事件绑定就是对于一个可以绑定的事件对象，进行多次绑定事件都能运行。
@@ -30,7 +31,9 @@ btn.addEventListener("click",function(){
 // 运行结果会依次弹出你好111，你好222的弹出框。
 ```
 
+
 ```js
 // onclick属性不适用以下元素：<base>、<bdo>、<br>、<head>、<html>、<iframe>、<meta>、<param>、<script>、<style> 或 <title>。
 ```
+
 

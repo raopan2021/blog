@@ -25,6 +25,7 @@ function animate() {
 }
 ```
 
+
 GSAP 的优势：
 
 ```js
@@ -35,6 +36,7 @@ gsap.to(params.cameraPos, {
   ease: 'power2.inOut',  // 缓动函数
 })
 ```
+
 
 ## 8.2 动画参数对象
 
@@ -86,6 +88,7 @@ const params = {
 }
 ```
 
+
 ## 8.3 GSAP Timeline
 
 Timeline = 时间线，可以编排多个动画的顺序和重叠：
@@ -103,6 +106,7 @@ tl.to(params, { a: 1, duration: 2 }, '<')     // '<' = 与上一个同时开始
 tl.to(params, { b: 1, duration: 2 }, '+=1')   // '+1' = 延迟 1 秒
 tl.to(params, { c: 1, duration: 2 }, '-=1')   // '-=1' = 提前 1 秒
 ```
+
 
 ## 8.4 进场动画
 
@@ -201,9 +205,11 @@ function enter() {
 }
 ```
 
+
 ## 8.5 时间线图解
 
 ```
+
 时间轴（秒）：
 0     1     2     3     4     5
 │     │     │     │     │     │
@@ -216,6 +222,7 @@ function enter() {
 t3 的 envWeight 在 t3.envIntensity 开始前 2.5 秒就开始
 即 t=1.5s 时 envWeight 开始（而 envIntensity 是 t=0.5s 开始的）
 ```
+
 
 ## 8.6 缓动函数（Easing）
 
@@ -244,7 +251,9 @@ ease: 'bounce.out'
 ease: 'myEase.custom'
 ```
 
+
 ```
+
 缓动函数图解：
 
           ease: 'none'           ease: 'power2.inOut'
@@ -257,6 +266,7 @@ value     ┤                      ┤
 │    ╱                       ╱         ╲
 ├───────────────time    ├───────────────time
 ```
+
 
 ## 8.7 Lerp 插值
 
@@ -277,6 +287,7 @@ onUpdate: () => {
 }
 ```
 
+
 ## 8.8 清除动画
 
 ```js
@@ -294,6 +305,7 @@ rush() {
   // ...
 }
 ```
+
 
 ---
 

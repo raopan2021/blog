@@ -48,6 +48,7 @@ public class UserService {
 }
 ```
 
+
 ## 3. 第一个 Spring 程序
 
 ### 添加 Maven 依赖
@@ -59,6 +60,7 @@ public class UserService {
     <version>6.1.0</version>
 </dependency>
 ```
+
 
 ### 定义 Bean 接口与实现
 
@@ -83,6 +85,7 @@ public class UserDaoImpl implements UserDao {
 }
 ```
 
+
 ### 使用 XML 配置 Bean
 
 ```xml
@@ -103,6 +106,7 @@ public class UserDaoImpl implements UserDao {
 
 </beans>
 ```
+
 
 ### 编写测试类
 
@@ -128,6 +132,7 @@ public class SpringTest {
 }
 ```
 
+
 ## 4. Bean 的配置方式
 
 ### 4.1 构造器注入
@@ -146,6 +151,7 @@ public class SpringTest {
 </bean>
 ```
 
+
 ### 4.2 Setter 注入
 
 ```xml
@@ -155,6 +161,7 @@ public class SpringTest {
     <property name="name" value="默认名称"/>
 </bean>
 ```
+
 
 ### 4.3 构造器 vs Setter 注入
 
@@ -176,6 +183,7 @@ public class SpringTest {
 <context:component-scan base-package="com.example"/>
 ```
 
+
 或在 Java 配置类中：
 
 ```java
@@ -184,6 +192,7 @@ public class SpringTest {
 public class AppConfig {
 }
 ```
+
 
 ### 5.2 常用注解
 
@@ -196,6 +205,7 @@ public class AppConfig {
 @Component                    // 通用组件标注
 @Configuration                // 配置类，等价于 <beans>
 ```
+
 
 ```java
 // 示例：Service 层
@@ -213,6 +223,7 @@ public class UserServiceImpl implements UserService {
 }
 ```
 
+
 #### 依赖注入注解
 
 ```java
@@ -221,6 +232,7 @@ public class UserServiceImpl implements UserService {
 @Qualifier("xxx")          // 指定注入哪个 Bean（配合 @Autowired 使用）
 @Value("${属性名}")         // 注入配置文件中的值
 ```
+
 
 ```java
 @Service
@@ -236,6 +248,7 @@ public class UserServiceImpl implements UserService {
     private String appName;
 }
 ```
+
 
 #### Java 配置类方式
 
@@ -258,6 +271,7 @@ public class AppConfig {
     }
 }
 ```
+
 
 ### 5.3 完整注解示例
 
@@ -299,6 +313,7 @@ public class Test {
 }
 ```
 
+
 ## 6. Bean 的作用域与生命周期
 
 ### 作用域
@@ -316,6 +331,7 @@ public class Test {
 public class UserService {
 }
 ```
+
 
 ### 生命周期回调
 
@@ -337,6 +353,7 @@ public class UserService {
 }
 ```
 
+
 ## 7. 外部配置文件
 
 将数据库配置等抽离到 properties 文件：
@@ -349,6 +366,7 @@ jdbc.username=root
 jdbc.password=123456
 ```
 
+
 ```xml
 <!-- 引入外部配置文件 -->
 <context:property-placeholder location="classpath:jdbc.properties"/>
@@ -358,6 +376,7 @@ jdbc.password=123456
     <property name="username" value="${jdbc.username}"/>
 </bean>
 ```
+
 
 ## 8. Spring 整合 JUnit 测试
 
@@ -374,6 +393,7 @@ jdbc.password=123456
 </dependency>
 ```
 
+
 ```java
 @SpringJUnitConfig(AppConfig.class) // 启动 Spring 容器
 class UserServiceTest {
@@ -387,6 +407,7 @@ class UserServiceTest {
     }
 }
 ```
+
 
 ## 总结
 

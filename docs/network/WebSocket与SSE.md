@@ -9,11 +9,13 @@ title: WebSocket 与 SSE
 HTTP 是「一问一答」模式，服务端不能主动推送：
 
 ```
+
 客户端 → 请求 → 服务端
 客户端 ← 响应 ← 服务端
 
 问题：聊天、实时数据、游戏等场景需要服务端主动推送
 ```
+
 
 ## 解决方案对比
 
@@ -29,6 +31,7 @@ HTTP 是「一问一答」模式，服务端不能主动推送：
 ### 原理
 
 ```
+
 1. HTTP 握手（Upgrade 请求）
 客户端 → GET /ws HTTP/1.1
           Upgrade: websocket
@@ -40,6 +43,7 @@ HTTP 是「一问一答」模式，服务端不能主动推送：
 3. 双方进入 WebSocket 模式（全双工通信）
 客户端 ↔ 服务端（平等对话）
 ```
+
 
 ### 客户端代码
 
@@ -71,6 +75,7 @@ ws.onerror = (error) => {
 // 手动关闭
 ws.close()
 ```
+
 
 ### 服务端代码（Node.js）
 
@@ -109,9 +114,11 @@ wss.on('connection', (ws) => {
 })
 ```
 
+
 ### 帧结构
 
 ```
+
 WebSocket 帧：
 ┌─────────────┬─────────────┬─────────────┬──────────────┐
 │ FIN(1) │ RSV(3) │ Opcode(4) │ MASK(1) │ Payload len(7) │
@@ -123,6 +130,7 @@ WebSocket 帧：
 
 Opcode: 0x1=文本帧, 0x2=二进制帧, 0x8=关闭帧
 ```
+
 
 ### 心跳机制
 
@@ -149,14 +157,17 @@ ws.on('message', (data) => {
 })
 ```
 
+
 ## Server-Sent Events（SSE）
 
 ### 原理
 
 ```
+
 HTTP 连接建立后，服务端持续向客户端推送数据
 客户端只能接收，不能发送（单向）
 ```
+
 
 ### 客户端代码
 
@@ -181,6 +192,7 @@ eventSource.onerror = (error) => {
 }
 ```
 
+
 ### 服务端代码（Node.js + Express）
 
 ```javascript
@@ -203,6 +215,7 @@ app.get('/api/events', (req, res) => {
 })
 ```
 
+
 ## WebSocket vs SSE
 
 | 特性 | WebSocket | SSE |
@@ -218,9 +231,11 @@ app.get('/api/events', (req, res) => {
 ## 使用建议
 
 ```
+
 需要双向通信（聊天、游戏）→ WebSocket
 只需要服务端推送（通知、实时数据）→ SSE
 需要兼容性好 → Long Polling
 ```
+
 
 [[返回 计算机网络首页|../index]]

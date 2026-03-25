@@ -12,11 +12,13 @@
 pnpm add --save multer @types/multer
 ```
 
+
 ### 生成模块
 
 ```bash
 nest g res uploadPic
 ```
+
 
 ### 设置数据格式 `DTO`
 
@@ -29,6 +31,7 @@ export class CreateUploadPicDto {
     file: any;
 }
 ```
+
 
 ### `Module` 注册
 
@@ -62,6 +65,7 @@ import { extname, join } from 'path';
 export class UploadPicModule {}
 ```
 
+
 ### 在控制器使用
 
 使用 UseInterceptors 装饰器 FileInterceptor 是单个 读取字段名称 FilesInterceptor 是多个
@@ -88,6 +92,7 @@ export class UploadPicController {
 }
 ```
 
+
 ## 下载/查看图片
 
 ### 生成静态目录访问上传之后的图片
@@ -104,6 +109,7 @@ async function bootstrap() {
     ...
 }
 ```
+
 
 浏览器打开 http://localhost:3000/raopan/[/dist/images 目录里的图片]
 
@@ -131,6 +137,7 @@ export class UploadPicController {
 }
 ```
 
+
 ### 文件流下载
 
 使用 compressing 把他压缩成一个 zip 包
@@ -138,6 +145,7 @@ export class UploadPicController {
 ```bash
 pnpm add compressing
 ```
+
 
 ```ts{1,6-13}
 import { zip } from 'compressing';
@@ -156,3 +164,4 @@ export class UploadPicController {
     }
 }
 ```
+

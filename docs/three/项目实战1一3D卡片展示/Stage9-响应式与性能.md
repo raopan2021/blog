@@ -17,6 +17,7 @@ window.addEventListener('resize', () => {
 })
 ```
 
+
 **注意**：`camera.updateProjectionMatrix()` 是必须的，否则相机不会立即应用新的宽高比。
 
 ## 高清屏适配
@@ -30,6 +31,7 @@ window.addEventListener('resize', () => {
 // 限制最大像素比，避免性能问题
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 ```
+
 
 ## 响应式布局
 
@@ -70,6 +72,7 @@ updateLayout()
 window.addEventListener('resize', updateLayout)
 ```
 
+
 ## 移动端支持
 
 移动端没有 `click` 事件，需要监听 `touchstart`：
@@ -89,6 +92,7 @@ window.addEventListener('touchstart', (event) => {
   }
 }, { passive: true })
 ```
+
 
 ## 性能优化建议
 
@@ -119,4 +123,5 @@ function animate() {
   renderer.render(scene, camera)
 }
 ```
+
 

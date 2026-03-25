@@ -11,6 +11,7 @@ Three.js 的 `BoxGeometry` 创建一个矩形盒子，有 6 个面：
 const geometry = new THREE.BoxGeometry(2, 1.25, 0.1)
 ```
 
+
 ## MeshStandardMaterial 物理渲染材质
 
 Three.js 推荐使用 PBR（基于物理的渲染）材质：
@@ -22,6 +23,7 @@ const material = new THREE.MeshStandardMaterial({
   metalness: 0.1,      // 金属度（金属材质更光滑）
 })
 ```
+
 
 ## 材质数组（6个面）
 
@@ -42,6 +44,7 @@ const materials = [
 
 const mesh = new THREE.Mesh(geometry, materials)
 ```
+
 
 ## 卡片创建函数
 
@@ -117,9 +120,11 @@ function createCard(config, index) {
 cardConfigs.forEach((config, index) => createCard(config, index))
 ```
 
+
 ## 布局示意图
 
 ```
+
 第0行 (index 0,1,2)
 [ 卡片0 ]  [ 卡片1 ]  [ 卡片2 ]
    col=0     col=1     col=2
@@ -132,6 +137,7 @@ X轴 →  (col-1) * 2.5
 Y轴 ↓  -row * 1.8 + 0.9
 ```
 
+
 ## userData 的作用
 
 `mesh.userData` 可以自由附加任意数据，用于存储每张卡片的状态：
@@ -142,4 +148,5 @@ mesh.userData.targetRotationY  // 目标旋转角度
 mesh.userData.currentRotationY // 当前旋转角度
 mesh.userData.basePositionY    // 初始 Y 坐标
 ```
+
 

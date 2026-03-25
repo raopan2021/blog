@@ -56,4 +56,5 @@ VSCode 默认是支持 Markdown 的，但还是有必装下面 3 个插件提高
 }
 ```
 
+
 至此，VSCode 已经实现了 Typora 等 Markdown 编辑器除所见即所得（WYSIWYG）之外的全部功能。

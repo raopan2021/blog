@@ -19,6 +19,7 @@ emitter.on('message', (data) => {
 emitter.emit('message', 'Hello World')
 ```
 
+
 ## on vs once
 
 ```js
@@ -32,6 +33,7 @@ emitter.once('event', () => console.log('只触发一次'))
 emitter.emit('event') // 输出
 emitter.emit('event') // 不输出
 ```
+
 
 ## 事件监听器方法
 
@@ -63,6 +65,7 @@ console.log(emitter.listeners('message'))
 console.log(emitter.hasListeners('message')) // true
 ```
 
+
 ## 传递参数
 
 ```js
@@ -73,6 +76,7 @@ emitter.on('user', (name, age) => {
 emitter.emit('user', '张三', 18)
 // 输出: 张三, 18岁
 ```
+
 
 ## 错误处理
 
@@ -91,6 +95,7 @@ emitter.on('error', (err) => {
   console.error('错误:', err.message)
 })
 ```
+
 
 ## 继承 EventEmitter
 
@@ -118,6 +123,7 @@ myEmitter.on('message', (msg) => {
 myEmitter.sendMessage('Hello')
 ```
 
+
 ## 同步 vs 异步
 
 > 事件监听是同步执行的，按注册顺序依次调用
@@ -132,6 +138,7 @@ emitter.emit('event')
 // 第二个
 ```
 
+
 如果需要异步执行：
 
 ```js
@@ -141,6 +148,7 @@ emitter.on('event', () => {
   })
 })
 ```
+
 
 ## 常用内置事件（HTTP 示例）
 
@@ -163,6 +171,7 @@ server.on('close', () => {
 })
 ```
 
+
 ## newListener 和 removeListener
 
 ```js
@@ -176,6 +185,7 @@ emitter.on('removeListener', (event, listener) => {
   console.log(`移除监听: ${event}`)
 })
 ```
+
 
 ## EventEmitter.defaultMaxListeners
 
@@ -191,6 +201,7 @@ emitter.setMaxListeners(20)
 // 获取最大监听数
 console.log(emitter.getMaxListeners())
 ```
+
 
 ## 实际应用：发布订阅系统
 
@@ -226,3 +237,4 @@ bus.subscribe('user:login', (user) => {
 
 bus.publish('user:login', { name: '张三', time: new Date() })
 ```
+

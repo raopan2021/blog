@@ -18,9 +18,11 @@
 D:\IDEs\Anaconda\condabin
 ```
 
+
 ```txt
 D:\IDEs\Anaconda\Scripts
 ```
+
 
 ### 修改源、包安装位置
 
@@ -42,6 +44,7 @@ envs_dirs:
 pkgs_dirs:
   - D:\IDEs\PythonEnvs\pkgs
 ```
+
 
 ## 环境创建、使用等
 
@@ -67,6 +70,7 @@ conda remove -n <env_name> --all
 conda env list
 ```
 
+
 ## 安装包
 
 ```bash
@@ -83,3 +87,4 @@ conda list
 # conda查看指定环境的包
 conda list -n <env_name>
 ```
+

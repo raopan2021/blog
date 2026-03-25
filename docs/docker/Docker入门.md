@@ -11,9 +11,11 @@ title: Docker入门
 镜像是一个只读的模板，包含了运行容器所需的文件系统、代码和依赖。
 
 ```
+
 镜像结构：
 nginx:latest (Ubuntu + Nginx + 应用)
 ```
+
 
 ### 容器（Container）
 
@@ -23,6 +25,7 @@ nginx:latest (Ubuntu + Nginx + 应用)
 # 镜像是类，容器是实例
 ```
 
+
 ### 仓库（Registry）
 
 存储和分发镜像的服务，Docker Hub 是最大的公共仓库。
@@ -31,6 +34,7 @@ nginx:latest (Ubuntu + Nginx + 应用)
 # 格式：registry/repository:tag
 # 例如：docker.io/nginx:1.25
 ```
+
 
 ## 镜像操作
 
@@ -47,6 +51,7 @@ docker pull nginx:1.25-alpine
 docker pull -a nginx
 ```
 
+
 ### 列出本地镜像
 
 ```bash
@@ -58,6 +63,7 @@ docker images
 # 查看镜像详细信息
 docker inspect nginx:latest
 ```
+
 
 ### 删除镜像
 
@@ -74,6 +80,7 @@ docker image prune
 # 删除所有镜像
 docker rmi $(docker images -q)
 ```
+
 
 ### 构建镜像
 
@@ -95,6 +102,7 @@ EXPOSE 8080                    # 暴露端口
 CMD ["python", "app.py"]       # 启动命令
 ```
 
+
 #### 构建命令
 
 ```bash
@@ -110,6 +118,7 @@ docker build --build-arg VERSION=1.0 -t myapp:v1 .
 # 多阶段构建
 docker build -t myapp:v1 -f Dockerfile.multi .
 ```
+
 
 #### 多阶段构建示例
 
@@ -128,6 +137,7 @@ EXPOSE 8080
 CMD ["./myapp"]
 ```
 
+
 ### 镜像标签
 
 ```bash
@@ -139,6 +149,7 @@ docker tag myapp:v1 registry.example.com/myapp:v1
 docker login registry.example.com
 docker push registry.example.com/myapp:v1
 ```
+
 
 ## 容器操作
 
@@ -168,6 +179,7 @@ docker run -d -v /host/path:/container/path nginx
 docker run -it ubuntu bash
 ```
 
+
 ### 启动/停止/重启
 
 ```bash
@@ -183,6 +195,7 @@ docker restart my-nginx
 # 强制停止
 docker kill my-nginx
 ```
+
 
 ### 查看容器
 
@@ -200,6 +213,7 @@ docker ps -l
 docker ps --format "table {{.ID}}\t{{.Names}}\t{{.Status}}"
 ```
 
+
 ### 进入容器
 
 ```bash
@@ -212,6 +226,7 @@ docker exec -it my-nginx sh
 # 分离模式（exit 不会停止容器）
 docker attach my-nginx
 ```
+
 
 ### 删除容器
 
@@ -228,6 +243,7 @@ docker container prune
 # 删除所有容器
 docker rm $(docker ps -aq)
 ```
+
 
 ### 容器日志
 
@@ -247,6 +263,7 @@ docker logs --since "2024-01-01" my-nginx
 # 查看错误日志
 docker logs --tail 100 --since 30m my-nginx | grep ERROR
 ```
+
 
 ## 数据卷（Volume）
 
@@ -272,6 +289,7 @@ docker run -d -v /app/data nginx
 docker run -d -v /host/data:/container/data nginx
 ```
 
+
 ## 常用示例
 
 ### 运行 Nginx
@@ -283,6 +301,7 @@ docker run -d \
   -v $(pwd)/html:/usr/share/nginx/html \
   nginx
 ```
+
 
 ### 运行 MySQL
 
@@ -296,6 +315,7 @@ docker run -d \
   mysql:8
 ```
 
+
 ### 运行 Redis
 
 ```bash
@@ -307,6 +327,7 @@ docker run -d \
   redis-server --appendonly yes
 ```
 
+
 ### 运行 Python 应用
 
 ```bash
@@ -317,6 +338,7 @@ docker run -d \
   -v $(pwd):/app \
   myapp:v1
 ```
+
 
 ## 清理资源
 
@@ -339,5 +361,6 @@ docker system prune
 # 完全清理（包括未使用的镜像）
 docker system prune -a
 ```
+
 
 [[返回 Docker 首页|docker/index]]

@@ -6,6 +6,7 @@
 npm login
 ```
 
+
 ## 上传
 
 ::: tip
@@ -15,14 +16,17 @@ npm login
 npm config set registry https://registry.npmjs.org/
 ```
 
+
 :::
 
 ```bash
 npm publish
 ```
 
+
 ## 取消发布
 
 ```bash
 npm unpublish raopancli@1.0.15 --force
 ```
+

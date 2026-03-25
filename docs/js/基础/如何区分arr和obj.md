@@ -12,6 +12,7 @@ console.log(typeof arr) // object
 console.log(obj) // object
 ```
 
+
 那这是为什么呢？
 
 因为`typeof`返回的类型只有
@@ -43,6 +44,7 @@ Array.isArray(arr) // true
 Array.isArray(obj) // false
 ```
 
+
 ### **Object.prototype.toString.call**
 
 ```js
@@ -52,6 +54,7 @@ const obj = {name: 'zhangsan'}
 Object.prototype.toString.call(obj)==="[object Array]" // false
 Object.prototype.toString.call(arr)==="[object Array]" // true
 ```
+
 
 ### **instanceof**
 
@@ -65,6 +68,7 @@ arr instanceof Array // true
 obj instanceof Array // false
 ```
 
+
 ### **isPrototypeOf()**
 
 ```js
@@ -75,6 +79,7 @@ Array.prototype.isPrototypeOf(arr) // true
 Array.prototype.isPrototypeOf(obj) // false
 ```
 
+
 ### **构造函数`constructor`**
 
 ```js
@@ -84,4 +89,5 @@ const obj = { name: 'zhangsan' }
 arr.constructor === Array; // true
 obj.constructor === Object; // true
 ```
+
 

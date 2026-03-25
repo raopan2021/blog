@@ -6,6 +6,7 @@
 pip install pandas numpy
 ```
 
+
 ## 基本数据结构
 
 ```python
@@ -30,6 +31,7 @@ print(df.info())      # 数据信息
 print(df.describe())  # 统计摘要
 ```
 
+
 ## 数据选择
 
 ```python
@@ -50,6 +52,7 @@ print(df.iloc[0:2, 0:2])    # 行+列切片
 print(df[df["age"] > 30])           # age > 30
 print(df[(df["age"] > 25) & (df["score"] > 80)])  # 多条件
 ```
+
 
 ## 数据操作
 
@@ -73,6 +76,7 @@ df.sort_values(by="score", ascending=False, inplace=True)
 df["rank"] = df["score"].rank(ascending=False)
 ```
 
+
 ## 缺失值处理
 
 ```python
@@ -89,6 +93,7 @@ df.fillna(0)             # 用0填充
 df.fillna(df.mean())     # 用均值填充
 df.interpolate()         # 插值填充
 ```
+
 
 ## 分组聚合
 
@@ -114,6 +119,7 @@ def salary_range(x):
 print(grouped["salary"].agg(salary_range))
 ```
 
+
 ## 数据合并
 
 ```python
@@ -128,6 +134,7 @@ right = pd.DataFrame({"key": ["K0", "K1", "K2"], "B": ["B0", "B1", "B2"]})
 result = pd.merge(left, right, on="key")
 ```
 
+
 ## CSV 读写
 
 ```python
@@ -139,6 +146,7 @@ df = pd.read_excel("data.xlsx", sheet_name="Sheet1")
 df.to_csv("output.csv", index=False, encoding="utf-8")
 df.to_excel("output.xlsx", index=False)
 ```
+
 
 ---
 

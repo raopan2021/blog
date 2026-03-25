@@ -66,6 +66,7 @@ fun MainActivity.Content() {
 }
 ```
 
+
 ### 动画参数说明
 
 | 参数 | 作用 |
@@ -125,6 +126,7 @@ LaunchedEffect(userId) {
 }
 ```
 
+
 ### LaunchedEffect vs remember
 
 ```kotlin
@@ -141,6 +143,7 @@ LaunchedEffect(Unit) {
 // rememberEffect：组合两者
 val viewModel = remember { ViewModel() }
 ```
+
 
 ## Material3 主题
 
@@ -184,6 +187,7 @@ fun ApiQuotaHelperTheme(
 }
 ```
 
+
 ### 在 UI 中使用主题
 
 ```kotlin
@@ -204,6 +208,7 @@ fun MyComponent() {
     }
 }
 ```
+
 
 ## 动态主题切换
 
@@ -227,6 +232,7 @@ fun MainActivity.setContent() {
     }
 }
 ```
+
 
 ## SwipeToDismiss 滑动删除
 
@@ -278,6 +284,7 @@ fun SwipeToDeleteCard(
 }
 ```
 
+
 ## FilterChip 筛选标签
 
 ```kotlin
@@ -302,6 +309,7 @@ Row(
     }
 }
 ```
+
 
 ## BackHandler 处理返回键
 
@@ -332,6 +340,7 @@ BackHandler {
 }
 ```
 
+
 ## 响应式状态栏
 
 ```kotlin
@@ -347,4 +356,5 @@ class MainActivity : ComponentActivity() {
     }
 }
 ```
+
 

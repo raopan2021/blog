@@ -27,6 +27,7 @@ mysql -u root -p
 mysql -h 127.0.0.1 -P 3306 -u root -p
 ```
 
+
 ### 数据库操作
 
 ```sql
@@ -42,6 +43,7 @@ USE mydb;
 -- 删除数据库
 DROP DATABASE mydb;
 ```
+
 
 ### 表操作
 
@@ -63,6 +65,7 @@ DESC users;
 -- 删除表
 DROP TABLE users;
 ```
+
 
 ### 增删改查（CRUD）
 
@@ -86,6 +89,7 @@ UPDATE users SET email = 'new@example.com' WHERE id = 1;
 DELETE FROM users WHERE id = 1;
 ```
 
+
 ### 条件查询
 
 ```sql
@@ -96,6 +100,7 @@ SELECT * FROM users WHERE name LIKE '张%';
 SELECT * FROM users WHERE id IN (1, 2, 3);
 SELECT * FROM users WHERE email IS NULL;
 ```
+
 
 ### 聚合函数
 
@@ -122,6 +127,7 @@ GROUP BY department
 HAVING num > 5;
 ```
 
+
 ### 表连接（JOIN）
 
 ```sql
@@ -141,6 +147,7 @@ FROM users
 RIGHT JOIN orders ON users.id = orders.user_id;
 ```
 
+
 ### 索引
 
 ```sql
@@ -154,6 +161,7 @@ SHOW INDEX FROM users;
 -- 删除索引
 DROP INDEX idx_name ON users;
 ```
+
 
 ### 常用数据类型
 
@@ -185,6 +193,7 @@ SELECT * FROM users LIMIT 10 OFFSET 10;
 SELECT * FROM users LIMIT 10, 10; -- (offset, limit)
 ```
 
+
 ### 字符串函数
 
 ```sql
@@ -194,6 +203,7 @@ SELECT LENGTH(name) FROM users;
 SELECT SUBSTRING(name, 1, 2) FROM users; -- 截取前2个字符
 ```
 
+
 ### 日期函数
 
 ```sql
@@ -202,3 +212,4 @@ SELECT CURDATE();      -- 当前日期
 SELECT DATE_FORMAT(created_at, '%Y-%m-%d') FROM users;
 SELECT DATE_ADD(created_at, INTERVAL 7 DAY) FROM users;
 ```
+

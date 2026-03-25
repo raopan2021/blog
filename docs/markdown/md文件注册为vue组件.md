@@ -5,17 +5,21 @@
 ### 安装依赖包
 
 ```
+
 npm i vue-markdown-loader -D
 npm i  vue-loader vue-template-compiler -D
 npm i github-markdown-css -D
 npm i highlight.js -D
 ```
 
+
  若报错 Vue packages [version](https://so.csdn.net/so/search?q=version&spm=1001.2101.3001.7020) mismatch，则安装与 vue-template-compiler 版本一致的vue即可
 
 ```
+
 npm install vue@2.6.12 --save
 ```
+
 
 ### 在vue.config.js中添加配置
 
@@ -36,6 +40,7 @@ module.exports = {
 }
 ```
 
+
 ### 导入样式
 
 在 .vue 文件中局部导入，或在 main.js 中全局导入。
@@ -44,6 +49,7 @@ module.exports = {
 import 'github-markdown-css'
 import 'highlight.js/styles/github.css'
 ```
+
 
 如果上面的不行，那就是下面这个（测试这个打开了太多网页csdn，导入的太多了），我是在main.js里面导入的下面这个。
 
@@ -60,17 +66,20 @@ Vue.directive('highlight', function (el) {
 })
 ```
 
+
 ### 在vue文件中使用
 
 ```js
 import ReadmeView from '@/../README.md';
 ```
 
+
 ```vue
 components: {
     ReadmeView
 },
 ```
+
 
 ```vue
 <div class="markdown-body">
@@ -80,3 +89,4 @@ components: {
   </div>
 </div>
 ```
+

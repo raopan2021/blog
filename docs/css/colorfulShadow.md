@@ -12,6 +12,7 @@ import ColorfulShadow from './components/colorfulShadow.vue'
 </div>
 ```
 
+
 ```scss
 .color-shadow {
   position: relative;
@@ -42,6 +43,7 @@ import ColorfulShadow from './components/colorfulShadow.vue'
   }
 }
 ```
+
 
 ::: details 详细代码
 <<< ./components/colorfulShadow.vue

@@ -33,6 +33,7 @@
 </svg>
 ```
 
+
 ## 常用图形
 
 ### 基础图形
@@ -57,12 +58,14 @@
 <rect x="10" y="10" width="100" height="60" fill="none" stroke="#333" stroke-width="2" />
 ```
 
+
 ### 圆形和椭圆
 
 ```svg
 <circle cx="50" cy="50" r="40" fill="#ff6b6b" />
 <ellipse cx="100" cy="50" rx="60" ry="30" fill="#4ecdc4" />
 ```
+
 
 ### 路径 path
 
@@ -89,6 +92,7 @@
       fill="#ff6b6b" />
 ```
 
+
 ## 常用样式属性
 
 ### 填充与描边
@@ -98,12 +102,14 @@
 <circle fill="none" stroke="#4ecdc4" stroke-width="3" />
 ```
 
+
 ### 透明度
 
 ```svg
 <rect fill="#ff6b6b" opacity="0.5" />
 <circle fill="#4ecdc4" fill-opacity="0.5" stroke-opacity="0.8" />
 ```
+
 
 ### 线条样式
 
@@ -113,6 +119,7 @@
 <!-- stroke-dasharray: 虚线 -->
 <line stroke-dasharray="5,5" stroke-linecap="round" />
 ```
+
 
 ### 渐变
 
@@ -135,6 +142,7 @@
 <rect fill="url(#myGradient)" width="200" height="100" />
 ```
 
+
 ### 滤镜效果
 
 ```svg
@@ -152,6 +160,7 @@
 <rect filter="url(#dropShadow)" width="100" height="100" fill="#ff6b6b" />
 ```
 
+
 ## 裁剪与遮罩
 
 ```svg
@@ -165,6 +174,7 @@
 <image href="photo.jpg" clip-path="url(#circleClip)" width="100" height="100" />
 ```
 
+
 ## 文本
 
 ```svg
@@ -177,6 +187,7 @@
   居中文字
 </text>
 ```
+
 
 ## 变形
 
@@ -194,6 +205,7 @@
 <rect transform="translate(10,10) rotate(45) scale(1.2)" />
 ```
 
+
 ## 在 HTML 中使用
 
 ```html
@@ -208,6 +220,7 @@
 <!-- CSS 背景 -->
 <div style="background-image: url('icon.svg');"></div>
 ```
+
 
 ## 动画
 
@@ -227,6 +240,7 @@
 </rect>
 ```
 
+
 ### CSS 动画
 
 ```css
@@ -240,6 +254,7 @@
 }
 ```
 
+
 ## 实用技巧
 
 ### 响应式 SVG
@@ -249,6 +264,7 @@
   <circle cx="50" cy="50" r="40" fill="#ff6b6b" />
 </svg>
 ```
+
 
 ### 图标制作技巧
 
@@ -265,6 +281,7 @@
 
 <use href="#icon-home" width="24" height="24" fill="currentColor" />
 ```
+
 
 ### 优化 SVG 文件
 

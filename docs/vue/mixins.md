@@ -53,6 +53,7 @@ export const myMixins = {
 }
 ```
 
+
 ② 组件1中对num进行+1操作
 
 ```javascript
@@ -68,6 +69,7 @@ export default {
 }
 ```
 
+
 ③组件2不进行操作
 
 ```haskell
@@ -78,6 +80,7 @@ export default {
   },
 }
 ```
+
 
 ④我们分别切换到两个页面，查看控制台输出。会发现组件1改变了age里面的值，组件2中age值还是混合对象的初始值，并没有随着组件1的增加而改变
 
@@ -113,6 +116,7 @@ export const myMixins = {
 }
 ```
 
+
  ②我们在引入了myMixins文件的组件中，增加age属性、getAge1方法和getAge3方法
 
 ```javascript
@@ -140,6 +144,7 @@ export default {
   }
 }
 ```
+
 
 ③我们会发现，组件中的age覆盖了混合对象的age，组件的getAge1方法覆盖了混合对象的getAge1方法
 
@@ -169,6 +174,7 @@ export default {
   }
 }
 ```
+
 
 ![img](https://img-blog.csdnimg.cn/20200807173312845.png)
 

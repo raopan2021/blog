@@ -106,6 +106,7 @@ copy了2种方案
 </style>
 ```
 
+
 ### 方案2，点击后左侧border变蓝
 
 ```scss
@@ -157,4 +158,5 @@ copy了2种方案
   color: #38B2FF !important;
 }
 ```
+
 

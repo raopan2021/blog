@@ -8,6 +8,7 @@ Swagger 是一个用于生成、描述和可视化 RESTful API 的工具。
 pnpm install @nestjs/swagger swagger-ui-express
 ```
 
+
 ## 在 main.ts 注册 swagger
 
 ```ts{1,2,7-12}
@@ -27,6 +28,7 @@ async function bootstrap() {
 }
 ```
 
+
 浏览器访问 http://localhost:3000/api-docs 即可查看接口文档。
 
 ## 在 controller 中添加接口描述
@@ -41,6 +43,7 @@ getUsers() {
 }
 ```
 
+
 ### url 传参描述
 
 ```ts
@@ -50,6 +53,7 @@ getUser(@Param('id', new ParseIntPipe(), new DefaultValuePipe(0)) id: number) {
     ...
 }
 ```
+
 
 ### query 参数描述
 
@@ -61,6 +65,7 @@ searchUsers(@Query('name') name: string) {
 }
 ```
 
+
 ### header 参数描述
 
 ```ts
@@ -71,6 +76,7 @@ getUsersWithHeader(@Headers('Authorization') authorization: string) {
 }
 ```
 
+
 ### body 参数描述
 
 ```ts
@@ -80,6 +86,7 @@ createUser(@Body() createUserDto: CreateUserDto) {
     ...
 }
 ```
+
 
 ## 在 dto 中添加字段描述
 
@@ -94,6 +101,7 @@ export class CreateUserDto {
     password: string;
 }
 ```
+
 
 ## 在 service 中添加接口描述
 
@@ -110,3 +118,4 @@ export class UserService {
     }
 }
 ```
+

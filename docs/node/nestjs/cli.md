@@ -4,11 +4,13 @@
 npm i -g @nestjs/cli
 ```
 
+
 在当前目录创建nest项目
 
 ```bash
 nest new [项目名称]
 ```
+
 
 ## 启动项目
 
@@ -17,6 +19,7 @@ nest new [项目名称]
 "start:dev": "nest start --watch",
 "start:debug": "nest start --debug --watch",
 ```
+
 
 热更新启动 `npm run start:dev` 就可以了
 
@@ -33,11 +36,13 @@ nest g controller [控制器名称]
 nest g service [服务名称]
 ```
 
+
 以上步骤一个一个生成的太慢了我们可以直接使用一个命令生成CURD
 
 ```bash
 nest g resource [模块名称]
 ```
+
 
 其他
 
@@ -53,6 +58,7 @@ nest g pipe [管道名称]
 # 创建一个过滤器
 nest g filter [过滤器名称]
 ```
+
 
 查看nestjs所有的命令
 
@@ -95,3 +101,4 @@ Commands:
       │ sub-app       │ app         │ Generate a new application within a monorepo │
       └───────────────┴─────────────┴──────────────────────────────────────────────┘
 ```
+

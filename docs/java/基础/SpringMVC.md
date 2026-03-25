@@ -25,6 +25,7 @@ SpringMVC 是 Spring 框架的 Web 模块，基于 Servlet API 构建，遵循 M
 ### 完整流程图
 
 ```
+
 浏览器请求
     │
     ▼
@@ -56,6 +57,7 @@ SpringMVC 是 Spring 框架的 Web 模块，基于 Servlet API 构建，遵循 M
 浏览器响应
 ```
 
+
 ### 具体步骤
 
 1. **请求拦截**：浏览器发送请求到 `DispatcherServlet`
@@ -75,6 +77,7 @@ SpringMVC 是 Spring 框架的 Web 模块，基于 Servlet API 构建，遵循 M
     <version>6.1.0</version>
 </dependency>
 ```
+
 
 ### 配置 DispatcherServlet
 
@@ -97,6 +100,7 @@ SpringMVC 是 Spring 框架的 Web 模块，基于 Servlet API 构建，遵循 M
     <url-pattern>/</url-pattern>
 </servlet-mapping>
 ```
+
 
 ### SpringMVC 配置文件
 
@@ -123,6 +127,7 @@ SpringMVC 是 Spring 框架的 Web 模块，基于 Servlet API 构建，遵循 M
 </beans>
 ```
 
+
 ### 编写 Controller
 
 ```java
@@ -145,6 +150,7 @@ public class UserController {
     }
 }
 ```
+
 
 ## 4. 核心注解详解
 
@@ -170,6 +176,7 @@ public class ApiController {
     @DeleteMapping("/delete")
 }
 ```
+
 
 ### 4.2 获取请求参数
 
@@ -227,6 +234,7 @@ public class UserController {
 }
 ```
 
+
 ### 4.3 处理响应
 
 ```java
@@ -261,6 +269,7 @@ public class UserController {
 }
 ```
 
+
 ## 5. 参数绑定（核心）
 
 参数绑定是将 HTTP 请求参数自动转换为 Java 方法参数的过程。
@@ -276,6 +285,7 @@ public String detail(Long id, String name, Integer age) {
     return "detail";
 }
 ```
+
 
 ### 5.2 POJO 对象绑定
 
@@ -297,6 +307,7 @@ public String save(User user) {
 }
 ```
 
+
 ### 5.3 嵌套 POJO 绑定
 
 ```java
@@ -313,6 +324,7 @@ public String save(Order order) {
     return "success";
 }
 ```
+
 
 ### 5.4 数组和集合绑定
 
@@ -333,6 +345,7 @@ public String batch(@RequestParam("users") List<User> users) {
     return "success";
 }
 ```
+
 
 ### 5.5 自定义类型转换
 
@@ -362,6 +375,7 @@ public class WebConfig implements WebMvcConfigurer {
 }
 ```
 
+
 ## 6. 视图解析
 
 ### 6.1 JSP 视图解析
@@ -374,6 +388,7 @@ public String list(Model model) {
     return "userList"; // 前缀 + "userList" + 后缀 = /WEB-INF/views/userList.jsp
 }
 ```
+
 
 ### 6.2 重定向与转发
 
@@ -402,6 +417,7 @@ public class UserController {
     }
 }
 ```
+
 
 ### 6.3 RESTful 风格
 
@@ -442,6 +458,7 @@ public class UserRestController {
 }
 ```
 
+
 ## 7. 数据共享
 
 | 方式 | 作用域 | 说明 |
@@ -470,6 +487,7 @@ public class UserController {
     }
 }
 ```
+
 
 ## 8. 异常处理
 
@@ -502,6 +520,7 @@ public class GlobalExceptionHandler {
     }
 }
 ```
+
 
 ## 总结
 

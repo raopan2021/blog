@@ -16,6 +16,7 @@ npm install --save nprogress
 yarn add nprogress
 ```
 
+
 ### 作为加载进度条
 
 在Vue入口文件 main.js 中引入 nprogress
@@ -26,6 +27,7 @@ import Vue from 'vue'
 import NProgress from 'nprogress' //引入 nprogress 插件
 import 'nprogress/nprogress.css' // 引入基础样式
 ```
+
 
 切换路由时进行加载（也是在main.js中）
 
@@ -43,6 +45,7 @@ router.afterEach(() => {
   NProgress.done()
 })
 ```
+
 
 
 
@@ -81,6 +84,7 @@ export default {
 
 
 
+
 ### 更改默认颜色样式
 
 在 App.vue 中
@@ -98,6 +102,7 @@ export default {
 
 
 
+
 ### 进度环显示隐藏
 
 在main.js中
@@ -105,6 +110,7 @@ export default {
 ```js
 NProgress.configure({showSpinner: false});
 ```
+
 
 
 
@@ -118,11 +124,13 @@ NProgress.configure({ease:'ease',speed:1000});
 
 
 
+
 ### 进度条最低百分比
 
 ```js
 NProgress.configure({minimum:0.0});
 ```
+
 
 
 

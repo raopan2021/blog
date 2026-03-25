@@ -8,6 +8,7 @@
 npm install @nestjs/schedule
 ```
 
+
 ## 创建定时任务
 
 @Cron()装饰器，把 handleCron()方法定义成一个每 10 秒执行一次的定时任务。
@@ -26,6 +27,7 @@ export class TaskService {
 }
 ```
 
+
 ## 注册服务
 
 将 MyTaskService 服务添加到你的模块的 providers 数组中，以便 NestJS 可以创建并管理它
@@ -41,6 +43,7 @@ export class TaskService {
 })
 export class DeviceModule {}
 ```
+
 
 一切设置好后，我们可以运行项目 npm run start 看看我们的定时任务效果：
 
@@ -59,6 +62,7 @@ handleCron() {
 }
 ```
 
+
 ### 间隔执行任务
 
 如果你想每隔一段固定的时间执行一次任务，可以使用 @Interval() 装饰器：
@@ -70,6 +74,7 @@ handleInterval() {
 }
 ```
 
+
 ### 超时执行任务
 
 你还可以设置一个任务在应用程序经过特定时间后执行。使用 @Timeout() 装饰器：
@@ -80,3 +85,4 @@ handleTimeout() {
 // 应用程序启动后 5 秒执行
 }
 ```
+

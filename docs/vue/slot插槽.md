@@ -22,6 +22,7 @@ export default {
 </script>
 ```
 
+
 ```vue
 // 子组件 footerComponent.vue
 <template>
@@ -31,6 +32,7 @@ export default {
   </div>
 </template>
 ```
+
 
 #### 后备内容
 
@@ -54,6 +56,7 @@ export default {
 </script>
 ```
 
+
 ```javascript
 // 子组件 footerComponent.vue
 <template>
@@ -65,6 +68,7 @@ export default {
   </div>
 </template>
 ```
+
 
 ### 具名插槽
 
@@ -89,6 +93,7 @@ export default {
 1234
 ```
 
+
 如果你希望使用缩写的话，你必须始终以明确插槽名取而代之：
 
 ```javascript
@@ -97,6 +102,7 @@ export default {
 </current-user>
 123
 ```
+
 
 #### 2.2 动态插槽名
 
@@ -110,6 +116,7 @@ export default {
 </base-layout>
 12345
 ```
+
 
 父组件
 
@@ -148,6 +155,7 @@ export default {
 </script>
 ```
 
+
 子组件
 
 ```javascript
@@ -168,4 +176,5 @@ export default {
   background-color pink
 </style>
 ```
+
 

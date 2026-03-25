@@ -22,6 +22,7 @@ Windows下使用pyenv的方法请移步 pyenv-win 源码地址查看： <https:/
 sudo yum install git
 ```
 
+
 - 安装 pyenv
 
 把项目克隆下来，放在家目录下的隐藏文件夹中：.pyenv
@@ -29,6 +30,7 @@ sudo yum install git
 ```bash
 git clone https://github.com/pyenv/pyenv.git ~/.pyenv
 ```
+
 
 - 配置环境变量
 
@@ -39,11 +41,13 @@ echo -e 'if command -v pyenv 1>/dev/null 2>&1; then\n eval "$(pyenv init -)"\nfi
 source ~/.bashrc
 ```
 
+
 - 安装 pyenv-virtualenv
 
 ```bash
 git clone https://github.com/pyenv/pyenv-virtualenv.git $(pyenv root)/plugins/pyenv-virtualenv
 ```
+
 
 - 配置环境变量
 
@@ -51,6 +55,7 @@ git clone https://github.com/pyenv/pyenv-virtualenv.git $(pyenv root)/plugins/py
 echo 'eval "$(pyenv virtualenv-init -)"' >> ~/.bashrc
 source ~/.bashrc
 ```
+
 
 ### 使用 pyenv
 
@@ -65,6 +70,7 @@ pyenv install 3.11 -v
 # 如果安装失败，试试下方指令
 sudo yum install gcc zlib-devel bzip2 bzip2-devel readline-devel sqlite sqlite-devel openssl-devel tk-devel libffi-devel
 ```
+
 
 ::: details 安装python3.7及以上的版本，会因为ssl报错，需要安装openssl，[详情查案看csdn](https://blog.csdn.net/qq_42280510/article/details/130511547)
 
@@ -90,6 +96,7 @@ openssl version
 CPPFLAGS="-I/usr/local/openssl/include" LDFLAGS="-L/usr/local/openssl/lib" pyenv install -v 3.11.10
 ```
 
+
 :::
 
 ```bash
@@ -102,6 +109,7 @@ pyenv version
 # 卸载指定版本
 pyenv uninstall 3.11.10
 ```
+
 
 ### 虚拟环境
 
@@ -122,3 +130,4 @@ pyenv which python
 # 重新生成 pyenv 的 shims 目录中的可执行文件
 pyenv rehash 
 ```
+

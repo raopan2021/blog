@@ -32,6 +32,7 @@ var bindFoo = bar.bind(foo);
 bindFoo(); // 1
 ```
 
+
 关于指定 this 的指向，我们可以使用 call 或者 apply 实现，关于 call 和 apply 的模拟实现，可以查看[《JavaScript深入之call和apply的模拟实现》](https://github.com/mqyqingfeng/Blog/issues/11)。我们来写第一版的代码：
 
 ```js
@@ -44,6 +45,7 @@ Function.prototype.bind2 = function (context) {
 
 }
 ```
+
 
 此外，之所以 `return self.apply(context)`，是考虑到绑定函数可能是有返回值的，依然是这个例子：
 
@@ -60,6 +62,7 @@ var bindFoo = bar.bind(foo);
 
 console.log(bindFoo()); // 1
 ```
+
 
 ## 传参的模拟实现
 
@@ -84,6 +87,7 @@ bindFoo('18');
 // 18
 ```
 
+
 函数需要传 name 和 age 两个参数，竟然还可以在 bind 的时候，只传一个 name，在执行返回的函数的时候，再传另一个参数 age!
 
 这可咋办？不急，我们用 arguments 进行处理：
@@ -104,6 +108,7 @@ Function.prototype.bind2 = function (context) {
 
 }
 ```
+
 
 ## 构造函数效果的模拟实现
 
@@ -141,6 +146,7 @@ console.log(obj.friend);
 // kevin
 ```
 
+
 注意：尽管在全局和 foo 中都声明了 value 值，最后依然返回了 undefind，说明绑定的 this 失效了，如果大家了解 new 的模拟实现，就会知道这个时候的 this 已经指向了 obj。
 
 (哈哈，我这是为我的下一篇文章[《JavaScript深入系列之new的模拟实现》](https://github.com/mqyqingfeng/Blog/issues/13)打广告)。
@@ -166,6 +172,7 @@ Function.prototype.bind2 = function (context) {
 }
 
 ```
+
 
 如果对原型链稍有困惑，可以查看[《JavaScript深入之从原型到原型链》](https://github.com/mqyqingfeng/Blog/issues/2)。
 
@@ -193,6 +200,7 @@ Function.prototype.bind2 = function (context) {
 }
 ```
 
+
 到此为止，大的问题都已经解决，给自己一个赞！o(￣▽￣)ｄ
 
 ## 三个小问题
@@ -208,6 +216,7 @@ Function.prototype.bind2 = function (context) {
 self.apply(this instanceof self ? this : context || this, args.concat(bindArgs))
 
 ```
+
 
 多了一个关于 context 是否存在的判断，然而这个是错误的！
 
@@ -227,6 +236,7 @@ function bar() {
 foo.bar() // 2
 ```
 
+
 以上代码正常情况下会打印 2，如果换成了 context || this，这段代码就会打印 1！
 
 所以这里不应该进行 context 的判断，大家查看 MDN 同样内容的英文版，就不存在这个判断！
@@ -241,6 +251,7 @@ if (typeof this !== "function") {
 }
 ```
 
+
 **3.我要在线上用**
 
 那别忘了做个兼容：
@@ -250,6 +261,7 @@ Function.prototype.bind = Function.prototype.bind || function () {
     ……
 };
 ```
+
 
 当然最好是用 [es5-shim](https://github.com/es-shims/es5-shim) 啦。
 
@@ -279,6 +291,7 @@ Function.prototype.bind2 = function (context) {
     return fBound;
 }
 ```
+
 
 ## 下一篇文章
 

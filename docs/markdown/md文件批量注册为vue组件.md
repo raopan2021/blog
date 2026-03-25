@@ -37,6 +37,7 @@ export default {
 </script>
 ```
 
+
 ### 应用
 
 ```vue
@@ -47,3 +48,4 @@ export default {
   </div>
 </div>
 ```
+

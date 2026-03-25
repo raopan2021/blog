@@ -8,6 +8,7 @@
 nest g res user
 ```
 
+
 ## 定义实体-创建数据库表
 
 [参见上集](./Entity)
@@ -39,6 +40,7 @@ export class CreateUserDto {
 }
 ```
 
+
 ```ts [page-user.dto.ts]
 export class PageUserDto {
     @IsNotEmpty()
@@ -57,6 +59,7 @@ export class PageUserDto {
     pageSize: number;
 }
 ```
+
 
 ```ts [update-user.dto.ts]
 export class UpdateUserDto extends PartialType(CreateUserDto) {
@@ -81,6 +84,7 @@ export class UpdateUserDto extends PartialType(CreateUserDto) {
 }
 ```
 
+
 :::
 
 ## Module 关联实体
@@ -95,6 +99,7 @@ export class UpdateUserDto extends PartialType(CreateUserDto) {
 })
 export class UserModule {}
 ```
+
 
 ## user.controller.ts
 
@@ -139,6 +144,7 @@ export class UserController {
     }
 }
 ```
+
 
 ## user.service.ts
 
@@ -193,6 +199,7 @@ export class UserService {
 }
 ```
 
+
 ::: tip where 的用法
 
 ```ts
@@ -206,6 +213,7 @@ export class UserService {
 //     { age: MoreThanOrEqual(18) }
 // ]
 ```
+
 
 :::
 

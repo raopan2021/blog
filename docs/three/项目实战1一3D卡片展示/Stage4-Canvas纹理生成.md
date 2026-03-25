@@ -27,6 +27,7 @@ ctx.fillRect(0, 0, 512, 320)
 const texture = new THREE.CanvasTexture(canvas)
 ```
 
+
 ## 圆角矩形辅助函数
 
 Three.js 的 Canvas 不会自动绘制圆角，需要手动实现：
@@ -55,6 +56,7 @@ function roundRect(ctx, x, y, width, height, radius) {
   ctx.closePath()
 }
 ```
+
 
 ## 正面纹理生成
 
@@ -106,6 +108,7 @@ function createCardFrontTexture(title, subtitle, gradientStart, gradientEnd, ico
 }
 ```
 
+
 ## 背面纹理生成
 
 ```js
@@ -144,6 +147,7 @@ function createCardBackTexture(number) {
 }
 ```
 
+
 ## 六张卡片的配置
 
 ```js
@@ -157,6 +161,7 @@ const cardConfigs = [
 ]
 ```
 
+
 ## 纹理优化
 
 如果纹理模糊，可以尝试：
@@ -166,4 +171,5 @@ const texture = new THREE.CanvasTexture(canvas)
 texture.minFilter = THREE.LinearFilter  // 线性滤波
 texture.magFilter = THREE.LinearFilter
 ```
+
 

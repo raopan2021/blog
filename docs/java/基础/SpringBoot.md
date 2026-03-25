@@ -25,6 +25,7 @@
 </dependency>
 ```
 
+
 使用optional=true表示依赖不会传递，即该项目依赖devtools；其他项目如果引入此项目生成的JAR包，则不会包含devtools
 
 2、在application.properties中配置devtools。
@@ -37,6 +38,7 @@ spring.devtools.restart.additional-paths=src/main/java
 #classpath目录下的WEB-INF文件夹内容修改不重启
 #spring.mvc.static-path-pattern=/static/**
 ```
+
 
 3、最后
 
@@ -55,6 +57,7 @@ spring.servlet.multipart.max-file-size=10MB
 spring.servlet.multipart.max-request-size=10MB
 ```
 
+
 ## Swagger
 
 添加 依赖
@@ -72,11 +75,13 @@ spring.servlet.multipart.max-request-size=10MB
 </dependency>
 ```
 
+
 Spring Boot 2.6.X后与Swagger有版本冲突问题，需要在application.properties中加入以下配置：
 
 ```properties
 spring.mvc.pathmatch.matching-strategy=ant path_matcher
 ```
+
 
 启动项目访问 `http://127.0.0.1:8080/swagger-ui.html` ，即可打开自动生成的可视化测试页面
 
@@ -106,6 +111,7 @@ spring.mvc.pathmatch.matching-strategy=ant path_matcher
 </dependency>
 ```
 
+
 配置数据库相关信息
 
 ```properties
@@ -116,3 +122,4 @@ spring.datasource.username=root
 spring.datasource.password=root
 mybatis-plus.configuration,1og-impl=org.apache.ibatis.logging.stdout.stdOutImpl
 ```
+

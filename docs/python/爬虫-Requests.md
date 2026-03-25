@@ -6,6 +6,7 @@
 pip install requests
 ```
 
+
 ## 基本请求
 
 ```python
@@ -23,6 +24,7 @@ params = {"page": 1, "per_page": 10}
 response = requests.get("https://api.github.com/users", params=params)
 ```
 
+
 ## POST 请求
 
 ```python
@@ -39,6 +41,7 @@ response = requests.post("https://api.example.com/posts", json=payload)
 files = {"file": open("image.png", "rb")}
 response = requests.post("https://api.example.com/upload", files=files)
 ```
+
 
 ## 请求头和认证
 
@@ -63,6 +66,7 @@ headers = {"Authorization": "Bearer YOUR_ACCESS_TOKEN"}
 response = requests.get("https://api.example.com/user", headers=headers)
 ```
 
+
 ## 超时和重试
 
 ```python
@@ -86,6 +90,7 @@ session.mount("https://", adapter)
 response = session.get("https://example.com/api")
 ```
 
+
 ## Session 保持会话
 
 ```python
@@ -100,6 +105,7 @@ session.post("https://example.com/login", json={"username": "alice", "password":
 # 之后的请求会自动带上 Cookie
 response = session.get("https://example.com/profile")
 ```
+
 
 ## 异常处理
 
@@ -118,6 +124,7 @@ except ConnectionError:
 except RequestException as e:
     print(f"请求错误: {e}")
 ```
+
 
 ---
 

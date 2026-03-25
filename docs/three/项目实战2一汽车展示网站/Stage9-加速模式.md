@@ -7,8 +7,10 @@
 加速模式是小米 SU7 官网最核心的交互特效。点击汽车后：
 
 ```
+
 正常状态 ──点击──→ 加速中 ──再次点击──→ 正常状态
 ```
+
 
 | 阶段 | 效果 |
 |------|------|
@@ -159,9 +161,11 @@ function rush() {
 }
 ```
 
+
 ## 9.3 加速效果一览
 
 ```
+
 正常状态                                  加速状态
 ─────────────────────────────────────────────
 speed: 0                              speed: 10
@@ -174,6 +178,7 @@ carBodyEnvIntensity: 1               carBodyEnvIntensity: 10
 cameraShakeIntensity: 0               cameraShakeIntensity: 1
 bloomIntensity: 1                     bloomIntensity: 2
 ```
+
 
 ## 9.4 rushDone() 恢复正常
 
@@ -266,9 +271,11 @@ function rushDone() {
 }
 ```
 
+
 ## 9.5 加速模式视觉原理
 
 ```
+
 FOV 增大（广角）→ 物体「变小」但视野「变大」
 → 产生「速度感」
 
@@ -281,6 +288,7 @@ cameraShake → 画面轻微抖动
 speedUpOpacity → Speed Lines 出现
 → 明确传达「正在加速」
 ```
+
 
 ---
 
