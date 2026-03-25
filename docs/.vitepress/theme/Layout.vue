@@ -1,18 +1,11 @@
 <script setup lang="ts">
-import { nextTick, provide, ref, computed, h } from 'vue'
-import { useData, useRoute } from 'vitepress'
+import { nextTick, provide } from 'vue'
+import { useData } from 'vitepress'
 import DefaultTheme from 'vitepress/theme'
 const { Layout } = DefaultTheme
-
 import { ElBacktop } from 'element-plus'
 
 const { isDark } = useData()
-const route = useRoute()
-
-// 判断是否为 Three.js 实战篇的最后一页
-const isThreeLastPage = computed(() => {
-  return route.path.includes('/three/') && route.path.endsWith('/总结')
-})
 
 const enableTransitions = () =>
   'startViewTransition' in document &&
@@ -47,47 +40,14 @@ provide('toggle-appearance', async ({ clientX: x, clientY: y }: MouseEvent) => {
     }
   )
 })
-
-// 自定义 PrevNext 组件
-const PrevNext = () => {
-	if (isThreeLastPage.value) {
-		return h('div', {
-			class: 'prev-next-page',
-			style: 'display: flex; justify-content: space-between; gap: 1rem; margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--vp-c-divider);'
-		}, [
-			h('a', {
-				href: '/blog/three/项目实战2一汽车展示网站/Stage11-交互与完整流程',
-				class: 'vp-pager-link prev',
-				style: 'flex: 1; padding: 0.75rem 1rem; background: var(--vp-c-bg-soft); border-radius: 8px; text-decoration: none; transition: background 0.2s;',
-			}, [
-				h('span', { style: 'display: block; font-size: 0.75rem; color: var(--vp-c-text-2); margin-bottom: 0.25rem;' }, '← 上一篇'),
-				h('span', { style: 'display: block; font-weight: 600; color: var(--vp-c-text-1);' }, 'Stage11：交互与完整流程'),
-			]),
-			h('a', {
-				href: '/blog/three/01-入门',
-				class: 'vp-pager-link next',
-				style: 'flex: 1; padding: 0.75rem 1rem; background: var(--vp-c-bg-soft); border-radius: 8px; text-decoration: none; text-align: right; transition: background 0.2s;',
-			}, [
-				h('span', { style: 'display: block; font-size: 0.75rem; color: var(--vp-c-text-2); margin-bottom: 0.25rem;' }, '下一篇 →'),
-				h('span', { style: 'display: block; font-weight: 600; color: var(--vp-c-brand-1);' }, '基础篇 01：入门'),
-			]),
-		])
-	}
-	return null
-}
 </script>
 
 <template>
-	<Layout>
-		<template #doc-after>
-			<el-backtop :right="100" :bottom="100" />
-		</template>
-
-		<template #doc-footer>
-			<component :is="PrevNext" v-if="isThreeLastPage" />
-			<slot v-else name="doc-footer" />
-		</template>
-	</Layout>
+  <Layout>
+    <template #doc-after>
+      <el-backtop :right="100" :bottom="100" />
+    </template>
+  </Layout>
 </template>
 
 <style>
