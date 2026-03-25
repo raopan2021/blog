@@ -99,7 +99,7 @@ features:
       src: /mainView/node.svg
     title: Node.js
     details: Node.js nvm npm pnpm
-    link: /node/
+    link: /node/nodejs/
 
   - icon:
       src: /mainView/nestjs.svg
