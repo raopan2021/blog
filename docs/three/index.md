@@ -1,3 +1,9 @@
+---
+next:
+  text: '入门：场景、相机、渲染器'
+  link: '/three/01-入门'
+---
+
 # Three.js 教程
 
 > Three.js 是一个基于 WebGL 的 3D 图形库，用于在浏览器中创建 3D 图形
