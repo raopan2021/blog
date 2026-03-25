@@ -7,8 +7,18 @@ export function NodeSidebar(): DefaultTheme.SidebarItem[] {
       link: 'index',
       base: '/node/',
       items: [
-        // { text: '首页', link: 'index' },
-        // { text: 'pnpm', link: 'pnpm' },
+        // 基础入门
+        { text: '首页', link: 'index' },
+        { text: 'npm/yarn/pnpm', link: 'npm' },
+        { text: 'nvm 版本管理', link: 'nvm' },
+        // 核心模块
+        { text: 'fs 文件系统', link: 'fs模块' },
+        { text: 'path 路径', link: 'path模块' },
+        { text: 'http 模块', link: 'http模块' },
+        { text: 'events 事件', link: 'events模块' },
+        { text: 'Buffer 缓冲区', link: 'Buffer' },
+        { text: 'Stream 流', link: 'Stream' },
+        // NestJS
         {
           text: 'NestJS',
           link: 'nestjs',
