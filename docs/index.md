@@ -143,6 +143,12 @@ features:
     details: 计算机网络基础知识
     link: /network/
 
+  - icon:
+      src: /mainView/plc.svg
+    title: PLC 工业自动化
+    details: 西门子 S7-1200 / 三菱 FX5U 编程入门
+    link: /plc/
+
   # ===== 工具 & 其他 =====
   - icon:
       src: /mainView/algorithm.svg

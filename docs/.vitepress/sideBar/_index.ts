@@ -18,6 +18,7 @@ import { MicroSidebar } from './micro.ts'
 import { MysqlSidebar } from './mysql.ts'
 import { NetworkSidebar } from './network.ts'
 import { NodeSidebar } from './node.ts'
+import { PLCSidebar } from './plc.ts'
 import { PlanSidebar } from './plan.ts'
 import { PoemSidebar } from './poem.ts'
 import { PythonSidebar } from './python.ts'
@@ -42,6 +43,7 @@ export const side = {
   '/mysql/': { base: '/mysql/', items: MysqlSidebar() },
   '/network/': { base: '/network/', items: NetworkSidebar() },
   '/node/': { base: '/node/', items: NodeSidebar() },
+  '/plc/': { base: '/plc/', items: PLCSidebar() },
   '/linux/': { base: '/linux/', items: LinuxSidebar() },
   '/docker/': { base: '/docker/', items: DockerSidebar() },
   '/ai/': { base: '/ai/', items: AISidebar() },
@@ -88,6 +90,7 @@ export function nav(): DefaultTheme.NavItem[] {
         { text: 'Linux', link: '/linux/', activeMatch: '/linux/' },
         { text: 'Docker', link: '/docker/', activeMatch: '/docker/' },
         { text: '计算机网络', link: '/network/', activeMatch: '/network/' },
+        { text: 'PLC 工业自动化', link: '/plc/', activeMatch: '/plc/' },
       ],
     },
     {
