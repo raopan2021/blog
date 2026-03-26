@@ -146,7 +146,7 @@ features:
   - icon:
       src: /mainView/plc.svg
     title: PLC 工业自动化
-    details: 西门子 S7-1200 / 三菱 FX5U 编程入门
+    details: 西门子 S7-1200/1500 / 三菱 FX5U / ABB AC500
     link: /plc/
 
   # ===== 工具 & 其他 =====

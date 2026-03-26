@@ -90,7 +90,16 @@ export function nav(): DefaultTheme.NavItem[] {
         { text: 'Linux', link: '/linux/', activeMatch: '/linux/' },
         { text: 'Docker', link: '/docker/', activeMatch: '/docker/' },
         { text: '计算机网络', link: '/network/', activeMatch: '/network/' },
-        { text: 'PLC 工业自动化', link: '/plc/', activeMatch: '/plc/' },
+      ],
+    },
+    {
+      text: 'PLC 工业自动化',
+      items: [
+        { text: '基础入门', link: '/plc/基础入门/认识PLC', activeMatch: '/plc/基础入门/' },
+        { text: '西门子系列', link: '/plc/西门子/S7-1200快速入门', activeMatch: '/plc/西门子/' },
+        { text: '三菱系列', link: '/plc/三菱/FX5U快速入门', activeMatch: '/plc/三菱/' },
+        { text: 'ABB 系列', link: '/plc/ABB/ABB-PLC快速入门', activeMatch: '/plc/ABB/' },
+        { text: '专题实战', link: '/plc/专题/工业通信专题', activeMatch: '/plc/专题/' },
       ],
     },
     {
