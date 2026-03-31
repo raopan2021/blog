@@ -22,15 +22,18 @@ import { PLCSidebar } from './plc.ts'
 import { PlanSidebar } from './plan.ts'
 import { PoemSidebar } from './poem.ts'
 import { PythonSidebar } from './python.ts'
+import { ReactSidebar } from './react.ts'
 import { RegSidebar } from './reg.ts'
 import { SvgSidebar } from './svg.ts'
 import { ThreeSidebar } from './three.ts'
 import { VueSidebar } from './vue.ts'
+import { ViteSidebar } from './vite.ts'
 
 export const side = {
   '/algorithm/': { base: '/algorithm/', items: AlgorithmSidebar() },
   '/android/': { base: '/android/', items: AndroidSidebar() },
   '/base/': { base: '/base/', items: BaseSidebar() },
+  '/build/': { base: '/build/', items: ViteSidebar() },
   '/cli/': { base: '/cli/', items: CliSidebar() },
   '/css/': { base: '/css/', items: CssSidebar() },
   '/engineering/': { base: '/engineering/', items: EngineeringSidebar() },
@@ -47,9 +50,11 @@ export const side = {
   '/linux/': { base: '/linux/', items: LinuxSidebar() },
   '/docker/': { base: '/docker/', items: DockerSidebar() },
   '/ai/': { base: '/ai/', items: AISidebar() },
+  '/react/': { base: '/react/', items: ReactSidebar() },
   '/reg/': { base: '/reg/', items: RegSidebar() },
   '/svg/': { base: '/svg/', items: SvgSidebar() },
   '/three/': { base: '/three/', items: ThreeSidebar() },
+  '/vite/': { base: '/vite/', items: ViteSidebar() },
   '/vue/': { base: '/vue/', items: VueSidebar() },
   '/poem/': { base: '/poem/', items: PoemSidebar() },
   '/plan/': { base: '/plan/', items: PlanSidebar() },
@@ -66,6 +71,8 @@ export function nav(): DefaultTheme.NavItem[] {
         { text: 'SVG', link: '/svg/', activeMatch: '/svg/' },
         { text: 'JavaScript 进阶', link: '/js/', activeMatch: '/js/' },
         { text: 'Vue', link: '/vue/', activeMatch: '/vue/' },
+        { text: 'React', link: '/react/', activeMatch: '/react/' },
+        { text: 'Vite', link: '/vite/', activeMatch: '/vite/' },
         { text: 'Markdown', link: '/markdown/', activeMatch: '/markdown/' },
         { text: 'Three.js', link: '/three/', activeMatch: '/three/' },
         { text: '工程化', link: '/engineering/', activeMatch: '/engineering/' },
