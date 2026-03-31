@@ -73,6 +73,19 @@ export function VueSidebar(): DefaultTheme.SidebarItem[] {
 						{ text: 'Vue.Draggable 拖拽插件', link: 'vueDraggable' },
 					],
 				},
+				{
+					text: 'Vue 源码解析',
+					collapsed: false,
+					base: '/vue/源码解析/',
+					items: [
+						{ text: '教程总览', link: 'index' },
+						{ text: '模块一：项目框架', link: '01-项目框架/index' },
+						{ text: '模块二：响应式基础', link: '02-响应式基础/index' },
+						{ text: '模块三：基础功能', link: '03-基础功能/index' },
+						{ text: '模块四：响应式深入', link: '04-响应式深入/index' },
+						{ text: '模块五：性能优化', link: '05-性能优化/index' },
+					],
+				},
 			],
 		},
 	]
