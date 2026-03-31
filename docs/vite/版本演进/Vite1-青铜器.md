@@ -29,9 +29,9 @@ Webpack 开发流程：
 Vite 开发流程：
 
 ┌─────────────────────────────┐
-│  1. 启动开发服务器           │
+│  1. 启动轻量级开发服务器     │
 │  2. 浏览器请求时才处理        │
-│  3. 利用浏览器原生 ESM        │
+│  3. 利用浏览器原生 ESM         │
 └─────────────────────────────┘
 
 优势：启动快（毫秒级）
@@ -49,7 +49,7 @@ import React from 'react'
 
 // Vite 方式：浏览器直接请求
 // <script type="module" src="/src/main.js"></script>
-import React from '/node_modules/react/index.js'
+import React from '/node_modules/react/index.esm.js'
 ```
 
 ### 按需编译
@@ -75,6 +75,8 @@ Vite 转换并返回
 ---
 
 ## 依赖预构建
+
+### esbuild 预构建
 
 ```javascript
 // Vite 使用 esbuild 预构建依赖
@@ -113,13 +115,13 @@ export default defineConfig({
 
 ---
 
-## 问题与改进
+## 问题与改进空间
 
 | 问题 | 说明 |
 |------|------|
-| 生产构建慢 | 使用 rollup 打包，开发快但生产慢 |
-| 插件生态不完善 | 早期插件较少 |
-| CommonJS 处理 | 部分 npm 包不兼容 ESM |
+| 生产构建 | 使用 rollup 打包，开发快但生产慢 |
+| 插件生态 | 早期插件较少 |
+| CommonJS 处理 | 部分 npm 包不完全兼容 ESM |
 
 ---
 
@@ -128,6 +130,6 @@ export default defineConfig({
 | 特性 | 说明 |
 |------|------|
 | ESM 开发服务器 | 启动快，按需编译 |
-| 依赖预构建 | esbuild 快速转换 |
+| 依赖预构建 | esbuild 快速转换 CommonJS |
 | HMR | 基于 ESM 的快速热更新 |
 | 无需打包 | 开发环境直接运行源码 |

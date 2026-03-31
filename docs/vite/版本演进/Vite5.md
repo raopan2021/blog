@@ -2,58 +2,84 @@
 
 ## 📖 本节总结
 
-Vite 5 是 Vite 的重要版本，主要改进是**使用 Rolldown 作为生产构建工具**，进一步提升构建性能。
+Vite 5 是 Vite 的重要版本，带来了**Rolldown 集成**、**性能大幅提升**和**更好的开发体验**。
 
 ---
 
-## Rolldown 集成
+## 核心改进
 
-### 为什么使用 Rolldown？
-
-```
-Vite 开发使用 Esbuild（快）
-Vite 生产使用 Rollup（慢）
-
-Rolldown: 用 Rust 重写的 Rollup
-- 接近 Esbuild 的速度
-- 兼容 Rollup 的插件 API
-
-Vite 5 目标：统一开发/生产构建体验
-```
-
-### Rolldown 状态
+### Rolldown 集成
 
 ```
-Rolldown 已集成到 Vite 5
-- Rollup 插件可直接使用
-- 构建速度大幅提升
-- API 完全兼容
+Vite 5 使用 Rolldown 作为生产构建工具
+
+Rolldown: Rust 编写的打包工具
+- 接近 esbuild 的速度
+- 兼容 Rollup 插件 API
+
+效果: 生产构建速度提升 3-10 倍
 ```
 
----
-
-## 重大变化
-
-### 移除 Node.js 14/16 支持
-
-```bash
-# Vite 5 需要 Node.js 18+
-node --version  # 需要 >= 18
-```
-
-### 简化 CSS
+### Rollup 4 兼容
 
 ```javascript
-// Vite 5 改进了 CSS 处理
-// 更好的 source map
-// 更快的 HMR
+// Vite 5 内置 Rollup 4
+// 插件兼容性更好
+import { defineConfig } from 'vite'
+
+export default defineConfig({
+  build: {
+    rollupOptions: {
+      // Rollup 4 的选项都能用
+    }
+  }
+})
 ```
 
-### 改进的依赖预构建
+---
+
+## 破坏性变更
+
+### Node.js 版本要求
+
+```bash
+# Vite 5 需要 Node.js 18.18.0+
+node --version  # 需要 >= 18.18.0
+```
+
+### 移除一些废弃 API
+
+```javascript
+// 移除: process.env 替换为 import.meta.env
+// 移除: some deprecated options
+```
+
+---
+
+## CSS 改进
+
+### 更好的 CSS Source Map
+
+```javascript
+// Vite 5 改进了 CSS 的 source map
+// 调试更方便
+```
+
+### CSS Modules 改进
+
+```css
+/* 更好的类型支持 */
+```
+
+---
+
+## 依赖预构建
+
+### Rolldown 进行预构建
 
 ```javascript
 // Vite 5 使用 Rolldown 进行依赖预构建
-// 速度更快，结果更准确
+// 更快、更准确
 ```
 
 ---
@@ -70,20 +96,20 @@ npm install vite@5
 
 | 变化 | 说明 |
 |------|------|
-| Node.js | 需要 18+ |
+| Node.js | 需要 18.18.0+ |
 | Rolldown | 用于生产构建 |
 | CSS | 更好的 source map |
-| 依赖 | 一些内部依赖更新 |
+| 插件 | Rollup 4 兼容 |
 
 ---
 
 ## 性能对比
 
 | 场景 | Vite 4 | Vite 5 | 提升 |
-|------|--------|---------|------|
-| 开发启动 | 快 | 更快 | 10-20% |
-| HMR | 快 | 更快 | 5-10% |
-| 生产构建 | 慢 | 很快 | 3-10x |
+|------|---------|---------|------|
+| 生产构建 | 基准 | 3-10x | 大幅提升 |
+| 依赖预构建 | 快 | 更快 | 20-30% |
+| 冷启动 | 毫秒 | 更快 | 10-20% |
 
 ---
 
@@ -91,7 +117,8 @@ npm install vite@5
 
 | 特性 | 说明 |
 |------|------|
-| Rolldown | Rust 重写的打包工具 |
-| 速度 | 生产构建 3-10 倍提升 |
-| 兼容性 | 兼容 Rollup 插件 |
-| Node.js | 需要 18+ |
+| Rolldown | Rust 重写的打包，速度极快 |
+| Rollup 4 | 兼容现有插件 |
+| CSS 改进 | 更好的 source map |
+| Node.js | 需要 18.18.0+ |
+| 性能 | 生产构建 3-10x 提升 |

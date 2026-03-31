@@ -2,7 +2,7 @@
 
 ## 📖 本节总结
 
-Vite 2 带来了成熟的**插件系统**，支持**多框架**，成为了真正的"构建工具"。
+Vite 2 带来了成熟的**插件系统**，**多框架支持**，以及更好的**Rollup 兼容性**。
 
 ---
 
@@ -177,7 +177,26 @@ VITE_VERSION=1.0.0
 
 // 代码中使用
 console.log(import.meta.env.VITE_API_URL)
-console.log(import.meta.env.VITE_VERSION)
+```
+
+---
+
+## 新增特性
+
+### CSS Modules
+
+### JSON 支持
+
+```javascript
+// 直接导入 JSON
+import data from './data.json'
+```
+
+### Web Workers
+
+```javascript
+// 直接导入 Web Worker
+import Worker from './worker.js?worker'
 ```
 
 ---

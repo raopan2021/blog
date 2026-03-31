@@ -18,7 +18,7 @@ export function ViteSidebar(): DefaultTheme.SidebarItem[] {
 				{ text: 'Vite 1.x 青铜器时代', link: 'Vite1-青铜器' },
 				{ text: 'Vite 2.x 插件系统', link: 'Vite2-插件系统' },
 				{ text: 'Vite 3/4 稳定发展', link: 'Vite3-4稳定发展' },
-				{ text: 'Vite 5', link: 'Vite5' },
+				{ text: 'Vite 5.x', link: 'Vite5' },
 			],
 		},
 		{
