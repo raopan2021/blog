@@ -153,20 +153,14 @@ const proxy = new Proxy(child, {
 
 </details>
 
----
-
 ## 📚 相关讨论
-
 这道题在 Vue3 源码中的实际应用：
-
 ```javascript
 // 当 effect 中访问 proxy.name 时
 effect(() => {
   console.log(state.name)
 })
-
 // 如果没有正确使用 receiver，
 // 当 name 在原型链上时，可能无法正确收集依赖
 ```
-
 [← 返回练习列表](../index)

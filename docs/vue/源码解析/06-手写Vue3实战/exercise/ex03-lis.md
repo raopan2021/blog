@@ -114,11 +114,7 @@ console.log(indices)  // [0, 1, 2, 3, 4]
 console.log(indices.map(i => arr[i]))  // [1, 2, 3, 4, 5]
 ```
 
----
-
 ## 📚 相关源码
-
 - `packages/runtime-core/src/seq.ts`
 - `packages/runtime-core/src/renderer.ts` — Diff 算法中使用 LIS
-
 [← 返回练习列表](../index)

@@ -182,12 +182,8 @@ class ComputedRefImpl {
 
 </details>
 
----
-
 ## 📚 相关源码
-
 - `packages/reactivity/src/computed.ts`
 - `packages/reactivity/src/ref.ts` — trackRefValue、triggerRefValue
 - `packages/reactivity/src/effect.ts` — ReactiveEffect
-
 [← 返回练习列表](../index)

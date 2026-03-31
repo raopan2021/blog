@@ -142,12 +142,8 @@ function reactive(obj) {
 
 </details>
 
----
-
 ## 📚 相关源码
-
 - `packages/reactivity/src/reactive.ts` — reactive 实现
 - `packages/reactivity/src/baseHandler.ts` — Proxy handler
 - `packages/reactivity/src/effect.ts` — trackEffect、triggerEffects
-
 [← 返回练习列表](../index)

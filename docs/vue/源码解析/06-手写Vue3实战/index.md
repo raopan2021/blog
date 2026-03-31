@@ -5,9 +5,7 @@
 ## 📂 配套源码
 
 本章节配套完整的 Vue3 源码学习项目：
-```
 projects/vue3-source/2024vue3-lesson-master/
-```
 
 ## 🎯 练习列表
 
@@ -21,25 +19,10 @@ projects/vue3-source/2024vue3-lesson-master/
 | 06 | [实现 watch](./exercise/ex06-watch) | ⭐⭐⭐⭐ | `packages/reactivity/src/apiWatch.ts` |
 | 07 | [实现虚拟 DOM 与 Diff](./exercise/ex07-vnode-diff) | ⭐⭐⭐⭐ | `packages/runtime-core/src/renderer.ts` |
 
----
-
 ## 🚀 如何学习
-
 1. **先看配套源码** — 阅读对应的 Vue3 源码文件
 2. **理解原理** — 看文档中的原理解析
 3. **动手实现** — 根据提示完成练习
 4. **对比答案** — 参考源码中的实现方式
-
 ## 💡 提示
-
 每个练习都有配套的源码路径，可以在 `2024vue3-lesson-master/` 目录下找到对应的实现。
-
-开始之前，确保你已经：
-
-```bash
-# 安装依赖
-cd projects/vue3-source/2024vue3-lesson-master
-pnpm install
-```
-
-[← 返回源码解析总览](../index)

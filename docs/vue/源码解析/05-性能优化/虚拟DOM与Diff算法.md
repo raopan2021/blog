@@ -576,22 +576,15 @@ export function createRenderer(renderOptions) {
 | key | 优化复用，避免状态错乱 |
 | Patch Flags | 编译时标记，运行时精确更新 |
 
----
-
 ## 教程总结
-
 恭喜你完成了 Vue 源码解析系列教程！🎉
-
 **我们学到了**：
 1. Monorepo 架构与 pnpm workspace
 2. 响应式系统：Proxy、track、trigger、computed、watch
 3. 组件实例创建与生命周期管理
 4. 深度响应式原理与 effect 调度
 5. 虚拟 DOM 与 Diff 算法
-
 **下一步建议**：
 - 阅读 Vue3 官方源码（https://github.com/vuejs/core）
 - 尝试手写一个简化版 Vue
 - 深入理解编译器部分（template → render function）
-
-[← 返回模块概览](../index) | [← 上一节：effect 与 watch](../04-响应式深入/effect与watch)

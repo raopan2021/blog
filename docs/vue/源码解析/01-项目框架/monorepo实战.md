@@ -316,11 +316,3 @@ const proxy = new Proxy(obj, {
 | pnpm workspace | 高效的包管理工具 |
 | `pnpm-workspace.yaml` | 声明包的目录位置 |
 | 作用域包名 | `@vue-learn/xxx` 格式 |
-
----
-
-## 下节预告
-
-下一节我们将深入学习 **响应式基础**，详细讲解 `ref`、`reactive` 的实现原理，以及依赖收集与触发的具体流程。
-
-[← 返回模块概览](../index)

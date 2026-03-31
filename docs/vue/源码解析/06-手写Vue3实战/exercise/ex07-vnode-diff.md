@@ -201,12 +201,8 @@ function patch(oldVnode, newVnode, container) {
 
 </details>
 
----
-
 ## 📚 相关源码
-
 - `packages/runtime-core/src/renderer.ts` — 完整渲染器
 - `packages/runtime-core/src/createVnode.ts` — VNode 创建
 - `packages/shared/src/shapeFlags.ts` — shapeFlag 定义
-
 [← 返回练习列表](../index)

@@ -172,11 +172,7 @@ function watchEffect(callback) {
 
 </details>
 
----
-
 ## 📚 相关源码
-
 - `packages/reactivity/src/apiWatch.ts`
 - `packages/reactivity/src/effect.ts` — ReactiveEffect
-
 [← 返回练习列表](../index)

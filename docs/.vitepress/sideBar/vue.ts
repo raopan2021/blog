@@ -79,7 +79,7 @@ export function VueSidebar(): DefaultTheme.SidebarItem[] {
 					base: '/vue/源码解析/',
 					items: [
 						{
-							text: '模块一：项目框架 & 教程总览',
+							text: '模块一：项目框架',
 							collapsed: false,
 							base: '/vue/源码解析/01-项目框架/',
 							items: [
@@ -156,6 +156,36 @@ export function VueSidebar(): DefaultTheme.SidebarItem[] {
 								{ text: 'Vue3.2 响应式提升', link: 'Vue3.2响应式提升' },
 								{ text: 'Vue3.3 泛型组件', link: 'Vue3.3泛型组件' },
 								{ text: 'Vue3.4 性能飞跃', link: 'Vue3.4性能飞跃' },
+								{ text: 'Vue3.5 更强性能', link: 'Vue3.5更强性能' },
+							],
+						},
+						{
+							text: '模块九：Slots 插槽原理',
+							collapsed: false,
+							base: '/vue/源码解析/09-Slots插槽原理/',
+							items: [
+								{ text: '插槽编译原理', link: '插槽编译原理' },
+								{ text: '作用域插槽实现', link: '作用域插槽实现' },
+							],
+						},
+						{
+							text: '模块十：指令系统',
+							collapsed: false,
+							base: '/vue/源码解析/10-指令系统/',
+							items: [
+								{ text: '指令编译原理', link: '指令编译原理' },
+								{ text: 'v-model 实现原理', link: 'v-model实现原理' },
+								{ text: '自定义指令', link: '自定义指令' },
+							],
+						},
+						{
+							text: '模块十一：内置组件',
+							collapsed: false,
+							base: '/vue/源码解析/11-内置组件/',
+							items: [
+								{ text: 'KeepAlive 缓存组件', link: 'KeepAlive原理' },
+								{ text: 'Transition 动画过渡', link: 'Transition原理' },
+								{ text: 'Teleport 传送门', link: 'Teleport原理' },
 							],
 						},
 					],

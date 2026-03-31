@@ -24,10 +24,7 @@ projects/vue3-source/2024vue3-lesson-master/
 | 深层对象 | ⚠️ 需递归 | ✅ 自动递归 |
 | 性能 | 需遍历所有 key | 按需代理 |
 
----
-
 ## 本模块内容
-
 1. [响应式原理对比](./响应式原理对比)
 2. [defineProperty vs Proxy](./defineProperty对比Proxy)
 3. [Vue2 响应式的局限](./Vue2响应式的局限)

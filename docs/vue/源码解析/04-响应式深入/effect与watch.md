@@ -635,11 +635,3 @@ watch(() => state.name, (newName) => {
 | queueJob | 批量更新队列 |
 | watch | 侦听数据变化的封装 |
 | cleanup | 清理副作用 |
-
----
-
-## 下节预告
-
-下一节我们将学习最后一个模块 **性能优化**，了解虚拟 DOM 和 Diff 算法的核心原理。
-
-[← 返回模块概览](../index) | [← 上一节：Proxy 深度解析](./Proxy深度解析)

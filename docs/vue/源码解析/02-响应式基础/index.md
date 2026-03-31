@@ -36,21 +36,12 @@ packages/reactivity/src/
 └── computed.ts      # ComputedRefImpl
 ```
 
----
-
 ## 本模块内容
-
 1. [响应式系统入门：ref 与 reactive](./响应式系统入门)
 2. [依赖收集与触发机制](./依赖收集与触发)
-
 ## 知识点预览
-
 - **Proxy** — Vue3 响应式的数据劫持方案
 - **track / trigger** — 依赖收集与更新的核心函数
 - **ref** — 基础类型数据的响应式包装
 - **reactive** — 对象类型的响应式转换
 - **依赖图** — 理解 targetMap 的结构
-
----
-
-[→ 下一节：响应式系统入门](./响应式系统入门)

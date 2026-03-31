@@ -182,11 +182,7 @@ function createScheduler() {
 
 </details>
 
----
-
 ## 📚 相关源码
-
 - `packages/runtime-core/src/scheduler.ts` — 完整的调度器实现
 - `packages/reactivity/src/effect.ts` — scheduler 的使用场景
-
 [← 返回练习列表](../index)
