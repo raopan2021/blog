@@ -58,6 +58,18 @@ features:
     link: /vue/
 
   - icon:
+      src: /mainView/react.svg
+    title: React 框架
+    details: React 源码解析、版本演进
+    link: /react/
+
+  - icon:
+      src: /mainView/vite.svg
+    title: Vite 构建工具
+    details: Vite 核心原理、版本演进
+    link: /vite/
+
+  - icon:
       src: /mainView/markdown.svg
     title: Markdown编写
     details: 搭建 Markdown 强大写作环境（VSCode）
