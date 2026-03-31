@@ -10,6 +10,30 @@ packages/runtime-core/src/
 └── apiLifecycle.ts   # 生命周期钩子实现
 ```
 
+## 📖 本节总结
+
+**组件实例**：Vue 在内部创建组件实例对象，存储组件的状态、方法、生命周期等。
+
+### 核心流程
+```
+createComponentInstance()  → 创建实例
+     ↓
+initProps()               → 初始化 props
+     ↓
+setupComponent()          → 执行 setup()
+     ↓
+setupState()             → 合并状态
+```
+
+### 配套源码
+```
+packages/runtime-core/src/
+├── component.ts      # createComponentInstance、setupComponent
+└── apiLifecycle.ts   # 生命周期钩子实现
+```
+
+---
+
 ## 本模块内容
 
 1. [组件实例创建](./组件实例创建)

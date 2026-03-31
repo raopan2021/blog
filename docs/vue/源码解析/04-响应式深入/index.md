@@ -12,6 +12,31 @@ packages/reactivity/src/
 └── apiWatch.ts        # watch 源码实现
 ```
 
+## 📖 本节总结
+
+**Effect** = 副作用函数，"当数据变化时需要重新执行的函数"。
+
+### 核心概念
+| 概念 | 说明 |
+|------|------|
+| ReactiveEffect | effect 的核心实现 |
+| effectStack | 支持嵌套 effect |
+| scheduler | 调度器，控制更新时机 |
+| queueJob | 批量更新队列 |
+| watch | 侦听数据变化的封装 |
+| cleanup | 清理副作用 |
+
+### 配套源码
+```
+packages/reactivity/src/
+├── effect.ts          # ReactiveEffect 完整实现、DirtyLevels
+├── baseHandler.ts     # 13种 Proxy 拦截器完整实现
+├── reactiveEffect.ts  # 依赖的创建和管理
+└── apiWatch.ts        # watch 源码实现
+```
+
+---
+
 ## 本模块内容
 
 1. [Proxy 与 Reflect 深度解析](./Proxy深度解析)

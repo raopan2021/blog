@@ -2,9 +2,11 @@
 
 > 从零开始，深入理解 Vue3 的核心实现原理
 
-## 📚 课程大纲
+---
 
-本系列教程通过手写简化版 Vue3，带你从源码角度理解 Vue 的设计思想。
+## 📚 课程总结
+
+本系列教程通过**理论 + 实战**的方式，带你从源码角度理解 Vue3 的设计思想。
 
 ### 模块一：项目框架
 ::: details 点击展开
@@ -41,12 +43,36 @@
 - 编译时优化技巧
 :::
 
+### 模块六：手写 Vue3 实战
+::: details 点击展开
+- 7 个练习题，手写实现核心功能
+- 配套完整源码对照
+:::
+
+### 模块七：Vue2/3 响应式对比
+::: details 点击展开
+- defineProperty vs Proxy
+- Vue2 响应式的局限
+- 为什么 Vue3 选择 Proxy
+:::
+
+### 模块八：Vue3 版本演进
+::: details 点击展开
+- Vue 3.0 初版特性
+- Vue 3.2 script setup 语法糖
+- Vue 3.4 性能飞跃
+:::
+
+---
+
 ## 🎯 学习目标
 
 1. **理解 Vue3 的核心响应式系统** — 掌握 Proxy、Effect、Watch 的原理
 2. **了解组件挂载与更新流程** — 从 template 到真实 DOM 的转变
 3. **掌握性能优化思路** — 虚拟 DOM、懒加载、computed 缓存
 4. **具备阅读源码的能力** — 遇到问题能追根溯源
+
+---
 
 ## 📂 配套源码
 
@@ -59,19 +85,19 @@ projects/vue3-source/2024vue3-lesson-master/
 │   │   ├── effect.ts           # ReactiveEffect、trackEffect、triggerEffects
 │   │   ├── reactive.ts         # reactive、createReactiveObject
 │   │   ├── ref.ts              # RefImpl、toRef、toRefs、proxyRefs
-│   │   ├── computed.ts         # ComputedRefImpl
-│   │   ├── baseHandler.ts     # Proxy Handler
-│   │   └── reactiveEffect.ts  # 依赖创建和管理
-│   ├── runtime-core/src/       # 运行时核心
-│   │   ├── component.ts       # 组件实例创建、setupComponent
-│   │   ├── renderer.ts        # 渲染器、mountElement、patchElement
-│   │   ├── scheduler.ts       # 任务调度、queueJob
-│   │   └── apiLifecycle.ts    # 生命周期钩子
-│   ├── runtime-dom/src/        # DOM 特定实现
-│   └── shared/src/             # 共享工具、patchFlags
+│   │   ├── computed.ts          # ComputedRefImpl
+│   │   ├── baseHandler.ts       # Proxy Handler
+│   │   └── reactiveEffect.ts    # 依赖创建和管理
+│   ├── runtime-core/src/        # 运行时核心
+│   │   ├── component.ts         # 组件实例创建、setupComponent
+│   │   ├── renderer.ts          # 渲染器、mountElement、patchElement
+│   │   ├── scheduler.ts         # 任务调度、queueJob
+│   │   └── apiLifecycle.ts      # 生命周期钩子
+│   ├── runtime-dom/src/         # DOM 特定实现
+│   └── shared/src/              # 共享工具、patchFlags
 ```
 
-每个模块的文档末尾都附有对应的真实源码对照，帮助你对照学习！
+---
 
 ## 💡 适合人群
 
@@ -79,9 +105,14 @@ projects/vue3-source/2024vue3-lesson-master/
 - 对前端框架设计感兴趣的同学
 - 准备面试或想要提升架构能力的前端工程师
 
-## 📖 如何学习
+---
 
-建议按顺序阅读每个模块，理论结合代码实践。每一章都会提供简化的实现代码，帮助你理解核心概念后再深入细节。
+## 📖 学习建议
+
+1. **按顺序学习** — 每个模块都建立在前一个模块的基础上
+2. **理论结合代码** — 每章都提供简化的实现代码和真实源码对照
+3. **动手练习** — 模块六的练习题，尝试自己实现后再看答案
+4. **不懂就查** — 配合源码项目，边学边看实际代码
 
 ---
 

@@ -78,12 +78,86 @@ export function VueSidebar(): DefaultTheme.SidebarItem[] {
 					collapsed: false,
 					base: '/vue/源码解析/',
 					items: [
-						{ text: '教程总览', link: 'index' },
-						{ text: '模块一：项目框架', link: '01-项目框架/index' },
-						{ text: '模块二：响应式基础', link: '02-响应式基础/index' },
-						{ text: '模块三：基础功能', link: '03-基础功能/index' },
-						{ text: '模块四：响应式深入', link: '04-响应式深入/index' },
-						{ text: '模块五：性能优化', link: '05-性能优化/index' },
+						{
+							text: '模块一：项目框架 & 教程总览',
+							collapsed: false,
+							base: '/vue/源码解析/01-项目框架/',
+							items: [
+								{ text: 'Monorepo 实战', link: 'monorepo实战' },
+							],
+						},
+						{
+							text: '模块二：响应式基础',
+							collapsed: false,
+							base: '/vue/源码解析/02-响应式基础/',
+							items: [
+								{ text: '响应式系统入门', link: '响应式系统入门' },
+								{ text: '依赖收集与触发', link: '依赖收集与触发' },
+							],
+						},
+						{
+							text: '模块三：基础功能',
+							collapsed: false,
+							base: '/vue/源码解析/03-基础功能/',
+							items: [
+								{ text: '组件实例创建', link: '组件实例创建' },
+								{ text: '生命周期钩子', link: '生命周期钩子' },
+							],
+						},
+						{
+							text: '模块四：响应式深入',
+							collapsed: false,
+							base: '/vue/源码解析/04-响应式深入/',
+							items: [
+								{ text: 'Proxy 深度解析', link: 'Proxy深度解析' },
+								{ text: 'effect 与 watch', link: 'effect与watch' },
+							],
+						},
+						{
+							text: '模块五：性能优化',
+							collapsed: false,
+							base: '/vue/源码解析/05-性能优化/',
+							items: [
+								{ text: '虚拟 DOM 与 Diff 算法', link: '虚拟DOM与Diff算法' },
+							],
+						},
+						{
+							text: '模块六：手写 Vue3 实战',
+							collapsed: false,
+							base: '/vue/源码解析/06-手写Vue3实战/',
+							items: [
+								{ text: '练习总览', link: 'index' },
+								{ text: '练习 01：实现响应式系统', link: 'exercise/ex01-reactive' },
+								{ text: '练习 02：理解 Proxy receiver', link: 'exercise/ex02-proxy-receiver' },
+								{ text: '练习 03：最长递增子序列 LIS', link: 'exercise/ex03-lis' },
+								{ text: '练习 04：任务调度器', link: 'exercise/ex04-scheduler' },
+								{ text: '练习 05：实现计算属性', link: 'exercise/ex05-computed' },
+								{ text: '练习 06：实现 watch', link: 'exercise/ex06-watch' },
+								{ text: '练习 07：虚拟 DOM 与 Diff', link: 'exercise/ex07-vnode-diff' },
+							],
+						},
+						{
+							text: '模块七：Vue2/3 响应式对比',
+							collapsed: false,
+							base: '/vue/源码解析/07-vue2-3-reactive/',
+							items: [
+								{ text: '响应式原理对比', link: '响应式原理对比' },
+								{ text: 'defineProperty vs Proxy', link: 'defineProperty对比Proxy' },
+								{ text: 'Vue2 响应式的局限', link: 'Vue2响应式的局限' },
+							],
+						},
+						{
+							text: '模块八：Vue3 版本演进',
+							collapsed: false,
+							base: '/vue/源码解析/08-vue3-versions/',
+							items: [
+								{ text: 'Vue3.0 初版特性', link: 'Vue3.0特性' },
+								{ text: 'Vue3.1 渲染器优化', link: 'Vue3.1优化' },
+								{ text: 'Vue3.2 响应式提升', link: 'Vue3.2响应式提升' },
+								{ text: 'Vue3.3 泛型组件', link: 'Vue3.3泛型组件' },
+								{ text: 'Vue3.4 性能飞跃', link: 'Vue3.4性能飞跃' },
+							],
+						},
 					],
 				},
 			],
