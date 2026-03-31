@@ -2,6 +2,17 @@
 
 > 理解虚拟 DOM 的概念、Diff 算法的核心逻辑，以及 Vue 的编译时优化技巧
 
+## 📍 配套源码
+
+本模块配套源码位置：
+```
+projects/vue3-source/2024vue3-lesson-master/
+└── packages/
+    ├── runtime-core/src/renderer.ts    # 渲染器核心
+    ├── runtime-dom/src/                # DOM 操作实现
+    └── shared/src/patchFlags.ts        # Patch Flags 定义
+```
+
 ## 本模块内容
 
 1. [虚拟 DOM 与 Diff 算法](./虚拟DOM与Diff算法)

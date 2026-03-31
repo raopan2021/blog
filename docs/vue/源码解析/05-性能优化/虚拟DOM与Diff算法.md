@@ -476,6 +476,57 @@ function render() {
 }
 ```
 
+## 真实源码对照
+
+以下代码来自 Vue3 源码（`packages/runtime-core/src/renderer.ts`）：
+
+```typescript
+// packages/runtime-core/src/renderer.ts
+export function createRenderer(renderOptions) {
+  const {
+    insert: hostInsert,
+    remove: hostRemove,
+    createElement: hostCreateElement,
+    createText: hostCreateText,
+    setText: hostSetText,
+    setElementText: hostSetElementText,
+    parentNode: hostParentNode,
+    nextSibling: hostNextSibling,
+    patchProp: hostPatchProp,
+  } = renderOptions;
+
+  const mountElement = (vnode, container, anchor, parentComponent) => {
+    const { type, children, props, shapeFlag, transition } = vnode;
+
+    let el = (vnode.el = hostCreateElement(type));
+
+    if (props) {
+      for (let key in props) {
+        hostPatchProp(el, key, null, props[key]);
+      }
+    }
+
+    if (shapeFlag & ShapeFlags.TEXT_CHILDREN) {
+      hostSetElementText(el, children);
+    } else if (shapeFlag & ShapeFlags.ARRAY_CHILDREN) {
+      mountChildren(children, el, anchor, parentComponent);
+    }
+
+    hostInsert(el, container, anchor);
+  };
+
+  const patchElement = (n1, n2, container, anchor, parentComponent) => {
+    // 比较属性
+    patchProps(n1.props, n2.props, el);
+
+    // 比较子节点
+    patchChildren(n1, n2, el, anchor, parentComponent);
+  };
+
+  // ...更多逻辑
+}
+```
+
 ## 常见问题
 
 ### Q: 虚拟 DOM 一定比直接操作 DOM 快吗？

@@ -2,6 +2,14 @@
 
 > 理解 Vue 组件的创建、挂载与生命周期管理
 
+## 📍 配套源码
+
+```
+packages/runtime-core/src/
+├── component.ts      # createComponentInstance、setupComponent
+└── apiLifecycle.ts   # 生命周期钩子实现
+```
+
 ## 本模块内容
 
 1. [组件实例创建](./组件实例创建)

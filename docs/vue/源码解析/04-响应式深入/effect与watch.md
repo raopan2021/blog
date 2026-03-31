@@ -484,6 +484,114 @@ watchEffect(() => {
 11. 批量更新（queueJob）
 ```
 
+## 真实源码对照
+
+以下代码来自 Vue3 源码（`packages/reactivity/src/effect.ts`）：
+
+### ReactiveEffect 的完整实现
+
+```typescript
+// packages/reactivity/src/effect.ts
+export class ReactiveEffect {
+  _trackId = 0;      // 记录 effect 执行次数
+  _depsLength = 0;   // 上一次依赖数量
+  _running = 0;
+  _dirtyLevel = DirtyLevels.Dirty;
+  deps = [];         // 双向记忆：effect 知道自己依赖了哪些 dep
+  public active = true;
+
+  constructor(public fn, public scheduler) {}
+
+  public get dirty() {
+    return this._dirtyLevel === DirtyLevels.Dirty;
+  }
+
+  run() {
+    this._dirtyLevel = DirtyLevels.NoDirty;  // 执行后变为"干净"
+    if (!this.active) return this.fn();
+
+    let lastEffect = activeEffect;
+    try {
+      activeEffect = this;
+      preCleanEffect(this);    // 清理旧依赖
+      this._running++;
+      return this.fn();        // 收集新依赖
+    } finally {
+      this._running--;
+      postCleanEffect(this);   // 清理不需要的依赖
+      activeEffect = lastEffect;
+    }
+  }
+
+  stop() {
+    if (this.active) {
+      this.active = false;
+      preCleanEffect(this);
+      postCleanEffect(this);
+    }
+  }
+}
+```
+
+### computed 的真实实现
+
+```typescript
+// packages/reactivity/src/computed.ts
+class ComputedRefImpl {
+  public _value;
+  public effect;
+  constructor(getter, public setter) {
+    // 计算属性内部创建一个 effect
+    this.effect = new ReactiveEffect(
+      () => getter(this._value),
+      () => {
+        // 依赖变化时触发重新渲染
+        triggerRefValue(this);
+      }
+    );
+  }
+
+  get value() {
+    if (this.effect.dirty) {
+      this._value = this.effect.run();  // 缓存：dirty 时才重新计算
+      trackRefValue(this);
+    }
+    return this._value;
+  }
+
+  set value(v) {
+    this.setter(v);
+  }
+}
+```
+
+### ref 的真实实现
+
+```typescript
+// packages/reactivity/src/ref.ts
+class RefImpl {
+  public __v_isRef = true;  // ref 标识
+  public _value;
+  public dep;
+  constructor(public rawValue) {
+    this._value = toReactive(rawValue);  // 基础类型也转成响应式
+  }
+
+  get value() {
+    trackRefValue(this);  // 收集依赖
+    return this._value;
+  }
+
+  set value(newValue) {
+    if (newValue !== this.rawValue) {
+      this.rawValue = newValue;
+      this._value = newValue;
+      triggerRefValue(this);  // 触发更新
+    }
+  }
+}
+```
+
 ## 常见问题
 
 ### Q: effect 和 watch 有什么区别？

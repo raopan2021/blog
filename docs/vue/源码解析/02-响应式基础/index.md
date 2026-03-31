@@ -2,6 +2,17 @@
 
 > 深入理解 Vue3 响应式系统的核心：Proxy、依赖收集、触发更新
 
+## 📍 配套源码
+
+```
+packages/reactivity/src/
+├── effect.ts        # ReactiveEffect、trackEffect、triggerEffects
+├── reactive.ts      # reactive、createReactiveObject
+├── baseHandler.ts   # Proxy Handler (get/set)
+├── ref.ts           # RefImpl、toRef、toRefs
+└── computed.ts      # ComputedRefImpl
+```
+
 ## 本模块内容
 
 1. [响应式系统入门：ref 与 reactive](./响应式系统入门)

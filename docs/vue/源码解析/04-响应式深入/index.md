@@ -2,6 +2,16 @@
 
 > 深入理解 Proxy 的高级特性、Reflect 的作用，以及 effect 与 watch 的实现细节
 
+## 📍 配套源码
+
+```
+packages/reactivity/src/
+├── effect.ts          # ReactiveEffect 完整实现、DirtyLevels
+├── baseHandler.ts     # 13种 Proxy 拦截器完整实现
+├── reactiveEffect.ts  # 依赖的创建和管理
+└── apiWatch.ts        # watch 源码实现
+```
+
 ## 本模块内容
 
 1. [Proxy 与 Reflect 深度解析](./Proxy深度解析)

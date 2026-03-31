@@ -48,6 +48,31 @@
 3. **掌握性能优化思路** — 虚拟 DOM、懒加载、computed 缓存
 4. **具备阅读源码的能力** — 遇到问题能追根溯源
 
+## 📂 配套源码
+
+项目中已附带完整的 Vue3 源码学习项目，位于：
+
+```
+projects/vue3-source/2024vue3-lesson-master/
+├── packages/
+│   ├── reactivity/src/         # 响应式系统完整源码
+│   │   ├── effect.ts           # ReactiveEffect、trackEffect、triggerEffects
+│   │   ├── reactive.ts         # reactive、createReactiveObject
+│   │   ├── ref.ts              # RefImpl、toRef、toRefs、proxyRefs
+│   │   ├── computed.ts         # ComputedRefImpl
+│   │   ├── baseHandler.ts     # Proxy Handler
+│   │   └── reactiveEffect.ts  # 依赖创建和管理
+│   ├── runtime-core/src/       # 运行时核心
+│   │   ├── component.ts       # 组件实例创建、setupComponent
+│   │   ├── renderer.ts        # 渲染器、mountElement、patchElement
+│   │   ├── scheduler.ts       # 任务调度、queueJob
+│   │   └── apiLifecycle.ts    # 生命周期钩子
+│   ├── runtime-dom/src/        # DOM 特定实现
+│   └── shared/src/             # 共享工具、patchFlags
+```
+
+每个模块的文档末尾都附有对应的真实源码对照，帮助你对照学习！
+
 ## 💡 适合人群
 
 - 有一定 Vue 开发经验，想深入理解内部原理
