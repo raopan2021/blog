@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pretext — Dynamic Layout</title>
+  <style>
+    :root {
+      --page: #f5f1ea;
+      --panel: #fffdf8;
+      --ink: #201b18;
+      --muted: #6d645d;
+      --rule: #d8cec3;
+      --accent: #955f3b;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      min-height: 100vh;
+      background: linear-gradient(180deg, #fbf7f0 0%, var(--page) 100%);
+      color: var(--ink);
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      padding: 40px 20px;
+    }
+    .page { max-width: 800px; margin: 0 auto; }
+    .eyebrow { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; font-family: "SF Mono", monospace; }
+    h1 { font: 700 32px/1.1 Georgia, serif; margin-bottom: 12px; }
+    .intro { font-size: 14px; line-height: 1.6; color: var(--muted); margin-bottom: 28px; max-width: 60ch; }
+    .canvas-wrap { background: var(--panel); border: 1px solid var(--rule); border-radius: 20px; overflow: hidden; box-shadow: 0 8px 40px rgba(54,40,23,0.08); }
+    canvas { display: block; width: 100%; cursor: crosshair; }
+    .controls { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px; }
+    button { padding: 8px 18px; background: white; border: 1px solid var(--rule); border-radius: 8px; font-size: 13px; cursor: pointer; transition: all 0.15s; color: var(--ink); }
+    button:hover { border-color: var(--accent); color: var(--accent); }
+    button.active { background: var(--accent); color: white; border-color: var(--accent); }
+    .info { font-size: 12px; color: var(--muted); margin-top: 10px; line-height: 1.6; }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="eyebrow">Pretext Demo</div>
+    <h1>Dynamic Layout</h1>
+    <p class="intro">障碍物感知文本布局：点击画布添加障碍物，文字自动绕流。拖动障碍物可以看到文字实时重排。Pretext 的 layoutNextLine() API 让流式布局成为可能——每行宽度可以动态变化。</p>
+
+    <div class="canvas-wrap">
+      <canvas id="canvas"></canvas>
+    </div>
+
+    <div class="controls">
+      <button class="active" id="mode-add" onclick="setMode('add')">+ 添加障碍物</button>
+      <button id="mode-move" onclick="setMode('move')">✋ 移动障碍物</button>
+      <button id="mode-del" onclick="setMode('delete')">🗑 删除障碍物</button>
+      <button onclick="resetObstacles()">重置</button>
+    </div>
+
+    <p class="info">💡 点击添加障碍物后，文字会自动绕开。Pretext 提前知道每段文字需要的高度，因此可以在障碍物周围精确布局，没有任何 DOM 回流。</p>
+  </div>
+
+  <script type="module">
+    import { prepareWithSegments, layoutNextLine } from 'https://cdn.jsdelivr.net/npm/@chenglou/pretext@0.0.3/dist/layout.js'
+
+    const canvas = document.getElementById('canvas')
+    const ctx = canvas.getContext('2d')
+    let DPR = window.devicePixelRatio || 1
+
+    const text = `In the beginning, the universe was a hot, dense soup of particles and radiation. From this primordial chaos, structure emerged: first atoms, then stars, then galaxies. Our own solar system formed from a collapsing cloud of gas and dust about 4.6 billion years ago. Earth, a pale blue dot in the vast cosmic arena, became home to life—a remarkable development that transformed the planet's atmosphere and surface.
+
+The story of human civilization is one of constant innovation. From the first scratched symbols on cave walls to the invention of writing, from the wheel to the printing press, each breakthrough opened new possibilities. Language allowed knowledge to transcend time and space. Mathematics provided a universal framework for understanding nature's laws. Science gave us a method to systematically question and revise our beliefs.
+
+Typography emerged from the marriage of technology and art. Movable type, invented by Gutenberg in the fifteenth century, democratized knowledge. The industrial revolution brought mass production. The digital age compressed time and space further still. Now, with tools like Pretext, we can calculate the physical properties of text before it is rendered—predicting heights, routing lines around obstacles, and creating dynamic layouts that adapt to content.`
+
+    let font = '14px/1.7 Georgia, "Times New Roman", serif'
+    let lineH = 23.8
+    let mode = 'add'
+    let obstacles = []
+    let dragging = null
+    let dragOffset = { x: 0, y: 0 }
+    let cw = 760, ch = 500
+
+    function resize() {
+      const wrap = canvas.parentElement
+      cw = wrap.clientWidth
+      ch = 520
+      canvas.width = cw * DPR
+      canvas.height = ch * DPR
+      canvas.style.width = cw + 'px'
+      canvas.style.height = ch + 'px'
+      ctx.scale(DPR, DPR)
+      draw()
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, cw, ch)
+      ctx.fillStyle = '#fffdf8'
+      ctx.fillRect(0, 0, cw, ch)
+
+      // Draw text with obstacle avoidance
+      const prepared = prepareWithSegments(text, font)
+      let cursor = { segmentIndex: 0, graphemeIndex: 0 }
+      let y = 30
+      const margin = 30
+
+      ctx.font = font
+      ctx.fillStyle = '#201b18'
+      ctx.textBaseline = 'top'
+
+      while (true) {
+        // Find obstacles in current row
+        const obsInRow = obstacles.filter(o => o.y + o.h > y && o.y < y + lineH)
+        // Sort by x
+        obsInRow.sort((a, b) => a.x - b.x)
+
+        let availableX = margin
+        let availableW = cw - margin * 2
+
+        // Adjust for obstacles in this row
+        if (obsInRow.length > 0 && obsInRow[0].x < cw - margin) {
+          availableW = obsInRow[0].x - availableX - 8
+        }
+
+        if (availableW <= 0) break
+
+        const line = layoutNextLine(prepared, cursor, availableW)
+        if (!line || line.text.trim() === '') break
+
+        ctx.fillText(line.text, availableX, y)
+        cursor = line.end.cursor
+        y += lineH
+
+        // Check if we hit an obstacle
+        const hitObs = obstacles.find(o => y >= o.y - 2 && y <= o.y + o.h + 2)
+        if (hitObs) {
+          y = hitObs.y + hitObs.h + 6
+        }
+
+        if (y > ch - 30) break
+      }
+
+      // Draw obstacle heights info
+      obstacles.forEach(o => {
+        // Shadow
+        ctx.fillStyle = 'rgba(149,95,59,0.08)'
+        ctx.beginPath()
+        ctx.roundRect(o.x + 3, o.y + 3, o.w, o.h, 8)
+        ctx.fill()
+
+        // Box
+        ctx.fillStyle = '#955f3b20'
+        ctx.strokeStyle = '#955f3b50'
+        ctx.lineWidth = 1.5
+        ctx.beginPath()
+        ctx.roundRect(o.x, o.y, o.w, o.h, 8)
+        ctx.fill()
+        ctx.stroke()
+
+        // Label
+        ctx.font = '11px "SF Mono", monospace'
+        ctx.fillStyle = '#955f3b'
+        ctx.textAlign = 'center'
+        ctx.fillText(`${o.w}×${o.h}`, o.x + o.w / 2, o.y + o.h / 2 - 5)
+        ctx.font = '10px Helvetica Neue'
+        ctx.fillStyle = '#955f3b80'
+        ctx.fillText('obstacle', o.x + o.w / 2, o.y + o.h / 2 + 10)
+        ctx.textAlign = 'left'
+      })
+    }
+
+    window.setMode = (m) => {
+      mode = m
+      document.querySelectorAll('.controls button').forEach(b => b.classList.remove('active'))
+      document.getElementById('mode-' + m).classList.add('active')
+      canvas.style.cursor = m === 'add' ? 'crosshair' : m === 'move' ? 'grab' : 'not-allowed'
+    }
+
+    function getPos(e) {
+      const rect = canvas.getBoundingClientRect()
+      return { x: e.clientX - rect.left, y: e.clientY - rect.top }
+    }
+
+    canvas.addEventListener('click', (e) => {
+      if (mode === 'add') {
+        const { x, y } = getPos(e)
+        const w = 60 + Math.random() * 80
+        const h = 60 + Math.random() * 80
+        obstacles.push({ x: Math.min(x - w / 2, cw - w - 30), y: Math.min(Math.max(y - h / 2, 20), ch - h - 20), w, h })
+        draw()
+      } else if (mode === 'delete') {
+        const { x, y } = getPos(e)
+        obstacles = obstacles.filter(o => !(x >= o.x && x <= o.x + o.w && y >= o.y && y <= o.y + o.h))
+        draw()
+      }
+    })
+
+    canvas.addEventListener('mousedown', (e) => {
+      if (mode === 'move') {
+        const { x, y } = getPos(e)
+        dragging = obstacles.find(o => x >= o.x && x <= o.x + o.w && y >= o.y && y <= o.y + o.h)
+        if (dragging) {
+          dragOffset = { x: x - dragging.x, y: y - dragging.y }
+          canvas.style.cursor = 'grabbing'
+        }
+      }
+    })
+
+    canvas.addEventListener('mousemove', (e) => {
+      if (dragging) {
+        const { x, y } = getPos(e)
+        dragging.x = Math.min(Math.max(x - dragOffset.x, 10), cw - dragging.w - 10)
+        dragging.y = Math.min(Math.max(y - dragOffset.y, 10), ch - dragging.h - 10)
+        draw()
+      }
+    })
+
+    canvas.addEventListener('mouseup', () => {
+      dragging = null
+      if (mode === 'move') canvas.style.cursor = 'grab'
+    })
+
+    window.resetObstacles = () => {
+      obstacles = []
+      draw()
+    }
+
+    window.addEventListener('resize', resize)
+
+    document.fonts.ready.then(() => {
+      resize()
+    })
+  </script>
+</body>
+</html>

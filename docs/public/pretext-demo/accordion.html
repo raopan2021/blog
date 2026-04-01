@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pretext — Accordion</title>
+  <style>
+    :root {
+      --page: #f5f1ea;
+      --panel: #fffdf8;
+      --ink: #201b18;
+      --muted: #6d645d;
+      --rule: #d8cec3;
+      --accent: #955f3b;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      min-height: 100vh;
+      background: linear-gradient(180deg, #fbf7f0 0%, var(--page) 100%);
+      color: var(--ink);
+      font-family: Georgia, "Times New Roman", serif;
+      padding: 40px 20px;
+    }
+    .page { max-width: 640px; margin: 0 auto; }
+    .eyebrow { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; font-family: "SF Mono", ui-monospace, monospace; }
+    h1 { font: 700 32px/1.1 Georgia, serif; margin-bottom: 12px; }
+    .intro { font-size: 15px; line-height: 1.6; color: var(--muted); margin-bottom: 36px; }
+    .accordion { display: flex; flex-direction: column; gap: 10px; }
+    .item { background: var(--panel); border: 1px solid var(--rule); border-radius: 12px; overflow: hidden; box-shadow: 0 4px 16px rgba(54,40,23,0.05); }
+    .item-header { padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; user-select: none; transition: background 0.15s; }
+    .item-header:hover { background: rgba(149,95,59,0.04); }
+    .item-header h3 { font: 600 15px/1.3 Helvetica, sans-serif; }
+    .item-header .tag { font-size: 11px; padding: 3px 10px; border-radius: 20px; background: var(--accent); color: white; margin-left: 10px; font-family: "Helvetica Neue", sans-serif; }
+    .chevron { width: 20px; height: 20px; transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1); flex-shrink: 0; }
+    .chevron line { stroke: var(--muted); stroke-width: 2; stroke-linecap: round; }
+    .item.open .chevron { transform: rotate(180deg); }
+    .item-body { max-height: 0; overflow: hidden; transition: max-height 400ms cubic-bezier(0.4, 0, 0.2, 1); }
+    .item.open .item-body { max-height: 600px; }
+    .item-content { padding: 0 20px 18px; font-size: 14px; line-height: 1.8; color: var(--muted); border-top: 1px solid var(--rule); padding-top: 16px; }
+    .height-badge { font-size: 11px; color: var(--accent); font-family: "SF Mono", monospace; margin-top: 8px; }
+    .controls { margin-top: 28px; display: flex; gap: 10px; flex-wrap: wrap; }
+    .controls label { font-size: 13px; color: var(--muted); }
+    input[type="range"] { width: 140px; accent-color: var(--accent); }
+    .width-val { font-size: 12px; color: var(--accent); font-family: "SF Mono", monospace; min-width: 45px; }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="eyebrow">Pretext Demo</div>
+    <h1>Accordion</h1>
+    <p class="intro">手风琴组件的高度由 Pretext 预先计算，展开/收起动画流畅无抖动。传统方案依赖 DOM 测量触发回流，Pretext 则在初始化时一次性预测所有内容高度。</p>
+
+    <div class="accordion" id="accordion"></div>
+
+    <div class="controls">
+      <label>容器宽度: <span class="width-val" id="wval">560px</span></label>
+      <input type="range" min="300" max="640" value="560" id="width-slider" oninput="updateWidth(this.value)">
+    </div>
+  </div>
+
+  <script type="module">
+    import { prepare, layout } from 'https://cdn.jsdelivr.net/npm/@chenglou/pretext@0.0.3/dist/layout.js'
+
+    const items = [
+      {
+        title: '什么是 Pretext？',
+        tag: '基础',
+        content: 'Pretext 是一个纯 JavaScript 库，用于多行文本的精确测量与布局。它的核心能力是：在不触碰 DOM 的情况下，精确预测文本的渲染高度。这意味着你可以提前知道一个段落需要多高，而不需要先渲染出来再测量。对于需要动态调整布局的 UI（如虚拟列表、手风琴、聊天气泡）来说，这是一个范式级别的提升。'
+      },
+      {
+        title: '为什么不用 getBoundingClientRect？',
+        tag: '原理',
+        content: 'getBoundingClientRect()、offsetHeight 等 DOM 测量方法会强制触发布局回流（layout reflow）——浏览器需要重新计算整个渲染树，这是一个同步的、昂贵的主线程操作。当你的 UI 每秒需要更新几十次时（比如输入框打字、虚拟滚动），DOM 测量会成为性能瓶颈。Pretext 通过 Canvas 的 measureText API 读取字体度量信息，完全绕开渲染树，因此不会触发任何回流。'
+      },
+      {
+        title: 'Knuth-Plass 算法的核心思想',
+        tag: '原理',
+        content: 'Donald Knuth 和 Michael Plass 在 1970 年代提出了这个算法，目标是实现"美观"的段落排版。算法的核心概念是"糟糕度"（badness）——衡量某一行的不完美程度。一行太满或太空都不好，badness 函数会惩罚偏离最优宽度的行。Knuth-Plass 通过动态规划寻找总 badness 最小的断行方案，从而消除"河流"（空白通道）并保持词间间距均匀。'
+      },
+      {
+        title: 'Unicode 字形簇的处理',
+        tag: '细节',
+        content: 'JavaScript 的 string.length 对 emoji、组合字符、ZWJ 序列会返回错误的值。比如中国国旗 🇨🇳 在 JavaScript 中 length = 2，但你看到的是一个字符。再比如 👨‍👩‍👧‍👦（家庭 emoji）实际上由多个码点用零宽度连接符组成。Pretext 使用 Unicode Segmentation 标准正确切割"用户感知字符"，确保换行不会发生在 emoji 序列中间，也确保了混合方向文本（阿拉伯文 + 中文 + 英文）的正确处理。'
+      },
+      {
+        title: '典型应用场景',
+        tag: '实践',
+        content: 'Pretext 最适合以下场景：1) 虚拟滚动列表——需要精确的列表总高度才能让滚动条准确；2) Textarea 自动高度——输入时实时预测高度；3) 聊天消息气泡——每条消息根据内容长度自动调整；4) 文本环绕布局——图片旁边的文字动态适应剩余空间；5) CLS 优化——在文本加载前就预留好容器高度，避免内容跳动。'
+      },
+    ]
+
+    let font = '14px/1.8 Georgia, "Times New Roman", serif'
+    let lineHeight = 25.2
+    let containerWidth = 560
+
+    const accordion = document.getElementById('accordion')
+
+    function getHeight(text, width) {
+      const p = prepare(text, `14px/1.8 Georgia, "Times New Roman", serif`)
+      const { height } = layout(p, width - 40, lineHeight)
+      return height + 16 + 60 // content padding + header
+    }
+
+    function render() {
+      accordion.innerHTML = ''
+      items.forEach((item, i) => {
+        const h = getHeight(item.content, containerWidth)
+        const div = document.createElement('div')
+        div.className = 'item'
+        div.id = `item-${i}`
+        div.innerHTML = `
+          <div class="item-header" onclick="toggle(${i})">
+            <div style="display:flex;align-items:center">
+              <h3>${item.title}</h3>
+              <span class="tag">${item.tag}</span>
+            </div>
+            <svg class="chevron" viewBox="0 0 20 20">
+              <line x1="4" y1="7" x2="10" y2="13"/>
+              <line x1="10" y1="13" x2="16" y2="7"/>
+            </svg>
+          </div>
+          <div class="item-body" id="body-${i}">
+            <div class="item-content">
+              ${item.content}
+              <div class="height-badge">预测高度: ${Math.round(h)}px · ${Math.ceil(h / lineHeight)} 行</div>
+            </div>
+          </div>
+        `
+        accordion.appendChild(div)
+      })
+    }
+
+    window.toggle = (i) => {
+      const el = document.getElementById(`item-${i}`)
+      el.classList.toggle('open')
+    }
+
+    window.updateWidth = (val) => {
+      containerWidth = parseInt(val)
+      document.getElementById('wval').textContent = val + 'px'
+      accordion.style.width = val + 'px'
+      render()
+    }
+
+    document.fonts.ready.then(() => {
+      accordion.style.width = containerWidth + 'px'
+      render()
+      // Open first item
+      setTimeout(() => toggle(0), 400)
+    })
+  </script>
+</body>
+</html>

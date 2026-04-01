@@ -47,72 +47,72 @@
 ## 🧪 在线演示
 
 ::: info 在线 Demo 说明
-以下 Demo 均可直接交互，点击按钮体验 Pretext 的精确文本测量能力
+参考官方 chenglou.me/pretext 设计风格：羊皮纸配色、衬线标题、克制动效
 :::
 
-### Demo 1：瀑布流布局
+### Demo 1：Justification — 三种段落对齐算法对比
 
 <iframe
-  src="/blog/pretext-demo/masonry.html"
+  src="/blog/pretext-demo/justification.html"
+  width="100%"
+  height="500px"
+  frameborder="0"
+  style="margin-top:12px; border-radius:12px; background:#f5f1ea;"
+  allow="autoplay"
+/>
+
+### Demo 2：Accordion — 手风琴展开高度预测
+
+<iframe
+  src="/blog/pretext-demo/accordion.html"
   width="100%"
   height="420px"
   frameborder="0"
-  style="margin-top:12px; border-radius:12px; background:#0f0f1a;"
+  style="margin-top:12px; border-radius:12px; background:#f5f1ea;"
   allow="autoplay"
 />
 
-### Demo 2：聊天消息气泡
+### Demo 3：Bubbles — 聊天气泡精确高度
 
 <iframe
-  src="/blog/pretext-demo/chat.html"
+  src="/blog/pretext-demo/bubbles.html"
   width="100%"
   height="420px"
   frameborder="0"
-  style="margin-top:12px; border-radius:12px; background:#0d1117;"
+  style="margin-top:12px; border-radius:12px; background:#f5f7f5;"
   allow="autoplay"
 />
 
-### Demo 3：AI 打字机效果
+### Demo 4：Dynamic Layout — 障碍物感知文本绕流
 
 <iframe
-  src="/blog/pretext-demo/typewriter.html"
+  src="/blog/pretext-demo/dynamic-layout.html"
   width="100%"
-  height="360px"
+  height="480px"
   frameborder="0"
-  style="margin-top:12px; border-radius:12px; background:#0a0a0f;"
+  style="margin-top:12px; border-radius:12px; background:#f5f1ea;"
   allow="autoplay"
 />
 
-### Demo 4：智能截断与展开
+### Demo 5：Typography — 字体大小精确行高测量
 
 <iframe
-  src="/blog/pretext-demo/truncation.html"
+  src="/blog/pretext-demo/typography.html"
   width="100%"
   height="420px"
   frameborder="0"
-  style="margin-top:12px; border-radius:12px; background:#f0f2f5;"
+  style="margin-top:12px; border-radius:12px; background:#f5f1ea;"
   allow="autoplay"
 />
 
-### Demo 5：通知提示系统
+### Demo 6：Rich Text — 内联元素混合布局
 
 <iframe
-  src="/blog/pretext-demo/notification.html"
+  src="/blog/pretext-demo/rich-text.html"
   width="100%"
-  height="380px"
+  height="420px"
   frameborder="0"
-  style="margin-top:12px; border-radius:12px; background:#0f0f1a;"
-  allow="autoplay"
-/>
-
-### Demo 6：代码编辑器行号
-
-<iframe
-  src="/blog/pretext-demo/code-editor.html"
-  width="100%"
-  height="380px"
-  frameborder="0"
-  style="margin-top:12px; border-radius:12px; background:#0d1117;"
+  style="margin-top:12px; border-radius:12px; background:#f5f1ea;"
   allow="autoplay"
 />
 
@@ -122,5 +122,7 @@
 
 | Demo | 文件 | 说明 |
 |------|------|------|
+| 瀑布流 | [masonry2.html](/blog/pretext-demo/masonry2.html) | Canvas 绘制，真实高度瀑布流 |
 | 综合演示 | [index.html](/blog/pretext-demo/) | Textarea / Canvas / 虚拟列表 / 文本环绕 |
-| 新闻订阅阅读器 | [newsletter.html](/blog/pretext-demo/newsletter.html) | 动态列数切换，文章高度自适应 |
+| 智能截断 | [truncation.html](/blog/pretext-demo/truncation.html) | 二分查找精确截断位置 |
+| 通知系统 | [notification.html](/blog/pretext-demo/notification.html) | 自动撑开高度的 toast |
