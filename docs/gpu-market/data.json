@@ -19,6 +19,7 @@
         "2026年3月": 1050
       },
       "performance_pct": 347.5,
+      "stars": 1,
       "cost_perf": 1.82,
       "efficiency": 83.0
     },
@@ -41,6 +42,7 @@
         "2026年3月": -700
       },
       "performance_pct": 348.7,
+      "stars": 1,
       "cost_perf": 2.23,
       "efficiency": 83.3
     },
@@ -63,6 +65,7 @@
         "2026年3月": -800
       },
       "performance_pct": 268.3,
+      "stars": 3,
       "cost_perf": 2.0,
       "efficiency": 81.2
     },
@@ -85,6 +88,7 @@
         "2026年3月": 100
       },
       "performance_pct": 251.1,
+      "stars": 2,
       "cost_perf": 1.94,
       "efficiency": 80.5
     },
@@ -107,6 +111,7 @@
         "2026年3月": -125
       },
       "performance_pct": 341.4,
+      "stars": 1,
       "cost_perf": 2.76,
       "efficiency": 81.6
     },
@@ -129,6 +134,7 @@
         "2026年3月": -1
       },
       "performance_pct": 242.8,
+      "stars": 1,
       "cost_perf": 3.8,
       "efficiency": 91.9
     },
@@ -151,6 +157,7 @@
         "2026年3月": 59
       },
       "performance_pct": 209.0,
+      "stars": 2,
       "cost_perf": 4.38,
       "efficiency": 89.0
     },
@@ -173,6 +180,7 @@
         "2026年3月": 156
       },
       "performance_pct": 207.2,
+      "stars": 2,
       "cost_perf": 4.48,
       "efficiency": 88.2
     },
@@ -195,6 +203,7 @@
         "2026年3月": 180
       },
       "performance_pct": 203.3,
+      "stars": 1,
       "cost_perf": 4.14,
       "efficiency": 92.3
     },
@@ -217,6 +226,7 @@
         "2026年3月": -200
       },
       "performance_pct": 161.8,
+      "stars": 3,
       "cost_perf": 3.94,
       "efficiency": 49.0
     },
@@ -239,6 +249,7 @@
         "2026年3月": 99
       },
       "performance_pct": 145.9,
+      "stars": 3,
       "cost_perf": 4.14,
       "efficiency": 56.8
     },
@@ -261,6 +272,7 @@
         "2026年3月": 125
       },
       "performance_pct": 178.7,
+      "stars": 2,
       "cost_perf": 4.93,
       "efficiency": 85.4
     },
@@ -283,6 +295,7 @@
         "2026年3月": -99
       },
       "performance_pct": 166.1,
+      "stars": 1,
       "cost_perf": 5.03,
       "efficiency": 90.5
     },
@@ -305,6 +318,7 @@
         "2026年3月": 68
       },
       "performance_pct": 221.8,
+      "stars": 1,
       "cost_perf": 6.88,
       "efficiency": 99.4
     },
@@ -327,6 +341,7 @@
         "2026年3月": 50
       },
       "performance_pct": 223.5,
+      "stars": 2,
       "cost_perf": 7.12,
       "efficiency": 85.7
     },
@@ -349,6 +364,7 @@
         "2026年3月": 50
       },
       "performance_pct": 198.3,
+      "stars": 1,
       "cost_perf": 7.01,
       "efficiency": 122.7
     },
@@ -371,6 +387,7 @@
         "2026年3月": 0
       },
       "performance_pct": 167.5,
+      "stars": 2,
       "cost_perf": 5.85,
       "efficiency": 80.0
     },
@@ -393,6 +410,7 @@
         "2026年3月": 51
       },
       "performance_pct": 154.8,
+      "stars": 2,
       "cost_perf": 5.85,
       "efficiency": 95.8
     },
@@ -415,6 +433,7 @@
         "2026年3月": -88
       },
       "performance_pct": 195.2,
+      "stars": 2,
       "cost_perf": 8.06,
       "efficiency": 84.4
     },
@@ -437,6 +456,7 @@
         "2026年3月": 5
       },
       "performance_pct": 117.1,
+      "stars": 1,
       "cost_perf": 4.62,
       "efficiency": 88.6
     },
@@ -459,6 +479,7 @@
         "2026年3月": 50
       },
       "performance_pct": 131.2,
+      "stars": 2,
       "cost_perf": 5.76,
       "efficiency": 89.3
     },
@@ -481,6 +502,7 @@
         "2026年3月": 101
       },
       "performance_pct": 167.0,
+      "stars": 1,
       "cost_perf": 7.11,
       "efficiency": 103.4
     },
@@ -503,6 +525,7 @@
         "2026年3月": 49
       },
       "performance_pct": 161.8,
+      "stars": 2,
       "cost_perf": 7.87,
       "efficiency": 84.8
     },
@@ -525,6 +548,7 @@
         "2026年3月": 166
       },
       "performance_pct": 116.7,
+      "stars": 1,
       "cost_perf": 5.56,
       "efficiency": 88.3
     },
@@ -547,6 +571,7 @@
         "2026年3月": 60
       },
       "performance_pct": 145.0,
+      "stars": 3,
       "cost_perf": 7.29,
       "efficiency": 56.4
     },
@@ -569,6 +594,7 @@
         "2026年3月": -7
       },
       "performance_pct": 99.2,
+      "stars": 2,
       "cost_perf": 5.0,
       "efficiency": 90.1
     },
@@ -591,6 +617,7 @@
         "2026年3月": -305
       },
       "performance_pct": 137.7,
+      "stars": 2,
       "cost_perf": 8.16,
       "efficiency": 53.6
     },
@@ -613,6 +640,7 @@
         "2026年3月": 112
       },
       "performance_pct": 147.0,
+      "stars": 2,
       "cost_perf": 8.01,
       "efficiency": 76.1
     },
@@ -635,6 +663,7 @@
         "2026年3月": 61
       },
       "performance_pct": 157.4,
+      "stars": 2,
       "cost_perf": 8.58,
       "efficiency": 64.0
     },
@@ -657,6 +686,7 @@
         "2026年3月": 50
       },
       "performance_pct": 100.0,
+      "stars": 1,
       "cost_perf": 5.56,
       "efficiency": 93.9
     },
@@ -679,6 +709,7 @@
         "2026年3月": 6
       },
       "performance_pct": 121.5,
+      "stars": 1,
       "cost_perf": 6.9,
       "efficiency": 103.5
     },
@@ -701,6 +732,7 @@
         "2026年3月": 35
       },
       "performance_pct": 99.2,
+      "stars": 2,
       "cost_perf": 6.33,
       "efficiency": 90.1
     },
@@ -723,6 +755,7 @@
         "2026年3月": 200
       },
       "performance_pct": 153.6,
+      "stars": 3,
       "cost_perf": 10.02,
       "efficiency": 69.7
     },
@@ -745,6 +778,7 @@
         "2026年3月": 0
       },
       "performance_pct": 130.0,
+      "stars": 3,
       "cost_perf": 8.95,
       "efficiency": 55.3
     },
@@ -767,6 +801,7 @@
         "2026年3月": 30
       },
       "performance_pct": 119.5,
+      "stars": 1,
       "cost_perf": 8.43,
       "efficiency": 101.7
     },
@@ -789,6 +824,7 @@
         "2026年3月": 36
       },
       "performance_pct": 125.3,
+      "stars": 2,
       "cost_perf": 8.89,
       "efficiency": 69.6
     },
@@ -811,6 +847,7 @@
         "2026年3月": 10
       },
       "performance_pct": 78.0,
+      "stars": 2,
       "cost_perf": 5.71,
       "efficiency": 92.4
     },
@@ -833,6 +870,7 @@
         "2026年3月": 51
       },
       "performance_pct": 75.3,
+      "stars": 1,
       "cost_perf": 5.7,
       "efficiency": 78.9
     },
@@ -855,6 +893,7 @@
         "2026年3月": 40
       },
       "performance_pct": 109.8,
+      "stars": 3,
       "cost_perf": 8.8,
       "efficiency": 51.6
     },
@@ -877,6 +916,7 @@
         "2026年3月": 31
       },
       "performance_pct": 142.6,
+      "stars": 3,
       "cost_perf": 11.5,
       "efficiency": 64.7
     },
@@ -899,6 +939,7 @@
         "2026年3月": -32
       },
       "performance_pct": 119.8,
+      "stars": 3,
       "cost_perf": 10.93,
       "efficiency": 65.3
     },
@@ -921,6 +962,7 @@
         "2026年3月": 100
       },
       "performance_pct": 89.7,
+      "stars": 2,
       "cost_perf": 7.64,
       "efficiency": 61.1
     },
@@ -943,6 +985,7 @@
         "2026年3月": 142
       },
       "performance_pct": 109.6,
+      "stars": 1,
       "cost_perf": 9.16,
       "efficiency": 78.5
     },
@@ -965,6 +1008,7 @@
         "2026年3月": 50
       },
       "performance_pct": 100.2,
+      "stars": 3,
       "cost_perf": 9.09,
       "efficiency": 62.0
     },
@@ -987,6 +1031,7 @@
         "2026年3月": 30
       },
       "performance_pct": 92.7,
+      "stars": 2,
       "cost_perf": 8.71,
       "efficiency": 54.9
     },
@@ -1009,6 +1054,7 @@
         "2026年3月": 101
       },
       "performance_pct": 99.1,
+      "stars": 2,
       "cost_perf": 9.0,
       "efficiency": 54.0
     },
@@ -1031,6 +1077,7 @@
         "2026年3月": 22
       },
       "performance_pct": 85.5,
+      "stars": 3,
       "cost_perf": 8.2,
       "efficiency": 58.2
     },
@@ -1053,6 +1100,7 @@
         "2026年3月": 50
       },
       "performance_pct": 54.1,
+      "stars": 2,
       "cost_perf": 5.27,
       "efficiency": 43.4
     },
@@ -1075,6 +1123,7 @@
         "2026年3月": 50
       },
       "performance_pct": 64.3,
+      "stars": 3,
       "cost_perf": 6.04,
       "efficiency": 51.5
     },
@@ -1097,6 +1146,7 @@
         "2026年3月": 62
       },
       "performance_pct": 107.3,
+      "stars": 4,
       "cost_perf": 10.83,
       "efficiency": 56.2
     },
@@ -1119,6 +1169,7 @@
         "2026年3月": 70
       },
       "performance_pct": 81.9,
+      "stars": 1,
       "cost_perf": 8.39,
       "efficiency": 65.6
     },
@@ -1141,6 +1192,7 @@
         "2026年3月": 50
       },
       "performance_pct": 81.9,
+      "stars": 2,
       "cost_perf": 8.58,
       "efficiency": 63.7
     },
@@ -1163,6 +1215,7 @@
         "2026年3月": 193
       },
       "performance_pct": 92.6,
+      "stars": 1,
       "cost_perf": 9.05,
       "efficiency": 70.1
     },
@@ -1185,6 +1238,7 @@
         "2026年3月": 32
       },
       "performance_pct": 84.9,
+      "stars": 4,
       "cost_perf": 10.03,
       "efficiency": 46.2
     },
@@ -1207,6 +1261,7 @@
         "2026年3月": 49
       },
       "performance_pct": 93.8,
+      "stars": 3,
       "cost_perf": 10.65,
       "efficiency": 55.5
     },
@@ -1229,6 +1284,7 @@
         "2026年3月": 74
       },
       "performance_pct": 80.6,
+      "stars": 2,
       "cost_perf": 9.11,
       "efficiency": 66.5
     },
@@ -1251,6 +1307,7 @@
         "2026年3月": 58
       },
       "performance_pct": 99.9,
+      "stars": 2,
       "cost_perf": 11.27,
       "efficiency": 60.5
     },
@@ -1273,6 +1330,7 @@
         "2026年3月": 48
       },
       "performance_pct": 72.8,
+      "stars": 2,
       "cost_perf": 9.03,
       "efficiency": 55.1
     },
@@ -1295,6 +1353,7 @@
         "2026年3月": 50
       },
       "performance_pct": 80.6,
+      "stars": 4,
       "cost_perf": 10.45,
       "efficiency": 48.8
     },
@@ -1317,6 +1376,7 @@
         "2026年3月": 62
       },
       "performance_pct": 74.2,
+      "stars": 4,
       "cost_perf": 9.63,
       "efficiency": 47.0
     },
@@ -1339,6 +1399,7 @@
         "2026年3月": 100
       },
       "performance_pct": 99.9,
+      "stars": 2,
       "cost_perf": 12.96,
       "efficiency": 60.5
     },
@@ -1361,6 +1422,7 @@
         "2026年3月": -20
       },
       "performance_pct": 58.9,
+      "stars": 2,
       "cost_perf": 8.02,
       "efficiency": 43.3
     },
@@ -1383,6 +1445,7 @@
         "2026年3月": 13
       },
       "performance_pct": 35.6,
+      "stars": 1,
       "cost_perf": 4.87,
       "efficiency": 69.3
     },
@@ -1405,6 +1468,7 @@
         "2026年3月": 30
       },
       "performance_pct": 63.4,
+      "stars": 4,
       "cost_perf": 9.09,
       "efficiency": 49.4
     },
@@ -1427,6 +1491,7 @@
         "2026年3月": -1
       },
       "performance_pct": 45.8,
+      "stars": 2,
       "cost_perf": 6.06,
       "efficiency": 48.0
     },
@@ -1449,6 +1514,7 @@
         "2026年3月": 11
       },
       "performance_pct": 65.2,
+      "stars": 4,
       "cost_perf": 9.76,
       "efficiency": 48.0
     },
@@ -1471,6 +1537,7 @@
         "2026年3月": 62
       },
       "performance_pct": 70.3,
+      "stars": 3,
       "cost_perf": 10.08,
       "efficiency": 59.9
     },
@@ -1493,6 +1560,7 @@
         "2026年3月": 19
       },
       "performance_pct": 59.4,
+      "stars": 3,
       "cost_perf": 8.99,
       "efficiency": 61.3
     },
@@ -1515,6 +1583,7 @@
         "2026年3月": 16
       },
       "performance_pct": 91.6,
+      "stars": 2,
       "cost_perf": 14.4,
       "efficiency": 55.4
     },
@@ -1537,6 +1606,7 @@
         "2026年3月": -1
       },
       "performance_pct": 78.3,
+      "stars": 2,
       "cost_perf": 13.33,
       "efficiency": 57.6
     },
@@ -1559,6 +1629,7 @@
         "2026年3月": 11
       },
       "performance_pct": 72.5,
+      "stars": 5,
       "cost_perf": 12.34,
       "efficiency": 39.5
     },
@@ -1581,6 +1652,7 @@
         "2026年3月": 10
       },
       "performance_pct": 55.0,
+      "stars": 4,
       "cost_perf": 9.02,
       "efficiency": 46.8
     },
@@ -1603,6 +1675,7 @@
         "2026年3月": -12
       },
       "performance_pct": 68.2,
+      "stars": 5,
       "cost_perf": 11.79,
       "efficiency": 31.0
     },
@@ -1625,6 +1698,7 @@
         "2026年3月": 30
       },
       "performance_pct": 70.2,
+      "stars": 5,
       "cost_perf": 12.75,
       "efficiency": 38.2
     },
@@ -1647,6 +1721,7 @@
         "2026年3月": 29
       },
       "performance_pct": 74.5,
+      "stars": 4,
       "cost_perf": 12.85,
       "efficiency": 40.6
     },
@@ -1669,6 +1744,7 @@
         "2026年3月": 10
       },
       "performance_pct": 43.9,
+      "stars": 5,
       "cost_perf": 8.3,
       "efficiency": 47.8
     },
@@ -1691,6 +1767,7 @@
         "2026年3月": 20
       },
       "performance_pct": 46.0,
+      "stars": 5,
       "cost_perf": 8.7,
       "efficiency": 52.2
     },
@@ -1713,6 +1790,7 @@
         "2026年3月": 30
       },
       "performance_pct": 69.7,
+      "stars": 5,
       "cost_perf": 13.36,
       "efficiency": 42.2
     },
@@ -1735,6 +1813,7 @@
         "2026年3月": 15
       },
       "performance_pct": 39.8,
+      "stars": 4,
       "cost_perf": 7.85,
       "efficiency": 45.1
     },
@@ -1757,6 +1836,7 @@
         "2026年3月": -8
       },
       "performance_pct": 55.3,
+      "stars": 5,
       "cost_perf": 11.21,
       "efficiency": 41.9
     },
@@ -1779,6 +1859,7 @@
         "2026年3月": 8
       },
       "performance_pct": 62.4,
+      "stars": 5,
       "cost_perf": 12.98,
       "efficiency": 47.2
     },
@@ -1801,6 +1882,7 @@
         "2026年3月": 20
       },
       "performance_pct": 50.0,
+      "stars": 5,
       "cost_perf": 10.16,
       "efficiency": 37.8
     },
@@ -1823,6 +1905,7 @@
         "2026年3月": 23
       },
       "performance_pct": 34.3,
+      "stars": 3,
       "cost_perf": 7.41,
       "efficiency": 46.7
     },
@@ -1845,6 +1928,7 @@
         "2026年3月": 18
       },
       "performance_pct": 44.6,
+      "stars": 5,
       "cost_perf": 9.82,
       "efficiency": 40.5
     },
@@ -1867,6 +1951,7 @@
         "2026年3月": 10
       },
       "performance_pct": 26.4,
+      "stars": 4,
       "cost_perf": 6.1,
       "efficiency": 48.0
     },
@@ -1889,6 +1974,7 @@
         "2026年3月": 19
       },
       "performance_pct": 56.6,
+      "stars": 5,
       "cost_perf": 12.87,
       "efficiency": 51.4
     },
@@ -1911,6 +1997,7 @@
         "2026年3月": 16
       },
       "performance_pct": 36.1,
+      "stars": 2,
       "cost_perf": 8.7,
       "efficiency": 46.0
     },
@@ -1933,6 +2020,7 @@
         "2026年3月": -11
       },
       "performance_pct": 30.9,
+      "stars": 5,
       "cost_perf": 7.38,
       "efficiency": 35.0
     },
@@ -1955,6 +2043,7 @@
         "2026年3月": 0
       },
       "performance_pct": 38.4,
+      "stars": 5,
       "cost_perf": 9.5,
       "efficiency": 20.9
     },
@@ -1977,6 +2066,7 @@
         "2026年3月": 70
       },
       "performance_pct": 31.7,
+      "stars": 2,
       "cost_perf": 7.31,
       "efficiency": 46.9
     },
@@ -1999,6 +2089,7 @@
         "2026年3月": 32
       },
       "performance_pct": 26.3,
+      "stars": 2,
       "cost_perf": 6.37,
       "efficiency": 67.5
     },
@@ -2021,6 +2112,7 @@
         "2026年3月": 18
       },
       "performance_pct": 55.2,
+      "stars": 5,
       "cost_perf": 15.34,
       "efficiency": 38.5
     },
@@ -2043,6 +2135,7 @@
         "2026年3月": 15
       },
       "performance_pct": 35.9,
+      "stars": 5,
       "cost_perf": 9.58,
       "efficiency": 37.6
     },
@@ -2065,6 +2158,7 @@
         "2026年3月": 20
       },
       "performance_pct": 28.7,
+      "stars": 5,
       "cost_perf": 7.82,
       "efficiency": 32.5
     },
@@ -2087,6 +2181,7 @@
         "2026年3月": 35
       },
       "performance_pct": 42.3,
+      "stars": 5,
       "cost_perf": 11.52,
       "efficiency": 23.0
     },
@@ -2109,6 +2204,7 @@
         "2026年3月": 0
       },
       "performance_pct": 17.2,
+      "stars": 4,
       "cost_perf": 5.31,
       "efficiency": 31.2
     },
@@ -2131,6 +2227,7 @@
         "2026年3月": 0
       },
       "performance_pct": 35.0,
+      "stars": 5,
       "cost_perf": 11.34,
       "efficiency": 21.2
     },
@@ -2153,6 +2250,7 @@
         "2026年3月": 10
       },
       "performance_pct": 32.0,
+      "stars": 5,
       "cost_perf": 10.38,
       "efficiency": 23.6
     },
@@ -2175,6 +2273,7 @@
         "2026年3月": 10
       },
       "performance_pct": 32.5,
+      "stars": 5,
       "cost_perf": 10.81,
       "efficiency": 23.3
     },
@@ -2197,6 +2296,7 @@
         "2026年3月": 0
       },
       "performance_pct": 28.2,
+      "stars": 5,
       "cost_perf": 9.85,
       "efficiency": 33.4
     },
@@ -2219,6 +2319,7 @@
         "2026年3月": 5
       },
       "performance_pct": 27.8,
+      "stars": 5,
       "cost_perf": 9.84,
       "efficiency": 25.3
     },
@@ -2241,6 +2342,7 @@
         "2026年3月": 9
       },
       "performance_pct": 50.5,
+      "stars": 5,
       "cost_perf": 15.62,
       "efficiency": 32.7
     },
@@ -2263,6 +2365,7 @@
         "2026年3月": -10
       },
       "performance_pct": 33.8,
+      "stars": 5,
       "cost_perf": 11.52,
       "efficiency": 20.5
     },
@@ -2285,6 +2388,7 @@
         "2026年3月": 12
       },
       "performance_pct": 30.6,
+      "stars": 5,
       "cost_perf": 10.4,
       "efficiency": 27.7
     },
@@ -2307,6 +2411,7 @@
         "2026年3月": 8
       },
       "performance_pct": 31.8,
+      "stars": 5,
       "cost_perf": 11.11,
       "efficiency": 25.5
     },
@@ -2329,6 +2434,7 @@
         "2026年3月": 10
       },
       "performance_pct": 28.4,
+      "stars": 5,
       "cost_perf": 9.91,
       "efficiency": 25.8
     },
@@ -2351,6 +2457,7 @@
         "2026年3月": 28
       },
       "performance_pct": 59.5,
+      "stars": 5,
       "cost_perf": 21.96,
       "efficiency": 43.8
     },
@@ -2373,6 +2480,7 @@
         "2026年3月": 16
       },
       "performance_pct": 26.6,
+      "stars": 5,
       "cost_perf": 11.11,
       "efficiency": 22.0
     },
@@ -2395,6 +2503,7 @@
         "2026年3月": 10
       },
       "performance_pct": 16.8,
+      "stars": 5,
       "cost_perf": 7.87,
       "efficiency": 19.0
     },
@@ -2417,6 +2526,7 @@
         "2026年3月": 40
       },
       "performance_pct": 27.2,
+      "stars": 5,
       "cost_perf": 10.28,
       "efficiency": 30.8
     },
@@ -2439,6 +2549,7 @@
         "2026年3月": 8
       },
       "performance_pct": 12.8,
+      "stars": 4,
       "cost_perf": 6.07,
       "efficiency": 23.3
     },
@@ -2461,6 +2572,7 @@
         "2026年3月": 0
       },
       "performance_pct": 7.9,
+      "stars": 4,
       "cost_perf": 4.92,
       "efficiency": 36.1
     },
@@ -2483,6 +2595,7 @@
         "2026年3月": -20
       },
       "performance_pct": 8.8,
+      "stars": 4,
       "cost_perf": 5.45,
       "efficiency": 24.0
     },
@@ -2505,6 +2618,7 @@
         "2026年3月": -10
       },
       "performance_pct": 3.9,
+      "stars": 2,
       "cost_perf": 2.76,
       "efficiency": 17.5
     },
@@ -2527,6 +2641,7 @@
         "2026年3月": 10
       },
       "performance_pct": 13.2,
+      "stars": 5,
       "cost_perf": 7.19,
       "efficiency": 22.5
     },
@@ -2549,6 +2664,7 @@
         "2026年3月": 9
       },
       "performance_pct": 12.8,
+      "stars": 5,
       "cost_perf": 8.37,
       "efficiency": 19.4
     },
@@ -2571,6 +2687,7 @@
         "2026年3月": 0
       },
       "performance_pct": 12.7,
+      "stars": 5,
       "cost_perf": 7.84,
       "efficiency": 23.0
     },
@@ -2593,6 +2710,7 @@
         "2026年3月": 9
       },
       "performance_pct": 43.5,
+      "stars": 5,
       "cost_perf": 25.86,
       "efficiency": 47.4
     },
@@ -2615,6 +2733,7 @@
         "2026年3月": 0
       },
       "performance_pct": 29.8,
+      "stars": 5,
       "cost_perf": 27.25,
       "efficiency": 33.8
     },
@@ -2635,6 +2754,7 @@
         "2026年3月": 31
       },
       "performance_pct": 65.4,
+      "stars": 5,
       "cost_perf": 14.69,
       "efficiency": 44.5
     },
@@ -2655,6 +2775,7 @@
         "2026年3月": 1
       },
       "performance_pct": 66.1,
+      "stars": 5,
       "cost_perf": 21.43,
       "efficiency": 66.7
     }
