@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pretext Demo - 通知提示自动高度</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', 'PingFang SC', sans-serif; background: #0f0f1a; min-height: 100vh; padding: 40px 20px; }
+    h1 { color: #fff; text-align: center; font-size: 24px; margin-bottom: 8px; }
+    p.sub { color: #666; text-align: center; margin-bottom: 40px; font-size: 14px; }
+    .container { max-width: 480px; margin: 0 auto; display: flex; flex-direction: column; gap: 12px; }
+    .notif { background: #1a1a2e; border-radius: 12px; padding: 14px 16px; display: flex; gap: 12px; align-items: flex-start; border: 1px solid #2a2a40; transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); overflow: hidden; max-height: 200px; }
+    .notif.show { transform: translateX(0); opacity: 1; }
+    .notif.hide { transform: translateX(120%); opacity: 0; max-height: 0; padding: 0; margin: 0; border: none; }
+    .notif-icon { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 18px; }
+    .notif-body { flex: 1; min-width: 0; }
+    .notif-title { font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 4px; }
+    .notif-text { font-size: 13px; color: #888; line-height: 1.6; }
+    .notif-close { color: #444; cursor: pointer; font-size: 18px; padding: 4px; transition: color 0.2s; user-select: none; flex-shrink: 0; }
+    .notif-close:hover { color: #fff; }
+    .notif-progress { position: absolute; bottom: 0; left: 0; height: 3px; border-radius: 0 0 12px 12px; transition: width linear; }
+    .notif { position: relative; overflow: hidden; }
+    .notif.info .notif-icon { background: #5f67ee20; }
+    .notif.info .notif-progress { background: #5f67ee; }
+    .notif.success .notif-icon { background: #2ecc7120; }
+    .notif.success .notif-progress { background: #2ecc71; }
+    .notif.warn .notif-icon { background: #f39c1220; }
+    .notif.warn .notif-progress { background: #f39c12; }
+    .notif.error .notif-icon { background: #e74c3c20; }
+    .notif.error .notif-progress { background: #e74c3c; }
+    .controls { display: flex; gap: 10px; justify-content: center; margin-top: 40px; flex-wrap: wrap; }
+    .controls button { padding: 10px 20px; border-radius: 10px; border: 1px solid #333; background: #1a1a2e; color: #c0c0d0; cursor: pointer; font-size: 13px; transition: all 0.2s; }
+    .controls button:hover { border-color: #5f67ee; color: #fff; }
+    .controls button.info-btn { background: #5f67ee20; border-color: #5f67ee50; color: #5f67ee; }
+    .controls button.success-btn { background: #2ecc7120; border-color: #2ecc7150; color: #2ecc71; }
+    .controls button.warn-btn { background: #f39c1220; border-color: #f39c1250; color: #f39c12; }
+    .controls button.error-btn { background: #e74c3c20; border-color: #e74c3c50; color: #e74c3c; }
+    .height-info { font-size: 11px; color: #5f67ee; margin-top: 4px; }
+  </style>
+</head>
+<body>
+  <h1>🔔 Pretext 通知提示系统</h1>
+  <p class="sub">动态内容自动撑开高度 · 进度条与内容长度解耦</p>
+
+  <div class="container" id="container"></div>
+
+  <div class="controls">
+    <button class="info-btn" onclick="addNotif('info')">📢 普通通知</button>
+    <button class="success-btn" onclick="addNotif('success')">✅ 成功通知</button>
+    <button class="warn-btn" onclick="addNotif('warn')">⚠️ 警告通知</button>
+    <button class="error-btn" onclick="addNotif('error')">❌ 错误通知</button>
+  </div>
+
+  <script type="module">
+    import { prepare, layout } from 'https://cdn.jsdelivr.net/npm/@chenglou/pretext@0.0.6/dist/pretext.es.js'
+
+    const container = document.getElementById('container')
+    const ICONS = { info: 'ℹ️', success: '✅', warn: '⚠️', error: '❌' }
+    const TEXTS = {
+      info: [
+        '系统将在今晚 23:00 进行维护升级，预计持续 30 分钟。',
+        '您有一条新的系统公告，请及时查看。我们更新了用户协议和隐私政策。',
+        '您的账户安全评分提升了 15%，继续保持良好的安全习惯！',
+      ],
+      success: [
+        '文件上传成功！已保存至云端「我的文档」目录。',
+        '恭喜！您的订单已确认，订单号 #20260301123456，预计 3 个工作日内送达。',
+        '配置已保存成功，新的设置将在下次启动时生效。',
+      ],
+      warn: [
+        '存储空间已使用 85%，建议清理部分文件以释放空间。',
+        '您的密码已超过 90 天未更新，为了账户安全，请及时修改。',
+        '检测到异常登录行为：2026-03-31 14:23 来自广东省广州市（IP: 42.*.*.78）。如非本人操作，请立即修改密码。',
+      ],
+      error: [
+        '网络连接失败，请检查您的网络设置后重试。错误代码：ERR_NETWORK_CHANGED',
+        '支付失败：余额不足。当前余额 ¥12.50，需要 ¥99.00。建议充值后再试。',
+        '服务暂不可用（503）。我们的服务器正在处理大量请求，请稍后再试。',
+      ],
+    }
+
+    const font = '13px Inter, "PingFang SC", sans-serif'
+    const lineH = 20
+    let notifId = 0
+
+    function getHeight(text) {
+      const prepared = prepare(text, font)
+      const w = 300 // 文字可用宽度
+      const { height } = layout(prepared, w, lineH)
+      return height + 60 // title + padding
+    }
+
+    function addNotif(type) {
+      const texts = TEXTS[type]
+      const text = texts[Math.floor(Math.random() * texts.length)]
+      const h = getHeight(text)
+      const id = notifId++
+
+      const div = document.createElement('div')
+      div.className = `notif ${type}`
+      div.id = `notif-${id}`
+      div.innerHTML = `
+        <div class="notif-icon">${ICONS[type]}</div>
+        <div class="notif-body">
+          <div class="notif-title">${type === 'info' ? '系统通知' : type === 'success' ? '操作成功' : type === 'warn' ? '安全提醒' : '错误提示'}</div>
+          <div class="notif-text" id="notif-text-${id}">${text}</div>
+          <div class="height-info" id="notif-h-${id}">高度: ${h}px · ${Math.ceil(h / lineH)} 行</div>
+        </div>
+        <div class="notif-close" onclick="closeNotif(${id})">×</div>
+        <div class="notif-progress" id="notif-bar-${id}" style="width:100%"></div>
+      `
+
+      container.prepend(div)
+      requestAnimationFrame(() => {
+        div.style.maxHeight = h + 'px'
+      })
+
+      // 进度条倒计时
+      const bar = document.getElementById(`notif-bar-${id}`)
+      bar.style.transition = 'none'
+      bar.style.width = '100%'
+      requestAnimationFrame(() => {
+        bar.style.transition = `width ${4000}ms linear`
+        bar.style.width = '0%'
+      })
+
+      setTimeout(() => closeNotif(id), 4000)
+    }
+
+    window.closeNotif = (id) => {
+      const el = document.getElementById(`notif-${id}`)
+      if (!el) return
+      el.classList.add('hide')
+      setTimeout(() => el.remove(), 300)
+    }
+
+    // 自动生成两条初始通知
+    document.fonts.ready.then(() => {
+      setTimeout(() => addNotif('info'), 300)
+      setTimeout(() => addNotif('success'), 900)
+    })
+  </script>
+</body>
+</html>

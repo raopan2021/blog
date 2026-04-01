@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pretext Demo - 代码编辑器行号</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'JetBrains Mono', 'Fira Code', 'SF Mono', 'Consolas', monospace; background: #0d1117; height: 100vh; display: flex; flex-direction: column; }
+    .toolbar { background: #161b22; border-bottom: 1px solid #30363d; padding: 8px 16px; display: flex; align-items: center; gap: 8px; }
+    .tab { padding: 6px 14px; border-radius: 6px; font-size: 13px; cursor: pointer; display: flex; align-items: center; gap: 6px; color: #c0c0d0; transition: all 0.15s; }
+    .tab:hover { background: #1c2128; }
+    .tab.active { background: #0d1117; color: #e6edf3; border: 1px solid #30363d; border-bottom: none; margin-bottom: -1px; }
+    .dot { width: 10px; height: 10px; border-radius: 50%; }
+    .lang-badge { font-size: 11px; padding: 2px 8px; border-radius: 10px; background: #5f67ee20; color: #5f67ee; margin-left: auto; }
+    .editor-wrap { flex: 1; display: flex; overflow: hidden; }
+    .line-nums { padding: 16px 12px; background: #161b22; border-right: 1px solid #21262d; text-align: right; user-select: none; min-width: 50px; }
+    .line-num { font-size: 13px; line-height: 22px; color: #3d444d; }
+    .line-num.active { color: #5f67ee; }
+    .editor-body { flex: 1; padding: 16px; overflow-y: auto; position: relative; }
+    .code-block { position: relative; }
+    .code-line { font-size: 13px; line-height: 22px; color: #c9d1d9; white-space: pre; padding-right: 16px; }
+    .code-line .keyword { color: #ff7b72; }
+    .code-line .string { color: #a5d6ff; }
+    .code-line .comment { color: #8b949e; font-style: italic; }
+    .code-line .number { color: #79c0ff; }
+    .code-line .fn { color: #d2a8ff; }
+    .code-line .type { color: #ffa657; }
+    .code-line .operator { color: #ff7b72; }
+    .highlight-line { background: #1c2128; border-left: 2px solid #5f67ee; margin-left: -2px; }
+    .statusbar { background: #161b22; border-top: 1px solid #30363d; padding: 4px 16px; font-size: 12px; color: #7d8590; display: flex; gap: 20px; }
+    .statusbar span { display: flex; align-items: center; gap: 4px; }
+    .statusbar .ok { color: #3fb950; }
+    .controls { position: fixed; bottom: 40px; right: 24px; display: flex; flex-direction: column; gap: 8px; }
+    .controls button { padding: 10px 16px; border-radius: 10px; border: 1px solid #333; background: #1a1a2e; color: #c0c0d0; cursor: pointer; font-size: 13px; transition: all 0.2s; backdrop-filter: blur(8px); }
+    .controls button:hover { border-color: #5f67ee; color: #fff; }
+  </style>
+</head>
+<body>
+  <div class="toolbar">
+    <div class="tab active" onclick="switchTab(this, 0)">
+      <span class="dot" style="background:#fc5c3c"></span>
+      <span>App.vue</span>
+    </div>
+    <div class="tab" onclick="switchTab(this, 1)">
+      <span class="dot" style="background:#feb243"></span>
+      <span>useVirtualList.ts</span>
+    </div>
+    <div class="tab" onclick="switchTab(this, 2)">
+      <span class="dot" style="background:#3fb950"></span>
+      <span>main.js</span>
+    </div>
+    <span class="lang-badge" id="lang-badge">Vue</span>
+  </div>
+
+  <div class="editor-wrap">
+    <div class="line-nums" id="line-nums"></div>
+    <div class="editor-body" id="editor-body"></div>
+  </div>
+
+  <div class="statusbar">
+    <span>行 <span id="cur-line">1</span>, 列 <span id="cur-col">1</span></span>
+    <span class="ok">● LF</span>
+    <span id="file-info">UTF-8</span>
+    <span id="char-count">0 字符</span>
+    <span id="line-count">0 行</span>
+  </div>
+
+  <div class="controls">
+    <button onclick="toggleHighlight()">🔍 高亮当前行</button>
+    <button onclick="scrollToLine()">⏫ 跳转第50行</button>
+  </div>
+
+  <script type="module">
+    import { prepare, layout, prepareWithSegments, layoutWithLines } from 'https://cdn.jsdelivr.net/npm/@chenglou/pretext@0.0.6/dist/pretext.es.js'
+
+    const codes = [
+      {
+        lang: 'Vue',
+        name: 'App.vue',
+        code: `<template>
+  <div class="app">
+    <VirtualList
+      :items="items"
+      :item-height="getItemHeight"
+      @visible-range="onVisibleRange"
+    />
+  </div>
+</template>
+
+<script setup>
+import { ref, computed } from 'vue'
+import { useVirtualScroll } from './useVirtualList'
+
+// 模拟 10000 条数据
+const items = ref(
+  Array.from({ length: 10000 }, (_, i) => ({
+    id: i,
+    title: \`Item #\${i + 1}\`,
+    content: \`这是第 \${i + 1} 条数据的描述内容...\`,
+  }))
+)
+
+const { containerRef, visibleItems, totalHeight } = useVirtualScroll({
+  items,
+  estimatedHeight: 80,
+  overscan: 5,
+})
+
+function getItemHeight(item) {
+  // 奇数行高度更高，模拟内容长度不一
+  return item.id % 2 === 0 ? 72 : 96
+}
+<\/script>
+
+<style scoped>
+.app {
+  height: 100vh;
+  overflow: hidden;
+}
+</style>`
+      },
+      {
+        lang: 'TypeScript',
+        name: 'useVirtualList.ts',
+        code: `import { prepare, layout } from '@chenglou/pretext'
+
+interface Options {
+  items: any[]
+  estimatedHeight: number
+  overscan?: number
+}
+
+export function useVirtualScroll(options: Options) {
+  const { items, estimatedHeight, overscan = 3 } = options
+
+  // 预计算所有 item 的 prepared 对象
+  const preparedMap = new Map()
+  const heightCache = new Map()
+
+  const font = '14px JetBrains Mono, Consolas, monospace'
+  const lineHeight = 22
+
+  function measureItem(item: any, width: number): number {
+    if (heightCache.has(item.id)) {
+      return heightCache.get(item.id)
+    }
+    const prepared = prepare(item.content, font)
+    const { height } = layout(prepared, width - 32, lineHeight) // 减去 padding
+    const h = Math.max(height + 32, estimatedHeight)
+    heightCache.set(item.id, h)
+    preparedMap.set(item.id, prepared)
+    return h
+  }
+
+  function getTotalHeight(width: number): number {
+    return items.reduce((sum, item) =>
+      sum + measureItem(item, width), 0
+    )
+  }
+
+  function getVisibleRange(
+    scrollTop: number,
+    viewportHeight: number,
+    width: number
+  ) {
+    let offset = 0
+    let startIndex = 0
+    let endIndex = items.length - 1
+
+    for (let i = 0; i < items.length; i++) {
+      const h = measureItem(items[i], width)
+      if (offset + h > scrollTop) {
+        startIndex = Math.max(0, i - overscan)
+        break
+      }
+      offset += h
+    }
+
+    for (let i = startIndex; i < items.length; i++) {
+      offset += measureItem(items[i], width)
+      if (offset > scrollTop + viewportHeight) {
+        endIndex = Math.min(items.length - 1, i + overscan)
+        break
+      }
+    }
+
+    return { startIndex, endIndex }
+  }
+
+  return {
+    measureItem,
+    getTotalHeight,
+    getVisibleRange,
+    preparedMap,
+  }
+}`
+      },
+      {
+        lang: 'JavaScript',
+        name: 'main.js',
+        code: `/**
+ * Pretext 在代码编辑器中的应用
+ * 核心问题：等宽字体的行号如何精确对齐？
+ */
+
+// 传统方案：每行一个 div，CSS 控制对齐
+// 问题：长代码行号会溢出，或者需要固定宽度
+
+// Pretext 方案：Canvas 精确测量每行宽度
+function renderLineNumbers(code, font, lineHeight) {
+  const prepared = prepareWithSegments(code, font)
+  const { lines } = layoutWithLines(prepared, Infinity, lineHeight)
+
+  // 找出最长行的宽度，用于对齐
+  let maxWidth = 0
+  lines.forEach(line => {
+    if (line.width > maxWidth) maxWidth = line.width
+  })
+
+  // 渲染行号和代码
+  const lineNumWidth = String(lines.length).length * CHAR_WIDTH
+  // 行号区域宽度 = 最长行宽度或固定宽度，取较大值
+  const alignWidth = Math.max(lineNumWidth + 20, maxWidth)
+
+  lines.forEach((line, i) => {
+    const y = i * lineHeight
+    // 绘制行号（右对齐）
+    drawRightAligned(lineNum(i + 1), alignWidth, y)
+    // 绘制代码
+    ctx.fillText(line.text, alignWidth + 10, y)
+  })
+}
+
+// 关键洞察：Pretext 的 layoutWithLines()
+// 返回每行的文本内容 + 宽度
+// 对于代码编辑器，这意味着：
+// 1. 可以精确知道哪一行最长
+// 2. 可以精确对齐行号区域
+// 3. 可以精确计算编辑器需要的最小宽度
+`
+      },
+    ]
+
+    let currentIdx = 0
+    let font = '13px JetBrains Mono, Fira Code, Consolas, monospace'
+    let lineH = 22
+    let showHighlight = false
+
+    function tokenize(code) {
+      // 简单语法高亮
+      return code
+        .replace(/\/\/.*/g, '<span class="comment">$&</span>')
+        .replace(/\/\*[\s\S]*?\*\//g, m => `<span class="comment">${m}</span>`)
+        .replace(/(&lt;\/?[\w-]+)/g, '<span class="fn">$1</span>')
+        .replace(/(&lt;|&gt;)/g, '<span class="operator">$1</span>')
+        .replace(/(['"`])(?:(?!\1)[^\\]|\\.)*\1/g, m => `<span class="string">${m}</span>`)
+        .replace(/\b(import|export|from|const|let|var|function|return|if|else|for|while|class|interface|type|extends|implements|new|this|async|await|try|catch|throw|default)\b/g, '<span class="keyword">$1</span>')
+        .replace(/\b(\d+\.?\d*)\b/g, '<span class="number">$1</span>')
+        .replace(/\b([A-Z][a-zA-Z0-9]*)\b/g, '<span class="type">$1</span>')
+        .replace(/\b([a-z_$][\w$]*)\s*(?=\()/g, '<span class="fn">$1</span>')
+    }
+
+    function renderCode(idx) {
+      const { code, lang } = codes[idx]
+      document.getElementById('lang-badge').textContent = lang
+
+      const prepared = prepareWithSegments(code, font)
+      const { lines } = layoutWithLines(prepared, 9999, lineH)
+
+      // 渲染行号
+      const numsEl = document.getElementById('line-nums')
+      numsEl.innerHTML = lines.map((_, i) =>
+        `<div class="line-num" id="ln-${i + 1}">${i + 1}</div>`
+      ).join('')
+
+      // 渲染代码
+      const bodyEl = document.getElementById('editor-body')
+      const codeLines = code.split('\n')
+      bodyEl.innerHTML = codeLines.map((line, i) => {
+        const highlighted = tokenize(
+          line.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+        )
+        return `<div class="code-line" id="cl-${i + 1}" onclick="gotoLine(${i + 1})">${highlighted}</div>`
+      }).join('')
+
+      // 统计
+      document.getElementById('line-count').textContent = `${lines.length} 行`
+      document.getElementById('char-count').textContent = `${code.length} 字符`
+      document.getElementById('file-info').textContent = lang + ' · UTF-8'
+    }
+
+    window.gotoLine = (n) => {
+      document.getElementById('cur-line').textContent = n
+      document.getElementById('cur-col').textContent = '1'
+      document.querySelectorAll('.line-num').forEach(el => el.classList.remove('active'))
+      document.querySelectorAll('.code-line').forEach(el => el.classList.remove('highlight-line'))
+      const ln = document.getElementById(`ln-${n}`)
+      const cl = document.getElementById(`cl-${n}`)
+      if (ln) { ln.classList.add('active'); ln.scrollIntoView({ block: 'center' }) }
+      if (cl) cl.classList.add('highlight-line')
+    }
+
+    window.switchTab = (el, idx) => {
+      currentIdx = idx
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'))
+      el.classList.add('active')
+      renderCode(idx)
+    }
+
+    window.toggleHighlight = () => {
+      showHighlight = !showHighlight
+      if (showHighlight) gotoLine(10)
+    }
+
+    window.scrollToLine = () => gotoLine(50)
+
+    document.fonts.ready.then(() => renderCode(0))
+  </script>
+</body>
+</html>
