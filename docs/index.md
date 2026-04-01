@@ -54,19 +54,16 @@ features:
   - icon:
       src: /mainView/vue.svg
     title: Vue 框架
-    details: Vue2 Vue3 及相关组件
     link: /vue/
 
   - icon:
       src: /mainView/react.svg
     title: React 框架
-    details: React 源码解析、版本演进
     link: /react/
 
   - icon:
       src: /mainView/vite.svg
     title: Vite 构建工具
-    details: Vite 核心原理、版本演进
     link: /vite/
 
   - icon:
@@ -158,7 +155,6 @@ features:
   - icon:
       src: /mainView/plc.svg
     title: PLC 工业自动化
-    details: 西门子 S7-1200/1500 / 三菱 FX5U / ABB AC500
     link: /plc/
 
   # ===== 工具 & 其他 =====
