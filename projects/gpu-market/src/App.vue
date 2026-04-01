@@ -24,20 +24,6 @@
       @sort-change="rankSort = $event"
     />
 
-    <!-- 价格趋势 -->
-    <TrendChart
-      v-if="view === 'trend'"
-      ref="trendChartRef"
-      :gpus="filteredGpus"
-      :months="months"
-      :selected-gpu-names="selectedGpuNames"
-      :filtered-count="filteredGpus.length"
-      :total-count="gpus.length"
-      :price-range="priceRange"
-      :brand-filter="brandFilter"
-      @update:selectedGpuNames="selectedGpuNames = $event"
-    />
-
     <!-- 数据浏览 -->
     <BrowseTable
       v-if="view === 'browse'"
@@ -56,26 +42,19 @@
 </template>
 
 <script setup>
-import { ref, computed, watch, nextTick } from 'vue'
+import { ref, computed } from 'vue'
 import Header from './components/Header.vue'
 import StatsBar from './components/StatsBar.vue'
 import RankTable from './components/RankTable.vue'
-import TrendChart from './components/TrendChart.vue'
 import BrowseTable from './components/BrowseTable.vue'
 import AboutSection from './components/AboutSection.vue'
 import { gpus, months } from './data.js'
 
-const view = ref('trend')
+const view = ref('rank')
 const brandFilter = ref('')
 const priceRange = ref('')
 const searchText = ref('')
 const rankSort = ref('score')
-const trendChartRef = ref(null)
-const selectedGpuNames = ref([])
-
-function initSelectedGpus() {
-  selectedGpuNames.value = filteredGpus.value.map(g => g.name)
-}
 
 const filteredGpus = computed(() => {
   let list = [...gpus]
@@ -89,7 +68,6 @@ const filteredGpus = computed(() => {
       if (priceRange.value === '3000-4000') return p >= 3000 && p < 4000
       if (priceRange.value === '4000-5000') return p >= 4000 && p < 5000
       if (priceRange.value === '5000+') return p >= 5000
-      // 自定义区间 custom:min-max
       const custom = priceRange.value.match(/^custom:(\d+)-(\d+)$/)
       if (custom) {
         const min = parseInt(custom[1]) || 0
@@ -107,19 +85,6 @@ const filteredGpus = computed(() => {
   }
   return list
 })
-
-// 筛选变化时更新图表选中的 GPU
-watch(filteredGpus, (newList) => {
-  const validNames = new Set(newList.map(g => g.name))
-  // 保留仍在筛选结果中的
-  const kept = selectedGpuNames.value.filter(n => validNames.has(n))
-  // 添加新筛入的（去重）
-  const added = newList.filter(g => !selectedGpuNames.value.includes(g.name)).map(g => g.name)
-  selectedGpuNames.value = [...kept, ...added]
-  if (view.value === 'trend') {
-    nextTick(() => trendChartRef.value?.updateChart())
-  }
-}, { deep: false })
 
 const avgChangePerGpu = computed(() => {
   if (!filteredGpus.value.length) return 0
@@ -144,15 +109,5 @@ function getLatestPrice(gpu) {
 
 function switchView(v) {
   view.value = v
-  if (v === 'trend') {
-    nextTick(() => {
-      nextTick(() => {
-        if (!selectedGpuNames.value.length) initSelectedGpus()
-        trendChartRef.value?.initChart()
-      })
-    })
-  }
 }
-
-initSelectedGpus()
 </script>

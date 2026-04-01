@@ -10,7 +10,6 @@
     "update": "node process_gpu_data.js"
   },
   "dependencies": {
-    "echarts": "^5.6.0",
     "vue": "^3.5.31"
   },
   "devDependencies": {

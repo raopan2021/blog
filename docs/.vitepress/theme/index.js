@@ -6,6 +6,7 @@ import { h, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 // import AdComponent from './AdComponent.vue'
 import Layout from './Layout.vue'
 import Poem from './poem.vue' // 自定义的markdowm布局
+import FullscreenLayout from './components/FullscreenLayout.vue'
 
 // import elementplus from "element-plus"
 // import "element-plus/dist/index.css";
@@ -121,6 +122,10 @@ export default {
 		})
 	},
 	Layout() {
+		const route = useRoute()
+		if (route.path.startsWith('/blog/gpu-market/') || route.path === '/blog/gpu-market') {
+			return h(FullscreenLayout, { src: '/blog/gpu-market/index.html' })
+		}
 		return h(Layout, null, {
 			// 'doc-before': () => h(AdComponent),
 		})
