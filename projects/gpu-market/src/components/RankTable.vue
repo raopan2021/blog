@@ -20,17 +20,17 @@
         <thead>
           <tr>
             <th style="width:40px;color:#475569">#</th>
-            <th>显卡型号</th>
-            <th>品牌</th>
-            <th>显存</th>
-            <th>TDP</th>
-            <th>跑分</th>
-            <th>性能%</th>
-            <th>3月价格</th>
-            <th>3月涨幅</th>
-            <th>性价比</th>
-            <th>能耗比</th>
-            <th>翻车风险</th>
+            <th title="显卡型号">型号</th>
+            <th title="NVIDIA / AMD / Intel">品牌</th>
+            <th title="显存容量">显存</th>
+            <th title="热设计功耗（瓦特）">TDP</th>
+            <th title="3DMark Time Spy 分数，衡量GPU综合性能">跑分 ↕</th>
+            <th title="相对RTX 5060(13619分)的性能百分比">性能%</th>
+            <th title="2026年3月二手价格（元）">3月价格</th>
+            <th title="3月价格相比2月的变化（+涨/-跌）">3月涨幅</th>
+            <th title="跑分÷价格，≥7绿/5-7蓝/3-5黄/<3红">性价比</th>
+            <th title="跑分÷TDP，数值越大越省电">能耗比</th>
+            <th title="基于架构/矿卡历史评估，★越多翻车概率越高">翻车风险</th>
           </tr>
         </thead>
         <tbody>
@@ -107,17 +107,16 @@ function renderStars(stars) {
 .header-left {
   display: flex;
   align-items: center;
-  gap: 12px;
-  flex-wrap: wrap;
+  gap: 10px;
 }
-
 .card-count {
-  padding: 3px 12px;
+  padding: 2px 10px;
   background: rgba(#60a5fa, 0.12);
   border: 1px solid rgba(#60a5fa, 0.3);
   border-radius: 20px;
-  font-size: 12px;
+  font-size: 11px;
   color: #60a5fa;
   font-weight: 600;
 }
+th[title] { cursor: help; }
 </style>

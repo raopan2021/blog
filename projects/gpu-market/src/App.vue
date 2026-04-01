@@ -31,6 +31,8 @@
       :gpus="filteredGpus"
       :months="months"
       :selected-gpu-names="selectedGpuNames"
+      :filtered-count="filteredGpus.length"
+      :total-count="gpus.length"
       @update:selectedGpuNames="selectedGpuNames = $event"
     />
 
@@ -38,6 +40,8 @@
     <BrowseTable
       v-if="view === 'browse'"
       :gpus="filteredGpus"
+      :filtered-count="filteredGpus.length"
+      :total-count="gpus.length"
     />
 
     <!-- 关于 -->
@@ -65,13 +69,10 @@ const priceRange = ref('')
 const searchText = ref('')
 const rankSort = ref('score')
 const trendChartRef = ref(null)
-
-// 默认展示筛选结果前8张（趋势图）
 const selectedGpuNames = ref([])
 
-// 初始化 selectedGpuNames 为前8张
 function initSelectedGpus() {
-  selectedGpuNames.value = filteredGpus.value.slice(0, 8).map(g => g.name)
+  selectedGpuNames.value = filteredGpus.value.map(g => g.name)
 }
 
 const filteredGpus = computed(() => {
@@ -83,7 +84,9 @@ const filteredGpus = computed(() => {
       if (priceRange.value === '0-1000') return p < 1000
       if (priceRange.value === '1000-2000') return p >= 1000 && p < 2000
       if (priceRange.value === '2000-3000') return p >= 2000 && p < 3000
-      if (priceRange.value === '3000+') return p >= 3000
+      if (priceRange.value === '3000-4000') return p >= 3000 && p < 4000
+      if (priceRange.value === '4000-5000') return p >= 4000 && p < 5000
+      if (priceRange.value === '5000+') return p >= 5000
       return true
     })
   }
@@ -94,17 +97,14 @@ const filteredGpus = computed(() => {
   return list
 })
 
-// 筛选变化时，更新图表默认选中的 GPU
+// 筛选变化时更新图表选中的 GPU
 watch(filteredGpus, (newList) => {
-  // 保留已选的，移除已选但不在新列表中的
   const validNames = newList.map(g => g.name)
+  // 移除不在筛选结果中的
   selectedGpuNames.value = selectedGpuNames.value.filter(n => validNames.includes(n))
-  // 如果不够8个，补充新的
-  if (selectedGpuNames.value.length < 8) {
-    const extra = newList.filter(g => !selectedGpuNames.value.includes(g.name)).slice(0, 8 - selectedGpuNames.value.length)
-    selectedGpuNames.value.push(...extra.map(g => g.name))
-  }
-  // 刷新图表
+  // 添加新筛入的
+  const newOnes = newList.filter(g => !selectedGpuNames.value.includes(g.name)).map(g => g.name)
+  selectedGpuNames.value.push(...newOnes)
   if (view.value === 'trend') {
     nextTick(() => trendChartRef.value?.updateChart())
   }
@@ -143,6 +143,5 @@ function switchView(v) {
   }
 }
 
-// 初始化
 initSelectedGpus()
 </script>

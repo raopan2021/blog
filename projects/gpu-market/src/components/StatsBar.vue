@@ -70,7 +70,9 @@ const priceOptions = [
   { value: '0-1000', label: '0~1k' },
   { value: '1000-2000', label: '1k~2k' },
   { value: '2000-3000', label: '2k~3k' },
-  { value: '3000+', label: '3k+' },
+  { value: '3000-4000', label: '3k~4k' },
+  { value: '4000-5000', label: '4k~5k' },
+  { value: '5000+', label: '5k+' },
 ]
 </script>
 

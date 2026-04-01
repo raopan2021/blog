@@ -1,24 +1,30 @@
 <template>
   <div class="card">
     <div class="card-header">
-      <span class="card-title">📋 完整数据（逐月价格明细）</span>
-      <span style="font-size:12px;color:#64748b">共 {{ gpus.length }} 张</span>
+      <div class="header-left">
+        <span class="card-title">📋 完整数据（逐月价格明细）</span>
+        <span class="card-count">{{ filteredCount }} / {{ totalCount }} 张</span>
+      </div>
+      <span style="font-size:12px;color:#64748b">Time Spy 跑分 · 性价比 = 跑分÷价格 · 能耗比 = 跑分÷TDP</span>
     </div>
     <div class="table-wrap">
       <table>
         <thead>
           <tr>
-            <th>显卡型号</th>
-            <th>品牌</th>
-            <th>显存</th>
-            <th>TDP</th>
-            <th>跑分</th>
-            <th>2025年12月</th>
-            <th>2026年1月</th>
-            <th>2026年2月</th>
-            <th>2026年3月</th>
-            <th>3月涨幅</th>
-            <th>翻车风险</th>
+            <th title="显卡型号">型号</th>
+            <th title="NVIDIA / AMD / Intel">品牌</th>
+            <th title="显存容量">显存</th>
+            <th title="热设计功耗（瓦特）">TDP</th>
+            <th title="3DMark Time Spy 分数，衡量GPU综合性能">跑分 ↕</th>
+            <th title="相对RTX 5060(13619分)的性能百分比">性能%</th>
+            <th title="2025年12月二手价格（元）">12月</th>
+            <th title="2026年1月二手价格（元）">1月</th>
+            <th title="2026年2月二手价格（元）">2月</th>
+            <th title="2026年3月二手价格（元）">3月</th>
+            <th title="3月价格相比2月的变化（+涨/-跌）">3月涨幅</th>
+            <th title="跑分÷价格，≥7绿/5-7蓝/3-5黄/<3红">性价比</th>
+            <th title="跑分÷TDP，数值越大越省电">能耗比</th>
+            <th title="基于架构/矿卡历史评估，★越多翻车概率越高">翻车风险</th>
           </tr>
         </thead>
         <tbody>
@@ -28,11 +34,14 @@
             <td style="color:#94a3b8">{{ gpu.vram }}</td>
             <td style="color:#94a3b8">{{ gpu.tdp }}W</td>
             <td style="color:#fbbf24">{{ gpu.score.toLocaleString() }}</td>
+            <td style="color:#a78bfa">{{ gpu.performance_pct }}%</td>
             <td class="price">{{ fmtPrice(gpu.prices['2025年12月']) }}</td>
             <td class="price">{{ fmtPrice(gpu.prices['2026年1月']) }}</td>
             <td class="price">{{ fmtPrice(gpu.prices['2026年2月']) }}</td>
             <td class="price">{{ fmtPrice(gpu.prices['2026年3月']) }}</td>
             <td><span :class="changeBadgeClass(gpu)">{{ getChange(gpu) }}</span></td>
+            <td :class="costPerfClass(gpu.cost_perf)">{{ gpu.cost_perf || '-' }}</td>
+            <td style="color:#22d3ee">{{ gpu.efficiency || '-' }}</td>
             <td v-html="renderStars(gpu.stars)"></td>
           </tr>
         </tbody>
@@ -43,7 +52,11 @@
 </template>
 
 <script setup>
-defineProps({ gpus: Array })
+defineProps({
+  gpus: Array,
+  filteredCount: Number,
+  totalCount: Number,
+})
 
 function fmtPrice(v) { return v ? '¥' + v.toLocaleString() : '-' }
 function getChange(gpu) {
@@ -56,6 +69,13 @@ function changeBadgeClass(gpu) {
   if (!c && c !== 0) return 'change-badge flat'
   return c > 0 ? 'change-badge up' : c < 0 ? 'change-badge down' : 'change-badge flat'
 }
+function costPerfClass(v) {
+  if (!v) return ''
+  if (v >= 7) return 'cp-green'
+  if (v >= 5) return 'cp-blue'
+  if (v >= 3) return 'cp-yellow'
+  return 'cp-red'
+}
 function renderStars(stars) {
   if (!stars && stars !== 0) return '-'
   const full = Math.max(0, Math.min(5, Math.round(stars)))
@@ -63,3 +83,21 @@ function renderStars(stars) {
   return '<span style="color:#fbbf24">' + '★'.repeat(full) + '</span><span style="color:#334155">' + '☆'.repeat(empty) + '</span>'
 }
 </script>
+
+<style lang="scss" scoped>
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.card-count {
+  padding: 2px 10px;
+  background: rgba(#60a5fa, 0.12);
+  border: 1px solid rgba(#60a5fa, 0.3);
+  border-radius: 20px;
+  font-size: 11px;
+  color: #60a5fa;
+  font-weight: 600;
+}
+th[title] { cursor: help; }
+</style>
