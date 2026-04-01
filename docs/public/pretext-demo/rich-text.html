@@ -130,6 +130,10 @@
         const el = document.getElementById(id)
         el.style.width = (val - 110) + 'px'
       })
+
+      // Re-render with new width
+      const richText = document.getElementById('rich-text')
+      richText.style.width = (val - 48) + 'px'
     }
 
     document.fonts.ready.then(() => {

@@ -4,7 +4,7 @@ import DefaultTheme from 'vitepress/theme'
 import { h, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 
 // import AdComponent from './AdComponent.vue'
-import Layout from './Layout.vue'
+import SiteLayout from './Layout.vue'
 import Poem from './poem.vue' // 自定义的markdowm布局
 import FullscreenLayout from './components/FullscreenLayout.vue'
 
@@ -123,10 +123,11 @@ export default {
 	},
 	Layout() {
 		const route = useRoute()
-		if (route.path.startsWith('/blog/gpu-market/') || route.path === '/blog/gpu-market') {
+		// gpu-market 页面使用全屏布局
+		if (route.path.startsWith('/blog/gpu-market') || route.path === '/blog/gpu-market') {
 			return h(FullscreenLayout, { src: '/blog/gpu-market/index.html' })
 		}
-		return h(Layout, null, {
+		return h(SiteLayout, null, {
 			// 'doc-before': () => h(AdComponent),
 		})
 	},

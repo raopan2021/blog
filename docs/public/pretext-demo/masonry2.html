@@ -329,7 +329,7 @@
     window.updateWidth = (val) => {
       canvasWidth = parseInt(val)
       document.getElementById('wval').textContent = val + 'px'
-      render()
+      resize()
     }
 
     document.fonts.ready.then(() => {

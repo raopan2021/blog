@@ -55,7 +55,7 @@
 <iframe
   src="/blog/pretext-demo/justification.html"
   width="100%"
-  height="500px"
+  height="580px"
   frameborder="0"
   style="margin-top:12px; border-radius:12px; background:#f5f1ea;"
   allow="autoplay"
@@ -66,7 +66,7 @@
 <iframe
   src="/blog/pretext-demo/accordion.html"
   width="100%"
-  height="420px"
+  height="540px"
   frameborder="0"
   style="margin-top:12px; border-radius:12px; background:#f5f1ea;"
   allow="autoplay"
@@ -77,7 +77,7 @@
 <iframe
   src="/blog/pretext-demo/bubbles.html"
   width="100%"
-  height="420px"
+  height="540px"
   frameborder="0"
   style="margin-top:12px; border-radius:12px; background:#f5f7f5;"
   allow="autoplay"
@@ -88,7 +88,7 @@
 <iframe
   src="/blog/pretext-demo/dynamic-layout.html"
   width="100%"
-  height="480px"
+  height="580px"
   frameborder="0"
   style="margin-top:12px; border-radius:12px; background:#f5f1ea;"
   allow="autoplay"
@@ -99,7 +99,7 @@
 <iframe
   src="/blog/pretext-demo/typography.html"
   width="100%"
-  height="420px"
+  height="540px"
   frameborder="0"
   style="margin-top:12px; border-radius:12px; background:#f5f1ea;"
   allow="autoplay"
@@ -110,7 +110,7 @@
 <iframe
   src="/blog/pretext-demo/rich-text.html"
   width="100%"
-  height="420px"
+  height="540px"
   frameborder="0"
   style="margin-top:12px; border-radius:12px; background:#f5f1ea;"
   allow="autoplay"
