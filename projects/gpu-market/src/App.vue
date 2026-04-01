@@ -33,6 +33,7 @@
       :selected-gpu-names="selectedGpuNames"
       :filtered-count="filteredGpus.length"
       :total-count="gpus.length"
+      :price-range="priceRange"
       @update:selectedGpuNames="selectedGpuNames = $event"
     />
 
@@ -87,6 +88,15 @@ const filteredGpus = computed(() => {
       if (priceRange.value === '3000-4000') return p >= 3000 && p < 4000
       if (priceRange.value === '4000-5000') return p >= 4000 && p < 5000
       if (priceRange.value === '5000+') return p >= 5000
+      // 自定义区间 custom:min-max
+      const custom = priceRange.value.match(/^custom:(\d+)-(\d+)$/)
+      if (custom) {
+        const min = parseInt(custom[1]) || 0
+        const max = parseInt(custom[2]) || 0
+        const above = min === 0 || p >= min
+        const below = max === 0 || p <= max
+        return above && below
+      }
       return true
     })
   }
@@ -99,12 +109,12 @@ const filteredGpus = computed(() => {
 
 // 筛选变化时更新图表选中的 GPU
 watch(filteredGpus, (newList) => {
-  const validNames = newList.map(g => g.name)
-  // 移除不在筛选结果中的
-  selectedGpuNames.value = selectedGpuNames.value.filter(n => validNames.includes(n))
-  // 添加新筛入的
-  const newOnes = newList.filter(g => !selectedGpuNames.value.includes(g.name)).map(g => g.name)
-  selectedGpuNames.value.push(...newOnes)
+  const validNames = new Set(newList.map(g => g.name))
+  // 保留仍在筛选结果中的
+  const kept = selectedGpuNames.value.filter(n => validNames.has(n))
+  // 添加新筛入的（去重）
+  const added = newList.filter(g => !selectedGpuNames.value.includes(g.name)).map(g => g.name)
+  selectedGpuNames.value = [...kept, ...added]
   if (view.value === 'trend') {
     nextTick(() => trendChartRef.value?.updateChart())
   }

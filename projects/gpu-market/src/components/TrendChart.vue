@@ -57,6 +57,7 @@ const props = defineProps({
   selectedGpuNames: Array,
   filteredCount: Number,
   totalCount: Number,
+  priceRange: { type: String, default: '' },
 })
 
 const emit = defineEmits(['update:selectedGpuNames'])
@@ -91,54 +92,89 @@ function initChart() {
   updateChart()
 }
 
-function updateChart() {
-  if (!chartInstance) return
-  const mons = props.months
-  // 动态颜色池
+function buildSeries(mons) {
   const palette = [
     '#60a5fa','#f87171','#34d399','#fbbf24','#a78bfa',
     '#f472b6','#38bdf8','#fb923c','#4ade80','#f97316',
     '#e879f9','#22d3ee','#facc15','#2dd4bf','#fb7185',
   ]
 
-  const series = props.selectedGpuNames.map((name, i) => {
+  const gpuNames = props.selectedGpuNames
+  const n = gpuNames.length
+
+  // 计算每个 GPU 的最终价格，用于标签垂直错开
+  const finalPrices = gpuNames.map(name => {
+    const gpu = props.gpus.find(g => g.name === name)
+    return gpu ? (getLatestPrice(gpu)) : 0
+  })
+
+  // 计算标签垂直偏移：价格接近的相邻 GPU 错开
+  const offsets = new Array(n).fill(0)
+  const OFFSET_PIXELS = 22  // 每级错开的像素数
+  const PRICE_PROXIMITY_THRESHOLD = 0.08  // 价格差距 < 8% 认为是接近
+  for (let i = 1; i < n; i++) {
+    const maxPrice = Math.max(finalPrices[i], finalPrices[i - 1])
+    if (maxPrice === 0) continue
+    const proximity = Math.abs(finalPrices[i] - finalPrices[i - 1]) / maxPrice
+    if (proximity < PRICE_PROXIMITY_THRESHOLD) {
+      offsets[i] = offsets[i - 1] + 1
+    } else {
+      offsets[i] = Math.max(0, offsets[i - 1] - 1)
+    }
+  }
+
+  return gpuNames.map((name, i) => {
     const gpu = props.gpus.find(g => g.name === name)
     if (!gpu) return null
     const color = palette[i % palette.length]
-    const latestPrice = getLatestPrice(gpu)
+    const rawData = mons.map(m => gpu.prices[m] ?? null)
+
+    let lastIdx = -1
+    for (let k = rawData.length - 1; k >= 0; k--) {
+      if (rawData[k] != null) { lastIdx = k; break }
+    }
+
     return {
       name,
       type: 'line',
       smooth: true,
-      data: mons.map(m => gpu.prices[m] || null),
+      data: rawData,
       lineStyle: { color, width: 1.5 },
       itemStyle: { color },
       connectNulls: true,
       emphasis: { lineStyle: { width: 3 } },
-      // 折线末端标注型号+价格
-      markPoint: undefined,
-      // 使用 lineLabel 在折线末端显示
       label: {
         show: true,
-        position: 'end',
-        formatter: () => `{name|${name}}  ¥${latestPrice.toLocaleString()}`,
-        rich: {
-          name: { fontSize: 11, color: color, fontWeight: 600, lineHeight: 16 },
+        position: 'right',
+        formatter: function(p) {
+          if (p.dataIndex !== lastIdx || p.value == null) return ''
+          return `${name}  ¥${Number(p.value).toLocaleString()}`
         },
-        distance: 10,
         fontSize: 11,
-        color: color,
+        color,
+        offset: [0, offsets[i] * -OFFSET_PIXELS],
       },
     }
   }).filter(Boolean)
+}
 
-  // 动态计算高度：每条线需要一定空间
+function calcChartHeight() {
   const lineCount = props.selectedGpuNames.length
-  const baseHeight = 420
-  const perLineHeight = 18
-  const chartHeight = Math.max(baseHeight, lineCount * perLineHeight + 80)
+  return Math.max(500, lineCount * 55 + 80)
+}
 
+function updateChart() {
+  if (!chartInstance) return
+  const mons = props.months
+  const gpuNames = props.selectedGpuNames
+
+  const series = buildSeries(mons)
+  const chartHeight = calcChartHeight()
   if (chartRef.value) chartRef.value.style.height = chartHeight + 'px'
+
+  // 动态 right padding
+  const maxLabelLen = gpuNames.reduce((m, n) => Math.max(m, n.length), 0)
+  const rightPad = Math.max(180, maxLabelLen * 13 + 80)
 
   chartInstance.setOption({
     backgroundColor: 'transparent',
@@ -152,16 +188,21 @@ function updateChart() {
         if (!params.length) return ''
         let html = `<div style="font-weight:700;margin-bottom:6px;font-size:13px">${params[0].axisValue}</div>`
         params.forEach(p => {
-          if (p.value !== null && p.value !== undefined) {
+          if (p.value != null) {
             html += `<div style="display:flex;justify-content:space-between;gap:20px;margin:2px 0"><span style="color:${p.color}">● ${p.seriesName}</span><span style="font-weight:600">¥${Number(p.value).toLocaleString()}</span></div>`
           }
         })
         return html
       }
     },
-    legend: { show: false }, // 隐藏legend，用lineLabel代替
-    grid: { top: 20, right: Math.max(160, props.selectedGpuNames.reduce((max, name) => Math.max(max, name.length * 14 + 80), 160)), bottom: 40, left: 60 },
-    xAxis: { type: 'category', data: mons, axisLine: { lineStyle: { color: '#334155' } }, axisLabel: { color: '#94a3b8', fontSize: 12 } },
+    legend: { show: false },
+    grid: { top: 20, right: rightPad, bottom: 40, left: 80, containLabel: true },
+    xAxis: {
+      type: 'category',
+      data: mons,
+      axisLine: { lineStyle: { color: '#334155' } },
+      axisLabel: { color: '#94a3b8', fontSize: 12 },
+    },
     yAxis: {
       type: 'value',
       axisLine: { show: false },
@@ -169,12 +210,26 @@ function updateChart() {
       axisLabel: { color: '#64748b', fontSize: 11, formatter: v => '¥' + (v >= 1000 ? v / 1000 + 'k' : v) },
     },
     series,
-  }, true)
+  }, { notMerge: true })
 
   chartInstance.resize()
 }
 
 let resizeHandler = null
+
+// 价格筛选变化时重绘图表（Y轴范围、图表高度）
+watch(() => props.priceRange, () => {
+  if (chartInstance) updateChart()
+})
+
+// 筛选结果（GPU数量）变化时重算高度
+watch(() => props.selectedGpuNames.length, () => {
+  if (chartInstance) {
+    const h = calcChartHeight()
+    if (chartRef.value) chartRef.value.style.height = h + 'px'
+    chartInstance.resize()
+  }
+})
 
 onMounted(() => {
   setTimeout(initChart, 50)
@@ -199,7 +254,7 @@ defineExpose({ updateChart, initChart })
 
 #trendChart {
   width: 100%;
-  height: 420px;
+  height: 600px;
   transition: height 0.3s;
 }
 
