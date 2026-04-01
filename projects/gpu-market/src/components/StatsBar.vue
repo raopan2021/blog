@@ -61,6 +61,10 @@
           @input="$emit('searchChange', $event.target.value)"
         >
       </div>
+      <!-- 筛选结果数量 -->
+      <div class="filter-group">
+        <span class="filter-count">筛选出 <strong>{{ filteredCount }}</strong> / 共 <strong>{{ totalCount }}</strong> 张显卡</span>
+      </div>
     </div>
 
     <!-- 平均价格变化 -->
@@ -189,6 +193,20 @@ const priceOptions = [
   &.nvidia.active { background: #3d6b27; border-color: #4d8b31; }
   &.amd.active { background: #a52a2a; border-color: #c4322e; }
   &.intel.active { background: #004c8f; border-color: #0065b8; }
+}
+
+.filter-count {
+  font-size: 13px;
+  color: $text-muted;
+  padding: 4px 12px;
+  background: rgba($accent-blue, 0.1);
+  border: 1px solid rgba($accent-blue, 0.25);
+  border-radius: 20px;
+
+  strong {
+    color: $accent-blue;
+    font-weight: 600;
+  }
 }
 
 .search-input {
