@@ -164,13 +164,28 @@ function calcChartHeight() {
 }
 
 function updateChart() {
-  if (!chartInstance) return
+  if (!chartInstance || !chartRef.value) return
   const mons = props.months
   const gpuNames = props.selectedGpuNames
 
+  // 如果没有选择GPU，显示空状态
+  if (!gpuNames || gpuNames.length === 0) {
+    chartInstance.clear()
+    chartInstance.setOption({
+      title: {
+        text: '请在右侧选择要对比的显卡',
+        left: 'center',
+        top: 'center',
+        textStyle: { color: '#64748b', fontSize: 14 }
+      },
+      series: []
+    })
+    return
+  }
+
   const series = buildSeries(mons)
   const chartHeight = calcChartHeight()
-  if (chartRef.value) chartRef.value.style.height = chartHeight + 'px'
+  chartRef.value.style.height = chartHeight + 'px'
 
   // 动态 right padding
   const maxLabelLen = gpuNames.reduce((m, n) => Math.max(m, n.length), 0)
@@ -179,6 +194,7 @@ function updateChart() {
   chartInstance.setOption({
     backgroundColor: 'transparent',
     animation: true,
+    title: { show: false },
     tooltip: {
       trigger: 'axis',
       backgroundColor: '#1e293b',
@@ -212,7 +228,10 @@ function updateChart() {
     series,
   }, { notMerge: true })
 
-  chartInstance.resize()
+  // resize需要在下一次tick调用，确保DOM高度已更新
+  nextTick(() => {
+    if (chartInstance) chartInstance.resize()
+  })
 }
 
 let resizeHandler = null
@@ -222,11 +241,16 @@ watch(() => props.priceRange, () => {
   if (chartInstance) updateChart()
 })
 
-// 筛选结果（GPU数量）变化时重算高度
+// GPU 选择变化时重绘图表
+watch(() => props.selectedGpuNames, () => {
+  if (chartInstance) updateChart()
+}, { deep: false })
+
+// 筛选结果（GPU数量）变化时重算高度并resize
 watch(() => props.selectedGpuNames.length, () => {
-  if (chartInstance) {
+  if (chartInstance && chartRef.value) {
     const h = calcChartHeight()
-    if (chartRef.value) chartRef.value.style.height = h + 'px'
+    chartRef.value.style.height = h + 'px'
     chartInstance.resize()
   }
 })
