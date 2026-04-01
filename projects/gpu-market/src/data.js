@@ -1,4 +1,4 @@
-// 由 process_gpu_data.py 自动生成，请勿手动修改
+// 由 data.json 生成，请勿手动修改
 export const gpus = [
   {
     "name": "RTX 5090",

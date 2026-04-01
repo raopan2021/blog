@@ -1,20 +1,18 @@
 <template>
   <div class="trend-layout">
-    <!-- 图表区 -->
     <div class="card chart-card">
       <div class="card-header">
-        <span class="card-title">📈 价格走势（近4个月）</span>
-        <span style="font-size:12px;color:#64748b">点击左侧添加对比，最多8张</span>
+        <span class="card-title">📈 价格走势（近{{ months.length }}个月）</span>
+        <span style="font-size:12px;color:#64748b">展示筛选结果 · 最多8张</span>
       </div>
       <div class="card-body">
         <div id="trendChart" ref="chartRef"></div>
       </div>
     </div>
 
-    <!-- 显卡选择器 -->
     <div class="card selector-card">
       <div class="card-header">
-        <span class="card-title">🖱️ 选择显卡</span>
+        <span class="card-title">🖱️ 选择对比显卡</span>
         <span style="font-size:12px;color:#64748b">已选 {{ selectedGpuNames.length }}/8</span>
       </div>
       <div class="card-body" style="padding:8px">
@@ -39,7 +37,7 @@
 </template>
 
 <script setup>
-import { ref, watch, onMounted, onUnmounted } from 'vue'
+import { ref, watch, onMounted, onUnmounted, nextTick } from 'vue'
 import * as echarts from 'echarts'
 
 const props = defineProps({
@@ -67,10 +65,7 @@ function toggleGpu(name) {
 
 function initChart() {
   if (!chartRef.value) return
-  if (chartInstance) {
-    chartInstance.dispose()
-    chartInstance = null
-  }
+  if (chartInstance) { chartInstance.dispose(); chartInstance = null }
   chartInstance = echarts.init(chartRef.value)
   updateChart()
 }
@@ -112,13 +107,16 @@ function updateChart() {
       }
     },
     legend: { bottom: 0, textStyle: { color: '#94a3b8', fontSize: 12 }, itemWidth: 16 },
-    grid: { top: 10, right: 20, bottom: 50, left: 60 },
+    grid: { top: 10, right: 80, bottom: 50, left: 60 },
     xAxis: { type: 'category', data: mons, axisLine: { lineStyle: { color: '#334155' } }, axisLabel: { color: '#94a3b8' } },
     yAxis: {
       type: 'value',
       axisLine: { show: false },
       splitLine: { lineStyle: { color: '#1e293b' } },
-      axisLabel: { color: '#64748b', formatter: v => '¥' + (v >= 1000 ? v / 1000 + 'k' : v) }
+      axisLabel: {
+        color: '#64748b',
+        formatter: v => '¥' + (v >= 1000 ? v / 1000 + 'k' : v)
+      },
     },
     series,
   }, true)
@@ -127,7 +125,6 @@ function updateChart() {
 let resizeHandler = null
 
 onMounted(() => {
-  // 延迟初始化，等待 DOM 就绪
   setTimeout(initChart, 50)
   resizeHandler = () => chartInstance && chartInstance.resize()
   window.addEventListener('resize', resizeHandler)
@@ -135,13 +132,9 @@ onMounted(() => {
 
 onUnmounted(() => {
   window.removeEventListener('resize', resizeHandler)
-  if (chartInstance) {
-    chartInstance.dispose()
-    chartInstance = null
-  }
+  if (chartInstance) { chartInstance.dispose(); chartInstance = null }
 })
 
-// 暴露刷新方法，供父组件调用
 defineExpose({ updateChart, initChart })
 </script>
 

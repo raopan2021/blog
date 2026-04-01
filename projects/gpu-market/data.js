@@ -1,11 +1,11 @@
-// 由 process_gpu_data.py 自动生成，请勿手动修改
+// 由 process_gpu_data.js 自动生成，请勿手动修改
 export const gpus = [
   {
     "name": "RTX 5090",
     "brand": "NVIDIA",
     "vram": "32GB",
     "tdp": 570,
-    "score": 47331.0,
+    "score": 47331,
     "prices": {
       "2025年12月": 20000,
       "2026年1月": 19500,
@@ -20,15 +20,15 @@ export const gpus = [
     },
     "performance_pct": 347.5,
     "stars": 1,
-    "cost_perf": 1.82,
-    "efficiency": 83.0
+    "cost_perf": 0,
+    "efficiency": 83
   },
   {
     "name": "RTX 5090D",
     "brand": "NVIDIA",
     "vram": "32GB",
     "tdp": 570,
-    "score": 47489.0,
+    "score": 47489,
     "prices": {
       "2025年12月": 18900,
       "2026年1月": 18400,
@@ -43,7 +43,7 @@ export const gpus = [
     },
     "performance_pct": 348.7,
     "stars": 1,
-    "cost_perf": 2.23,
+    "cost_perf": 0,
     "efficiency": 83.3
   },
   {
@@ -51,7 +51,7 @@ export const gpus = [
     "brand": "NVIDIA",
     "vram": "24GB",
     "tdp": 450,
-    "score": 36538.0,
+    "score": 36538,
     "prices": {
       "2025年12月": 18200,
       "2026年1月": 18300,
@@ -66,7 +66,7 @@ export const gpus = [
     },
     "performance_pct": 268.3,
     "stars": 3,
-    "cost_perf": 2.0,
+    "cost_perf": 0,
     "efficiency": 81.2
   },
   {
@@ -74,7 +74,7 @@ export const gpus = [
     "brand": "NVIDIA",
     "vram": "24GB",
     "tdp": 425,
-    "score": 34204.0,
+    "score": 34204,
     "prices": {
       "2025年12月": 15000,
       "2026年1月": 16699,
@@ -89,7 +89,7 @@ export const gpus = [
     },
     "performance_pct": 251.1,
     "stars": 2,
-    "cost_perf": 1.94,
+    "cost_perf": 0,
     "efficiency": 80.5
   },
   {
@@ -97,7 +97,7 @@ export const gpus = [
     "brand": "NVIDIA",
     "vram": "24GB",
     "tdp": 570,
-    "score": 46501.0,
+    "score": 46501,
     "prices": {
       "2025年12月": 14200,
       "2026年1月": 14660,
@@ -112,7 +112,7 @@ export const gpus = [
     },
     "performance_pct": 341.4,
     "stars": 1,
-    "cost_perf": 2.76,
+    "cost_perf": 0,
     "efficiency": 81.6
   },
   {
@@ -120,7 +120,7 @@ export const gpus = [
     "brand": "NVIDIA",
     "vram": "16GB",
     "tdp": 360,
-    "score": 33071.0,
+    "score": 33071,
     "prices": {
       "2025年12月": 7900,
       "2026年1月": 8100,
@@ -135,7 +135,7 @@ export const gpus = [
     },
     "performance_pct": 242.8,
     "stars": 1,
-    "cost_perf": 3.8,
+    "cost_perf": 0,
     "efficiency": 91.9
   },
   {
@@ -143,7 +143,7 @@ export const gpus = [
     "brand": "NVIDIA",
     "vram": "16GB",
     "tdp": 320,
-    "score": 28469.0,
+    "score": 28469,
     "prices": {
       "2025年12月": 6258,
       "2026年1月": 6300,
@@ -156,17 +156,17 @@ export const gpus = [
       "2026年2月": 140,
       "2026年3月": 59
     },
-    "performance_pct": 209.0,
+    "performance_pct": 209,
     "stars": 2,
-    "cost_perf": 4.38,
-    "efficiency": 89.0
+    "cost_perf": 0,
+    "efficiency": 89
   },
   {
     "name": "RTX 4080",
     "brand": "NVIDIA",
     "vram": "16GB",
     "tdp": 320,
-    "score": 28221.0,
+    "score": 28221,
     "prices": {
       "2025年12月": 6000,
       "2026年1月": 6025,
@@ -181,7 +181,7 @@ export const gpus = [
     },
     "performance_pct": 207.2,
     "stars": 2,
-    "cost_perf": 4.48,
+    "cost_perf": 0,
     "efficiency": 88.2
   },
   {
@@ -189,7 +189,7 @@ export const gpus = [
     "brand": "NVIDIA",
     "vram": "16GB",
     "tdp": 300,
-    "score": 27686.0,
+    "score": 27686,
     "prices": {
       "2025年12月": 5911,
       "2026年1月": 5950,
@@ -204,7 +204,7 @@ export const gpus = [
     },
     "performance_pct": 203.3,
     "stars": 1,
-    "cost_perf": 4.14,
+    "cost_perf": 0,
     "efficiency": 92.3
   },
   {
@@ -212,7 +212,7 @@ export const gpus = [
     "brand": "NVIDIA",
     "vram": "24GB",
     "tdp": 450,
-    "score": 22038.0,
+    "score": 22038,
     "prices": {
       "2025年12月": 5900,
       "2026年1月": 5941,
@@ -227,15 +227,15 @@ export const gpus = [
     },
     "performance_pct": 161.8,
     "stars": 3,
-    "cost_perf": 3.94,
-    "efficiency": 49.0
+    "cost_perf": 0,
+    "efficiency": 49
   },
   {
     "name": "RTX 3090",
     "brand": "NVIDIA",
     "vram": "24GB",
     "tdp": 350,
-    "score": 19874.0,
+    "score": 19874,
     "prices": {
       "2025年12月": 4800,
       "2026年1月": 4780,
@@ -250,7 +250,7 @@ export const gpus = [
     },
     "performance_pct": 145.9,
     "stars": 3,
-    "cost_perf": 4.14,
+    "cost_perf": 0,
     "efficiency": 56.8
   },
   {
@@ -258,7 +258,7 @@ export const gpus = [
     "brand": "NVIDIA",
     "vram": "16GB",
     "tdp": 285,
-    "score": 24343.0,
+    "score": 24343,
     "prices": {
       "2025年12月": 4600,
       "2026年1月": 4511,
@@ -273,7 +273,7 @@ export const gpus = [
     },
     "performance_pct": 178.7,
     "stars": 2,
-    "cost_perf": 4.93,
+    "cost_perf": 0,
     "efficiency": 85.4
   },
   {
@@ -281,7 +281,7 @@ export const gpus = [
     "brand": "NVIDIA",
     "vram": "12GB",
     "tdp": 250,
-    "score": 22626.0,
+    "score": 22626,
     "prices": {
       "2025年12月": 4200,
       "2026年1月": 4150,
@@ -296,7 +296,7 @@ export const gpus = [
     },
     "performance_pct": 166.1,
     "stars": 1,
-    "cost_perf": 5.03,
+    "cost_perf": 0,
     "efficiency": 90.5
   },
   {
@@ -304,7 +304,7 @@ export const gpus = [
     "brand": "AMD",
     "vram": "16GB",
     "tdp": 304,
-    "score": 30210.0,
+    "score": 30210,
     "prices": {
       "2025年12月": 4119,
       "2026年1月": 4188,
@@ -319,7 +319,7 @@ export const gpus = [
     },
     "performance_pct": 221.8,
     "stars": 1,
-    "cost_perf": 6.88,
+    "cost_perf": 0,
     "efficiency": 99.4
   },
   {
@@ -327,7 +327,7 @@ export const gpus = [
     "brand": "AMD",
     "vram": "24GB",
     "tdp": 355,
-    "score": 30432.0,
+    "score": 30432,
     "prices": {
       "2025年12月": 4025,
       "2026年1月": 4084,
@@ -342,7 +342,7 @@ export const gpus = [
     },
     "performance_pct": 223.5,
     "stars": 2,
-    "cost_perf": 7.12,
+    "cost_perf": 0,
     "efficiency": 85.7
   },
   {
@@ -350,7 +350,7 @@ export const gpus = [
     "brand": "AMD",
     "vram": "16GB",
     "tdp": 220,
-    "score": 27002.0,
+    "score": 27002,
     "prices": {
       "2025年12月": 3699,
       "2026年1月": 3700,
@@ -365,7 +365,7 @@ export const gpus = [
     },
     "performance_pct": 198.3,
     "stars": 1,
-    "cost_perf": 7.01,
+    "cost_perf": 0,
     "efficiency": 122.7
   },
   {
@@ -373,7 +373,7 @@ export const gpus = [
     "brand": "NVIDIA",
     "vram": "12GB",
     "tdp": 285,
-    "score": 22806.0,
+    "score": 22806,
     "prices": {
       "2025年12月": 3674,
       "2026年1月": 3600,
@@ -388,15 +388,15 @@ export const gpus = [
     },
     "performance_pct": 167.5,
     "stars": 2,
-    "cost_perf": 5.85,
-    "efficiency": 80.0
+    "cost_perf": 0,
+    "efficiency": 80
   },
   {
     "name": "RTX 4070 SUPER",
     "brand": "NVIDIA",
     "vram": "12GB",
     "tdp": 220,
-    "score": 21076.0,
+    "score": 21076,
     "prices": {
       "2025年12月": 3380,
       "2026年1月": 3333,
@@ -411,7 +411,7 @@ export const gpus = [
     },
     "performance_pct": 154.8,
     "stars": 2,
-    "cost_perf": 5.85,
+    "cost_perf": 0,
     "efficiency": 95.8
   },
   {
@@ -419,7 +419,7 @@ export const gpus = [
     "brand": "AMD",
     "vram": "20GB",
     "tdp": 315,
-    "score": 26586.0,
+    "score": 26586,
     "prices": {
       "2025年12月": 3250,
       "2026年1月": 3152,
@@ -434,7 +434,7 @@ export const gpus = [
     },
     "performance_pct": 195.2,
     "stars": 2,
-    "cost_perf": 8.06,
+    "cost_perf": 0,
     "efficiency": 84.4
   },
   {
@@ -442,7 +442,7 @@ export const gpus = [
     "brand": "NVIDIA",
     "vram": "16GB",
     "tdp": 180,
-    "score": 15954.0,
+    "score": 15954,
     "prices": {
       "2025年12月": 3099,
       "2026年1月": 3150,
@@ -457,7 +457,7 @@ export const gpus = [
     },
     "performance_pct": 117.1,
     "stars": 1,
-    "cost_perf": 4.62,
+    "cost_perf": 0,
     "efficiency": 88.6
   },
   {
@@ -465,7 +465,7 @@ export const gpus = [
     "brand": "NVIDIA",
     "vram": "12GB",
     "tdp": 200,
-    "score": 17866.0,
+    "score": 17866,
     "prices": {
       "2025年12月": 3040,
       "2026年1月": 2899,
@@ -480,7 +480,7 @@ export const gpus = [
     },
     "performance_pct": 131.2,
     "stars": 2,
-    "cost_perf": 5.76,
+    "cost_perf": 0,
     "efficiency": 89.3
   },
   {
@@ -488,7 +488,7 @@ export const gpus = [
     "brand": "AMD",
     "vram": "12GB",
     "tdp": 220,
-    "score": 22748.0,
+    "score": 22748,
     "prices": {
       "2025年12月": 3000,
       "2026年1月": 2950,
@@ -501,9 +501,9 @@ export const gpus = [
       "2026年2月": 149,
       "2026年3月": 101
     },
-    "performance_pct": 167.0,
+    "performance_pct": 167,
     "stars": 1,
-    "cost_perf": 7.11,
+    "cost_perf": 0,
     "efficiency": 103.4
   },
   {
@@ -511,7 +511,7 @@ export const gpus = [
     "brand": "AMD",
     "vram": "16GB",
     "tdp": 260,
-    "score": 22039.0,
+    "score": 22039,
     "prices": {
       "2025年12月": 2700,
       "2026年1月": 2699,
@@ -526,7 +526,7 @@ export const gpus = [
     },
     "performance_pct": 161.8,
     "stars": 2,
-    "cost_perf": 7.87,
+    "cost_perf": 0,
     "efficiency": 84.8
   },
   {
@@ -534,7 +534,7 @@ export const gpus = [
     "brand": "NVIDIA",
     "vram": "8GB",
     "tdp": 180,
-    "score": 15889.0,
+    "score": 15889,
     "prices": {
       "2025年12月": 2699,
       "2026年1月": 2708,
@@ -549,7 +549,7 @@ export const gpus = [
     },
     "performance_pct": 116.7,
     "stars": 1,
-    "cost_perf": 5.56,
+    "cost_perf": 0,
     "efficiency": 88.3
   },
   {
@@ -557,7 +557,7 @@ export const gpus = [
     "brand": "NVIDIA",
     "vram": "12GB",
     "tdp": 350,
-    "score": 19744.0,
+    "score": 19744,
     "prices": {
       "2025年12月": 2650,
       "2026年1月": 2546,
@@ -570,9 +570,9 @@ export const gpus = [
       "2026年2月": 104,
       "2026年3月": 60
     },
-    "performance_pct": 145.0,
+    "performance_pct": 145,
     "stars": 3,
-    "cost_perf": 7.29,
+    "cost_perf": 0,
     "efficiency": 56.4
   },
   {
@@ -580,7 +580,7 @@ export const gpus = [
     "brand": "NVIDIA",
     "vram": "16G",
     "tdp": 150,
-    "score": 13509.0,
+    "score": 13509,
     "prices": {
       "2025年12月": 2525,
       "2026年1月": 2550,
@@ -595,7 +595,7 @@ export const gpus = [
     },
     "performance_pct": 99.2,
     "stars": 2,
-    "cost_perf": 5.0,
+    "cost_perf": 0,
     "efficiency": 90.1
   },
   {
@@ -603,7 +603,7 @@ export const gpus = [
     "brand": "NVIDIA",
     "vram": "12GB",
     "tdp": 350,
-    "score": 18760.0,
+    "score": 18760,
     "prices": {
       "2025年12月": 2471,
       "2026年1月": 2550,
@@ -618,7 +618,7 @@ export const gpus = [
     },
     "performance_pct": 137.7,
     "stars": 2,
-    "cost_perf": 8.16,
+    "cost_perf": 0,
     "efficiency": 53.6
   },
   {
@@ -626,7 +626,7 @@ export const gpus = [
     "brand": "AMD",
     "vram": "16GB",
     "tdp": 263,
-    "score": 20024.0,
+    "score": 20024,
     "prices": {
       "2025年12月": 2399,
       "2026年1月": 2350,
@@ -639,9 +639,9 @@ export const gpus = [
       "2026年2月": 38,
       "2026年3月": 112
     },
-    "performance_pct": 147.0,
+    "performance_pct": 147,
     "stars": 2,
-    "cost_perf": 8.01,
+    "cost_perf": 0,
     "efficiency": 76.1
   },
   {
@@ -649,7 +649,7 @@ export const gpus = [
     "brand": "AMD",
     "vram": "16GB",
     "tdp": 335,
-    "score": 21434.0,
+    "score": 21434,
     "prices": {
       "2025年12月": 2365,
       "2026年1月": 2280,
@@ -664,15 +664,15 @@ export const gpus = [
     },
     "performance_pct": 157.4,
     "stars": 2,
-    "cost_perf": 8.58,
-    "efficiency": 64.0
+    "cost_perf": 0,
+    "efficiency": 64
   },
   {
     "name": "RTX 5060",
     "brand": "NVIDIA",
     "vram": "8GB",
     "tdp": 145,
-    "score": 13619.0,
+    "score": 13619,
     "prices": {
       "2025年12月": 2299,
       "2026年1月": 2200,
@@ -685,9 +685,9 @@ export const gpus = [
       "2026年2月": 200,
       "2026年3月": 50
     },
-    "performance_pct": 100.0,
+    "performance_pct": 100,
     "stars": 1,
-    "cost_perf": 5.56,
+    "cost_perf": 0,
     "efficiency": 93.9
   },
   {
@@ -695,7 +695,7 @@ export const gpus = [
     "brand": "AMD",
     "vram": "16GB",
     "tdp": 160,
-    "score": 16553.0,
+    "score": 16553,
     "prices": {
       "2025年12月": 2299,
       "2026年1月": 2199,
@@ -710,7 +710,7 @@ export const gpus = [
     },
     "performance_pct": 121.5,
     "stars": 1,
-    "cost_perf": 6.9,
+    "cost_perf": 0,
     "efficiency": 103.5
   },
   {
@@ -718,7 +718,7 @@ export const gpus = [
     "brand": "NVIDIA",
     "vram": "8GB",
     "tdp": 150,
-    "score": 13509.0,
+    "score": 13509,
     "prices": {
       "2025年12月": 1980,
       "2026年1月": 1950,
@@ -733,7 +733,7 @@ export const gpus = [
     },
     "performance_pct": 99.2,
     "stars": 2,
-    "cost_perf": 6.33,
+    "cost_perf": 0,
     "efficiency": 90.1
   },
   {
@@ -741,7 +741,7 @@ export const gpus = [
     "brand": "AMD",
     "vram": "16GB",
     "tdp": 300,
-    "score": 20912.0,
+    "score": 20912,
     "prices": {
       "2025年12月": 1980,
       "2026年1月": 1900,
@@ -756,7 +756,7 @@ export const gpus = [
     },
     "performance_pct": 153.6,
     "stars": 3,
-    "cost_perf": 10.02,
+    "cost_perf": 0,
     "efficiency": 69.7
   },
   {
@@ -764,7 +764,7 @@ export const gpus = [
     "brand": "NVIDIA",
     "vram": "10GB",
     "tdp": 320,
-    "score": 17706.0,
+    "score": 17706,
     "prices": {
       "2025年12月": 1860,
       "2026年1月": 1800,
@@ -777,9 +777,9 @@ export const gpus = [
       "2026年2月": 179,
       "2026年3月": 0
     },
-    "performance_pct": 130.0,
+    "performance_pct": 130,
     "stars": 3,
-    "cost_perf": 8.95,
+    "cost_perf": 0,
     "efficiency": 55.3
   },
   {
@@ -787,7 +787,7 @@ export const gpus = [
     "brand": "AMD",
     "vram": "8GB",
     "tdp": 160,
-    "score": 16275.0,
+    "score": 16275,
     "prices": {
       "2025年12月": 1860,
       "2026年1月": 1850,
@@ -802,7 +802,7 @@ export const gpus = [
     },
     "performance_pct": 119.5,
     "stars": 1,
-    "cost_perf": 8.43,
+    "cost_perf": 0,
     "efficiency": 101.7
   },
   {
@@ -810,7 +810,7 @@ export const gpus = [
     "brand": "AMD",
     "vram": "12GB",
     "tdp": 245,
-    "score": 17060.0,
+    "score": 17060,
     "prices": {
       "2025年12月": 1825,
       "2026年1月": 1800,
@@ -825,7 +825,7 @@ export const gpus = [
     },
     "performance_pct": 125.3,
     "stars": 2,
-    "cost_perf": 8.89,
+    "cost_perf": 0,
     "efficiency": 69.6
   },
   {
@@ -833,7 +833,7 @@ export const gpus = [
     "brand": "NVIDIA",
     "vram": "8GB",
     "tdp": 115,
-    "score": 10627.0,
+    "score": 10627,
     "prices": {
       "2025年12月": 1810,
       "2026年1月": 1759,
@@ -846,9 +846,9 @@ export const gpus = [
       "2026年2月": 91,
       "2026年3月": 10
     },
-    "performance_pct": 78.0,
+    "performance_pct": 78,
     "stars": 2,
-    "cost_perf": 5.71,
+    "cost_perf": 0,
     "efficiency": 92.4
   },
   {
@@ -856,7 +856,7 @@ export const gpus = [
     "brand": "NVIDIA",
     "vram": "8GB",
     "tdp": 130,
-    "score": 10259.0,
+    "score": 10259,
     "prices": {
       "2025年12月": 1688,
       "2026年1月": 1610,
@@ -871,7 +871,7 @@ export const gpus = [
     },
     "performance_pct": 75.3,
     "stars": 1,
-    "cost_perf": 5.7,
+    "cost_perf": 0,
     "efficiency": 78.9
   },
   {
@@ -879,7 +879,7 @@ export const gpus = [
     "brand": "NVIDIA",
     "vram": "8GB",
     "tdp": 290,
-    "score": 14952.0,
+    "score": 14952,
     "prices": {
       "2025年12月": 1680,
       "2026年1月": 1675,
@@ -894,7 +894,7 @@ export const gpus = [
     },
     "performance_pct": 109.8,
     "stars": 3,
-    "cost_perf": 8.8,
+    "cost_perf": 0,
     "efficiency": 51.6
   },
   {
@@ -902,7 +902,7 @@ export const gpus = [
     "brand": "AMD",
     "vram": "16GB",
     "tdp": 300,
-    "score": 19420.0,
+    "score": 19420,
     "prices": {
       "2025年12月": 1655,
       "2026年1月": 1630,
@@ -917,7 +917,7 @@ export const gpus = [
     },
     "performance_pct": 142.6,
     "stars": 3,
-    "cost_perf": 11.5,
+    "cost_perf": 0,
     "efficiency": 64.7
   },
   {
@@ -925,7 +925,7 @@ export const gpus = [
     "brand": "AMD",
     "vram": "16GB",
     "tdp": 250,
-    "score": 16313.0,
+    "score": 16313,
     "prices": {
       "2025年12月": 1558,
       "2026年1月": 1450,
@@ -940,7 +940,7 @@ export const gpus = [
     },
     "performance_pct": 119.8,
     "stars": 3,
-    "cost_perf": 10.93,
+    "cost_perf": 0,
     "efficiency": 65.3
   },
   {
@@ -948,7 +948,7 @@ export const gpus = [
     "brand": "NVIDIA",
     "vram": "8GB",
     "tdp": 200,
-    "score": 12214.0,
+    "score": 12214,
     "prices": {
       "2025年12月": 1474,
       "2026年1月": 1400,
@@ -963,7 +963,7 @@ export const gpus = [
     },
     "performance_pct": 89.7,
     "stars": 2,
-    "cost_perf": 7.64,
+    "cost_perf": 0,
     "efficiency": 61.1
   },
   {
@@ -971,7 +971,7 @@ export const gpus = [
     "brand": "Intel",
     "vram": "12GB",
     "tdp": 190,
-    "score": 14923.0,
+    "score": 14923,
     "prices": {
       "2025年12月": 1450,
       "2026年1月": 1400,
@@ -986,7 +986,7 @@ export const gpus = [
     },
     "performance_pct": 109.6,
     "stars": 1,
-    "cost_perf": 9.16,
+    "cost_perf": 0,
     "efficiency": 78.5
   },
   {
@@ -994,7 +994,7 @@ export const gpus = [
     "brand": "NVIDIA",
     "vram": "8GB",
     "tdp": 220,
-    "score": 13640.0,
+    "score": 13640,
     "prices": {
       "2025年12月": 1450,
       "2026年1月": 1411,
@@ -1009,15 +1009,15 @@ export const gpus = [
     },
     "performance_pct": 100.2,
     "stars": 3,
-    "cost_perf": 9.09,
-    "efficiency": 62.0
+    "cost_perf": 0,
+    "efficiency": 62
   },
   {
     "name": "RX 6750 GRE 12G",
     "brand": "AMD",
     "vram": "12GB",
     "tdp": 230,
-    "score": 12623.0,
+    "score": 12623,
     "prices": {
       "2025年12月": 1400,
       "2026年1月": 1350,
@@ -1032,7 +1032,7 @@ export const gpus = [
     },
     "performance_pct": 92.7,
     "stars": 2,
-    "cost_perf": 8.71,
+    "cost_perf": 0,
     "efficiency": 54.9
   },
   {
@@ -1040,7 +1040,7 @@ export const gpus = [
     "brand": "AMD",
     "vram": "12GB",
     "tdp": 250,
-    "score": 13498.0,
+    "score": 13498,
     "prices": {
       "2025年12月": 1390,
       "2026年1月": 1350,
@@ -1055,15 +1055,15 @@ export const gpus = [
     },
     "performance_pct": 99.1,
     "stars": 2,
-    "cost_perf": 9.0,
-    "efficiency": 54.0
+    "cost_perf": 0,
+    "efficiency": 54
   },
   {
     "name": "RTX 3060 Ti ",
     "brand": "NVIDIA",
     "vram": "8GB",
     "tdp": 200,
-    "score": 11649.0,
+    "score": 11649,
     "prices": {
       "2025年12月": 1380,
       "2026年1月": 1350,
@@ -1078,7 +1078,7 @@ export const gpus = [
     },
     "performance_pct": 85.5,
     "stars": 3,
-    "cost_perf": 8.2,
+    "cost_perf": 0,
     "efficiency": 58.2
   },
   {
@@ -1086,7 +1086,7 @@ export const gpus = [
     "brand": "NVIDIA",
     "vram": "8GB",
     "tdp": 170,
-    "score": 7373.0,
+    "score": 7373,
     "prices": {
       "2025年12月": 1350,
       "2026年1月": 1300,
@@ -1101,7 +1101,7 @@ export const gpus = [
     },
     "performance_pct": 54.1,
     "stars": 2,
-    "cost_perf": 5.27,
+    "cost_perf": 0,
     "efficiency": 43.4
   },
   {
@@ -1109,7 +1109,7 @@ export const gpus = [
     "brand": "NVIDIA",
     "vram": "12GB",
     "tdp": 170,
-    "score": 8753.0,
+    "score": 8753,
     "prices": {
       "2025年12月": 1350,
       "2026年1月": 1399,
@@ -1124,7 +1124,7 @@ export const gpus = [
     },
     "performance_pct": 64.3,
     "stars": 3,
-    "cost_perf": 6.04,
+    "cost_perf": 0,
     "efficiency": 51.5
   },
   {
@@ -1132,7 +1132,7 @@ export const gpus = [
     "brand": "NVIDIA",
     "vram": "11GB",
     "tdp": 260,
-    "score": 14617.0,
+    "score": 14617,
     "prices": {
       "2025年12月": 1300,
       "2026年1月": 1188,
@@ -1147,7 +1147,7 @@ export const gpus = [
     },
     "performance_pct": 107.3,
     "stars": 4,
-    "cost_perf": 10.83,
+    "cost_perf": 0,
     "efficiency": 56.2
   },
   {
@@ -1155,7 +1155,7 @@ export const gpus = [
     "brand": "AMD",
     "vram": "8GB",
     "tdp": 170,
-    "score": 11158.0,
+    "score": 11158,
     "prices": {
       "2025年12月": 1300,
       "2026年1月": 1250,
@@ -1170,7 +1170,7 @@ export const gpus = [
     },
     "performance_pct": 81.9,
     "stars": 1,
-    "cost_perf": 8.39,
+    "cost_perf": 0,
     "efficiency": 65.6
   },
   {
@@ -1178,7 +1178,7 @@ export const gpus = [
     "brand": "AMD",
     "vram": "10GB",
     "tdp": 175,
-    "score": 11152.0,
+    "score": 11152,
     "prices": {
       "2025年12月": 1250,
       "2026年1月": 1250,
@@ -1193,7 +1193,7 @@ export const gpus = [
     },
     "performance_pct": 81.9,
     "stars": 2,
-    "cost_perf": 8.58,
+    "cost_perf": 0,
     "efficiency": 63.7
   },
   {
@@ -1201,7 +1201,7 @@ export const gpus = [
     "brand": "Intel",
     "vram": "10GB",
     "tdp": 180,
-    "score": 12610.0,
+    "score": 12610,
     "prices": {
       "2025年12月": 1200,
       "2026年1月": 1299,
@@ -1216,7 +1216,7 @@ export const gpus = [
     },
     "performance_pct": 92.6,
     "stars": 1,
-    "cost_perf": 9.05,
+    "cost_perf": 0,
     "efficiency": 70.1
   },
   {
@@ -1224,7 +1224,7 @@ export const gpus = [
     "brand": "NVIDIA",
     "vram": "8GB",
     "tdp": 250,
-    "score": 11558.0,
+    "score": 11558,
     "prices": {
       "2025年12月": 1174,
       "2026年1月": 1080,
@@ -1239,7 +1239,7 @@ export const gpus = [
     },
     "performance_pct": 84.9,
     "stars": 4,
-    "cost_perf": 10.03,
+    "cost_perf": 0,
     "efficiency": 46.2
   },
   {
@@ -1247,7 +1247,7 @@ export const gpus = [
     "brand": "AMD",
     "vram": "12GB",
     "tdp": 230,
-    "score": 12773.0,
+    "score": 12773,
     "prices": {
       "2025年12月": 1161,
       "2026年1月": 1120,
@@ -1262,7 +1262,7 @@ export const gpus = [
     },
     "performance_pct": 93.8,
     "stars": 3,
-    "cost_perf": 10.65,
+    "cost_perf": 0,
     "efficiency": 55.5
   },
   {
@@ -1270,7 +1270,7 @@ export const gpus = [
     "brand": "AMD",
     "vram": "8GB",
     "tdp": 165,
-    "score": 10973.0,
+    "score": 10973,
     "prices": {
       "2025年12月": 1130,
       "2026年1月": 1150,
@@ -1285,7 +1285,7 @@ export const gpus = [
     },
     "performance_pct": 80.6,
     "stars": 2,
-    "cost_perf": 9.11,
+    "cost_perf": 0,
     "efficiency": 66.5
   },
   {
@@ -1293,7 +1293,7 @@ export const gpus = [
     "brand": "Intel",
     "vram": "16GB",
     "tdp": 225,
-    "score": 13610.0,
+    "score": 13610,
     "prices": {
       "2025年12月": 1100,
       "2026年1月": 1040,
@@ -1308,7 +1308,7 @@ export const gpus = [
     },
     "performance_pct": 99.9,
     "stars": 2,
-    "cost_perf": 11.27,
+    "cost_perf": 0,
     "efficiency": 60.5
   },
   {
@@ -1316,7 +1316,7 @@ export const gpus = [
     "brand": "AMD",
     "vram": "8GB",
     "tdp": 180,
-    "score": 9910.0,
+    "score": 9910,
     "prices": {
       "2025年12月": 1050,
       "2026年1月": 1047,
@@ -1331,7 +1331,7 @@ export const gpus = [
     },
     "performance_pct": 72.8,
     "stars": 2,
-    "cost_perf": 9.03,
+    "cost_perf": 0,
     "efficiency": 55.1
   },
   {
@@ -1339,7 +1339,7 @@ export const gpus = [
     "brand": "NVIDIA",
     "vram": "8GB",
     "tdp": 225,
-    "score": 10972.0,
+    "score": 10972,
     "prices": {
       "2025年12月": 1050,
       "2026年1月": 1050,
@@ -1354,7 +1354,7 @@ export const gpus = [
     },
     "performance_pct": 80.6,
     "stars": 4,
-    "cost_perf": 10.45,
+    "cost_perf": 0,
     "efficiency": 48.8
   },
   {
@@ -1362,7 +1362,7 @@ export const gpus = [
     "brand": "NVIDIA",
     "vram": "8GB",
     "tdp": 215,
-    "score": 10101.0,
+    "score": 10101,
     "prices": {
       "2025年12月": 1050,
       "2026年1月": 999,
@@ -1377,15 +1377,15 @@ export const gpus = [
     },
     "performance_pct": 74.2,
     "stars": 4,
-    "cost_perf": 9.63,
-    "efficiency": 47.0
+    "cost_perf": 0,
+    "efficiency": 47
   },
   {
     "name": "ARC A770 8G",
     "brand": "Intel",
     "vram": "8GB",
     "tdp": 225,
-    "score": 13610.0,
+    "score": 13610,
     "prices": {
       "2025年12月": 1000,
       "2026年1月": 980,
@@ -1400,7 +1400,7 @@ export const gpus = [
     },
     "performance_pct": 99.9,
     "stars": 2,
-    "cost_perf": 12.96,
+    "cost_perf": 0,
     "efficiency": 60.5
   },
   {
@@ -1408,7 +1408,7 @@ export const gpus = [
     "brand": "NVIDIA",
     "vram": "12GB",
     "tdp": 185,
-    "score": 8015.0,
+    "score": 8015,
     "prices": {
       "2025年12月": 970,
       "2026年1月": 960,
@@ -1423,7 +1423,7 @@ export const gpus = [
     },
     "performance_pct": 58.9,
     "stars": 2,
-    "cost_perf": 8.02,
+    "cost_perf": 0,
     "efficiency": 43.3
   },
   {
@@ -1431,7 +1431,7 @@ export const gpus = [
     "brand": "NVIDIA",
     "vram": "6GB",
     "tdp": 70,
-    "score": 4848.0,
+    "score": 4848,
     "prices": {
       "2025年12月": 966,
       "2026年1月": 950,
@@ -1446,7 +1446,7 @@ export const gpus = [
     },
     "performance_pct": 35.6,
     "stars": 1,
-    "cost_perf": 4.87,
+    "cost_perf": 0,
     "efficiency": 69.3
   },
   {
@@ -1454,7 +1454,7 @@ export const gpus = [
     "brand": "NVIDIA",
     "vram": "8GB",
     "tdp": 175,
-    "score": 8640.0,
+    "score": 8640,
     "prices": {
       "2025年12月": 950,
       "2026年1月": 920,
@@ -1469,7 +1469,7 @@ export const gpus = [
     },
     "performance_pct": 63.4,
     "stars": 4,
-    "cost_perf": 9.09,
+    "cost_perf": 0,
     "efficiency": 49.4
   },
   {
@@ -1477,7 +1477,7 @@ export const gpus = [
     "brand": "NVIDIA",
     "vram": "8GB",
     "tdp": 130,
-    "score": 6239.0,
+    "score": 6239,
     "prices": {
       "2025年12月": 928,
       "2026年1月": 950,
@@ -1492,15 +1492,15 @@ export const gpus = [
     },
     "performance_pct": 45.8,
     "stars": 2,
-    "cost_perf": 6.06,
-    "efficiency": 48.0
+    "cost_perf": 0,
+    "efficiency": 48
   },
   {
     "name": "RTX 2070",
     "brand": "NVIDIA",
     "vram": "8GB",
     "tdp": 185,
-    "score": 8879.0,
+    "score": 8879,
     "prices": {
       "2025年12月": 905,
       "2026年1月": 900,
@@ -1515,15 +1515,15 @@ export const gpus = [
     },
     "performance_pct": 65.2,
     "stars": 4,
-    "cost_perf": 9.76,
-    "efficiency": 48.0
+    "cost_perf": 0,
+    "efficiency": 48
   },
   {
     "name": "RX 6600 XT",
     "brand": "AMD",
     "vram": "8GB",
     "tdp": 160,
-    "score": 9579.0,
+    "score": 9579,
     "prices": {
       "2025年12月": 899,
       "2026年1月": 880,
@@ -1538,7 +1538,7 @@ export const gpus = [
     },
     "performance_pct": 70.3,
     "stars": 3,
-    "cost_perf": 10.08,
+    "cost_perf": 0,
     "efficiency": 59.9
   },
   {
@@ -1546,7 +1546,7 @@ export const gpus = [
     "brand": "AMD",
     "vram": "8GB",
     "tdp": 132,
-    "score": 8086.0,
+    "score": 8086,
     "prices": {
       "2025年12月": 872,
       "2026年1月": 820,
@@ -1561,7 +1561,7 @@ export const gpus = [
     },
     "performance_pct": 59.4,
     "stars": 3,
-    "cost_perf": 8.99,
+    "cost_perf": 0,
     "efficiency": 61.3
   },
   {
@@ -1569,7 +1569,7 @@ export const gpus = [
     "brand": "Intel",
     "vram": "8GB",
     "tdp": 225,
-    "score": 12473.0,
+    "score": 12473,
     "prices": {
       "2025年12月": 860,
       "2026年1月": 819,
@@ -1584,7 +1584,7 @@ export const gpus = [
     },
     "performance_pct": 91.6,
     "stars": 2,
-    "cost_perf": 14.4,
+    "cost_perf": 0,
     "efficiency": 55.4
   },
   {
@@ -1592,7 +1592,7 @@ export const gpus = [
     "brand": "Intel",
     "vram": "8GB",
     "tdp": 185,
-    "score": 10664.0,
+    "score": 10664,
     "prices": {
       "2025年12月": 842,
       "2026年1月": 800,
@@ -1607,7 +1607,7 @@ export const gpus = [
     },
     "performance_pct": 78.3,
     "stars": 2,
-    "cost_perf": 13.33,
+    "cost_perf": 0,
     "efficiency": 57.6
   },
   {
@@ -1615,7 +1615,7 @@ export const gpus = [
     "brand": "NVIDIA",
     "vram": "11GB",
     "tdp": 250,
-    "score": 9875.0,
+    "score": 9875,
     "prices": {
       "2025年12月": 818,
       "2026年1月": 799,
@@ -1630,7 +1630,7 @@ export const gpus = [
     },
     "performance_pct": 72.5,
     "stars": 5,
-    "cost_perf": 12.34,
+    "cost_perf": 0,
     "efficiency": 39.5
   },
   {
@@ -1638,7 +1638,7 @@ export const gpus = [
     "brand": "NVIDIA",
     "vram": "6GB",
     "tdp": 160,
-    "score": 7490.0,
+    "score": 7490,
     "prices": {
       "2025年12月": 800,
       "2026年1月": 800,
@@ -1651,9 +1651,9 @@ export const gpus = [
       "2026年2月": 20,
       "2026年3月": 10
     },
-    "performance_pct": 55.0,
+    "performance_pct": 55,
     "stars": 4,
-    "cost_perf": 9.02,
+    "cost_perf": 0,
     "efficiency": 46.8
   },
   {
@@ -1661,7 +1661,7 @@ export const gpus = [
     "brand": "Other",
     "vram": "16GB",
     "tdp": 300,
-    "score": 9292.0,
+    "score": 9292,
     "prices": {
       "2025年12月": 800,
       "2026年1月": 730,
@@ -1676,15 +1676,15 @@ export const gpus = [
     },
     "performance_pct": 68.2,
     "stars": 5,
-    "cost_perf": 11.79,
-    "efficiency": 31.0
+    "cost_perf": 0,
+    "efficiency": 31
   },
   {
     "name": "Titan X pascal",
     "brand": "Other",
     "vram": "12GB",
     "tdp": 250,
-    "score": 9560.0,
+    "score": 9560,
     "prices": {
       "2025年12月": 760,
       "2026年1月": 750,
@@ -1699,7 +1699,7 @@ export const gpus = [
     },
     "performance_pct": 70.2,
     "stars": 5,
-    "cost_perf": 12.75,
+    "cost_perf": 0,
     "efficiency": 38.2
   },
   {
@@ -1707,7 +1707,7 @@ export const gpus = [
     "brand": "Other",
     "vram": "12GB",
     "tdp": 250,
-    "score": 10152.0,
+    "score": 10152,
     "prices": {
       "2025年12月": 751,
       "2026年1月": 760,
@@ -1722,7 +1722,7 @@ export const gpus = [
     },
     "performance_pct": 74.5,
     "stars": 4,
-    "cost_perf": 12.85,
+    "cost_perf": 0,
     "efficiency": 40.6
   },
   {
@@ -1730,7 +1730,7 @@ export const gpus = [
     "brand": "NVIDIA",
     "vram": "6GB",
     "tdp": 125,
-    "score": 5978.0,
+    "score": 5978,
     "prices": {
       "2025年12月": 701,
       "2026年1月": 700,
@@ -1745,7 +1745,7 @@ export const gpus = [
     },
     "performance_pct": 43.9,
     "stars": 5,
-    "cost_perf": 8.3,
+    "cost_perf": 0,
     "efficiency": 47.8
   },
   {
@@ -1753,7 +1753,7 @@ export const gpus = [
     "brand": "NVIDIA",
     "vram": "6GB",
     "tdp": 120,
-    "score": 6261.0,
+    "score": 6261,
     "prices": {
       "2025年12月": 700,
       "2026年1月": 699,
@@ -1766,9 +1766,9 @@ export const gpus = [
       "2026年2月": 1,
       "2026年3月": 20
     },
-    "performance_pct": 46.0,
+    "performance_pct": 46,
     "stars": 5,
-    "cost_perf": 8.7,
+    "cost_perf": 0,
     "efficiency": 52.2
   },
   {
@@ -1776,7 +1776,7 @@ export const gpus = [
     "brand": "AMD",
     "vram": "8GB",
     "tdp": 225,
-    "score": 9489.0,
+    "score": 9489,
     "prices": {
       "2025年12月": 698,
       "2026年1月": 688,
@@ -1791,7 +1791,7 @@ export const gpus = [
     },
     "performance_pct": 69.7,
     "stars": 5,
-    "cost_perf": 13.36,
+    "cost_perf": 0,
     "efficiency": 42.2
   },
   {
@@ -1799,7 +1799,7 @@ export const gpus = [
     "brand": "NVIDIA",
     "vram": "6GB",
     "tdp": 120,
-    "score": 5414.0,
+    "score": 5414,
     "prices": {
       "2025年12月": 670,
       "2026年1月": 660,
@@ -1814,7 +1814,7 @@ export const gpus = [
     },
     "performance_pct": 39.8,
     "stars": 4,
-    "cost_perf": 7.85,
+    "cost_perf": 0,
     "efficiency": 45.1
   },
   {
@@ -1822,7 +1822,7 @@ export const gpus = [
     "brand": "NVIDIA",
     "vram": "8GB",
     "tdp": 180,
-    "score": 7533.0,
+    "score": 7533,
     "prices": {
       "2025年12月": 659,
       "2026年1月": 665,
@@ -1837,7 +1837,7 @@ export const gpus = [
     },
     "performance_pct": 55.3,
     "stars": 5,
-    "cost_perf": 11.21,
+    "cost_perf": 0,
     "efficiency": 41.9
   },
   {
@@ -1845,7 +1845,7 @@ export const gpus = [
     "brand": "AMD",
     "vram": "8GB",
     "tdp": 180,
-    "score": 8500.0,
+    "score": 8500,
     "prices": {
       "2025年12月": 650,
       "2026年1月": 620,
@@ -1860,7 +1860,7 @@ export const gpus = [
     },
     "performance_pct": 62.4,
     "stars": 5,
-    "cost_perf": 12.98,
+    "cost_perf": 0,
     "efficiency": 47.2
   },
   {
@@ -1868,7 +1868,7 @@ export const gpus = [
     "brand": "NVIDIA",
     "vram": "8GB",
     "tdp": 180,
-    "score": 6809.0,
+    "score": 6809,
     "prices": {
       "2025年12月": 642,
       "2026年1月": 628,
@@ -1881,9 +1881,9 @@ export const gpus = [
       "2026年2月": 22,
       "2026年3月": 20
     },
-    "performance_pct": 50.0,
+    "performance_pct": 50,
     "stars": 5,
-    "cost_perf": 10.16,
+    "cost_perf": 0,
     "efficiency": 37.8
   },
   {
@@ -1891,7 +1891,7 @@ export const gpus = [
     "brand": "NVIDIA",
     "vram": "4GB",
     "tdp": 100,
-    "score": 4670.0,
+    "score": 4670,
     "prices": {
       "2025年12月": 629,
       "2026年1月": 610,
@@ -1906,7 +1906,7 @@ export const gpus = [
     },
     "performance_pct": 34.3,
     "stars": 3,
-    "cost_perf": 7.41,
+    "cost_perf": 0,
     "efficiency": 46.7
   },
   {
@@ -1914,7 +1914,7 @@ export const gpus = [
     "brand": "NVIDIA",
     "vram": "8GB",
     "tdp": 150,
-    "score": 6069.0,
+    "score": 6069,
     "prices": {
       "2025年12月": 620,
       "2026年1月": 600,
@@ -1929,7 +1929,7 @@ export const gpus = [
     },
     "performance_pct": 44.6,
     "stars": 5,
-    "cost_perf": 9.82,
+    "cost_perf": 0,
     "efficiency": 40.5
   },
   {
@@ -1937,7 +1937,7 @@ export const gpus = [
     "brand": "NVIDIA",
     "vram": "4GB",
     "tdp": 75,
-    "score": 3598.0,
+    "score": 3598,
     "prices": {
       "2025年12月": 605,
       "2026年1月": 590,
@@ -1952,15 +1952,15 @@ export const gpus = [
     },
     "performance_pct": 26.4,
     "stars": 4,
-    "cost_perf": 6.1,
-    "efficiency": 48.0
+    "cost_perf": 0,
+    "efficiency": 48
   },
   {
     "name": "RX 5600 XT",
     "brand": "AMD",
     "vram": "6GB",
     "tdp": 150,
-    "score": 7711.0,
+    "score": 7711,
     "prices": {
       "2025年12月": 580,
       "2026年1月": 570,
@@ -1975,7 +1975,7 @@ export const gpus = [
     },
     "performance_pct": 56.6,
     "stars": 5,
-    "cost_perf": 12.87,
+    "cost_perf": 0,
     "efficiency": 51.4
   },
   {
@@ -1983,7 +1983,7 @@ export const gpus = [
     "brand": "AMD",
     "vram": "4GB",
     "tdp": 107,
-    "score": 4923.0,
+    "score": 4923,
     "prices": {
       "2025年12月": 568,
       "2026年1月": 550,
@@ -1998,15 +1998,15 @@ export const gpus = [
     },
     "performance_pct": 36.1,
     "stars": 2,
-    "cost_perf": 8.7,
-    "efficiency": 46.0
+    "cost_perf": 0,
+    "efficiency": 46
   },
   {
     "name": "GTX 1060 6G",
     "brand": "NVIDIA",
     "vram": "6GB",
     "tdp": 120,
-    "score": 4202.0,
+    "score": 4202,
     "prices": {
       "2025年12月": 565,
       "2026年1月": 570,
@@ -2021,15 +2021,15 @@ export const gpus = [
     },
     "performance_pct": 30.9,
     "stars": 5,
-    "cost_perf": 7.38,
-    "efficiency": 35.0
+    "cost_perf": 0,
+    "efficiency": 35
   },
   {
     "name": "GTX TITAN X",
     "brand": "NVIDIA",
     "vram": "12GB",
     "tdp": 250,
-    "score": 5227.0,
+    "score": 5227,
     "prices": {
       "2025年12月": 550,
       "2026年1月": 525,
@@ -2044,7 +2044,7 @@ export const gpus = [
     },
     "performance_pct": 38.4,
     "stars": 5,
-    "cost_perf": 9.5,
+    "cost_perf": 0,
     "efficiency": 20.9
   },
   {
@@ -2052,7 +2052,7 @@ export const gpus = [
     "brand": "Intel",
     "vram": "6GB",
     "tdp": 92,
-    "score": 4312.0,
+    "score": 4312,
     "prices": {
       "2025年12月": 550,
       "2026年1月": 520,
@@ -2067,7 +2067,7 @@ export const gpus = [
     },
     "performance_pct": 31.7,
     "stars": 2,
-    "cost_perf": 7.31,
+    "cost_perf": 0,
     "efficiency": 46.9
   },
   {
@@ -2075,7 +2075,7 @@ export const gpus = [
     "brand": "AMD",
     "vram": "4GB",
     "tdp": 53,
-    "score": 3579.0,
+    "score": 3579,
     "prices": {
       "2025年12月": 532,
       "2026年1月": 530,
@@ -2090,7 +2090,7 @@ export const gpus = [
     },
     "performance_pct": 26.3,
     "stars": 2,
-    "cost_perf": 6.37,
+    "cost_perf": 0,
     "efficiency": 67.5
   },
   {
@@ -2098,7 +2098,7 @@ export const gpus = [
     "brand": "AMD",
     "vram": "8GB",
     "tdp": 195,
-    "score": 7515.0,
+    "score": 7515,
     "prices": {
       "2025年12月": 500,
       "2026年1月": 515,
@@ -2113,7 +2113,7 @@ export const gpus = [
     },
     "performance_pct": 55.2,
     "stars": 5,
-    "cost_perf": 15.34,
+    "cost_perf": 0,
     "efficiency": 38.5
   },
   {
@@ -2121,7 +2121,7 @@ export const gpus = [
     "brand": "AMD",
     "vram": "8GB",
     "tdp": 130,
-    "score": 4888.0,
+    "score": 4888,
     "prices": {
       "2025年12月": 500,
       "2026年1月": 480,
@@ -2136,7 +2136,7 @@ export const gpus = [
     },
     "performance_pct": 35.9,
     "stars": 5,
-    "cost_perf": 9.58,
+    "cost_perf": 0,
     "efficiency": 37.6
   },
   {
@@ -2144,7 +2144,7 @@ export const gpus = [
     "brand": "NVIDIA",
     "vram": "5GB",
     "tdp": 120,
-    "score": 3904.0,
+    "score": 3904,
     "prices": {
       "2025年12月": 489,
       "2026年1月": 480,
@@ -2159,7 +2159,7 @@ export const gpus = [
     },
     "performance_pct": 28.7,
     "stars": 5,
-    "cost_perf": 7.82,
+    "cost_perf": 0,
     "efficiency": 32.5
   },
   {
@@ -2167,7 +2167,7 @@ export const gpus = [
     "brand": "NVIDIA",
     "vram": "6GB",
     "tdp": 250,
-    "score": 5758.0,
+    "score": 5758,
     "prices": {
       "2025年12月": 460,
       "2026年1月": 460,
@@ -2182,15 +2182,15 @@ export const gpus = [
     },
     "performance_pct": 42.3,
     "stars": 5,
-    "cost_perf": 11.52,
-    "efficiency": 23.0
+    "cost_perf": 0,
+    "efficiency": 23
   },
   {
     "name": "GTX 1050 Ti",
     "brand": "NVIDIA",
     "vram": "4GB",
     "tdp": 75,
-    "score": 2338.0,
+    "score": 2338,
     "prices": {
       "2025年12月": 435,
       "2026年1月": 440,
@@ -2205,7 +2205,7 @@ export const gpus = [
     },
     "performance_pct": 17.2,
     "stars": 4,
-    "cost_perf": 5.31,
+    "cost_perf": 0,
     "efficiency": 31.2
   },
   {
@@ -2213,7 +2213,7 @@ export const gpus = [
     "brand": "AMD",
     "vram": "8GB",
     "tdp": 225,
-    "score": 4764.0,
+    "score": 4764,
     "prices": {
       "2025年12月": 420,
       "2026年1月": 417,
@@ -2226,9 +2226,9 @@ export const gpus = [
       "2026年2月": 3,
       "2026年3月": 0
     },
-    "performance_pct": 35.0,
+    "performance_pct": 35,
     "stars": 5,
-    "cost_perf": 11.34,
+    "cost_perf": 0,
     "efficiency": 21.2
   },
   {
@@ -2236,7 +2236,7 @@ export const gpus = [
     "brand": "AMD",
     "vram": "8GB",
     "tdp": 185,
-    "score": 4360.0,
+    "score": 4360,
     "prices": {
       "2025年12月": 410,
       "2026年1月": 400,
@@ -2249,9 +2249,9 @@ export const gpus = [
       "2026年2月": 10,
       "2026年3月": 10
     },
-    "performance_pct": 32.0,
+    "performance_pct": 32,
     "stars": 5,
-    "cost_perf": 10.38,
+    "cost_perf": 0,
     "efficiency": 23.6
   },
   {
@@ -2259,7 +2259,7 @@ export const gpus = [
     "brand": "AMD",
     "vram": "8GB",
     "tdp": 190,
-    "score": 4432.0,
+    "score": 4432,
     "prices": {
       "2025年12月": 400,
       "2026年1月": 400,
@@ -2274,7 +2274,7 @@ export const gpus = [
     },
     "performance_pct": 32.5,
     "stars": 5,
-    "cost_perf": 10.81,
+    "cost_perf": 0,
     "efficiency": 23.3
   },
   {
@@ -2282,7 +2282,7 @@ export const gpus = [
     "brand": "NVIDIA",
     "vram": "3GB",
     "tdp": 115,
-    "score": 3843.0,
+    "score": 3843,
     "prices": {
       "2025年12月": 390,
       "2026年1月": 365,
@@ -2297,7 +2297,7 @@ export const gpus = [
     },
     "performance_pct": 28.2,
     "stars": 5,
-    "cost_perf": 9.85,
+    "cost_perf": 0,
     "efficiency": 33.4
   },
   {
@@ -2305,7 +2305,7 @@ export const gpus = [
     "brand": "AMD",
     "vram": "8GB",
     "tdp": 150,
-    "score": 3790.0,
+    "score": 3790,
     "prices": {
       "2025年12月": 390,
       "2026年1月": 375,
@@ -2320,7 +2320,7 @@ export const gpus = [
     },
     "performance_pct": 27.8,
     "stars": 5,
-    "cost_perf": 9.84,
+    "cost_perf": 0,
     "efficiency": 25.3
   },
   {
@@ -2328,7 +2328,7 @@ export const gpus = [
     "brand": "AMD",
     "vram": "8GB",
     "tdp": 210,
-    "score": 6874.0,
+    "score": 6874,
     "prices": {
       "2025年12月": 385,
       "2026年1月": 420,
@@ -2343,7 +2343,7 @@ export const gpus = [
     },
     "performance_pct": 50.5,
     "stars": 5,
-    "cost_perf": 15.62,
+    "cost_perf": 0,
     "efficiency": 32.7
   },
   {
@@ -2351,7 +2351,7 @@ export const gpus = [
     "brand": "Other",
     "vram": "4GB",
     "tdp": 225,
-    "score": 4606.0,
+    "score": 4606,
     "prices": {
       "2025年12月": 380,
       "2026年1月": 400,
@@ -2366,7 +2366,7 @@ export const gpus = [
     },
     "performance_pct": 33.8,
     "stars": 5,
-    "cost_perf": 11.52,
+    "cost_perf": 0,
     "efficiency": 20.5
   },
   {
@@ -2374,7 +2374,7 @@ export const gpus = [
     "brand": "AMD",
     "vram": "8GB",
     "tdp": 150,
-    "score": 4162.0,
+    "score": 4162,
     "prices": {
       "2025年12月": 380,
       "2026年1月": 390,
@@ -2389,7 +2389,7 @@ export const gpus = [
     },
     "performance_pct": 30.6,
     "stars": 5,
-    "cost_perf": 10.4,
+    "cost_perf": 0,
     "efficiency": 27.7
   },
   {
@@ -2397,7 +2397,7 @@ export const gpus = [
     "brand": "NVIDIA",
     "vram": "4GB",
     "tdp": 170,
-    "score": 4332.0,
+    "score": 4332,
     "prices": {
       "2025年12月": 366,
       "2026年1月": 379,
@@ -2412,7 +2412,7 @@ export const gpus = [
     },
     "performance_pct": 31.8,
     "stars": 5,
-    "cost_perf": 11.11,
+    "cost_perf": 0,
     "efficiency": 25.5
   },
   {
@@ -2420,7 +2420,7 @@ export const gpus = [
     "brand": "AMD",
     "vram": "8GB",
     "tdp": 150,
-    "score": 3863.0,
+    "score": 3863,
     "prices": {
       "2025年12月": 366,
       "2026年1月": 380,
@@ -2435,7 +2435,7 @@ export const gpus = [
     },
     "performance_pct": 28.4,
     "stars": 5,
-    "cost_perf": 9.91,
+    "cost_perf": 0,
     "efficiency": 25.8
   },
   {
@@ -2443,7 +2443,7 @@ export const gpus = [
     "brand": "Other",
     "vram": "8GB",
     "tdp": 185,
-    "score": 8105.0,
+    "score": 8105,
     "prices": {
       "2025年12月": 322,
       "2026年1月": 320,
@@ -2458,7 +2458,7 @@ export const gpus = [
     },
     "performance_pct": 59.5,
     "stars": 5,
-    "cost_perf": 21.96,
+    "cost_perf": 0,
     "efficiency": 43.8
   },
   {
@@ -2466,7 +2466,7 @@ export const gpus = [
     "brand": "NVIDIA",
     "vram": "3.5GB+0.5GB",
     "tdp": 165,
-    "score": 3623.0,
+    "score": 3623,
     "prices": {
       "2025年12月": 318,
       "2026年1月": 310,
@@ -2481,15 +2481,15 @@ export const gpus = [
     },
     "performance_pct": 26.6,
     "stars": 5,
-    "cost_perf": 11.11,
-    "efficiency": 22.0
+    "cost_perf": 0,
+    "efficiency": 22
   },
   {
     "name": "GTX 960",
     "brand": "NVIDIA",
     "vram": "4GB",
     "tdp": 120,
-    "score": 2283.0,
+    "score": 2283,
     "prices": {
       "2025年12月": 300,
       "2026年1月": 282,
@@ -2504,15 +2504,15 @@ export const gpus = [
     },
     "performance_pct": 16.8,
     "stars": 5,
-    "cost_perf": 7.87,
-    "efficiency": 19.0
+    "cost_perf": 0,
+    "efficiency": 19
   },
   {
     "name": "RX 470",
     "brand": "AMD",
     "vram": "4GB/8GB",
     "tdp": 120,
-    "score": 3700.0,
+    "score": 3700,
     "prices": {
       "2025年12月": 300,
       "2026年1月": 300,
@@ -2527,7 +2527,7 @@ export const gpus = [
     },
     "performance_pct": 27.2,
     "stars": 5,
-    "cost_perf": 10.28,
+    "cost_perf": 0,
     "efficiency": 30.8
   },
   {
@@ -2535,7 +2535,7 @@ export const gpus = [
     "brand": "NVIDIA",
     "vram": "2GB",
     "tdp": 75,
-    "score": 1749.0,
+    "score": 1749,
     "prices": {
       "2025年12月": 290,
       "2026年1月": 266,
@@ -2550,7 +2550,7 @@ export const gpus = [
     },
     "performance_pct": 12.8,
     "stars": 4,
-    "cost_perf": 6.07,
+    "cost_perf": 0,
     "efficiency": 23.3
   },
   {
@@ -2558,7 +2558,7 @@ export const gpus = [
     "brand": "Other",
     "vram": "2GB/4GB",
     "tdp": 30,
-    "score": 1082.0,
+    "score": 1082,
     "prices": {
       "2025年12月": 260,
       "2026年1月": 248,
@@ -2573,7 +2573,7 @@ export const gpus = [
     },
     "performance_pct": 7.9,
     "stars": 4,
-    "cost_perf": 4.92,
+    "cost_perf": 0,
     "efficiency": 36.1
   },
   {
@@ -2581,7 +2581,7 @@ export const gpus = [
     "brand": "AMD",
     "vram": "2GB/4GB",
     "tdp": 50,
-    "score": 1199.0,
+    "score": 1199,
     "prices": {
       "2025年12月": 230,
       "2026年1月": 230,
@@ -2596,15 +2596,15 @@ export const gpus = [
     },
     "performance_pct": 8.8,
     "stars": 4,
-    "cost_perf": 5.45,
-    "efficiency": 24.0
+    "cost_perf": 0,
+    "efficiency": 24
   },
   {
     "name": "GT 1010",
     "brand": "Other",
     "vram": "2GB",
     "tdp": 30,
-    "score": 525.0,
+    "score": 525,
     "prices": {
       "2025年12月": 210,
       "2026年1月": 180,
@@ -2619,7 +2619,7 @@ export const gpus = [
     },
     "performance_pct": 3.9,
     "stars": 2,
-    "cost_perf": 2.76,
+    "cost_perf": 0,
     "efficiency": 17.5
   },
   {
@@ -2627,7 +2627,7 @@ export const gpus = [
     "brand": "AMD",
     "vram": "2GB/4GB",
     "tdp": 80,
-    "score": 1797.0,
+    "score": 1797,
     "prices": {
       "2025年12月": 200,
       "2026年1月": 220,
@@ -2642,7 +2642,7 @@ export const gpus = [
     },
     "performance_pct": 13.2,
     "stars": 5,
-    "cost_perf": 7.19,
+    "cost_perf": 0,
     "efficiency": 22.5
   },
   {
@@ -2650,7 +2650,7 @@ export const gpus = [
     "brand": "NVIDIA",
     "vram": "2GB",
     "tdp": 90,
-    "score": 1750.0,
+    "score": 1750,
     "prices": {
       "2025年12月": 200,
       "2026年1月": 188,
@@ -2665,7 +2665,7 @@ export const gpus = [
     },
     "performance_pct": 12.8,
     "stars": 5,
-    "cost_perf": 8.37,
+    "cost_perf": 0,
     "efficiency": 19.4
   },
   {
@@ -2673,7 +2673,7 @@ export const gpus = [
     "brand": "AMD",
     "vram": "2GB/4GB",
     "tdp": 75,
-    "score": 1724.0,
+    "score": 1724,
     "prices": {
       "2025年12月": 200,
       "2026年1月": 230,
@@ -2688,15 +2688,15 @@ export const gpus = [
     },
     "performance_pct": 12.7,
     "stars": 5,
-    "cost_perf": 7.84,
-    "efficiency": 23.0
+    "cost_perf": 0,
+    "efficiency": 23
   },
   {
     "name": "30HX",
     "brand": "Other",
     "vram": "6GB",
     "tdp": 125,
-    "score": 5922.0,
+    "score": 5922,
     "prices": {
       "2025年12月": 175,
       "2026年1月": 180,
@@ -2711,7 +2711,7 @@ export const gpus = [
     },
     "performance_pct": 43.5,
     "stars": 5,
-    "cost_perf": 25.86,
+    "cost_perf": 0,
     "efficiency": 47.4
   },
   {
@@ -2719,7 +2719,7 @@ export const gpus = [
     "brand": "Other",
     "vram": "6GB",
     "tdp": 120,
-    "score": 4060.0,
+    "score": 4060,
     "prices": {
       "2025年12月": 127,
       "2026年1月": 129,
@@ -2734,7 +2734,7 @@ export const gpus = [
     },
     "performance_pct": 29.8,
     "stars": 5,
-    "cost_perf": 27.25,
+    "cost_perf": 0,
     "efficiency": 33.8
   },
   {
@@ -2742,7 +2742,7 @@ export const gpus = [
     "brand": "Other",
     "vram": "16GB",
     "tdp": 200,
-    "score": 8902.0,
+    "score": 8902,
     "prices": {
       "2026年1月": 520,
       "2026年2月": 575,
@@ -2755,7 +2755,7 @@ export const gpus = [
     },
     "performance_pct": 65.4,
     "stars": 5,
-    "cost_perf": 14.69,
+    "cost_perf": 0,
     "efficiency": 44.5
   },
   {
@@ -2763,7 +2763,7 @@ export const gpus = [
     "brand": "Other",
     "vram": "8GB",
     "tdp": 135,
-    "score": 8999.0,
+    "score": 8999,
     "prices": {
       "2026年1月": 396,
       "2026年2月": 419,
@@ -2776,8 +2776,13 @@ export const gpus = [
     },
     "performance_pct": 66.1,
     "stars": 5,
-    "cost_perf": 21.43,
+    "cost_perf": 0,
     "efficiency": 66.7
   }
 ];
-export const months = ["2025年12月", "2026年1月", "2026年2月", "2026年3月"];
+export const months = [
+  "2025年12月",
+  "2026年1月",
+  "2026年2月",
+  "2026年3月"
+];

@@ -19,10 +19,12 @@
       v-if="view === 'rank'"
       :gpus="sortedGpus"
       :rank-sort="rankSort"
+      :filtered-count="filteredGpus.length"
+      :total-count="gpus.length"
       @sort-change="rankSort = $event"
     />
 
-    <!-- 价格趋势：始终渲染，图表用 expose 方法刷新 -->
+    <!-- 价格趋势 -->
     <TrendChart
       v-if="view === 'trend'"
       ref="trendChartRef"
@@ -62,8 +64,15 @@ const brandFilter = ref('')
 const priceRange = ref('')
 const searchText = ref('')
 const rankSort = ref('score')
-const selectedGpuNames = ref(['RTX 5060', 'RX 9070 GRE', 'RTX 4070', 'RX 9060 XT 8G', 'RTX 5070'])
 const trendChartRef = ref(null)
+
+// 默认展示筛选结果前8张（趋势图）
+const selectedGpuNames = ref([])
+
+// 初始化 selectedGpuNames 为前8张
+function initSelectedGpus() {
+  selectedGpuNames.value = filteredGpus.value.slice(0, 8).map(g => g.name)
+}
 
 const filteredGpus = computed(() => {
   let list = [...gpus]
@@ -85,7 +94,22 @@ const filteredGpus = computed(() => {
   return list
 })
 
-// 每张显卡平均价格变化
+// 筛选变化时，更新图表默认选中的 GPU
+watch(filteredGpus, (newList) => {
+  // 保留已选的，移除已选但不在新列表中的
+  const validNames = newList.map(g => g.name)
+  selectedGpuNames.value = selectedGpuNames.value.filter(n => validNames.includes(n))
+  // 如果不够8个，补充新的
+  if (selectedGpuNames.value.length < 8) {
+    const extra = newList.filter(g => !selectedGpuNames.value.includes(g.name)).slice(0, 8 - selectedGpuNames.value.length)
+    selectedGpuNames.value.push(...extra.map(g => g.name))
+  }
+  // 刷新图表
+  if (view.value === 'trend') {
+    nextTick(() => trendChartRef.value?.updateChart())
+  }
+}, { deep: false })
+
 const avgChangePerGpu = computed(() => {
   if (!filteredGpus.value.length) return 0
   const total = filteredGpus.value.reduce((sum, g) => {
@@ -112,9 +136,13 @@ function switchView(v) {
   if (v === 'trend') {
     nextTick(() => {
       nextTick(() => {
+        if (!selectedGpuNames.value.length) initSelectedGpus()
         trendChartRef.value?.initChart()
       })
     })
   }
 }
+
+// 初始化
+initSelectedGpus()
 </script>

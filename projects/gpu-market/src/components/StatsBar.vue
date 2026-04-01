@@ -1,29 +1,8 @@
 <template>
   <div class="stats-section">
-    <!-- 第一行：两个统计卡片 -->
-    <div class="stats-bar">
-      <div class="stat-card stat-primary">
-        <div class="stat-inner">
-          <div class="stat-value">{{ filteredCount }}</div>
-          <div class="stat-label">当前筛选收录显卡</div>
-        </div>
-      </div>
-      <div class="stat-card" :class="avgChange >= 0 ? 'up' : 'down'">
-        <div class="stat-inner">
-          <div class="stat-value" :class="avgChange >= 0 ? 'up-num' : 'down-num'">
-            {{ avgChange >= 0 ? '+' : '' }}{{ avgChange.toLocaleString() }} 元
-          </div>
-          <div class="stat-label">3月每张显卡平均价格变化</div>
-          <div class="stat-sub" :class="avgChange >= 0 ? 'up-text' : 'down-text'">
-            {{ avgChange >= 0 ? '▲ 均价上涨中' : '▼ 均价下降中' }}
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- 第二行：筛选栏 + 收录显卡总数 -->
+    <!-- 筛选栏 -->
     <div class="filters">
-      <div class="filter-group filter-brand">
+      <div class="filter-group">
         <span class="filter-label">品牌:</span>
         <button
           v-for="b in brandOptions"
@@ -33,7 +12,7 @@
           @click="$emit('brandChange', b.value)"
         >{{ b.label }}</button>
       </div>
-      <div class="filter-group filter-price">
+      <div class="filter-group">
         <span class="filter-label">价格:</span>
         <button
           v-for="p in priceOptions"
@@ -43,7 +22,7 @@
           @click="$emit('priceChange', p.value)"
         >{{ p.label }}</button>
       </div>
-      <div class="filter-group filter-search">
+      <div class="filter-group">
         <input
           class="search-input"
           :value="searchText"
@@ -51,16 +30,23 @@
           @input="$emit('searchChange', $event.target.value)"
         >
       </div>
-      <div class="filter-group filter-total">
-        <span class="filter-total-badge">共 {{ totalCount }} 张</span>
+    </div>
+
+    <!-- 平均价格变化（筛选行下方） -->
+    <div class="avg-change-card" :class="avgChange >= 0 ? 'up' : 'down'">
+      <div class="avg-change-inner">
+        <span class="avg-change-value">{{ avgChange >= 0 ? '+' : '' }}{{ avgChange.toLocaleString() }}</span>
+        <span class="avg-change-unit">元</span>
+        <span class="avg-change-label">3月每张显卡平均价格变化</span>
+        <span class="avg-change-sub" :class="avgChange >= 0 ? 'up' : 'down'">
+          {{ avgChange >= 0 ? '▲ 均价上涨中' : '▼ 均价下降中' }}
+        </span>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { computed } from 'vue'
-
 const props = defineProps({
   totalCount: Number,
   filteredCount: Number,
@@ -95,60 +81,6 @@ const priceOptions = [
   margin-bottom: 24px;
 }
 
-.stats-bar {
-  display: grid;
-  grid-template-columns: 280px 1fr;
-  gap: 16px;
-  margin-bottom: 12px;
-}
-
-.stat-card {
-  background: $bg-secondary;
-  border: 1px solid $border-color;
-  border-radius: $radius-lg;
-  padding: 20px 24px;
-  transition: border-color 0.2s;
-
-  &:hover { border-color: $accent-blue; }
-}
-
-.stat-primary {
-  display: flex;
-  align-items: center;
-}
-
-.stat-inner {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.stat-value {
-  font-size: 32px;
-  font-weight: 700;
-  line-height: 1.2;
-  background: linear-gradient(90deg, $accent-blue, $accent-purple);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.up-num { color: $accent-red; background: none; -webkit-text-fill-color: $accent-red; }
-.down-num { color: $accent-green; background: none; -webkit-text-fill-color: $accent-green; }
-
-.stat-label {
-  font-size: 13px;
-  color: $text-muted;
-}
-
-.stat-sub {
-  font-size: 12px;
-  margin-top: 2px;
-}
-
-.up-text { color: $accent-red; }
-.down-text { color: $accent-green; }
-
-// Filters
 .filters {
   background: $bg-secondary;
   border: 1px solid $border-color;
@@ -158,6 +90,7 @@ const priceOptions = [
   gap: 20px;
   flex-wrap: wrap;
   align-items: center;
+  margin-bottom: 12px;
 }
 
 .filter-group {
@@ -205,22 +138,57 @@ const priceOptions = [
   &::placeholder { color: $text-muted; }
 }
 
-.filter-total {
-  margin-left: auto;
+.avg-change-card {
+  background: $bg-secondary;
+  border: 1px solid $border-color;
+  border-radius: $radius-lg;
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.filter-total-badge {
-  padding: 5px 12px;
-  background: rgba($accent-blue, 0.1);
-  border: 1px solid rgba($accent-blue, 0.3);
-  border-radius: 20px;
-  font-size: 12px;
-  color: $accent-blue;
+.avg-change-inner {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.avg-change-value {
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.up .avg-change-value { color: $accent-red; }
+.down .avg-change-value { color: $accent-green; }
+
+.avg-change-unit {
+  font-size: 18px;
   font-weight: 600;
+  color: $text-secondary;
+}
+
+.avg-change-label {
+  font-size: 15px;
+  color: $text-muted;
+  margin-left: 8px;
+}
+
+.avg-change-sub {
+  font-size: 13px;
+  font-weight: 500;
+  margin-left: 8px;
+  padding: 2px 10px;
+  border-radius: 12px;
+
+  &.up { background: rgba($accent-red, 0.15); color: $accent-red; }
+  &.down { background: rgba($accent-green, 0.15); color: $accent-green; }
 }
 
 @media (max-width: 768px) {
-  .stats-bar { grid-template-columns: 1fr; }
   .filters { gap: 12px; }
 }
 </style>

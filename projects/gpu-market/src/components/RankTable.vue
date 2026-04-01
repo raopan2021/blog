@@ -1,7 +1,10 @@
 <template>
   <div class="card">
     <div class="card-header">
-      <span class="card-title">🏆 显卡跑分排行榜（Time Spy，RTX 5060 = 100%）</span>
+      <div class="header-left">
+        <span class="card-title">🏆 显卡跑分排行榜（Time Spy，RTX 5060 = 100%）</span>
+        <span class="card-count">{{ filteredCount }} / {{ totalCount }} 张</span>
+      </div>
       <div class="view-toggle">
         <button
           v-for="opt in sortOptions"
@@ -56,6 +59,8 @@
 defineProps({
   gpus: Array,
   rankSort: String,
+  filteredCount: Number,
+  totalCount: Number,
 })
 
 defineEmits(['sortChange'])
@@ -97,3 +102,22 @@ function renderStars(stars) {
   return '<span style="color:#fbbf24">' + '★'.repeat(full) + '</span><span style="color:#334155">' + '☆'.repeat(empty) + '</span>'
 }
 </script>
+
+<style lang="scss" scoped>
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.card-count {
+  padding: 3px 12px;
+  background: rgba(#60a5fa, 0.12);
+  border: 1px solid rgba(#60a5fa, 0.3);
+  border-radius: 20px;
+  font-size: 12px;
+  color: #60a5fa;
+  font-weight: 600;
+}
+</style>
