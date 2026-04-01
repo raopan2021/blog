@@ -26,6 +26,7 @@ import { ReactSidebar } from './react.ts'
 import { RegSidebar } from './reg.ts'
 import { SvgSidebar } from './svg.ts'
 import { ThreeSidebar } from './three.ts'
+import { PretextSidebar } from './pretext.ts'
 import { VueSidebar } from './vue.ts'
 import { ViteSidebar } from './vite.ts'
 
@@ -58,6 +59,7 @@ export const side = {
   '/vue/': { base: '/vue/', items: VueSidebar() },
   '/poem/': { base: '/poem/', items: PoemSidebar() },
   '/plan/': { base: '/plan/', items: PlanSidebar() },
+  '/pretext/': { base: '/pretext/', items: PretextSidebar() },
 }
 
 export function nav(): DefaultTheme.NavItem[] {
@@ -75,6 +77,7 @@ export function nav(): DefaultTheme.NavItem[] {
         { text: 'Vite', link: '/vite/', activeMatch: '/vite/' },
         { text: 'Markdown', link: '/markdown/', activeMatch: '/markdown/' },
         { text: 'Three.js', link: '/three/', activeMatch: '/three/' },
+        { text: 'Pretext', link: '/pretext/', activeMatch: '/pretext/' },
         { text: '工程化', link: '/engineering/', activeMatch: '/engineering/' },
         { text: '脚手架', link: '/cli/', activeMatch: '/cli/' },
         { text: '微前端', link: '/micro/', activeMatch: '/micro/' },

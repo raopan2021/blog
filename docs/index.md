@@ -79,6 +79,12 @@ features:
     link: /three/
 
   - icon:
+      src: /mainView/pretext.svg
+    title: Pretext 文本布局
+    details: 不触碰 DOM 的精确文本测量与多行布局
+    link: /pretext/
+
+  - icon:
       src: /mainView/engineering.svg
     title: 前端工程化
     details: Eslint Stylelint Husky lint-staged ...
