@@ -1,0 +1,70 @@
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'PingFang SC','Microsoft YaHei',sans-serif;background:#0f1117;color:#e2e8f0;min-height:100vh}
+a{color:#60a5fa;text-decoration:none}
+.header{background:linear-gradient(135deg,#1a1f2e,#141824);border-bottom:1px solid #2d3748;padding:0 24px;position:sticky;top:0;z-index:100}
+.header-inner{max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:60px}
+.logo{font-size:20px;font-weight:700;background:linear-gradient(90deg,#60a5fa,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.nav{display:flex;gap:6px}
+.nav a{color:#94a3b8;padding:8px 18px;border-radius:8px;font-size:15px;cursor:pointer;transition:all .2s;border:1px solid transparent}
+.nav a:hover{color:#e2e8f0;background:#1e293b;text-decoration:none}
+.nav a.active{background:#1e40af;color:#fff;border-color:#3b82f6;font-weight:600}
+.container{max-width:1400px;margin:0 auto;padding:24px}
+.stats-bar{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px}
+.stat-card{background:#1a1f2e;border:1px solid #2d3748;border-radius:12px;padding:20px;text-align:center;transition:border-color .2s}
+.stat-card:hover{border-color:#3b82f6}
+.stat-card .num{font-size:28px;font-weight:700;background:linear-gradient(90deg,#60a5fa,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.stat-card .label{font-size:13px;color:#64748b;margin-top:4px}
+.stat-card .sub{font-size:11px;color:#64748b;margin-top:2px}
+.filters{background:#1a1f2e;border:1px solid #2d3748;border-radius:12px;padding:16px 20px;margin-bottom:24px;display:flex;gap:20px;flex-wrap:wrap;align-items:center}
+.filter-group{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.filter-label{font-size:13px;color:#64748b;white-space:nowrap}
+.filter-btn{padding:6px 14px;border-radius:6px;border:1px solid #2d3748;background:#141824;color:#94a3b8;font-size:13px;cursor:pointer;transition:all .2s}
+.filter-btn:hover{border-color:#60a5fa;color:#60a5fa}
+.filter-btn.active{background:#1e40af;border-color:#3b82f6;color:#fff}
+.filter-btn.nvidia.active{background:#3d6b27;border-color:#4d8b31}
+.filter-btn.amd.active{background:#a52a2a;border-color:#c4322e}
+.filter-btn.intel.active{background:#004c8f;border-color:#0065b8}
+.search-input{padding:8px 14px;border-radius:6px;border:1px solid #2d3748;background:#141824;color:#e2e8f0;font-size:14px;outline:none;width:200px}
+.search-input:focus{border-color:#60a5fa}
+.main-grid{display:grid;grid-template-columns:1fr 380px;gap:24px}
+.card{background:#1a1f2e;border:1px solid #2d3748;border-radius:12px;overflow:hidden}
+.card-header{padding:16px 20px;border-bottom:1px solid #2d3748;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
+.card-title{font-size:15px;font-weight:600}
+.card-body{padding:16px 20px}
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:13px}
+thead th{padding:10px 12px;text-align:left;color:#64748b;font-weight:500;border-bottom:1px solid #2d3748;white-space:nowrap;cursor:pointer;user-select:none}
+thead th:hover{color:#94a3b8}
+tbody tr{border-bottom:1px solid #1e293b;transition:background .15s}
+tbody tr:hover{background:#1e293b}
+tbody td{padding:10px 12px;white-space:nowrap}
+.name-cell{font-weight:600;color:#e2e8f0}
+.brand-nvidia{color:#77b255;font-size:11px;background:rgba(119,178,85,.1);padding:2px 6px;border-radius:4px}
+.brand-amd{color:#e43c39;font-size:11px;background:rgba(228,60,57,.1);padding:2px 6px;border-radius:4px}
+.brand-intel{color:#60a5fa;font-size:11px;background:rgba(96,165,250,.1);padding:2px 6px;border-radius:4px}
+.price{font-weight:600;color:#fbbf24}
+.change-up{color:#ef4444}
+.change-down{color:#22c55e}
+.change-flat{color:#64748b}
+.change-badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:12px;font-weight:600}
+.change-badge.up{background:rgba(239,68,68,.15);color:#ef4444}
+.change-badge.down{background:rgba(34,197,94,.15);color:#22c55e}
+.change-badge.flat{background:rgba(100,116,139,.15);color:#64748b}
+.gpu-list{max-height:460px;overflow-y:auto}
+.gpu-item{display:flex;align-items:center;justify-content:space-between;padding:8px;border-bottom:1px solid #1e293b;cursor:pointer;transition:background .15s;border-radius:6px}
+.gpu-item:hover{background:#1e293b}
+.gpu-item.selected{background:#1e40af}
+.gpu-item-left{display:flex;flex-direction:column;gap:2px}
+.gpu-item-name{font-weight:600;font-size:13px}
+.gpu-item-score{font-size:11px;color:#64748b}
+.gpu-item-price{font-weight:600;color:#fbbf24;font-size:13px}
+.view-toggle{display:flex;gap:4px}
+.view-btn{padding:6px 12px;border-radius:6px;border:1px solid #2d3748;background:#141824;color:#94a3b8;font-size:13px;cursor:pointer}
+.view-btn.active{background:#1e40af;border-color:#3b82f6;color:#fff}
+.info-box{background:#141824;border:1px solid #2d3748;border-radius:8px;padding:16px;color:#94a3b8;line-height:2;margin-top:16px}
+.info-box h3{color:#e2e8f0;margin-bottom:8px}
+code{background:#1e293b;padding:2px 6px;border-radius:4px;font-size:12px;color:#fbbf24}
+.loading{text-align:center;padding:80px;color:#64748b;font-size:16px}
+#trendChart{width:100%;height:420px}
+.page-info{text-align:center;padding:12px;color:#64748b;font-size:13px}
+@media(max-width:1024px){.main-grid{grid-template-columns:1fr}.stats-bar{grid-template-columns:repeat(2,1fr)}}
