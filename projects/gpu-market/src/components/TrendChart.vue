@@ -58,6 +58,7 @@ const props = defineProps({
   filteredCount: Number,
   totalCount: Number,
   priceRange: { type: String, default: '' },
+  brandFilter: { type: String, default: '' },
 })
 
 const emit = defineEmits(['update:selectedGpuNames'])
@@ -233,15 +234,16 @@ function updateChart() {
 
 let resizeHandler = null
 
-// 价格筛选变化时重绘图表（Y轴范围、图表高度）
-watch(() => props.priceRange, () => {
+// 统一监听所有变化因素，自动触发图表更新
+watchEffect(() => {
+  // 这些都会被track：selectedGpuNames, gpus, priceRange, brandFilter
+  const _selected = props.selectedGpuNames
+  const _gpus = props.gpus
+  const _priceRange = props.priceRange
+  const _brandFilter = props.brandFilter
+  // 只在chartInstance存在时更新
   if (chartInstance) updateChart()
 })
-
-// GPU 选择变化时重绘图表
-watch(() => [props.selectedGpuNames, props.gpus], () => {
-  if (chartInstance) updateChart()
-}, { deep: false })
 
 onMounted(() => {
   setTimeout(initChart, 50)

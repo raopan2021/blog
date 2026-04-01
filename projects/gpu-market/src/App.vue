@@ -34,6 +34,7 @@
       :filtered-count="filteredGpus.length"
       :total-count="gpus.length"
       :price-range="priceRange"
+      :brand-filter="brandFilter"
       @update:selectedGpuNames="selectedGpuNames = $event"
     />
 
