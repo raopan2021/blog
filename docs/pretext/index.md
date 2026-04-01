@@ -46,25 +46,73 @@
 
 ## 🧪 在线演示
 
-### 瀑布流布局
+::: info 在线 Demo 说明
+以下 Demo 均可直接交互，点击按钮体验 Pretext 的精确文本测量能力
+:::
+
+### Demo 1：瀑布流布局
 
 <iframe
   src="/blog/projects/pretext-demo/masonry.html"
   width="100%"
-  height="480px"
+  height="420px"
   frameborder="0"
-  style="margin-top:20px; border-radius:12px; background:#0f0f1a;"
+  style="margin-top:12px; border-radius:12px; background:#0f0f1a;"
   allow="autoplay"
 />
 
-### 聊天消息气泡
+### Demo 2：聊天消息气泡
 
 <iframe
   src="/blog/projects/pretext-demo/chat.html"
   width="100%"
-  height="480px"
+  height="420px"
   frameborder="0"
-  style="margin-top:20px; border-radius:12px; background:#0d1117;"
+  style="margin-top:12px; border-radius:12px; background:#0d1117;"
+  allow="autoplay"
+/>
+
+### Demo 3：AI 打字机效果
+
+<iframe
+  src="/blog/projects/pretext-demo/typewriter.html"
+  width="100%"
+  height="360px"
+  frameborder="0"
+  style="margin-top:12px; border-radius:12px; background:#0a0a0f;"
+  allow="autoplay"
+/>
+
+### Demo 4：智能截断与展开
+
+<iframe
+  src="/blog/projects/pretext-demo/truncation.html"
+  width="100%"
+  height="420px"
+  frameborder="0"
+  style="margin-top:12px; border-radius:12px; background:#f0f2f5;"
+  allow="autoplay"
+/>
+
+### Demo 5：通知提示系统
+
+<iframe
+  src="/blog/projects/pretext-demo/notification.html"
+  width="100%"
+  height="380px"
+  frameborder="0"
+  style="margin-top:12px; border-radius:12px; background:#0f0f1a;"
+  allow="autoplay"
+/>
+
+### Demo 6：代码编辑器行号
+
+<iframe
+  src="/blog/projects/pretext-demo/code-editor.html"
+  width="100%"
+  height="380px"
+  frameborder="0"
+  style="margin-top:12px; border-radius:12px; background:#0d1117;"
   allow="autoplay"
 />
 
@@ -75,10 +123,4 @@
 | Demo | 文件 | 说明 |
 |------|------|------|
 | 综合演示 | [index.html](/blog/projects/pretext-demo/) | Textarea / Canvas / 虚拟列表 / 文本环绕 |
-| 瀑布流布局 | [masonry.html](/blog/projects/pretext-demo/masonry.html) | 真实高度瀑布流 |
-| 聊天消息气泡 | [chat.html](/blog/projects/pretext-demo/chat.html) | 自动高度气泡 |
-| AI 打字机 | [typewriter.html](/blog/projects/pretext-demo/typewriter.html) | 预判高度的流畅打字效果 |
-| 智能截断展开 | [truncation.html](/blog/projects/pretext-demo/truncation.html) | 精确截断位置 + 二分查找 |
-| 通知提示系统 | [notification.html](/blog/projects/pretext-demo/notification.html) | 自动撑开高度 |
-| 代码编辑器行号 | [code-editor.html](/blog/projects/pretext-demo/code-editor.html) | 等宽字体精确对齐 |
-| 新闻订阅阅读器 | [newsletter.html](/blog/pretext/projects/pretext-demo/newsletter.html) | 动态列数切换 |
+| 新闻订阅阅读器 | [newsletter.html](/blog/projects/pretext-demo/newsletter.html) | 动态列数切换，文章高度自适应 |
