@@ -92,7 +92,8 @@ Main [OB1]
 2. **参数化**：每个实例可有独立参数
 3. **易于维护**：修改一处，全局生效
 
-```st
+::: code-group
+```txt [st]
 // 创建电机控制功能块 Motor_Ctrl
 // 输入：Start, Stop, Fault
 // 输出：Run, FaultOut
@@ -100,6 +101,7 @@ Main [OB1]
   Motor1: Motor_Ctrl(Start:=start_btn1, Stop:=stop_btn1, ...);
   Motor2: Motor_Ctrl(Start:=start_btn2, Stop:=stop_btn2, ...);
 ```
+:::
 
 ## 常见问题解决
 

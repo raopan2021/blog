@@ -22,7 +22,8 @@
 
 ## 西门子模拟量处理
 
-```st
+::: code-group
+```txt [st]
 // 读取标准化值 0~27648 对应 4~20mA
 raw_value := IW64;
 
@@ -33,16 +34,19 @@ ELSE
     temperature := 0.0;
 END_IF;
 ```
+:::
 
 ## 三菱模拟量处理（FX5U 内置）
 
-```st
+::: code-group
+```txt [st]
 // 读取内置 AD 转换值（0~4000 对应 0~10V）
 raw_ad := FROM(K0, H3, D100, K1);
 
 // 标定（0~4000 → 0~10V）
 voltage := raw_ad * 10.0 / 4000.0;
 ```
+:::
 
 ## PID 控制
 
@@ -66,7 +70,8 @@ PID（比例-积分-微分）用于精确的过程控制，如恒温、恒压、
 
 ### 西门子 PID（PID_Compact）
 
-```st
+::: code-group
+```txt [st]
 // 配置 PID 指令
 "PID_Compact_1"(
     Setpoint  := 50.0,      // 目标温度 50°C
@@ -78,6 +83,7 @@ PID（比例-积分-微分）用于精确的过程控制，如恒温、恒压、
     Td        := T#0S       // 微分时间
 );
 ```
+:::
 
 ### 参数调节步骤
 

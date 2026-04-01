@@ -17,7 +17,8 @@
 
 ## 基础语法
 
-```svg
+::: code-group
+```txt [svg]
 <svg width="200" height="200" xmlns="http://www.w3.org/2000/svg">
   <!-- 圆形 -->
   <circle cx="100" cy="100" r="80" fill="#ff6b6b" />
@@ -32,6 +33,7 @@
   <path d="M 10 10 L 100 100 L 10 100 Z" fill="#ffe66d" />
 </svg>
 ```
+:::
 
 ## 常用图形
 
@@ -49,20 +51,24 @@
 
 ### 矩形示例
 
-```svg
+::: code-group
+```txt [svg]
 <!-- 圆角矩形 -->
 <rect x="10" y="10" width="100" height="60" rx="10" ry="10" fill="#4285f4" />
 
 <!-- 无填充只描边 -->
 <rect x="10" y="10" width="100" height="60" fill="none" stroke="#333" stroke-width="2" />
 ```
+:::
 
 ### 圆形和椭圆
 
-```svg
+::: code-group
+```txt [svg]
 <circle cx="50" cy="50" r="40" fill="#ff6b6b" />
 <ellipse cx="100" cy="50" rx="60" ry="30" fill="#4ecdc4" />
 ```
+:::
 
 ### 路径 path
 
@@ -79,7 +85,8 @@
 | A rx ry,rot,large,sweep,x y | 圆弧 | `A 50 50 0 0 1 100 100` |
 | Z | 闭合路径 | `Z` |
 
-```svg
+::: code-group
+```txt [svg]
 <!-- 绘制心形 -->
 <path d="M 100 180
          A 50 50 0 0 1 100 80
@@ -88,35 +95,43 @@
          Z"
       fill="#ff6b6b" />
 ```
+:::
 
 ## 常用样式属性
 
 ### 填充与描边
 
-```svg
+::: code-group
+```txt [svg]
 <rect fill="#ff6b6b" stroke="#333" stroke-width="2" />
 <circle fill="none" stroke="#4ecdc4" stroke-width="3" />
 ```
+:::
 
 ### 透明度
 
-```svg
+::: code-group
+```txt [svg]
 <rect fill="#ff6b6b" opacity="0.5" />
 <circle fill="#4ecdc4" fill-opacity="0.5" stroke-opacity="0.8" />
 ```
+:::
 
 ### 线条样式
 
-```svg
+::: code-group
+```txt [svg]
 <!-- stroke-linecap: butt | round | square -->
 <!-- stroke-linejoin: miter | round | bevel -->
 <!-- stroke-dasharray: 虚线 -->
 <line stroke-dasharray="5,5" stroke-linecap="round" />
 ```
+:::
 
 ### 渐变
 
-```svg
+::: code-group
+```txt [svg]
 <defs>
   <!-- 线性渐变 -->
   <linearGradient id="myGradient" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -134,10 +149,12 @@
 <!-- 使用渐变 -->
 <rect fill="url(#myGradient)" width="200" height="100" />
 ```
+:::
 
 ### 滤镜效果
 
-```svg
+::: code-group
+```txt [svg]
 <defs>
   <filter id="myBlur">
     <feGaussianBlur in="SourceGraphic" stdDeviation="5" />
@@ -151,10 +168,12 @@
 
 <rect filter="url(#dropShadow)" width="100" height="100" fill="#ff6b6b" />
 ```
+:::
 
 ## 裁剪与遮罩
 
-```svg
+::: code-group
+```txt [svg]
 <defs>
   <clipPath id="circleClip">
     <circle cx="50" cy="50" r="40" />
@@ -164,10 +183,12 @@
 <!-- 被裁剪的图片 -->
 <image href="photo.jpg" clip-path="url(#circleClip)" width="100" height="100" />
 ```
+:::
 
 ## 文本
 
-```svg
+::: code-group
+```txt [svg]
 <text x="50" y="50" font-family="Arial" font-size="16" fill="#333">
   Hello SVG
 </text>
@@ -177,10 +198,12 @@
   居中文字
 </text>
 ```
+:::
 
 ## 变形
 
-```svg
+::: code-group
+```txt [svg]
 <!-- 平移 -->
 <rect transform="translate(10, 20)" />
 
@@ -193,6 +216,7 @@
 <!-- 组合变形 -->
 <rect transform="translate(10,10) rotate(45) scale(1.2)" />
 ```
+:::
 
 ## 在 HTML 中使用
 
@@ -213,7 +237,8 @@
 
 ### SMIL 动画
 
-```svg
+::: code-group
+```txt [svg]
 <!-- 淡入 -->
 <circle r="0" opacity="0">
   <animate attributeName="r" from="0" to="50" dur="1s" fill="freeze" />
@@ -226,6 +251,7 @@
     from="0 50 50" to="360 50 50" dur="2s" repeatCount="indefinite" />
 </rect>
 ```
+:::
 
 ### CSS 动画
 
@@ -244,11 +270,13 @@
 
 ### 响应式 SVG
 
-```svg
+::: code-group
+```txt [svg]
 <svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">
   <circle cx="50" cy="50" r="40" fill="#ff6b6b" />
 </svg>
 ```
+:::
 
 ### 图标制作技巧
 
@@ -256,7 +284,8 @@
 2. 统一 viewBox 便于缩放
 3. 尽量使用单色，便于 CSS 控制
 
-```svg
+::: code-group
+```txt [svg]
 <defs>
   <symbol id="icon-home" viewBox="0 0 24 24">
     <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
@@ -265,6 +294,7 @@
 
 <use href="#icon-home" width="24" height="24" fill="currentColor" />
 ```
+:::
 
 ### 优化 SVG 文件
 

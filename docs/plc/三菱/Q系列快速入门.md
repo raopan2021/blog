@@ -43,15 +43,18 @@ Q 程序结构：
 
 ### 启保停
 
-```st
+::: code-group
+```txt [st]
 // Q 系列 ST 语言
 bMotorRun := (xStart OR bMotorRun) AND NOT xStop AND NOT xFault;
 Y0 := bMotorRun;
 ```
+:::
 
 ### 定时器（延时定时器）
 
-```st
+::: code-group
+```txt [st]
 // Q 系列定时器 TON
 TOF(timer_num := T0, set := 100);  // 延时 10 秒
 
@@ -59,6 +62,7 @@ TOF(timer_num := T0, set := 100);  // 延时 10 秒
 //  LD  X0
 //  OUT T0 K100   // K100 = 10s (单位 100ms)
 ```
+:::
 
 ### 子程序调用
 

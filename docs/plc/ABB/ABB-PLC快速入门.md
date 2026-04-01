@@ -56,7 +56,8 @@ ABB 使用标准化的变量体系，不同于西门子或三菱：
 
 ### 变量定义
 
-```st
+::: code-group
+```txt [st]
 VAR
     start_btn AT %IX0.0 : BOOL;    // 输入 0.0
     stop_btn AT %IX0.1 : BOOL;     // 输入 0.1
@@ -64,14 +65,17 @@ VAR
     counter : INT := 0;            // 计数器
 END_VAR
 ```
+:::
 
 ## 基本编程示例
 
 ### 启保停（ST）
 
-```st
+::: code-group
+```txt [st]
 motor_run := (start_btn OR motor_run) AND NOT stop_btn;
 ```
+:::
 
 ### 启保停（LAD）
 
@@ -86,11 +90,13 @@ motor_run := (start_btn OR motor_run) AND NOT stop_btn;
 
 ABB 的定时器功能块命名与西门子略有不同：
 
-```st
+::: code-group
+```txt [st]
 // 定时器实例
 timer1(IN := start_sig, PT := T#5S);
 Q0.0 := timer1.Q;
 ```
+:::
 
 ## ABB 特色功能
 
@@ -106,12 +112,14 @@ http://<PLC_IP>/webgate
 
 类似 S7-1500 的 Trace 功能，可记录变量波形用于诊断：
 
-```st
+::: code-group
+```txt [st]
 // 触发条件
 IF temperature > 100 THEN
     Recorder_1.Start();  // 温度超限开始记录
 END_IF;
 ```
+:::
 
 ### 3. 通信
 
@@ -125,7 +133,8 @@ END_IF;
 
 ### Modbus TCP 通信示例
 
-```st
+::: code-group
+```txt [st]
 // 作为 Modbus TCP 从站
 VAR
     ModbusTCPServer : ModbusTCP;
@@ -138,6 +147,7 @@ ModbusTCPServer(
     Port   := 502,
     pvHoldReg := ADR(holding_register));
 ```
+:::
 
 ## 与西门子对比
 
