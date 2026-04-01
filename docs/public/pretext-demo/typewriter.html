@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pretext Demo - AI 打字机效果</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', 'PingFang SC', sans-serif; background: #0a0a0f; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 40px 20px; }
+    .container { max-width: 700px; width: 100%; }
+    .title { color: #fff; font-size: 20px; font-weight: 700; margin-bottom: 8px; }
+    .subtitle { color: #7d8590; font-size: 13px; margin-bottom: 32px; }
+    .output { background: #0d1117; border: 1px solid #30363d; border-radius: 16px; padding: 28px; min-height: 160px; position: relative; }
+    .cursor { display: inline-block; width: 2px; height: 20px; background: #5f67ee; vertical-align: middle; animation: blink 0.8s infinite; margin-left: 1px; }
+    .cursor.hide { opacity: 0; }
+    @keyframes blink { 0%, 100% { opacity: 1 } 50% { opacity: 0 } }
+    .height-info { position: absolute; top: 12px; right: 16px; font-size: 12px; color: #5f67ee; background: #5f67ee15; padding: 4px 10px; border-radius: 20px; border: 1px solid #5f67ee30; }
+    .height-bar { position: absolute; bottom: 0; left: 0; right: 0; height: 3px; background: #30363d; border-radius: 0 0 16px 16px; overflow: hidden; }
+    .height-bar-fill { height: 100%; background: linear-gradient(90deg, #5f67ee, #a855f7); transition: width 0.3s ease; }
+    .controls { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; }
+    .controls button { flex: 1; min-width: 120px; padding: 10px; border: 1px solid #30363d; background: #161b22; color: #c0c0d0; border-radius: 10px; cursor: pointer; font-size: 13px; transition: all 0.2s; }
+    .controls button:hover { border-color: #5f67ee; color: #fff; }
+    .controls button.active { background: #5f67ee20; border-color: #5f67ee; color: #5f67ee; }
+    .prompt-label { color: #5f67ee; font-size: 13px; margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="title">⌨️ Pretext AI 打字机效果</div>
+    <div class="subtitle">容器高度随文本实时预测，无抖动 · 流畅如丝</div>
+
+    <div class="prompt-label">💬 选择文本内容</div>
+    <div class="controls">
+      <button class="active" onclick="setText(0)">技术长文</button>
+      <button onclick="setText(1)">诗歌</button>
+      <button onclick="setText(2)">代码注释</button>
+      <button onclick="setText(3)">产品描述</button>
+    </div>
+
+    <div class="output" id="output">
+      <div class="height-info" id="height-info">H: 0px</div>
+      <span id="typed-text"></span><span class="cursor" id="cursor"></span>
+      <div class="height-bar"><div class="height-bar-fill" id="bar"></div></div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { prepare, layout } from 'https://cdn.jsdelivr.net/npm/@chenglou/pretext@0.0.3/dist/layout.js'
+
+    const texts = [
+      `Pretext 是一个纯 JavaScript 库，用于多行文本的精确测量与布局。它的核心创新在于：通过预计算 + Canvas 测量，实现零 DOM 访问的文本高度预测。这意味着即使用户在 textarea 中输入了大量文本，浏览器也不会因为 getBoundingClientRect 触发布局回流而导致性能下降。
+
+在现代 Web 应用中，虚拟滚动、文本环绕、动态排版等场景都需要精确的文本高度信息。传统方案依赖 DOM 测量，每次输入都要触发回流，在低端设备上会造成明显的卡顿。Pretext 通过一次性预计算，将测量成本降到最低。
+
+更令人惊叹的是，Pretext 对 Unicode 的处理。它能正确处理 emoji 序列（如 🇺🇸 美国国旗由两个 Regional Indicator 码点组成）、混合方向文本（Bidi）、组合附加符号等复杂情况。这是传统 DOM 测量无法可靠做到的。`,
+
+      `床前明月光，
+疑是地上霜。
+举头望明月，
+低头思故乡。
+
+——李白《静夜思》
+
+两个黄鹂鸣翠柳，
+一行白鹭上青天。
+窗含西岭千秋雪，
+门泊东吴万里船。
+
+——杜甫《绝句》`,
+
+      `/**
+ * 使用 Pretext 预测文本高度的虚拟列表实现
+ * 核心思想：将每个 item 的文本预先生成 prepared 对象
+ * 在滚动时，只通过 layout() 计算高度，完全不触碰 DOM
+ */
+function getItemHeight(id, width) {
+  const prepared = preparedMap.get(id)
+  if (!prepared) return DEFAULT_HEIGHT
+  
+  // layout() 是纯算术运算，O(1) 复杂度
+  const { height } = layout(prepared, width, LINE_HEIGHT)
+  return height + PADDING * 2
+}
+
+// 关键：总高度由真实高度构成
+// 滚动条位置 = 精确的 item 累积高度
+const totalHeight = items.reduce((sum, id) => 
+  sum + getItemHeight(id, containerWidth), 0
+)
+container.style.height = totalHeight + 'px'`,
+
+      `🌟 产品特性亮点
+
+✨ 智能文本识别
+采用先进的自然语言处理技术，能够理解上下文语义，自动识别文本中的关键信息和结构化数据。无论是长篇小说、技术文档还是财务报表，都能精准分析。
+
+📊 数据可视化
+将文本分析结果以直观的图表形式呈现，包括词频统计、情感曲线、主题分布等。帮助你快速把握内容要点。
+
+🔄 实时协作
+支持多人同时编辑，毫秒级同步。版本历史永久保存，随时回溯。评论、批注、任务分配，让团队协作更高效。
+
+⚡ 高性能
+基于 Pretext 的精确文本测量技术，即使处理百万字级别的文档，也能保持流畅的编辑体验。零回流、零卡顿。`
+    ]
+
+    let font = '15px Inter, "PingFang SC", sans-serif'
+    let lineHeight = 26
+    let currentText = ''
+    let charIndex = 0
+    let prepared = null
+    let isRunning = false
+    let speed = 30
+    let lastTime = 0
+
+    const typedEl = document.getElementById('typed-text')
+    const cursorEl = document.getElementById('cursor')
+    const infoEl = document.getElementById('height-info')
+    const barEl = document.getElementById('bar')
+    const output = document.getElementById('output')
+
+    function getOutputWidth() {
+      return output.clientWidth - 56 // 减去 padding
+    }
+
+    function updateInfo() {
+      if (!prepared) return
+      const { height, lineCount } = layout(prepared, getOutputWidth(), lineHeight)
+      infoEl.textContent = `H: ${Math.round(height)}px | ${lineCount} 行`
+      const maxH = 400
+      barEl.style.width = Math.min(height / maxH * 100, 100) + '%'
+    }
+
+    function setText(idx) {
+      document.querySelectorAll('.controls button').forEach((b, i) => {
+        b.classList.toggle('active', i === idx)
+      })
+      currentText = texts[idx]
+      charIndex = 0
+      typedEl.textContent = ''
+      prepared = null
+      updateInfo()
+    }
+
+    function type(timestamp) {
+      if (!isRunning) return
+      if (timestamp - lastTime < speed) {
+        requestAnimationFrame(type)
+        return
+      }
+      lastTime = timestamp
+
+      if (charIndex < currentText.length) {
+        const ch = currentText[charIndex]
+        charIndex++
+        typedEl.textContent += ch
+
+        // 每 20 个字符才重新 prepare，避免过度测量
+        if (charIndex % 20 === 0 || charIndex === currentText.length) {
+          const visible = currentText.substring(0, charIndex)
+          prepared = prepare(visible, font)
+          updateInfo()
+        }
+        requestAnimationFrame(type)
+      } else {
+        isRunning = false
+        cursorEl.classList.add('hide')
+      }
+    }
+
+    function start() {
+      if (isRunning) return
+      isRunning = true
+      cursorEl.classList.remove('hide')
+      charIndex = 0
+      typedEl.textContent = ''
+      lastTime = 0
+      requestAnimationFrame(type)
+    }
+
+    window.setText = (idx) => {
+      setText(idx)
+      start()
+    }
+
+    document.fonts.ready.then(() => {
+      setText(0)
+      updateInfo()
+      setTimeout(start, 500)
+    })
+
+    window.addEventListener('resize', updateInfo)
+  </script>
+</body>
+</html>

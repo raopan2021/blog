@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pretext Demo - 瀑布流布局</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', 'PingFang SC', sans-serif; background: #0f0f1a; min-height: 100vh; padding: 40px 20px; }
+    h1 { color: #fff; text-align: center; margin-bottom: 10px; font-size: 24px; }
+    p.sub { color: #888; text-align: center; margin-bottom: 40px; font-size: 14px; }
+    .controls { display: flex; justify-content: center; gap: 12px; margin-bottom: 40px; flex-wrap: wrap; }
+    .controls button { padding: 8px 20px; border: 1px solid #333; background: #1a1a2e; color: #a0a0c0; border-radius: 8px; cursor: pointer; font-size: 14px; transition: all 0.2s; }
+    .controls button:hover { border-color: #5f67ee; color: #fff; background: #252540; }
+    .masonry { display: flex; gap: 16px; max-width: 900px; margin: 0 auto; align-items: flex-start; }
+    .column { flex: 1; display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+    .card { background: #1a1a2e; border-radius: 12px; padding: 16px; border: 1px solid #2a2a40; transition: transform 0.2s, box-shadow 0.2s; overflow: hidden; }
+    .card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(95, 103, 238, 0.2); border-color: #5f67ee40; }
+    .card-tag { display: inline-block; font-size: 11px; padding: 3px 10px; border-radius: 20px; margin-bottom: 10px; font-weight: 600; }
+    .card-text { font-size: 14px; line-height: 1.7; color: #c0c0d0; }
+    .card-text.title { font-size: 15px; color: #e0e0f0; font-weight: 600; margin-bottom: 8px; }
+    .card-footer { margin-top: 12px; display: flex; justify-content: space-between; align-items: center; }
+    .card-footer span { font-size: 12px; color: #666; }
+    .card-footer .dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; margin-right: 4px; }
+    .fade { background: linear-gradient(to bottom, #1a1a2e 70%, transparent); position: absolute; bottom: 0; left: 0; right: 0; height: 60px; display: none; }
+    .masonry-wrap { position: relative; }
+  </style>
+</head>
+<body>
+  <h1>🧱 Pretext 瀑布流布局</h1>
+  <p class="sub">根据文本真实高度自动排列，无需估算 · 完美对齐</p>
+
+  <div class="controls">
+    <button onclick="addCard()">+ 添加卡片</button>
+    <button onclick="shuffle()">🔀 打乱</button>
+    <button onclick="changeCols(2)">2 列</button>
+    <button onclick="changeCols(3)">3 列</button>
+    <button onclick="changeCols(4)">4 列</button>
+  </div>
+
+  <div class="masonry" id="masonry"></div>
+
+  <script type="module">
+    import { prepare, layout } from 'https://cdn.jsdelivr.net/npm/@chenglou/pretext@0.0.3/dist/layout.js'
+
+    const texts = [
+      { tag: '技术', color: '#5f67ee', text: '为什么 Pretext 能精确测量文本高度？核心在于它使用 Canvas 的 measureText API，在测量阶段完全不触碰 DOM，避免了强制回流。' },
+      { tag: '生活', color: '#2ecc71', text: '今天去爬山，山顶的风景真的很美。空气清新，整个人都放松下来了。' },
+      { tag: '技术', color: '#5f67ee', text: '虚拟滚动是前端性能优化的重要手段。传统方案用估算高度，Pretext 让真实高度测量成为可能，滚动条终于准确了。' },
+      { tag: '美食', color: '#e67e22', text: '成都火锅' },
+      { tag: '技术', color: '#5f67ee', text: 'Canvas 渲染文本的优势：不需要 DOM 节点、不触发回流、可以精确控制每个字符的位置和颜色。在游戏、教育图形、数据可视化中广泛应用。' },
+      { tag: '旅行', color: '#9b59b6', text: '日本京都清水寺 visit' },
+      { tag: '技术', color: '#5f67ee', text: 'Knuth-Plass 排版算法由 Donald Knuth 和 Michael Plass 在 1970 年代提出，核心思想是让每行的"糟糕度"（badness）尽可能均匀，从而实现整体美观。' },
+      { tag: '读书', color: '#e74c3c', text: '《设计心理学》读书笔记：设计的本质是解决用户的问题，而不是炫技。' },
+      { tag: '技术', color: '#5f67ee', text: 'Unicode 字形簇（Grapheme Cluster）是用户感知的一个字符，可能由多个码点组成。比如 "🇨🇳" 是 2 个 Regional Indicator 码点，但你看到的是 1 个中国国旗 emoji。' },
+      { tag: '随想', color: '#1abc9c', text: '代码写久了，偶尔也要抬头看看天。' },
+    ]
+
+    let font = '14px Inter, "PingFang SC", sans-serif'
+    let lineHeight = 22
+    let cardPadding = 16
+    let cols = 3
+    let cards = [...texts]
+    let cardId = 0
+
+    function getHeight(text, width) {
+      const prepared = prepare(text, font)
+      const w = width - cardPadding * 2
+      const { height } = layout(prepared, w, lineHeight)
+      return height + cardPadding * 2 + 52 // 52 = tag + footer
+    }
+
+    function render() {
+      const masonry = document.getElementById('masonry')
+      masonry.innerHTML = ''
+      masonry.style.gap = cols === 2 ? '24px' : '16px'
+
+      const colWidth = masonry.clientWidth / cols
+      const colHeights = Array(cols).fill(0)
+      const colContent = Array(cols).fill(null).map(() => [])
+
+      cards.forEach(card => {
+        const minCol = colHeights.indexOf(Math.min(...colHeights))
+        const x = minCol * colWidth
+        const y = colHeights[minCol]
+        const w = colWidth - (cols > 1 ? 8 : 0)
+        const h = getHeight(card.text, w)
+
+        colContent[minCol].push({ ...card, x, y, w, h })
+        colHeights[minCol] += h + 16
+      })
+
+      const maxH = Math.max(...colHeights)
+      masonry.style.height = maxH + 'px'
+      masonry.style.position = 'relative'
+
+      colContent.forEach((colCards, colIdx) => {
+        colCards.forEach(card => {
+          const div = document.createElement('div')
+          div.className = 'card'
+          div.style.cssText = `position:absolute;left:${card.x}px;top:${card.y}px;width:${card.w}px`
+          div.innerHTML = `
+            <span class="card-tag" style="background:${card.color}20;color:${card.color}">${card.tag}</span>
+            <div class="card-text">${card.text}</div>
+            <div class="card-footer">
+              <span><span class="dot" style="background:${card.color}"></span>${card.text.length} 字</span>
+              <span>${card.w.toFixed(0)}px</span>
+            </div>
+          `
+          masonry.appendChild(div)
+        })
+      })
+    }
+
+    window.addCard = () => {
+      const idx = Math.floor(Math.random() * texts.length)
+      cards.push({ ...texts[idx], id: cardId++ })
+      render()
+    }
+
+    window.shuffle = () => {
+      cards = [...texts].sort(() => Math.random() - 0.5).map((t, i) => ({ ...t, id: i }))
+      render()
+    }
+
+    window.changeCols = (n) => {
+      cols = n
+      document.querySelectorAll('.controls button').forEach(b => b.style.opacity = '')
+      event.target.style.opacity = '1'
+      render()
+    }
+
+    let resizeTimeout
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimeout)
+      resizeTimeout = setTimeout(render, 100)
+    })
+
+    cards = cards.map((t, i) => ({ ...t, id: i }))
+    document.fonts.ready.then(() => render())
+  </script>
+</body>
+</html>

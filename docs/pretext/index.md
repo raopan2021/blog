@@ -53,7 +53,7 @@
 ### Demo 1：瀑布流布局
 
 <iframe
-  src="/blog/projects/pretext-demo/masonry.html"
+  src="/blog/pretext-demo/masonry.html"
   width="100%"
   height="420px"
   frameborder="0"
@@ -64,7 +64,7 @@
 ### Demo 2：聊天消息气泡
 
 <iframe
-  src="/blog/projects/pretext-demo/chat.html"
+  src="/blog/pretext-demo/chat.html"
   width="100%"
   height="420px"
   frameborder="0"
@@ -75,7 +75,7 @@
 ### Demo 3：AI 打字机效果
 
 <iframe
-  src="/blog/projects/pretext-demo/typewriter.html"
+  src="/blog/pretext-demo/typewriter.html"
   width="100%"
   height="360px"
   frameborder="0"
@@ -86,7 +86,7 @@
 ### Demo 4：智能截断与展开
 
 <iframe
-  src="/blog/projects/pretext-demo/truncation.html"
+  src="/blog/pretext-demo/truncation.html"
   width="100%"
   height="420px"
   frameborder="0"
@@ -97,7 +97,7 @@
 ### Demo 5：通知提示系统
 
 <iframe
-  src="/blog/projects/pretext-demo/notification.html"
+  src="/blog/pretext-demo/notification.html"
   width="100%"
   height="380px"
   frameborder="0"
@@ -108,7 +108,7 @@
 ### Demo 6：代码编辑器行号
 
 <iframe
-  src="/blog/projects/pretext-demo/code-editor.html"
+  src="/blog/pretext-demo/code-editor.html"
   width="100%"
   height="380px"
   frameborder="0"
@@ -122,5 +122,5 @@
 
 | Demo | 文件 | 说明 |
 |------|------|------|
-| 综合演示 | [index.html](/blog/projects/pretext-demo/) | Textarea / Canvas / 虚拟列表 / 文本环绕 |
-| 新闻订阅阅读器 | [newsletter.html](/blog/projects/pretext-demo/newsletter.html) | 动态列数切换，文章高度自适应 |
+| 综合演示 | [index.html](/blog/pretext-demo/) | Textarea / Canvas / 虚拟列表 / 文本环绕 |
+| 新闻订阅阅读器 | [newsletter.html](/blog/pretext-demo/newsletter.html) | 动态列数切换，文章高度自适应 |
