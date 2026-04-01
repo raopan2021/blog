@@ -48,7 +48,7 @@
 </template>
 
 <script setup>
-import { ref, watch, onMounted, onUnmounted, nextTick } from 'vue'
+import { ref, watch, onMounted, onUnmounted } from 'vue'
 import * as echarts from 'echarts'
 
 const props = defineProps({
@@ -184,8 +184,10 @@ function updateChart() {
   }
 
   const series = buildSeries(mons)
+  // 先设置容器高度，然后resize让chart适应
   const chartHeight = calcChartHeight()
   chartRef.value.style.height = chartHeight + 'px'
+  chartInstance.resize({ height: chartHeight })
 
   // 动态 right padding
   const maxLabelLen = gpuNames.reduce((m, n) => Math.max(m, n.length), 0)
@@ -227,11 +229,6 @@ function updateChart() {
     },
     series,
   }, { notMerge: true })
-
-  // resize需要在下一次tick调用，确保DOM高度已更新
-  nextTick(() => {
-    if (chartInstance) chartInstance.resize()
-  })
 }
 
 let resizeHandler = null
@@ -242,18 +239,9 @@ watch(() => props.priceRange, () => {
 })
 
 // GPU 选择变化时重绘图表
-watch(() => props.selectedGpuNames, () => {
+watch(() => [props.selectedGpuNames, props.gpus], () => {
   if (chartInstance) updateChart()
 }, { deep: false })
-
-// 筛选结果（GPU数量）变化时重算高度并resize
-watch(() => props.selectedGpuNames.length, () => {
-  if (chartInstance && chartRef.value) {
-    const h = calcChartHeight()
-    chartRef.value.style.height = h + 'px'
-    chartInstance.resize()
-  }
-})
 
 onMounted(() => {
   setTimeout(initChart, 50)
