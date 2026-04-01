@@ -7,6 +7,7 @@ export function ViteSidebar(): DefaultTheme.SidebarItem[] {
 			collapsed: false,
 			base: '/vite/核心原理/',
 			items: [
+				{ text: '章节概览', link: 'index' },
 				{ text: 'Vite 原理', link: 'Vite原理' },
 			],
 		},
@@ -15,6 +16,7 @@ export function ViteSidebar(): DefaultTheme.SidebarItem[] {
 			collapsed: true,
 			base: '/vite/版本演进/',
 			items: [
+				{ text: '章节概览', link: 'index' },
 				{ text: 'Vite 1.x 青铜器时代', link: 'Vite1-青铜器' },
 				{ text: 'Vite 2.x 插件系统', link: 'Vite2-插件系统' },
 				{ text: 'Vite 3/4 稳定发展', link: 'Vite3-4稳定发展' },
@@ -28,6 +30,7 @@ export function ViteSidebar(): DefaultTheme.SidebarItem[] {
 			collapsed: true,
 			base: '/build/',
 			items: [
+				{ text: '章节概览', link: 'index' },
 				{ text: 'Webpack', link: 'Webpack' },
 				{ text: 'Rollup', link: 'Rollup' },
 				{ text: 'Rolldown', link: 'Rolldown' },
