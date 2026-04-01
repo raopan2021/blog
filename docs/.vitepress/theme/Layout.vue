@@ -1,11 +1,15 @@
 <script setup lang="ts">
-import { nextTick, provide } from 'vue'
+import { nextTick, provide, computed } from 'vue'
 import { useData } from 'vitepress'
 import DefaultTheme from 'vitepress/theme'
 const { Layout } = DefaultTheme
 import { ElBacktop } from 'element-plus'
+import FullscreenLayout from './components/FullscreenLayout.vue'
 
-const { isDark } = useData()
+const { isDark, page } = useData()
+
+// 检测 frontmatter 中的 layout 字段
+const isFullscreen = computed(() => page.value.frontmatter.layout === 'gpu-market')
 
 const enableTransitions = () =>
   'startViewTransition' in document &&
@@ -43,7 +47,9 @@ provide('toggle-appearance', async ({ clientX: x, clientY: y }: MouseEvent) => {
 </script>
 
 <template>
-  <Layout>
+  <!-- gpu-market 页面使用全屏 iframe 布局 -->
+  <FullscreenLayout v-if="isFullscreen" src="/blog/gpu-market/index.html" />
+  <Layout v-else>
     <template #doc-after>
       <el-backtop :right="100" :bottom="100" />
     </template>

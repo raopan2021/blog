@@ -122,11 +122,6 @@ export default {
 		})
 	},
 	Layout() {
-		const route = useRoute()
-		// gpu-market 页面使用全屏布局（VitePress 路由不含 base）
-		if (route.path.startsWith('/gpu-market') || route.path === '/gpu-market') {
-			return h(FullscreenLayout, { src: '/blog/gpu-market/index.html' })
-		}
 		return h(SiteLayout, null, {
 			// 'doc-before': () => h(AdComponent),
 		})
