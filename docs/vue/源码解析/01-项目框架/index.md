@@ -37,7 +37,7 @@ packages/
 | pnpm workspace | 高效的包管理工具 |
 | 作用域包名 | `@vue-learn/xxx` 格式 |
 
-## 本模块内容
+## 本节内容
 1. [Monorepo 实战：用 pnpm workspace 搭建 Vue 源码学习项目](./monorepo实战)
 ## 知识点预览
 - **Monorepo** — 单一代码仓库管理多个包
