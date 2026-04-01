@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>显卡行情中心</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@3.4/dist/vue.global.prod.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5.4/dist/echarts.min.js"></script>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'PingFang SC','Microsoft YaHei',sans-serif;background:#0f1117;color:#e2e8f0;min-height:100vh}
+    a{color:#60a5fa;text-decoration:none}
+    .header{background:linear-gradient(135deg,#1a1f2e,#141824);border-bottom:1px solid #2d3748;padding:0 24px;position:sticky;top:0;z-index:100}
+    .header-inner{max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:60px}
+    .logo{font-size:20px;font-weight:700;background:linear-gradient(90deg,#60a5fa,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+    .nav{display:flex;gap:8px}
+    .nav a{color:#94a3b8;padding:6px 14px;border-radius:6px;font-size:14px;cursor:pointer;transition:all .2s}
+    .nav a:hover{color:#e2e8f0;background:#1e293b;text-decoration:none}
+    .nav a.active{background:#1e40af;color:#fff}
+    .container{max-width:1400px;margin:0 auto;padding:24px}
+    .stats-bar{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px}
+    .stat-card{background:#1a1f2e;border:1px solid #2d3748;border-radius:12px;padding:20px;text-align:center}
+    .stat-card .num{font-size:28px;font-weight:700;background:linear-gradient(90deg,#60a5fa,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+    .stat-card .label{font-size:13px;color:#64748b;margin-top:4px}
+    .filters{background:#1a1f2e;border:1px solid #2d3748;border-radius:12px;padding:20px;margin-bottom:24px;display:flex;gap:24px;flex-wrap:wrap;align-items:center}
+    .filter-group{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+    .filter-label{font-size:13px;color:#64748b;white-space:nowrap}
+    .filter-btn{padding:6px 14px;border-radius:6px;border:1px solid #2d3748;background:#141824;color:#94a3b8;font-size:13px;cursor:pointer;transition:all .2s}
+    .filter-btn:hover{border-color:#60a5fa;color:#60a5fa}
+    .filter-btn.active{background:#1e40af;border-color:#3b82f6;color:#fff}
+    .filter-btn.nvidia.active{background:#4d8b31;border-color:#4d8b31}
+    .filter-btn.amd.active{background:#c4322e;border-color:#c4322e}
+    .filter-btn.intel.active{background:#0065b8;border-color:#0065b8}
+    .search-input{padding:8px 14px;border-radius:6px;border:1px solid #2d3748;background:#141824;color:#e2e8f0;font-size:14px;outline:none;width:200px}
+    .search-input:focus{border-color:#60a5fa}
+    .main-grid{display:grid;grid-template-columns:1fr 400px;gap:24px}
+    .card{background:#1a1f2e;border:1px solid #2d3748;border-radius:12px;overflow:hidden}
+    .card-header{padding:16px 20px;border-bottom:1px solid #2d3748;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
+    .card-title{font-size:15px;font-weight:600}
+    .card-body{padding:16px 20px}
+    .table-wrap{overflow-x:auto}
+    table{width:100%;border-collapse:collapse;font-size:13px}
+    thead th{padding:10px 12px;text-align:left;color:#64748b;font-weight:500;border-bottom:1px solid #2d3748;white-space:nowrap;cursor:pointer;user-select:none}
+    thead th:hover{color:#94a3b8}
+    tbody tr{border-bottom:1px solid #1e293b;transition:background .15s}
+    tbody tr:hover{background:#1e293b}
+    tbody td{padding:10px 12px;white-space:nowrap}
+    .name-cell{font-weight:600;color:#e2e8f0}
+    .brand-nvidia{color:#77b255;font-size:11px;background:rgba(119,178,85,.1);padding:2px 6px;border-radius:4px}
+    .brand-amd{color:#e43c39;font-size:11px;background:rgba(228,60,57,.1);padding:2px 6px;border-radius:4px}
+    .brand-intel{color:#60a5fa;font-size:11px;background:rgba(96,165,250,.1);padding:2px 6px;border-radius:4px}
+    .price{font-weight:600;color:#fbbf24}
+    .change-up{color:#ef4444}
+    .change-down{color:#22c55e}
+    .change-flat{color:#64748b}
+    .tag{display:inline-block;padding:2px 6px;border-radius:4px;font-size:11px}
+    .tag-danger{background:rgba(239,68,68,.15);color:#ef4444}
+    .tag-warn{background:rgba(251,191,36,.15);color:#fbbf24}
+    .tag-safe{background:rgba(34,197,94,.15);color:#22c55e}
+    .pagination{display:flex;align-items:center;justify-content:center;gap:8px;padding:16px;flex-wrap:wrap}
+    .page-btn{padding:6px 12px;border-radius:6px;border:1px solid #2d3748;background:#141824;color:#94a3b8;font-size:13px;cursor:pointer}
+    .page-btn:hover{border-color:#60a5fa;color:#60a5fa}
+    .page-btn.active{background:#1e40af;border-color:#3b82f6;color:#fff}
+    .page-btn:disabled{opacity:.4;cursor:not-allowed}
+    .gpu-list{max-height:460px;overflow-y:auto}
+    .gpu-item{display:flex;align-items:center;justify-content:space-between;padding:8px;border-bottom:1px solid #1e293b;cursor:pointer;transition:background .15s;border-radius:6px}
+    .gpu-item:hover{background:#1e293b}
+    .gpu-item.selected{background:#1e40af}
+    .gpu-item-left{display:flex;flex-direction:column;gap:2px}
+    .gpu-item-name{font-weight:600;font-size:13px}
+    .gpu-item-score{font-size:11px;color:#64748b}
+    .gpu-item-price{font-weight:600;color:#fbbf24;font-size:13px}
+    .excel-link{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:#141824;border:1px solid #2d3748;border-radius:8px;color:#94a3b8;font-size:13px;cursor:pointer;transition:all .2s}
+    .excel-link:hover{border-color:#60a5fa;color:#60a5fa;text-decoration:none}
+    .view-toggle{display:flex;gap:4px}
+    .view-btn{padding:6px 12px;border-radius:6px;border:1px solid #2d3748;background:#141824;color:#94a3b8;font-size:13px;cursor:pointer}
+    .view-btn.active{background:#1e40af;border-color:#3b82f6;color:#fff}
+    .info-box{background:#141824;border:1px solid #2d3748;border-radius:8px;padding:16px;color:#94a3b8;line-height:2;margin-top:16px}
+    .info-box h3{color:#e2e8f0;margin-bottom:8px}
+    code{background:#1e293b;padding:2px 6px;border-radius:4px;font-size:12px;color:#fbbf24}
+    .loading{text-align:center;padding:80px;color:#64748b;font-size:16px}
+    #trendChart{width:100%;height:420px}
+    @media(max-width:1024px){.main-grid{grid-template-columns:1fr}.stats-bar{grid-template-columns:repeat(2,1fr)}}
+  </style>
+</head>
+<body>
+<div id="app">
+  <div class="loading" v-if="!loaded">⏳ 数据加载中...</div>
+  <template v-else>
+  <div class="header">
+    <div class="header-inner">
+      <div class="logo">🎮 显卡行情中心</div>
+      <div class="nav">
+        <a :class="{active:view==='rank'}" @click="switchView('rank')">🏆 跑分榜</a>
+        <a :class="{active:view==='trend'}" @click="switchView('trend')">📈 价格趋势</a>
+        <a :class="{active:view==='browse'}" @click="switchView('browse')">📋 数据浏览</a>
+        <a :class="{active:view==='about'}" @click="switchView('about')">ℹ️ 关于</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="stats-bar">
+      <div class="stat-card"><div class="num">{{ filteredGpus.length }}</div><div class="label">收录显卡</div></div>
+      <div class="stat-card"><div class="num">{{ brandCount }}</div><div class="label">品牌数量</div></div>
+      <div class="stat-card"><div class="num">{{ months.length }}</div><div class="label">价格月份</div></div>
+      <div class="stat-card"><div class="num">¥{{ avgPrice }}</div><div class="label">3月均价(2k~5k)</div></div>
+    </div>
+
+    <div class="filters">
+      <div class="filter-group">
+        <span class="filter-label">品牌:</span>
+        <button class="filter-btn" :class="{active:brandFilter===''}" @click="brandFilter=''">全部</button>
+        <button class="filter-btn nvidia" :class="{active:brandFilter==='NVIDIA'}" @click="brandFilter='NVIDIA'">NVIDIA</button>
+        <button class="filter-btn amd" :class="{active:brandFilter==='AMD'}" @click="brandFilter='AMD'">AMD</button>
+        <button class="filter-btn intel" :class="{active:brandFilter==='Intel'}" @click="brandFilter='Intel'">Intel</button>
+      </div>
+      <div class="filter-group">
+        <span class="filter-label">价格:</span>
+        <button class="filter-btn" :class="{active:priceRange===''}" @click="priceRange=''">全部</button>
+        <button class="filter-btn" :class="{active:priceRange==='0-1000'}" @click="priceRange='0-1000'">0~1k</button>
+        <button class="filter-btn" :class="{active:priceRange==='1000-2000'}" @click="priceRange='1000-2000'">1k~2k</button>
+        <button class="filter-btn" :class="{active:priceRange==='2000-3000'}" @click="priceRange='2000-3000'">2k~3k</button>
+        <button class="filter-btn" :class="{active:priceRange==='3000+'}" @click="priceRange='3000+'">3k以上</button>
+      </div>
+      <div class="filter-group">
+        <input class="search-input" v-model="searchText" placeholder="搜索显卡型号...">
+      </div>
+      <a :href="excelPath" download class="excel-link" target="_blank">📥 下载原始Excel</a>
+    </div>
+
+    <!-- 跑分榜 -->
+    <div v-if="view==='rank'">
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">🏆 显卡跑分排行榜（Time Spy，RTX 5060 = 100%）</span>
+          <div class="view-toggle">
+            <button class="view-btn" :class="{active:rankSort==='score'}" @click="rankSort='score'">按跑分</button>
+            <button class="view-btn" :class="{active:rankSort==='price'}" @click="rankSort='price'">按价格</button>
+            <button class="view-btn" :class="{active:rankSort==='efficiency'}" @click="rankSort='efficiency'">按能效</button>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th style="width:40px;color:#475569">#</th>
+                <th>显卡型号</th><th>品牌</th><th>显存</th><th>TDP</th>
+                <th>跑分</th><th>性能%</th><th>3月价格</th><th>3月涨幅</th>
+                <th>性价比</th><th>能耗比</th><th>翻车风险</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="(gpu,idx) in paginatedGpus" :key="gpu.name">
+                <td>{{ (rankPage-1)*pageSize+idx+1 }}</td>
+                <td class="name-cell">{{ gpu.name }}</td>
+                <td><span :class="'brand-'+gpu.brand.toLowerCase()">{{ gpu.brand }}</span></td>
+                <td style="color:#94a3b8">{{ gpu.vram }}</td>
+                <td style="color:#94a3b8">{{ gpu.tdp }}W</td>
+                <td style="color:#fbbf24;font-weight:700">{{ gpu.score.toLocaleString() }}</td>
+                <td style="color:#a78bfa">{{ gpu.performance_pct }}%</td>
+                <td class="price">¥{{ getLatestPrice(gpu).toLocaleString() }}</td>
+                <td :class="getChangeClass(gpu)">{{ getChange(gpu) }}</td>
+                <td style="color:#34d399">{{ gpu.cost_perf || '-' }}</td>
+                <td style="color:#22d3ee">{{ gpu.efficiency || '-' }}</td>
+                <td>
+                  <span v-if="isHighRisk(gpu.name)" class="tag tag-danger">⚠️高</span>
+                  <span v-else-if="isMidRisk(gpu.name)" class="tag tag-warn">⚡中</span>
+                  <span v-else class="tag tag-safe">✅低</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="pagination">
+          <button class="page-btn" @click="rankPage--" :disabled="rankPage===1">上一页</button>
+          <button class="page-btn" v-for="p in rankPagesArr" :key="p" :class="{active:p===rankPage}" @click="rankPage=p">{{ p }}</button>
+          <button class="page-btn" @click="rankPage++" :disabled="rankPage>=rankPages">下一页</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 价格趋势 -->
+    <div v-if="view==='trend'" class="main-grid">
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">📈 价格走势（近4个月）</span>
+          <span style="font-size:12px;color:#64748b">点击左侧添加对比，最多8张</span>
+        </div>
+        <div class="card-body">
+          <div id="trendChart"></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">🖱️ 选择显卡</span>
+          <span style="font-size:12px;color:#64748b">已选 {{ selectedGpuNames.length }}/8</span>
+        </div>
+        <div class="card-body" style="padding:8px">
+          <div class="gpu-list">
+            <div v-for="gpu in filteredGpus" :key="gpu.name"
+              class="gpu-item" :class="{selected:selectedGpuNames.includes(gpu.name)}"
+              @click="toggleGpu(gpu.name)">
+              <div class="gpu-item-left">
+                <span class="gpu-item-name">{{ gpu.name }}</span>
+                <span class="gpu-item-score">{{ gpu.score.toLocaleString() }}分 · {{ gpu.brand }}</span>
+              </div>
+              <span class="gpu-item-price">¥{{ getLatestPrice(gpu).toLocaleString() }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 数据浏览 -->
+    <div v-if="view==='browse'">
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">📋 完整数据（逐月价格明细）</span>
+          <span style="font-size:12px;color:#64748b">共 {{ filteredGpus.length }} 张</span>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>显卡型号</th><th>品牌</th><th>显存</th><th>TDP</th>
+                <th>跑分</th>
+                <th>2025年12月</th><th>2026年1月</th><th>2026年2月</th><th>2026年3月</th>
+                <th>3月涨幅</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="gpu in browsedGpus" :key="gpu.name">
+                <td class="name-cell">{{ gpu.name }}</td>
+                <td><span :class="'brand-'+gpu.brand.toLowerCase()">{{ gpu.brand }}</span></td>
+                <td style="color:#94a3b8">{{ gpu.vram }}</td>
+                <td style="color:#94a3b8">{{ gpu.tdp }}W</td>
+                <td style="color:#fbbf24">{{ gpu.score.toLocaleString() }}</td>
+                <td class="price">{{ fmtPrice(gpu.prices['2025年12月']) }}</td>
+                <td class="price">{{ fmtPrice(gpu.prices['2026年1月']) }}</td>
+                <td class="price">{{ fmtPrice(gpu.prices['2026年2月']) }}</td>
+                <td class="price">{{ fmtPrice(gpu.prices['2026年3月']) }}</td>
+                <td :class="getChangeClass(gpu)">{{ getChange(gpu) }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="pagination">
+          <button class="page-btn" @click="browsePage--" :disabled="browsePage===1">上一页</button>
+          <button class="page-btn" v-for="p in browsePagesArr" :key="p" :class="{active:p===browsePage}" @click="browsePage=p">{{ p }}</button>
+          <button class="page-btn" @click="browsePage++" :disabled="browsePage>=browsePages">下一页</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 关于 -->
+    <div v-if="view==='about'">
+      <div class="card">
+        <div class="card-body" style="padding:32px">
+          <h2 style="margin-bottom:16px">📊 关于本页面</h2>
+          <p style="color:#94a3b8;line-height:2;margin-bottom:16px">
+            数据来源于二手显卡行情 Excel，涵盖 <b style="color:#e2e8f0">{{ gpus.length }}</b> 张显卡近
+            <b style="color:#e2e8f0">{{ months.length }}</b> 个月的价格走势，支持 NVIDIA / AMD / Intel 对比。
+          </p>
+          <div class="info-box">
+            <h3>📌 字段说明</h3>
+            <ul style="padding-left:20px">
+              <li><b style="color:#e2e8f0">Time Spy 跑分</b>：3DMark 显卡分数，衡量综合性能</li>
+              <li><b style="color:#e2e8f0">性能百分比</b>：以 RTX 5060（13619分）= 100% 为基准</li>
+              <li><b style="color:#e2e8f0">性价比</b>：跑分 ÷ 价格，数值越大越值（仅供参考）</li>
+              <li><b style="color:#e2e8f0">能耗比</b>：跑分 ÷ TDP，数值越大越省电</li>
+              <li><b style="color:#e2e8f0">翻车风险</b>：基于架构/挖矿历史的综合评估，仅供参考</li>
+            </ul>
+          </div>
+          <div class="info-box">
+            <h3>🔄 数据更新方法</h3>
+            <ol style="padding-left:20px">
+              <li>替换 <code>data/</code> 目录下的 Excel 文件</li>
+              <li>运行 <code>python3 process_gpu_data.py [Excel文件路径]</code></li>
+              <li>刷新页面即可看到新数据</li>
+            </ol>
+          </div>
+          <div class="info-box">
+            <h3>🚀 本地运行</h3>
+            <ol style="padding-left:20px">
+              <li>确保 Python 3 可用（无需安装额外依赖）</li>
+              <li>在目录下运行 <code>python3 -m http.server 8080</code></li>
+              <li>浏览器打开 <code>http://localhost:8080</code></li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </template>
+</div>
+
+<script>
+const {createApp,ref,computed,watch,onMounted,nextTick} = Vue;
+
+createApp({
+  setup() {
+    const gpus = ref([]);
+    const months = ref([]);
+    const loaded = ref(false);
+    const excelPath = ref('#');
+    const view = ref('rank');
+    const brandFilter = ref('');
+    const priceRange = ref('');
+    const searchText = ref('');
+    const rankSort = ref('score');
+    const rankPage = ref(1);
+    const pageSize = 20;
+    const browsePage = ref(1);
+    const selectedGpuNames = ref(['RTX 5060','RX 9070 GRE','RTX 4070','RX 9060 XT 8G','RTX 5070']);
+    let trendChart = null;
+
+    async function loadData() {
+      try {
+        const res = await fetch('data.json');
+        const data = await res.json();
+        gpus.value = data.gpus;
+        months.value = data.months;
+        loaded.value = true;
+        nextTick(initChart);
+      } catch(e) {
+        console.error('数据加载失败:', e);
+      }
+    }
+
+    function initChart() {
+      const el = document.getElementById('trendChart');
+      if (el) {
+        trendChart = echarts.init(el);
+        updateChart();
+        window.addEventListener('resize', () => trendChart && trendChart.resize());
+      }
+    }
+
+    function updateChart() {
+      if (!trendChart) return;
+      const mons = months.value;
+      const palette = ['#60a5fa','#f87171','#34d399','#fbbf24','#a78bfa','#f472b6','#38bdf8','#fb923c'];
+      const series = selectedGpuNames.value.map((name, i) => {
+        const gpu = gpus.value.find(g => g.name === name);
+        if (!gpu) return null;
+        return {
+          name,
+          type: 'line',
+          smooth: true,
+          data: mons.map(m => gpu.prices[m] || null),
+          lineStyle: { color: palette[i % palette.length], width: 2 },
+          itemStyle: { color: palette[i % palette.length] },
+          connectNulls: true
+        };
+      }).filter(Boolean);
+
+      trendChart.setOption({
+        backgroundColor: 'transparent',
+        tooltip: {
+          trigger: 'axis',
+          backgroundColor: '#1e293b',
+          borderColor: '#334155',
+          textStyle: { color: '#e2e8f0' },
+          formatter: params => {
+            let html = `<div style="font-weight:600;margin-bottom:6px">${params[0].axisValue}</div>`;
+            params.forEach(p => {
+              if (p.value !== null) html += `<div style="display:flex;justify-content:space-between;gap:16px"><span style="color:${p.color}">${p.seriesName}</span><span style="font-weight:600">¥${p.value.toLocaleString()}</span></div>`;
+            });
+            return html;
+          }
+        },
+        legend: { bottom: 0, textStyle: { color: '#94a3b8', fontSize: 12 }, itemWidth: 16 },
+        grid: { top: 10, right: 20, bottom: 50, left: 60 },
+        xAxis: { type: 'category', data: mons, axisLine: { lineStyle: { color: '#334155' } }, axisLabel: { color: '#94a3b8' } },
+        yAxis: { type: 'value', axisLine: { show: false }, splitLine: { lineStyle: { color: '#1e293b' } }, axisLabel: { color: '#64748b', formatter: v => '¥' + (v >= 1000 ? v/1000+'k' : v) } },
+        series
+      }, true);
+    }
+
+    function toggleGpu(name) {
+      const idx = selectedGpuNames.value.indexOf(name);
+      if (idx >= 0) selectedGpuNames.value.splice(idx, 1);
+      else { if (selectedGpuNames.value.length >= 8) selectedGpuNames.value.shift(); selectedGpuNames.value.push(name); }
+      nextTick(updateChart);
+    }
+
+    function switchView(v) {
+      view.value = v;
+      if (v === 'trend') nextTick(() => { if (!trendChart) initChart(); else updateChart(); });
+    }
+
+    const filteredGpus = computed(() => {
+      let list = [...gpus.value];
+      if (brandFilter.value) list = list.filter(g => g.brand === brandFilter.value);
+      if (priceRange.value) {
+        list = list.filter(g => {
+          const p = g.prices['2026年3月'] || g.prices['2026年2月'] || g.prices['2026年1月'] || g.prices['2025年12月'] || 0;
+          if (priceRange.value === '0-1000') return p < 1000;
+          if (priceRange.value === '1000-2000') return p >= 1000 && p < 2000;
+          if (priceRange.value === '2000-3000') return p >= 2000 && p < 3000;
+          if (priceRange.value === '3000+') return p >= 3000;
+          return true;
+        });
+      }
+      if (searchText.value) { const kw = searchText.value.toLowerCase(); list = list.filter(g => g.name.toLowerCase().includes(kw)); }
+      return list;
+    });
+
+    const brandCount = computed(() => new Set(gpus.value.map(g => g.brand)).size);
+    const avgPrice = computed(() => {
+      const mid = gpus.value.filter(g => { const p = g.prices['2026年3月'] || 0; return p >= 2000 && p <= 5000; });
+      if (!mid.length) return '-';
+      return Math.round(mid.reduce((s,g) => s + (g.prices['2026年3月']||0), 0) / mid.length).toLocaleString();
+    });
+    const sortedGpus = computed(() => {
+      const list = [...filteredGpus.value];
+      if (rankSort.value === 'score') list.sort((a,b) => b.score - a.score);
+      else if (rankSort.value === 'price') list.sort((a,b) => getLatestPrice(b) - getLatestPrice(a));
+      else if (rankSort.value === 'efficiency') list.sort((a,b) => (b.efficiency||0) - (a.efficiency||0));
+      return list;
+    });
+    const paginatedGpus = computed(() => { const s = (rankPage.value-1)*pageSize; return sortedGpus.value.slice(s, s+pageSize); });
+    const rankPages = computed(() => Math.ceil(sortedGpus.value.length / pageSize));
+    const rankPagesArr = computed(() => { const total = rankPages.value; const cur = rankPage.value; const arr = []; const start = Math.max(1, cur-2); const end = Math.min(total, cur+2); for(let i=start;i<=end;i++) arr.push(i); return arr; });
+    const browsedGpus = computed(() => { const s = (browsePage.value-1)*pageSize; return filteredGpus.value.slice(s, s+pageSize); });
+    const browsePages = computed(() => Math.ceil(filteredGpus.value.length / pageSize));
+    const browsePagesArr = computed(() => { const total = browsePages.value; const cur = browsePage.value; const arr = []; const start = Math.max(1, cur-2); const end = Math.min(total, cur+2); for(let i=start;i<=end;i++) arr.push(i); return arr; });
+
+    function getLatestPrice(gpu) { return gpu.prices['2026年3月'] || gpu.prices['2026年2月'] || gpu.prices['2026年1月'] || gpu.prices['2025年12月'] || 0; }
+    function getChange(gpu) { const c = gpu.changes['2026年3月']; if (!c && c!==0) return '-'; return (c>0?'+':'')+c; }
+    function getChangeClass(gpu) { const c = gpu.changes['2026年3月']; if (!c && c!==0) return ''; return c>0?'change-up':c<0?'change-down':'change-flat'; }
+    function fmtPrice(v) { return v ? '¥'+v.toLocaleString() : '-'; }
+    function isHighRisk(name) { return name.includes('RTX 2080') || name.includes('RTX 3090') || name.includes('GTX 1080') || name.includes('GTX 1070'); }
+    function isMidRisk(name) { return name.includes('RTX 3080') || name.includes('RTX 3070') || name.includes('RX 6800') || name.includes('RX 6700'); }
+
+    onMounted(loadData);
+
+    return {gpus,months,loaded,excelPath,view,brandFilter,priceRange,searchText,
+      rankSort,rankPage,pageSize,paginatedGpus,rankPages,rankPagesArr,
+      browsedGpus,browsePage,browsePages,browsePagesArr,
+      filteredGpus,brandCount,avgPrice,selectedGpuNames,
+      getLatestPrice,getChange,getChangeClass,fmtPrice,isHighRisk,isMidRisk,
+      toggleGpu,switchView};
+  }
+}).mount('#app');
+</script>
+</body>
+</html>
