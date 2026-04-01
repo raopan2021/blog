@@ -53,6 +53,23 @@
 - Vue 3.2 script setup 语法糖
 - Vue 3.4 性能飞跃
 
+### 模块九：Slots 插槽原理
+
+- 插槽编译原理
+- 作用域插槽实现
+
+### 模块十：指令系统
+
+- 指令编译原理
+- v-model 实现原理
+- 自定义指令
+
+### 模块十一：内置组件
+
+- KeepAlive 缓存组件
+- Transition 动画过渡
+- Teleport 传送门
+
 ## 🎯 学习目标
 
 1. **理解 Vue3 的核心响应式系统** — 掌握 Proxy、Effect、Watch 的原理
@@ -68,19 +85,8 @@
 projects/vue3-source/2024vue3-lesson-master/
 ├── packages/
 │   ├── reactivity/src/         # 响应式系统完整源码
-│   │   ├── effect.ts           # ReactiveEffect、trackEffect、triggerEffects
-│   │   ├── reactive.ts         # reactive、createReactiveObject
-│   │   ├── ref.ts              # RefImpl、toRef、toRefs、proxyRefs
-│   │   ├── computed.ts          # ComputedRefImpl
-│   │   ├── baseHandler.ts       # Proxy Handler
-│   │   └── reactiveEffect.ts    # 依赖创建和管理
-│   ├── runtime-core/src/        # 运行时核心
-│   │   ├── component.ts         # 组件实例创建、setupComponent
-│   │   ├── renderer.ts          # 渲染器、mountElement、patchElement
-│   │   ├── scheduler.ts         # 任务调度、queueJob
-│   │   └── apiLifecycle.ts      # 生命周期钩子
-│   ├── runtime-dom/src/         # DOM 特定实现
-│   └── shared/src/              # 共享工具、patchFlags
+│   ├── runtime-core/src/       # 运行时核心
+│   └── runtime-dom/src/        # DOM 特定实现
 ```
 
 ## 💡 适合人群
