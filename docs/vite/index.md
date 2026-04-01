@@ -5,20 +5,18 @@
 ## 📚 课程大纲
 
 ### Vite 版本演进
-::: details 点击展开
+
 - Vite 1.x: 青铜器时代
 - Vite 2.x: 插件系统
 - Vite 3/4: 稳定发展
 - Vite 5.x: Rolldown
-:::
 
 ### 打包工具对比
-::: details 点击展开
+
 - Webpack
 - Rollup
 - Rolldown
 - 其他工具对比
-:::
 
 ---
 
