@@ -26,7 +26,7 @@ jobs:
 
       - name: Install dependencies
         working-directory: ./projects/gpu-market
-        run: npm ci
+        run: npm install
 
       - name: Build
         working-directory: ./projects/gpu-market
