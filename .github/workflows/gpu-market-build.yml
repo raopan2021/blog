@@ -1,0 +1,46 @@
+name: Build GPU Market
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'projects/gpu-market/**'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-gpu-market:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: 'npm'
+          cache-dependency-path: projects/gpu-market/package-lock.json
+
+      - name: Install dependencies
+        run: cd projects/gpu-market && npm ci
+
+      - name: Build
+        run: cd projects/gpu-market && npm run build
+
+      - name: Copy dist to docs
+        run: cp projects/gpu-market/dist/index.html docs/public/gpu-market/index.html
+
+      - name: Commit & Push
+        run: |
+          git config --local user.name "github-actions[bot]"
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git add docs/public/gpu-market/index.html
+          git diff --cached --quiet || {
+            git commit -m "[auto] Update gpu-market dist"
+            git push
+          }
