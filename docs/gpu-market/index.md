@@ -1,5 +1,7 @@
 ---
-layout: gpu-market
+outline: 'deep'
 ---
 
 # 二手显卡行情
+
+页面内容建设中...
