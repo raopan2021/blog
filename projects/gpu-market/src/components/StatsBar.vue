@@ -4,71 +4,38 @@
     <div class="filters">
       <div class="filter-group">
         <span class="filter-label">品牌:</span>
-        <button
-          v-for="b in brandOptions"
-          :key="b.value"
-          class="filter-btn"
-          :class="[b.cls, { active: brandFilter === b.value }]"
-          @click="$emit('brandChange', b.value)"
-        >{{ b.label }}</button>
+        <button v-for="b in brandOptions" :key="b.value" class="filter-btn"
+          :class="[b.cls, { active: brandFilter === b.value }]" @click="$emit('brandChange', b.value)">{{ b.label
+          }}</button>
       </div>
       <div class="filter-group">
         <span class="filter-label">价格:</span>
-        <button
-          v-for="p in priceOptions"
-          :key="p.value"
-          class="filter-btn"
-          :class="{ active: priceRange === p.value && !customRange.active }"
-          @click="applyPreset(p.value)"
-        >{{ p.label }}</button>
+        <button v-for="p in priceOptions" :key="p.value" class="filter-btn"
+          :class="{ active: priceRange === p.value && !customRange.active }" @click="applyPreset(p.value)">{{ p.label
+          }}</button>
         <div class="custom-price">
-          <input
-            class="search-input custom-price-input"
-            type="number"
-            placeholder="最低价"
-            :value="customRange.min"
-            min="0"
-            @input="updateCustomMin($event.target.value)"
-          >
+          <input class="search-input custom-price-input" type="number" placeholder="最低价" :value="customRange.min"
+            min="0" @input="updateCustomMin($event.target.value)">
           <span class="filter-label">~</span>
-          <input
-            class="search-input custom-price-input"
-            type="number"
-            placeholder="最高价"
-            :value="customRange.max"
-            min="0"
-            @input="updateCustomMax($event.target.value)"
-          >
-          <button
-            v-if="customRange.active"
-            class="filter-btn active"
-            style="font-size:11px;padding:3px 8px"
-            @click="applyCustom"
-          >应用</button>
-          <button
-            v-if="customRange.active"
-            class="filter-btn"
-            style="font-size:11px;padding:3px 8px"
-            @click="clearCustom"
-          >清除</button>
+          <input class="search-input custom-price-input" type="number" placeholder="最高价" :value="customRange.max"
+            min="0" @input="updateCustomMax($event.target.value)">
+          <button v-if="customRange.active" class="filter-btn active" style="font-size:11px;padding:3px 8px"
+            @click="applyCustom">应用</button>
+          <button v-if="customRange.active" class="filter-btn" style="font-size:11px;padding:3px 8px"
+            @click="clearCustom">清除</button>
         </div>
       </div>
       <div class="filter-group">
-        <input
-          class="search-input"
-          :value="searchText"
-          placeholder="搜索显卡型号..."
-          @input="$emit('searchChange', $event.target.value)"
-        >
+        <input class="search-input" :value="searchText" placeholder="搜索显卡型号..."
+          @input="$emit('searchChange', $event.target.value)">
       </div>
       <!-- 筛选结果数量 -->
       <div class="filter-group">
-        <span class="filter-count">筛选出 <strong>{{ filteredCount }}</strong> / 共 <strong>{{ totalCount }}</strong> 张显卡</span>
+        <span class="filter-count">筛选出 <strong>{{ filteredCount }}</strong> / 共 <strong>{{ totalCount }}</strong>
+          张显卡</span>
       </div>
-    </div>
 
-    <!-- 平均价格变化 -->
-    <div class="avg-change-card">
+      <!-- 平均价格变化 -->
       <div class="avg-change-inner">
         <span class="avg-change-value">{{ avgChange >= 0 ? '+' : '' }}{{ avgChange.toLocaleString() }}</span>
         <span class="avg-change-unit">元</span>
@@ -188,11 +155,31 @@ const priceOptions = [
   cursor: pointer;
   transition: all 0.2s;
 
-  &:hover { border-color: $accent-blue; color: $accent-blue; }
-  &.active { background: #1e40af; border-color: #3b82f6; color: #fff; }
-  &.nvidia.active { background: #3d6b27; border-color: #4d8b31; }
-  &.amd.active { background: #a52a2a; border-color: #c4322e; }
-  &.intel.active { background: #004c8f; border-color: #0065b8; }
+  &:hover {
+    border-color: $accent-blue;
+    color: $accent-blue;
+  }
+
+  &.active {
+    background: #1e40af;
+    border-color: #3b82f6;
+    color: #fff;
+  }
+
+  &.nvidia.active {
+    background: #3d6b27;
+    border-color: #4d8b31;
+  }
+
+  &.amd.active {
+    background: #a52a2a;
+    border-color: #c4322e;
+  }
+
+  &.intel.active {
+    background: #004c8f;
+    border-color: #0065b8;
+  }
 }
 
 .filter-count {
@@ -220,8 +207,13 @@ const priceOptions = [
   width: 180px;
   transition: border-color 0.2s;
 
-  &:focus { border-color: $accent-blue; }
-  &::placeholder { color: $text-muted; }
+  &:focus {
+    border-color: $accent-blue;
+  }
+
+  &::placeholder {
+    color: $text-muted;
+  }
 }
 
 .custom-price {
@@ -258,8 +250,13 @@ const priceOptions = [
   line-height: 1;
 }
 
-.up .avg-change-value { color: $accent-red; }
-.down .avg-change-value { color: $accent-green; }
+.up .avg-change-value {
+  color: $accent-red;
+}
+
+.down .avg-change-value {
+  color: $accent-green;
+}
 
 .avg-change-unit {
   font-size: 18px;
@@ -280,11 +277,20 @@ const priceOptions = [
   padding: 2px 10px;
   border-radius: 12px;
 
-  &.up { background: rgba($accent-red, 0.15); color: $accent-red; }
-  &.down { background: rgba($accent-green, 0.15); color: $accent-green; }
+  &.up {
+    background: rgba($accent-red, 0.15);
+    color: $accent-red;
+  }
+
+  &.down {
+    background: rgba($accent-green, 0.15);
+    color: $accent-green;
+  }
 }
 
 @media (max-width: 768px) {
-  .filters { gap: 12px; }
+  .filters {
+    gap: 12px;
+  }
 }
 </style>

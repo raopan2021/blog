@@ -4,9 +4,9 @@ import DefaultTheme from 'vitepress/theme'
 import { h, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 
 // import AdComponent from './AdComponent.vue'
-import SiteLayout from './Layout.vue'
+import Layout from './Layout.vue'
 import Poem from './poem.vue' // 自定义的markdowm布局
-import FullscreenLayout from './components/FullscreenLayout.vue'
+import FullscreenLayout from './FullscreenLayout.vue'
 
 // import elementplus from "element-plus"
 // import "element-plus/dist/index.css";
@@ -28,6 +28,7 @@ export default {
 		// custom router. `siteData`` is a `ref`` of current site-level metadata.
 		// app.use(elementplus);
 		app.component('poem', Poem)
+		app.component('fullscreenLayout', FullscreenLayout)
 	},
 
 	// 文字渐入效果
@@ -122,7 +123,7 @@ export default {
 		})
 	},
 	Layout() {
-		return h(SiteLayout, null, {
+		return h(Layout, null, {
 			// 'doc-before': () => h(AdComponent),
 		})
 	},
