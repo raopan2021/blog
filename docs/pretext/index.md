@@ -16,74 +16,72 @@ Pretext 是由 chenglou（ReScript 作者）开发的一个纯 JavaScript/TypeSc
 
 ### Demo 演示
 
-import DemoCard from '../../components/DemoCard.vue'
-
-<DemoCard :demos="[
-  { title: '对齐算法', desc: '三种段落对齐算法对比', link: '/blog/pretext-demo/justification.html', tag: 'justification' },
-  { title: '聊天气泡', desc: '精确高度的气泡布局', link: '/blog/pretext-demo/bubbles.html', tag: 'bubbles' },
-  { title: '动态布局', desc: '障碍物感知的文本绕流', link: '/blog/pretext-demo/dynamic-layout.html', tag: 'dynamic-layout' },
-  { title: '字体测量', desc: '精确的行高与段落高度', link: '/blog/pretext-demo/typography.html', tag: 'typography' },
-  { title: '手风琴', desc: '预先计算的高度动画', link: '/blog/pretext-demo/accordion.html', tag: 'accordion' },
-]" />
+| Demo | 名称 | 说明 |
+|------|------|------|
+| 1 | [The Editorial Engine](./demo/demo1-editorial-engine) | 多栏布局 + 可拖拽障碍物，60fps 实时重排 |
+| 2 | [Fluid Smoke](./demo/demo2-fluid-smoke) | 粒子系统映射为 ASCII 艺术 |
+| 3 | [Justification Compared](./demo/demo3-justification-comparison) | 三种对齐算法对比：CSS、贪心、Knuth-Plass |
+| 4 | [Variable Typographic ASCII](./demo/demo4-variable-typographic-ascii) | 多字重比例字体宽度测量 |
+| 5 | [Shrinkwrap Showdown](./demo/demo5-shrinkwrap-showdown) | CSS fit-content vs Pretext 精确 shrinkwrap |
 
 ## 在线演示
 
 ::: info 在线 Demo 说明
-参考官方 chenglou.me/pretext 设计风格：羊皮纸配色、衬线标题、克制动效
+Demo 来自 [somnai-dreams/pretext-demos](https://github.com/somnai-dreams/pretext-demos)
 :::
 
-### Demo 1：对齐算法 — 三种段落布局对比
+### Demo 1：The Editorial Engine
 
 <iframe
-  src="/blog/pretext-demo/justification.html"
+  src="/blog/pretext-demo/the-editorial-engine.html"
   width="100%"
-  height="580px"
+  height="600px"
   frameborder="0"
-  style="margin-top:12px; border-radius:12px; background:#f5f1ea;"
+  style="margin-top:12px; border-radius:12px; background:#0a0a0c;"
   allow="autoplay"
 />
 
-### Demo 2：聊天气泡 — 精确高度的气泡布局
+### Demo 2：Fluid Smoke
 
 <iframe
-  src="/blog/pretext-demo/bubbles.html"
+  src="/blog/pretext-demo/fluid-smoke.html"
   width="100%"
-  height="540px"
+  height="600px"
   frameborder="0"
-  style="margin-top:12px; border-radius:12px; background:#f5f7f5;"
+  style="margin-top:12px; border-radius:12px; background:#06060a;"
   allow="autoplay"
 />
 
-### Demo 3：动态布局 — 障碍物感知的文本绕流
+### Demo 3：Justification Compared
 
 <iframe
-  src="/blog/pretext-demo/dynamic-layout.html"
+  src="/blog/pretext-demo/justification-comparison.html"
   width="100%"
-  height="580px"
+  height="700px"
   frameborder="0"
-  style="margin-top:12px; border-radius:12px; background:#f5f1ea;"
+  style="margin-top:12px; border-radius:12px; background:#faf8f5;"
   allow="autoplay"
 />
 
-### Demo 4：字体测量 — 精确的行高与段落高度
+### Demo 4：Variable Typographic ASCII
 
 <iframe
-  src="/blog/pretext-demo/typography.html"
+  src="/blog/pretext-demo/variable-typographic-ascii.html"
   width="100%"
-  height="540px"
+  height="500px"
   frameborder="0"
-  style="margin-top:12px; border-radius:12px; background:#f5f1ea;"
+  style="margin-top:12px; border-radius:12px; background:#0a0a12;"
   allow="autoplay"
 />
 
-### Demo 5：手风琴 — 预先计算的高度动画
+### Demo 5：Shrinkwrap Showdown
 
 <iframe
-  src="/blog/pretext-demo/accordion.html"
+  src="/blog/pretext-demo/shrinkwrap-showdown.html"
   width="100%"
-  height="540px"
+  height="650px"
   frameborder="0"
-  style="margin-top:12px; border-radius:12px; background:#f5f1ea;"
+  style="margin-top:12px; border-radius:12px; background:#faf8f5;"
   allow="autoplay"
 />
 
@@ -91,3 +89,4 @@ import DemoCard from '../../components/DemoCard.vue'
 
 - [Pretext 官方仓库](https://github.com/chenglou/pretext)
 - [在线 Demo](https://chenglou.me/pretext/)
+- [社区 Demo 集合](https://github.com/somnai-dreams/pretext-demos)
