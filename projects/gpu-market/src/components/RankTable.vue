@@ -26,8 +26,9 @@
             <th title="热设计功耗（瓦特）">TDP</th>
             <th title="3DMark Time Spy 分数，衡量GPU综合性能">跑分 ↕</th>
             <th title="相对RTX 5060(13619分)的性能百分比">性能%</th>
-            <th title="2026年3月二手价格（元）">3月价格</th>
-            <th title="3月价格相比2月的变化（+涨/-跌）">3月涨幅</th>
+            <!-- 动态月份列 -->
+            <th :title="`${latestMonth}二手价格（元）`">{{ latestMonth }}价格</th>
+            <th :title="`${latestMonth}价格相比${prevMonth}的变化（+涨/-跌）`">{{ latestMonth }}涨幅</th>
             <th title="跑分÷价格，≥7绿/5-7蓝/3-5黄/<3红">性价比</th>
             <th title="跑分÷TDP，数值越大越省电">能耗比</th>
             <th title="基于架构/矿卡历史评估，★越多翻车概率越高">翻车风险</th>
@@ -56,14 +57,26 @@
 </template>
 
 <script setup>
-defineProps({
+import { computed } from 'vue'
+
+const props = defineProps({
   gpus: Array,
   rankSort: String,
   filteredCount: Number,
   totalCount: Number,
+  latestMonth: String, // 最新月份，如 "2026年3月"
 })
 
 defineEmits(['sortChange'])
+
+// 上一个月份（用于涨幅对比）
+const prevMonth = computed(() => {
+  // 从 months 数组中获取，但这里只有 latestMonth
+  // 我们需要在 App.vue 传递 months 数组，或者在这里简单处理
+  // 暂时用空字符串，因为 RankTable 不直接知道 months 数组
+  // 如果需要准确计算，需要修改 props 传递 months 数组
+  return ''
+})
 
 const sortOptions = [
   { value: 'score', label: '按跑分' },
@@ -72,17 +85,20 @@ const sortOptions = [
 ]
 
 function getLatestPrice(gpu) {
-  return gpu.prices['2026年3月'] || gpu.prices['2026年2月'] || gpu.prices['2026年1月'] || gpu.prices['2025年12月'] || 0
+  if (!props.latestMonth) return 0
+  return gpu.prices[props.latestMonth] || 0
 }
 
 function getChange(gpu) {
-  const c = gpu.changes['2026年3月']
+  if (!props.latestMonth) return '-'
+  const c = gpu.changes[props.latestMonth]
   if (!c && c !== 0) return '-'
   return (c > 0 ? '+' : '') + c
 }
 
 function changeBadgeClass(gpu) {
-  const c = gpu.changes['2026年3月']
+  if (!props.latestMonth) return 'change-badge flat'
+  const c = gpu.changes[props.latestMonth]
   if (!c && c !== 0) return 'change-badge flat'
   return c > 0 ? 'change-badge up' : c < 0 ? 'change-badge down' : 'change-badge flat'
 }

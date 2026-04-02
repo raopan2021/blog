@@ -9,6 +9,7 @@
       :brand-filter="brandFilter"
       :price-range="priceRange"
       :search-text="searchText"
+      :latest-month="latestMonth"
       @brand-change="brandFilter = $event"
       @price-change="priceRange = $event"
       @search-change="searchText = $event"
@@ -21,6 +22,7 @@
       :rank-sort="rankSort"
       :filtered-count="filteredGpus.length"
       :total-count="gpus.length"
+      :latest-month="latestMonth"
       @sort-change="rankSort = $event"
     />
 
@@ -28,6 +30,7 @@
     <BrowseTable
       v-if="view === 'browse'"
       :gpus="filteredGpus"
+      :months="months"
       :filtered-count="filteredGpus.length"
       :total-count="gpus.length"
     />
@@ -56,12 +59,30 @@ const priceRange = ref('')
 const searchText = ref('')
 const rankSort = ref('score')
 
+// 最新月份（用于显示价格、涨幅等）
+const latestMonth = computed(() => {
+  if (!months || months.length === 0) return ''
+  return months[months.length - 1]
+})
+
+// 上一个月份（用于计算涨幅）
+const prevMonth = computed(() => {
+  if (!months || months.length < 2) return ''
+  return months[months.length - 2]
+})
+
+// 获取显卡的最新可用价格
+function getLatestPrice(gpu) {
+  if (!latestMonth.value) return 0
+  return gpu.prices[latestMonth.value] || 0
+}
+
 const filteredGpus = computed(() => {
   let list = [...gpus]
   if (brandFilter.value) list = list.filter(g => g.brand === brandFilter.value)
   if (priceRange.value) {
     list = list.filter(g => {
-      const p = g.prices['2026年3月'] || g.prices['2026年2月'] || g.prices['2026年1月'] || g.prices['2025年12月'] || 0
+      const p = getLatestPrice(g)
       if (priceRange.value === '0-1000') return p < 1000
       if (priceRange.value === '1000-2000') return p >= 1000 && p < 2000
       if (priceRange.value === '2000-3000') return p >= 2000 && p < 3000
@@ -89,7 +110,7 @@ const filteredGpus = computed(() => {
 const avgChangePerGpu = computed(() => {
   if (!filteredGpus.value.length) return 0
   const total = filteredGpus.value.reduce((sum, g) => {
-    const c = g.changes['2026年3月']
+    const c = g.changes[latestMonth.value]
     return sum + (typeof c === 'number' ? c : 0)
   }, 0)
   return Math.round(total / filteredGpus.value.length)
@@ -102,10 +123,6 @@ const sortedGpus = computed(() => {
   else if (rankSort.value === 'efficiency') list.sort((a, b) => (b.efficiency || 0) - (a.efficiency || 0))
   return list
 })
-
-function getLatestPrice(gpu) {
-  return gpu.prices['2026年3月'] || gpu.prices['2026年2月'] || gpu.prices['2026年1月'] || gpu.prices['2025年12月'] || 0
-}
 
 function switchView(v) {
   view.value = v

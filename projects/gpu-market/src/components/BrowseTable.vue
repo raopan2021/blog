@@ -17,11 +17,14 @@
             <th title="热设计功耗（瓦特）">TDP</th>
             <th title="3DMark Time Spy 分数，衡量GPU综合性能">跑分 ↕</th>
             <th title="相对RTX 5060(13619分)的性能百分比">性能%</th>
-            <th title="2025年12月二手价格（元）">12月</th>
-            <th title="2026年1月二手价格（元）">1月</th>
-            <th title="2026年2月二手价格（元）">2月</th>
-            <th title="2026年3月二手价格（元）">3月</th>
-            <th title="3月价格相比2月的变化（+涨/-跌）">3月涨幅</th>
+            <!-- 动态月份表头 -->
+            <th
+              v-for="month in months"
+              :key="month"
+              :title="`${month}二手价格（元）`"
+            >{{ month.replace('年', '年').replace('月', '月') }}</th>
+            <!-- 涨幅列：显示最新月份的涨跌幅 -->
+            <th :title="`${latestMonth}相比${prevMonth}的变化（+涨/-跌）`">{{ latestMonth }}涨幅</th>
             <th title="跑分÷价格，≥7绿/5-7蓝/3-5黄/<3红">性价比</th>
             <th title="跑分÷TDP，数值越大越省电">能耗比</th>
             <th title="基于架构/矿卡历史评估，★越多翻车概率越高">翻车风险</th>
@@ -35,10 +38,9 @@
             <td style="color:#94a3b8">{{ gpu.tdp }}W</td>
             <td style="color:#fbbf24">{{ gpu.score.toLocaleString() }}</td>
             <td style="color:#a78bfa">{{ gpu.performance_pct }}%</td>
-            <td class="price">{{ fmtPrice(gpu.prices['2025年12月']) }}</td>
-            <td class="price">{{ fmtPrice(gpu.prices['2026年1月']) }}</td>
-            <td class="price">{{ fmtPrice(gpu.prices['2026年2月']) }}</td>
-            <td class="price">{{ fmtPrice(gpu.prices['2026年3月']) }}</td>
+            <!-- 动态月份价格列 -->
+            <td v-for="month in months" :key="month" class="price">{{ fmtPrice(gpu.prices[month]) }}</td>
+            <!-- 涨幅列 -->
             <td><span :class="changeBadgeClass(gpu)">{{ getChange(gpu) }}</span></td>
             <td :class="costPerfClass(gpu.cost_perf)">{{ gpu.cost_perf || '-' }}</td>
             <td style="color:#22d3ee">{{ gpu.efficiency || '-' }}</td>
@@ -52,23 +54,40 @@
 </template>
 
 <script setup>
-defineProps({
+import { computed } from 'vue'
+
+const props = defineProps({
   gpus: Array,
+  months: Array,
   filteredCount: Number,
   totalCount: Number,
 })
 
+// 计算最新月份（用于涨幅列）和上一个月
+const latestMonth = computed(() => {
+  if (!props.months || props.months.length === 0) return ''
+  return props.months[props.months.length - 1]
+})
+
+const prevMonth = computed(() => {
+  if (!props.months || props.months.length < 2) return ''
+  return props.months[props.months.length - 2]
+})
+
 function fmtPrice(v) { return v ? '¥' + v.toLocaleString() : '-' }
+
 function getChange(gpu) {
-  const c = gpu.changes['2026年3月']
+  const c = gpu.changes[latestMonth.value]
   if (!c && c !== 0) return '-'
   return (c > 0 ? '+' : '') + c
 }
+
 function changeBadgeClass(gpu) {
-  const c = gpu.changes['2026年3月']
+  const c = gpu.changes[latestMonth.value]
   if (!c && c !== 0) return 'change-badge flat'
   return c > 0 ? 'change-badge up' : c < 0 ? 'change-badge down' : 'change-badge flat'
 }
+
 function costPerfClass(v) {
   if (!v) return ''
   if (v >= 7) return 'cp-green'
@@ -76,6 +95,7 @@ function costPerfClass(v) {
   if (v >= 3) return 'cp-yellow'
   return 'cp-red'
 }
+
 function renderStars(stars) {
   if (!stars && stars !== 0) return '-'
   const full = Math.max(0, Math.min(5, Math.round(stars)))

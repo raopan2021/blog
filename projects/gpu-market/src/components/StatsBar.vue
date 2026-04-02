@@ -39,7 +39,7 @@
       <div class="avg-change-inner">
         <span class="avg-change-value">{{ avgChange >= 0 ? '+' : '' }}{{ avgChange.toLocaleString() }}</span>
         <span class="avg-change-unit">元</span>
-        <span class="avg-change-label">3月每张显卡平均价格变化</span>
+        <span class="avg-change-label">{{ latestMonth }}每张显卡平均价格变化</span>
         <span class="avg-change-sub" :class="avgChange >= 0 ? 'up' : 'down'">
           {{ avgChange >= 0 ? '▲ 均价上涨中' : '▼ 均价下降中' }}
         </span>
@@ -58,6 +58,7 @@ const props = defineProps({
   brandFilter: String,
   priceRange: String,
   searchText: String,
+  latestMonth: String,
 })
 
 const emit = defineEmits(['brandChange', 'priceChange', 'searchChange'])
