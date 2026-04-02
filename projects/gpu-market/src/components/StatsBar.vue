@@ -72,12 +72,18 @@ function applyPreset(value) {
 
 function updateCustomMin(val) {
   customRange.min = val
-  if (customRange.min && customRange.max) customRange.active = true
+  if (customRange.min && customRange.max) {
+    customRange.active = true
+    applyCustom()
+  }
 }
 
 function updateCustomMax(val) {
   customRange.max = val
-  if (customRange.min && customRange.max) customRange.active = true
+  if (customRange.min && customRange.max) {
+    customRange.active = true
+    applyCustom()
+  }
 }
 
 function applyCustom() {
