@@ -8,38 +8,24 @@ export function PretextSidebar(): DefaultTheme.SidebarItem[] {
 			base: '/pretext/',
 			items: [
 				{
-					text: '模块一：基础',
-					collapsed: true,
-					base: '/pretext/基础/',
+					text: '介绍',
+					collapsed: false,
+					base: '/pretext/介绍/',
 					items: [
-						{ text: 'Pretext 快速入门', link: 'Pretext快速入门' },
+						{ text: '使用方法', link: '使用方法' },
+						{ text: '原理', link: '原理' },
 					],
 				},
 				{
-					text: '模块二：实现原理',
-					collapsed: true,
-					base: '/pretext/实现原理/',
-					items: [
-						{ text: 'Canvas 文本测量原理', link: 'Canvas文本测量原理' },
-						{ text: '字形分段与 Unicode 处理', link: '字形分段与Unicode处理' },
-						{ text: '换行算法与粘合规则', link: '换行算法与粘合规则' },
-					],
-				},
-				{
-					text: '模块三：进阶',
-					collapsed: true,
-					base: '/pretext/进阶/',
-					items: [
-						{ text: 'API 详解与高级用法', link: 'API详解与高级用法' },
-						{ text: '实战技巧与性能优化', link: '实战技巧与性能优化' },
-					],
-				},
-				{
-					text: '模块四：Demo 项目',
-					collapsed: true,
+					text: 'Demo 演示',
+					collapsed: false,
 					base: '/pretext/demo/',
 					items: [
-						{ text: '综合演示', link: '综合演示' },
+						{ text: '对齐算法', link: 'demo1-justification' },
+						{ text: '聊天气泡', link: 'demo2-bubbles' },
+						{ text: '动态布局', link: 'demo3-dynamic-layout' },
+						{ text: '字体测量', link: 'demo4-typography' },
+						{ text: '手风琴', link: 'demo5-accordion' },
 					],
 				},
 			],
