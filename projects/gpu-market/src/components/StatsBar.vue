@@ -19,9 +19,7 @@
           <span class="filter-label">~</span>
           <input class="search-input custom-price-input" type="number" placeholder="最高价" :value="customRange.max"
             min="0" @input="updateCustomMax($event.target.value)">
-          <button v-if="customRange.active" class="filter-btn active" style="font-size:11px;padding:3px 8px"
-            @click="applyCustom">应用</button>
-          <button v-if="customRange.active" class="filter-btn" style="font-size:11px;padding:3px 8px"
+          <button v-if="customRange.min || customRange.max" class="filter-btn" style="font-size:11px;padding:3px 8px"
             @click="clearCustom">清除</button>
         </div>
       </div>
@@ -72,17 +70,21 @@ function applyPreset(value) {
 
 function updateCustomMin(val) {
   customRange.min = val
-  if (customRange.min && customRange.max) {
+  if (customRange.min || customRange.max) {
     customRange.active = true
     applyCustom()
+  } else {
+    customRange.active = false
   }
 }
 
 function updateCustomMax(val) {
   customRange.max = val
-  if (customRange.min && customRange.max) {
+  if (customRange.min || customRange.max) {
     customRange.active = true
     applyCustom()
+  } else {
+    customRange.active = false
   }
 }
 
