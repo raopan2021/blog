@@ -2,64 +2,22 @@
 /**
  * 显卡行情数据处理脚本
  * 运行: node process_gpu_data.js [Excel文件路径]
- * 输出: data.js (ES Module)
+ * 输出: src/data.js (ES Module)
  *
  * 特性：自动检测 Excel 中的所有月份列，无需手动配置
+ * 纯 JS 实现（使用 xlsx 库）
  */
 
-import { spawn } from 'child_process';
+import XLSX from 'xlsx';
 import { readFileSync, writeFileSync, copyFileSync, readdirSync, statSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-const PYTHON_SCRIPT = `
-import zipfile, xml.etree.ElementTree as ET, json, sys, re
-
-filepath = sys.argv[1]
-with zipfile.ZipFile(filepath, 'r') as z:
-    ss_xml = z.read('xl/sharedStrings.xml')
-    ss_tree = ET.fromstring(ss_xml)
-    ns = {'ns': 'http://schemas.openxmlformats.org/spreadsheetml/2006/main'}
-    strings = []
-    for si in ss_tree.findall('ns:si', ns):
-        t = si.find('ns:t', ns)
-        if t is not None:
-            strings.append(t.text or '')
-        else:
-            runs = si.findall('ns:r', ns)
-            if runs:
-                parts = [r.find('ns:t', ns) for r in runs]
-                strings.append(''.join(p.text for p in parts if p is not None))
-            else:
-                strings.append('')
-
-    wb_xml = z.read('xl/workbook.xml')
-    wb_tree = ET.fromstring(wb_xml)
-    sheets = wb_tree.findall('.//{http://schemas.openxmlformats.org/spreadsheetml/2006/main}sheet')
-    all_data = {}
-    for i, sh in enumerate(sheets):
-        shname = sh.get('name', 'sheet' + str(i+1))
-        sh_xml = z.read('xl/worksheets/sheet' + str(i+1) + '.xml')
-        sh_tree = ET.fromstring(sh_xml)
-        headers = None
-        rows = []
-        for row in sh_tree.findall('.//ns:row', ns):
-            row_data = []
-            for cell in row.findall('ns:c', ns):
-                t = cell.get('t', '')
-                v = cell.find('ns:v', ns)
-                if v is None: row_data.append('')
-                elif t == 's': row_data.append(strings[int(v.text)])
-                else: row_data.append(v.text)
-            if headers is None: headers = row_data
-            elif row_data and row_data[0]: rows.append(row_data)
-        all_data[shname] = {'headers': headers, 'rows': rows}
-    print(json.dumps(all_data))
-`;
-
-/** 从 Excel 表名解析年月，如 "202512" -> "2025年12月" */
+/**
+ * 从 Excel 表名解析年月，如 "202512" -> "2025年12月"
+ */
 function parseSheetMonth(name) {
   const m = name.trim().match(/^(\d{4})(\d{2})$/);
   if (!m) return null;
@@ -67,13 +25,8 @@ function parseSheetMonth(name) {
   return `${y}年${parseInt(mo)}月`;
 }
 
-/** 从列名解析月份数字，如 "11月价格" -> 11, "3月价格" -> 3 */
-function parseMonthCol(col) {
-  const m = col.match(/^(\d+)月价格$/);
-  return m ? parseInt(m[1]) : null;
-}
-
-/** 根据表名推导该表对应哪两个月的数据
+/**
+ * 根据表名推导该表对应哪两个月的数据
  * 表名 202512 的数据：11月价格(上月) 和 12月价格(本月)
  * 表名 202601 的数据：12月价格(上月) 和 1月价格(本月)
  */
@@ -90,7 +43,6 @@ function deriveMonthMapping(sheetName) {
   if (prevMonth < 1) { prevMonth = 12; prevYear--; }
   // 本月
   let currYear = year, currMonth = monthNum;
-  // currMonth 保持不变
 
   return {
     sheetMonth: month,
@@ -99,6 +51,9 @@ function deriveMonthMapping(sheetName) {
   };
 }
 
+/**
+ * 检测显卡品牌
+ */
 function detectBrand(name) {
   const n = name.toLowerCase();
   if (n.includes('nvidia') || n.startsWith('rtx') || n.startsWith('gtx')) return 'NVIDIA';
@@ -107,6 +62,9 @@ function detectBrand(name) {
   return 'Other';
 }
 
+/**
+ * 计算星级（翻车概率）
+ */
 function countStars(s) {
   if (!s) return 0;
   const full = (s.match(/★/g) || []).length;
@@ -114,50 +72,107 @@ function countStars(s) {
   return 0;
 }
 
+/**
+ * 解析 Excel 文件（纯 JS 实现）
+ * 使用 xlsx 库读取，工作表名作为年月标识（如 "202512"）
+ */
 function parseXlsx(filepath) {
-  return new Promise((resolve, reject) => {
-    const py = spawn('python3', ['-c', PYTHON_SCRIPT, filepath]);
-    let out = '', err = '';
-    py.stdout.on('data', d => out += d.toString());
-    py.stderr.on('data', d => err += d.toString());
-    py.on('close', code => {
-      if (code !== 0) return reject(new Error(err || `Python exit ${code}`));
-      try { resolve(JSON.parse(out)); } catch(e) { reject(e); }
-    });
-  });
+  const workbook = XLSX.readFile(filepath);
+
+  // 获取所有工作表数据
+  const allData = {};
+  for (const sheetName of workbook.SheetNames) {
+    const worksheet = workbook.Sheets[sheetName];
+    // 将工作表转换为 JSON 数组（按行）
+    const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, defval: '' });
+
+    if (jsonData.length === 0) continue;
+
+    // 第一行是表头
+    const headers = jsonData[0].map(h => String(h).trim());
+    // 后续行是数据
+    const rows = jsonData.slice(1).filter(row => row.length > 0 && row[0]);
+
+    allData[sheetName] = { headers, rows };
+  }
+
+  return allData;
 }
 
+/**
+ * 主函数
+ */
 async function main() {
+  // 获取 Excel 文件路径
   let xlsxPath = process.argv[2];
   if (!xlsxPath) {
+    // 优先从命令行参数指定，否则从下载目录查找
     const downloads = join(process.env.HOME || '/home/rao', '.openclaw/qqbot/downloads');
-    const files = readdirSync(downloads).filter(f => f.endsWith('.xlsx') && f.includes('显卡'));
-    if (!files.length) { console.error('❌ 未找到显卡Excel文件'); process.exit(1); }
-    files.sort((a, b) => statSync(join(downloads, b)).mtime - statSync(join(downloads, a)).mtime);
-    xlsxPath = join(downloads, files[0]);
+    let files;
+    try {
+      files = readdirSync(downloads).filter(f => f.endsWith('.xlsx') && f.includes('显卡'));
+    } catch (e) {
+      // 下载目录不存在，尝试项目目录
+      files = [];
+    }
+
+    if (!files.length) {
+      // 尝试在项目目录查找
+      const projectDir = __dirname;
+      try {
+        files = readdirSync(projectDir).filter(f => f.endsWith('.xlsx') && f.includes('显卡'));
+        if (files.length > 0) {
+          xlsxPath = join(projectDir, files[0]);
+        }
+      } catch (e) {
+        files = [];
+      }
+    }
+
+    if (!xlsxPath) {
+      if (!files || files.length === 0) {
+        console.error('❌ 未找到显卡Excel文件');
+        console.error('   请将 Excel 文件放到项目目录，或指定路径：node process_gpu_data.js <文件路径>');
+        process.exit(1);
+      }
+      // 按修改时间排序，取最新的
+      files.sort((a, b) => {
+        const statA = statSync(join(downloads, a));
+        const statB = statSync(join(downloads, b));
+        return statB.mtime - statA.mtime;
+      });
+      xlsxPath = join(downloads, files[0]);
+    }
   }
   console.log(`📄 使用文件: ${xlsxPath}`);
 
-  const allData = await parseXlsx(xlsxPath);
+  // 解析 Excel
+  const allData = parseXlsx(xlsxPath);
 
-  // 找出所有月份表（表名为纯数字年月）
+  // 找出所有月份表（表名为纯数字年月 6 位）
   const monthSheets = Object.keys(allData).filter(k => /^\d{6}$/.test(k.trim()));
   monthSheets.sort(); // 按时间顺序排列
 
-  if (!monthSheets.length) { console.error('❌ 未找到任何月份数据表（表名需为6位数字如202512）'); process.exit(1); }
+  if (!monthSheets.length) {
+    console.error('❌ 未找到任何月份数据表（表名需为6位数字如202512）');
+    process.exit(1);
+  }
 
   console.log(`📅 检测到 ${monthSheets.length} 个月份: ${monthSheets.join(', ')}`);
 
   const gpuDict = {};
-  const baseScore = 13619;
+  const baseScore = 13619; // RTX 5060 跑分基准
 
+  // 遍历每个月份表，提取显卡数据
   for (const mk of monthSheets) {
     const { headers, rows } = allData[mk];
     if (!headers) continue;
 
+    // 根据表名推导月份映射
     const mapping = deriveMonthMapping(mk);
     if (!mapping) continue;
 
+    // 查找各列索引
     const ci = n => headers.indexOf(n);
     const nameI  = ci('显卡型号');
     const scoreI = ci('Time spy平均跑分');
@@ -168,12 +183,17 @@ async function main() {
     const changeI = ci('涨跌幅');
     const starsI  = ci('翻车概率');
 
-    if (nameI < 0 || scoreI < 0 || currI < 0) continue;
+    // 必需列：型号、跑分、本月价格
+    if (nameI < 0 || scoreI < 0 || currI < 0) {
+      console.warn(`  ⚠️ 表 ${mk} 缺少必需列，跳过`);
+      continue;
+    }
 
     for (const row of rows) {
       if (row.length <= Math.max(nameI, scoreI)) continue;
       const name = row[nameI];
       if (!name) continue;
+
       const score = parseFloat(row[scoreI]) || 0;
       const vram = row[vramI] || '';
       const tdp = parseInt(row[tdpI]) || 0;
@@ -182,38 +202,65 @@ async function main() {
       const stars = starsI >= 0 ? countStars(row[starsI] || '') : 0;
       const brand = detectBrand(name);
 
+      // 首次遇到该显卡，初始化
       if (!gpuDict[name]) {
         gpuDict[name] = {
-          name, brand, vram, tdp, score, prices: {}, changes: {},
-          performance_pct: Math.round(score / baseScore * 100 * 10) / 10, stars: 0
+          name,
+          brand,
+          vram,
+          tdp,
+          score,
+          prices: {},
+          changes: {},
+          performance_pct: Math.round(score / baseScore * 100 * 10) / 10,
+          stars: 0,
         };
       }
+
+      // 记录该月份的价格和涨跌幅
       gpuDict[name].prices[mapping.sheetMonth] = curr;
       gpuDict[name].changes[mapping.sheetMonth] = change;
-      if (stars > gpuDict[name].stars) gpuDict[name].stars = stars;
+
+      // 更新翻车概率（取最大值）
+      if (stars > gpuDict[name].stars) {
+        gpuDict[name].stars = stars;
+      }
     }
   }
 
   const gpus = Object.values(gpuDict);
-  const months = monthSheets.map(k => {
-    const m = parseSheetMonth(k);
-    return m;
-  }).filter(Boolean);
 
+  // 从表名提取所有月份并排序
+  const months = monthSheets
+    .map(k => parseSheetMonth(k))
+    .filter(Boolean);
+
+  // 计算每张卡的性价比和能耗比
   for (const gpu of gpus) {
+    // 取最新可用价格
     const latestPrice = [...months].reverse().find(m => gpu.prices[m]) || 0;
     gpu.cost_perf = latestPrice > 0 ? Math.round(gpu.score / latestPrice * 100) / 100 : 0;
     gpu.efficiency = gpu.tdp > 0 ? Math.round(gpu.score / gpu.tdp * 10) / 10 : 0;
   }
 
-  const dataJs = `// 由 process_gpu_data.js 自动生成，请勿手动修改\nexport const gpus = ${JSON.stringify(gpus, null, 2)};\nexport const months = ${JSON.stringify(months, null, 2)};\n`;
+  // 生成 data.js 文件
+  const dataJs = `// 由 process_gpu_data.js 自动生成，请勿手动修改
+// 生成时间: ${new Date().toISOString()}
+export const gpus = ${JSON.stringify(gpus, null, 2)};
+export const months = ${JSON.stringify(months, null, 2)};
+`;
 
   writeFileSync(join(__dirname, 'src', 'data.js'), dataJs, 'utf-8');
   console.log(`  ✅ data.js 已生成 (${gpus.length} 张显卡, ${months.length} 个月)`);
 
+  // 复制原始 Excel 到项目目录备份
   copyFileSync(xlsxPath, join(__dirname, '二手显卡行情.xlsx'));
-  console.log(`  ✅ 原始Excel已复制`);
+  console.log(`  ✅ 原始Excel已复制到项目目录`);
+
   console.log('\n🎉 完成！运行 npm run build 重新打包');
 }
 
-main().catch(e => { console.error(e); process.exit(1); });
+main().catch(e => {
+  console.error(e);
+  process.exit(1);
+});

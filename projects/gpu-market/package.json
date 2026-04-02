@@ -10,7 +10,8 @@
     "update": "node process_gpu_data.js"
   },
   "dependencies": {
-    "vue": "^3.5.31"
+    "vue": "^3.5.31",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^6.0.5",
