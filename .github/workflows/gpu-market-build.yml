@@ -23,14 +23,14 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version: 24
-          cache: 'npm'
-          cache-dependency-path: projects/gpu-market/package-lock.json
 
       - name: Install dependencies
-        run: cd projects/gpu-market && npm ci
+        working-directory: ./projects/gpu-market
+        run: npm ci
 
       - name: Build
-        run: cd projects/gpu-market && npm run build
+        working-directory: ./projects/gpu-market
+        run: npm run build
 
       - name: Copy dist to docs
         run: cp projects/gpu-market/dist/index.html docs/public/gpu-market/index.html
