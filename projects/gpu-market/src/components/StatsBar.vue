@@ -15,7 +15,7 @@
           <div class="ep-slider">
             <div class="ep-slider__track">
               <div class="ep-slider__runway"></div>
-              <div class="ep-slider__bar" :style="barStyle"></div>
+              <div class="ep-slider__bar" :class="{ active: isFiltered }" :style="barStyle"></div>
               <div class="ep-slider__button-wrap" :style="{ left: minPercent + '%' }">
                 <div class="ep-slider__button" @mouseenter="hoverMin = true" @mouseleave="hoverMin = false">
                   <div class="ep-slider__tooltip" v-if="hoverMin">{{ sliderMin === 0 ? '最低' : sliderMin + '元' }}</div>
@@ -89,6 +89,8 @@ const sliderLabel = computed(() => {
   if (sliderMax.value >= 10000) return `${sliderMin.value}元+`
   return `${sliderMin.value} ~ ${sliderMax.value}元`
 })
+
+const isFiltered = computed(() => sliderMin.value > 0 || sliderMax.value < 10000)
 
 const isActivePreset = computed(() => {
   if (!props.priceRange) return true // default all
@@ -280,8 +282,13 @@ const priceOptions = [
   position: absolute;
   top: 0;
   height: 6px;
-  background: #3b82f6;
+  background: #4b5563;
   border-radius: 3px;
+  transition: background 0.2s;
+
+  &.active {
+    background: #3b82f6;
+  }
 }
 
 .ep-slider__button-wrap {
@@ -296,14 +303,15 @@ const priceOptions = [
   height: 16px;
   border-radius: 50%;
   background: #fff;
-  border: 2px solid #3b82f6;
+  border: 2px solid #4b5563;
   cursor: grab;
-  transition: transform 0.15s, box-shadow 0.15s;
+  transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s;
   position: relative;
 
   &:hover {
     transform: scale(1.15);
     box-shadow: 0 0 0 4px rgba(#3b82f6, 0.2);
+    border-color: #3b82f6;
   }
 }
 
