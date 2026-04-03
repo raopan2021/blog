@@ -19,9 +19,7 @@
       :brand-filter="brandFilter"
       :price-range="priceRange"
       :search-text="searchText"
-      :rank-sort="rankSort"
       :latest-month="latestMonth"
-      @sort-change="rankSort = $event"
     />
 
     <AboutSection :gpus="gpus" :months="months" />
@@ -38,7 +36,6 @@ import { gpus, months } from './data.js'
 const brandFilter = ref('')
 const priceRange = ref('')
 const searchText = ref('')
-const rankSort = ref('score')
 
 const latestMonth = computed(() => {
   if (!months || months.length === 0) return ''

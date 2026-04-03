@@ -8,8 +8,14 @@
           :key="s.value"
           class="view-btn"
           :class="{ active: rankSort === s.value }"
-          @click="$emit('sortChange', s.value)"
-        >{{ s.label }}</button>
+          @click="toggleSort(s.value)"
+        >
+          {{ s.label }}
+          <template v-if="rankSort === s.value">
+            <span v-if="sortOrder === 'asc'" class="order-arrow asc">▲</span>
+            <span v-else class="order-arrow desc">▼</span>
+          </template>
+        </button>
       </div>
     </div>
     <div class="table-wrap">
@@ -65,11 +71,20 @@ const props = defineProps({
   brandFilter: String,
   priceRange: String,
   searchText: String,
-  rankSort: String,
   latestMonth: String,
 })
 
-const emit = defineEmits(['sortChange'])
+const rankSort = ref('score') // 默认按跑分
+const sortOrder = ref('desc') // 默认降序
+
+function toggleSort(value) {
+  if (rankSort.value === value) {
+    sortOrder.value = sortOrder.value === 'desc' ? 'asc' : 'desc'
+  } else {
+    rankSort.value = value
+    sortOrder.value = 'desc' // 切换维度时重置为降序
+  }
+}
 
 const sortOptions = [
   { value: 'score', label: '按跑分' },
@@ -176,12 +191,13 @@ function renderStars(stars) {
 
 const sortedGpus = computed(() => {
   const list = [...gpus.value]
-  if (props.rankSort === 'score') {
-    list.sort((a, b) => b.score - a.score)
-  } else if (props.rankSort === 'price') {
-    list.sort((a, b) => (b.prices[props.latestMonth] || 0) - (a.prices[props.latestMonth] || 0))
-  } else if (props.rankSort === 'efficiency') {
-    list.sort((a, b) => (b.efficiency || 0) - (a.efficiency || 0))
+  const asc = sortOrder.value === 'asc' ? 1 : -1
+  if (rankSort.value === 'score') {
+    list.sort((a, b) => asc * (b.score - a.score))
+  } else if (rankSort.value === 'price') {
+    list.sort((a, b) => asc * ((b.prices[props.latestMonth] || 0) - (a.prices[props.latestMonth] || 0)))
+  } else if (rankSort.value === 'efficiency') {
+    list.sort((a, b) => asc * ((b.efficiency || 0) - (a.efficiency || 0)))
   }
   return list
 })
@@ -228,9 +244,19 @@ th[title] { cursor: help; }
   font-size: 13px;
   cursor: pointer;
   transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 4px;
 
   &:hover { color: #fff; border-color: #3b82f6; }
   &.active { background: #1e40af; border-color: #3b82f6; color: #fff; }
+}
+
+.order-arrow {
+  font-size: 10px;
+  line-height: 1;
+  &.asc { color: #ef4444; }
+  &.desc { color: #22c55e; }
 }
 
 .price-default { color: #94a3b8; }
