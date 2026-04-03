@@ -116,44 +116,27 @@ function fmtPrice(v) { return v ? v.toLocaleString() : '-' }
 function getMonthPrice(gpu, month) { return gpu.prices[month] || 0 }
 
 function priceCellClass(gpu, month) {
-  const priceValues = displayMonths.value.map(m => gpu.prices[m] || 0).filter(p => p > 0)
-  const currentPrice = getMonthPrice(gpu, month)
-  if (currentPrice === 0) return ''
+  const priceValues = displayMonths.value
+    .map(m => gpu.prices[m])
+    .filter(p => p && p > 0)
+  if (priceValues.length < 2) return ''
   const maxPrice = Math.max(...priceValues)
   const minPrice = Math.min(...priceValues)
-  if (currentPrice === maxPrice && maxPrice !== minPrice) return 'price-high'
-  if (currentPrice === minPrice && maxPrice !== minPrice) return 'price-low'
-  return ''
+  const current = gpu.prices[month]
+  if (current === maxPrice) return 'price-high'
+  if (current === minPrice) return 'price-low'
+  return 'price-default'
 }
 
 function priceCellStyle(gpu, month) {
-  // Latest month vs previous month: red if up, green if down
-  const latestMonth = props.latestMonth
-  const idx = displayMonths.value.indexOf(month)
-  if (month === latestMonth && idx > 0) {
-    const prevMonth = displayMonths.value[idx - 1]
-    const curr = getMonthPrice(gpu, month)
-    const prev = getMonthPrice(gpu, prevMonth)
-    if (prev > 0 && curr > prev) return { color: '#ef4444' }
-    if (prev > 0 && curr < prev) return { color: '#22c55e' }
-  }
+  const cls = priceCellClass(gpu, month)
+  if (cls) return {} // CSS handles color for high/low, default gray below
   return { color: '#94a3b8' }
 }
 
 function priceCellText(gpu, month) {
-  const price = getMonthPrice(gpu, month)
-  if (!price) return '-'
-  const latestMonth = props.latestMonth
-  const idx = displayMonths.value.indexOf(month)
-  let text = price.toLocaleString()
-  // Add emoji for current month vs previous
-  if (month === latestMonth && idx > 0) {
-    const prevMonth = displayMonths.value[idx - 1]
-    const prev = getMonthPrice(gpu, prevMonth)
-    if (prev > 0 && price > prev) text += ' ▲'
-    else if (prev > 0 && price < prev) text += ' ▼'
-  }
-  return text
+  const price = gpu.prices[month]
+  return price ? price.toLocaleString() : '-'
 }
 
 function costPerfValue(gpu) {
@@ -239,6 +222,7 @@ th[title] { cursor: help; }
   &.active { background: #1e40af; border-color: #3b82f6; color: #fff; }
 }
 
+.price-default { color: #94a3b8; }
 .price-high { color: #ef4444; font-weight: 600; }
 .price-low { color: #22c55e; font-weight: 600; }
 </style>
