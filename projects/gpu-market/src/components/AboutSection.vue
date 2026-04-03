@@ -16,10 +16,9 @@
           <h3>🔄 数据更新方法</h3>
           <ol style="padding-left:20px">
             <li>访问 <a href="https://space.bilibili.com/10698051/dynamic" target="_blank" style="color:#60a5fa">B站清诚实验室poi</a> 置顶动态获取最新 Excel 数据</li>
-            <li>下载 Excel 文件到本地</li>
-            <li>运行 <code>node process_gpu_data.js [Excel文件路径]</code> 更新数据</li>
+            <li>下载 Excel 文件到本地，将数据复制到 <code>二手显卡行情.xlsx</code> 文件的新sheet中，注意重命名sheet，格式为 <code>YYYY年MM月</code></li>
+            <li>运行 <code>node process_gpu_data.js </code> 更新数据</li>
             <li>运行 <code>npm run build</code> 重新打包</li>
-            <li>提交并推送到 main 分支，CI 自动更新</li>
           </ol>
         </div>
       </div>
