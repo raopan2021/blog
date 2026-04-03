@@ -106,43 +106,29 @@ async function main() {
   // 获取 Excel 文件路径
   let xlsxPath = process.argv[2];
   if (!xlsxPath) {
-    // 优先从命令行参数指定，否则从下载目录查找
-    const downloads = join(process.env.HOME || '/home/rao', '.openclaw/qqbot/downloads');
+    // 未指定参数则在项目目录下查找最新的 .xlsx 文件
+    const projectDir = __dirname;
     let files;
     try {
-      files = readdirSync(downloads).filter(f => f.endsWith('.xlsx') && f.includes('显卡'));
+      files = readdirSync(projectDir).filter(f => f.endsWith('.xlsx'));
     } catch (e) {
-      // 下载目录不存在，尝试项目目录
       files = [];
     }
 
     if (!files.length) {
-      // 尝试在项目目录查找
-      const projectDir = __dirname;
-      try {
-        files = readdirSync(projectDir).filter(f => f.endsWith('.xlsx') && f.includes('显卡'));
-        if (files.length > 0) {
-          xlsxPath = join(projectDir, files[0]);
-        }
-      } catch (e) {
-        files = [];
-      }
+      console.error('❌ 未找到 Excel 文件');
+      console.error('   用法: node process_gpu_data.js <Excel文件路径>');
+      console.error('   或将 Excel 文件放到项目目录下');
+      process.exit(1);
     }
 
-    if (!xlsxPath) {
-      if (!files || files.length === 0) {
-        console.error('❌ 未找到显卡Excel文件');
-        console.error('   请将 Excel 文件放到项目目录，或指定路径：node process_gpu_data.js <文件路径>');
-        process.exit(1);
-      }
-      // 按修改时间排序，取最新的
-      files.sort((a, b) => {
-        const statA = statSync(join(downloads, a));
-        const statB = statSync(join(downloads, b));
-        return statB.mtime - statA.mtime;
-      });
-      xlsxPath = join(downloads, files[0]);
-    }
+    // 按修改时间排序，取最新的
+    files.sort((a, b) => {
+      const statA = statSync(join(projectDir, a));
+      const statB = statSync(join(projectDir, b));
+      return statB.mtime - statA.mtime;
+    });
+    xlsxPath = join(projectDir, files[0]);
   }
   console.log(`📄 使用文件: ${xlsxPath}`);
 
@@ -252,10 +238,6 @@ export const months = ${JSON.stringify(months, null, 2)};
 
   writeFileSync(join(__dirname, 'src', 'data.js'), dataJs, 'utf-8');
   console.log(`  ✅ data.js 已生成 (${gpus.length} 张显卡, ${months.length} 个月)`);
-
-  // 复制原始 Excel 到项目目录备份
-  copyFileSync(xlsxPath, join(__dirname, '二手显卡行情.xlsx'));
-  console.log(`  ✅ 原始Excel已复制到项目目录`);
 
   console.log('\n🎉 完成！运行 npm run build 重新打包');
 }
