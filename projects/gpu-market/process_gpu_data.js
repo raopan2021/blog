@@ -231,7 +231,7 @@ async function main() {
 
   // 生成 data.js 文件
   const dataJs = `// 由 process_gpu_data.js 自动生成，请勿手动修改
-// 生成时间: ${new Date().toISOString()}
+// 生成时间: ${new Date().toLocaleString('zh-CN', { timeZone: 'Asia/Shanghai', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' }).replace(/\//g, '-')}
 export const gpus = ${JSON.stringify(gpus, null, 2)};
 export const months = ${JSON.stringify(months, null, 2)};
 `;
