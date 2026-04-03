@@ -129,8 +129,6 @@ export default {
 		})
 	},
 	Layout() {
-		return h(Layout, null, {
-			// 'doc-before': () => h(AdComponent),
-		})
+		return h(Layout, null, {})
 	},
 }

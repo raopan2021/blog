@@ -5,7 +5,7 @@
 ## 在线演示
 
 <iframe
-  src="/blog/three-projects/3d-card-showcase/index.html"
+  src="/blog/projects/three/3d-card-showcase/index.html"
   width="100%"
   height="520px"
   frameborder="0"
@@ -359,8 +359,8 @@ function updateLayout() {
 
 > ✅ 单 HTML 文件版本（约 496KB，内嵌所有资源，可直接浏览器打开）
 
-<a href="/blog/three-projects/3d-card-showcase/index.html" target="_blank">📄 在线预览 3D 卡片展示</a>
+<a href="/blog/projects/three/3d-card-showcase/index.html" target="_blank">📄 在线预览 3D 卡片展示</a>
 
-<a href="/blog/three-projects/3d-card-showcase.zip" download>📦 下载完整项目源码（含开发环境）</a>
+<a href="/blog/projects/three/3d-card-showcase.zip" download>📦 下载完整项目源码（含开发环境）</a>
 
 ---

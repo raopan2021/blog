@@ -5,7 +5,7 @@
 ## 在线演示
 
 <iframe
-  src="/blog/three-projects/car-showcase/index.html"
+  src="/blog/projects/three/car-showcase/index.html"
   width="100%"
   height="560px"
   frameborder="0"
@@ -201,9 +201,9 @@ pnpm build
 
 > ⚠️ 汽车展示项目含外部资源（GLTF/HDR/音频），部署时需将 dist 下的所有文件一起部署
 
-<a href="/blog/three-projects/car-showcase/index.html" target="_blank">📄 在线预览汽车展示</a>
+<a href="/blog/projects/three/car-showcase/index.html" target="_blank">📄 在线预览汽车展示</a>
 
-<a href="/blog/three-projects/car-showcase.zip" download>📦 下载完整项目源码</a>
+<a href="/blog/projects/three/car-showcase.zip" download>📦 下载完整项目源码</a>
 
 ## 扩展练习
 

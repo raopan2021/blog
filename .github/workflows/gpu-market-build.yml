@@ -33,13 +33,13 @@ jobs:
         run: npm run build
 
       - name: Copy dist to docs
-        run: cp projects/gpu-market/dist/index.html docs/public/gpu-market/index.html
+        run: cp projects/gpu-market/dist/index.html docs/public/projects/gpu-market/index.html
 
       - name: Commit & Push
         run: |
           git config --local user.name "github-actions[bot]"
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git add docs/public/gpu-market/index.html
+          git add docs/public/projects/gpu-market/index.html
           git diff --cached --quiet || {
             git commit -m "[auto] Update gpu-market dist"
             git push

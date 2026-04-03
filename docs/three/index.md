@@ -30,7 +30,7 @@ next:
 #### [3D 卡片展示](./项目实战1一3D卡片展示)
 
 <iframe
-  src="/blog/three-projects/3d-card-showcase/index.html"
+  src="/blog/projects/three/3d-card-showcase/index.html"
   width="100%"
   height="320px"
   frameborder="0"
@@ -42,7 +42,7 @@ next:
 #### [汽车展示网站](./项目实战2一汽车展示网站)
 
 <iframe
-  src="/blog/three-projects/car-showcase/index.html"
+  src="/blog/projects/three/car-showcase/index.html"
   width="100%"
   height="360px"
   frameborder="0"
