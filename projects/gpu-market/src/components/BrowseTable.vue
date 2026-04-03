@@ -191,7 +191,7 @@ function renderStars(stars) {
 
 const sortedGpus = computed(() => {
   const list = [...gpus.value]
-  const asc = sortOrder.value === 'asc' ? 1 : -1
+  const asc = sortOrder.value === 'asc' ? -1 : 1
   if (rankSort.value === 'score') {
     list.sort((a, b) => (b.score - a.score) * asc)
   } else if (rankSort.value === 'price') {
