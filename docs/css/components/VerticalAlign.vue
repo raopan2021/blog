@@ -24,7 +24,7 @@ const options = ref([
 
     <br>
     <el-radio-group v-model="select">
-        <el-radio v-for="item in options" :key="item" :label="item">
+        <el-radio v-for="item in options" :key="item" :value="item">
             {{ item }}
         </el-radio>
     </el-radio-group>

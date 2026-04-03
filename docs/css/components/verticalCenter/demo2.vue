@@ -25,13 +25,13 @@ const checkListStr = computed(() => {
     </div>
 
     <el-checkbox-group v-model="checkList">
-        <el-checkbox label="top: 0;" />
-        <el-checkbox label="bottom: 0;" />
+        <el-checkbox value="top: 0;" />
+        <el-checkbox value="bottom: 0;" />
         <br>
-        <el-checkbox label="left: 0;" />
-        <el-checkbox label="right: 0;" />
+        <el-checkbox value="left: 0;" />
+        <el-checkbox value="right: 0;" />
         <br>
-        <el-checkbox label="margin: auto;" />
+        <el-checkbox value="margin: auto;" />
     </el-checkbox-group>
 </template>
 

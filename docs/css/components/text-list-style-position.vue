@@ -27,7 +27,7 @@ const position = ref(["inside", "outside"]);
         <br> <br>
 
         <el-radio-group v-model="selectedType">
-            <el-radio v-for="item in position" :key="item" :label="item">
+            <el-radio v-for="item in position" :key="item" :value="item">
                 {{ item }}
             </el-radio>
         </el-radio-group>

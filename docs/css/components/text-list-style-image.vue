@@ -22,11 +22,11 @@ const listStyleImage = computed(() => {
     <br>
 
     <el-radio-group v-model="radioSelect">
-        <el-radio label="/gitee.svg">
+        <el-radio value="/gitee.svg">
             /gitee.svg
             <img src="/gitee.svg" style="height: 20px;width: 20px;">
         </el-radio>
-        <el-radio label="/mainView/logo.svg">
+        <el-radio value="/mainView/logo.svg">
             /mainView/logo.svg
             <img src="/mainView/logo.svg" style="height: 20px;width: 20px;">
         </el-radio>

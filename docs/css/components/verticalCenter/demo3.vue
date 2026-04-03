@@ -22,9 +22,9 @@ const checkListStr = computed(() => {
     </div>
 
     <el-checkbox-group v-model="checkList">
-        <el-checkbox label="align-items: center;" />
+        <el-checkbox value="align-items: center;" />
         <br>
-        <el-checkbox label="justify-content: center;" />
+        <el-checkbox value="justify-content: center;" />
     </el-checkbox-group>
 </template>
 

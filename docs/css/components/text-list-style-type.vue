@@ -179,7 +179,7 @@ const template = ref([
         <br>
 
         <el-radio-group v-model="selectedType" class="type-container">
-            <el-radio v-for="item in type" :key="item.name" :label="item.name">
+            <el-radio v-for="item in type" :key="item.name" :value="item.name">
                 {{ item.name }} - {{ item.comment }}
             </el-radio>
         </el-radio-group>

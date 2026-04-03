@@ -2,6 +2,7 @@ import mediumZoom from 'medium-zoom'
 import { useData, useRoute } from 'vitepress'
 import DefaultTheme from 'vitepress/theme'
 import { h, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
+import { ID_INJECTION_KEY, ZINDEX_INJECTION_KEY } from 'element-plus'
 
 // import AdComponent from './AdComponent.vue'
 import Layout from './Layout.vue'
@@ -27,6 +28,11 @@ export default {
 		// app is the Vue 3 app instance from `createApp()`. router is VitePress'
 		// custom router. `siteData`` is a `ref`` of current site-level metadata.
 		// app.use(elementplus);
+
+		// Fix ElementPlus SSR ID injection warning
+		app.provide(ID_INJECTION_KEY, { prefix: 100, current: 0 })
+		app.provide(ZINDEX_INJECTION_KEY, { current: 0 })
+
 		app.component('poem', Poem)
 		app.component('fullscreenLayout', FullscreenLayout)
 	},
