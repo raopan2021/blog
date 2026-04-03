@@ -8,15 +8,13 @@
       </div>
 
       <div class="filter-group">
-        <span class="filter-label">价格区间:</span>
-        <div class="price-slider-wrap">
+        <span class="filter-label">价格:</span>
+        <button v-for="p in priceOptions" :key="p.value" class="filter-btn"
+          :class="{ active: priceRange === p.value && !isCustom }" @click="applyPreset(p.value)">{{ p.label }}</button>
+        <div class="price-slider-wrap" v-if="isCustom">
           <input type="range" class="price-slider" min="0" max="10000" step="100"
-            :value="localMin" @input="updateMin($event.target.value)" />
-          <span class="slider-val">{{ localMin }} 元</span>
-          <span class="filter-label">~</span>
-          <input type="range" class="price-slider" min="0" max="10000" step="100"
-            :value="localMax" @input="updateMax($event.target.value)" />
-          <span class="slider-val">{{ localMax >= 10000 ? '不限' : localMax + ' 元' }}</span>
+            :value="sliderVal" @input="updateSlider($event.target.value)" />
+          <span class="slider-val">{{ sliderLabel }}</span>
         </div>
       </div>
 
@@ -26,15 +24,15 @@
       </div>
 
       <div class="filter-group">
-        <span class="filter-count">筛选出 <strong>{{ filteredCount }}</strong> / 共 <strong>{{ totalCount }}</strong> 张显卡</span>
+        <span class="filter-count">筛选出 <strong>{{ filteredCount }}</strong> / 共 <strong>{{ totalCount }}</strong> 张</span>
       </div>
 
       <div class="avg-change-inner">
         <span class="avg-change-value">{{ avgChange >= 0 ? '+' : '' }}{{ avgChange.toLocaleString() }}</span>
         <span class="avg-change-unit">元</span>
-        <span class="avg-change-label">{{ latestMonth }}每张显卡均价变化</span>
+        <span class="avg-change-label">{{ latestMonth }}均价变化</span>
         <span class="avg-change-sub" :class="avgChange >= 0 ? 'up' : 'down'">
-          {{ avgChange >= 0 ? '▲ 上涨中' : '▼ 下降中' }}
+          {{ avgChange >= 0 ? '▲ 上涨' : '▼ 下降' }}
         </span>
       </div>
     </div>
@@ -42,7 +40,7 @@
 </template>
 
 <script setup>
-import { ref, watch } from 'vue'
+import { ref, computed, watch } from 'vue'
 
 const props = defineProps({
   totalCount: Number,
@@ -56,33 +54,66 @@ const props = defineProps({
 
 const emit = defineEmits(['brandChange', 'priceChange', 'searchChange'])
 
-const localMin = ref(0)
-const localMax = ref(10000)
+const isCustom = computed(() => props.priceRange && props.priceRange.startsWith('custom:'))
 
-function updateMin(val) {
-  localMin.value = parseInt(val)
-  if (localMin.value >= localMax.value) localMin.value = localMax.value - 100
-  emit('priceChange', `custom:${localMin.value}-${localMax.value}`)
+const sliderMin = ref(0)
+const sliderMax = ref(10000)
+
+const sliderLabel = computed(() => {
+  if (sliderMax.value >= 10000) return `${sliderMin.value}元+`
+  return `${sliderMin.value} ~ ${sliderMax.value}元`
+})
+
+function applyPreset(value) {
+  emit('priceChange', value)
 }
 
-function updateMax(val) {
-  localMax.value = parseInt(val)
-  if (localMax.value <= localMin.value) localMax.value = localMin.value + 100
-  emit('priceChange', `custom:${localMin.value}-${localMax.value}`)
+function updateSlider(val) {
+  const v = parseInt(val)
+  if (v < 500) {
+    sliderMin.value = 0
+    sliderMax.value = 500
+  } else if (v < 2000) {
+    sliderMin.value = 500
+    sliderMax.value = 2000
+  } else if (v < 5000) {
+    sliderMin.value = 2000
+    sliderMax.value = 5000
+  } else {
+    sliderMin.value = 5000
+    sliderMax.value = 10000
+  }
+  emit('priceChange', `custom:${sliderMin.value}-${sliderMax.value}`)
 }
 
 watch(() => props.priceRange, (val) => {
   if (!val || !val.startsWith('custom:')) {
-    localMin.value = 0
-    localMax.value = 10000
+    sliderMin.value = 0
+    sliderMax.value = 10000
+  } else {
+    const m = val.match(/^custom:(\d+)-(\d+)$/)
+    if (m) {
+      sliderMin.value = parseInt(m[1])
+      sliderMax.value = parseInt(m[2])
+    }
   }
-})
+}, { immediate: true })
 
 const brandOptions = [
   { value: '', label: '全部', cls: '' },
   { value: 'NVIDIA', label: 'NVIDIA', cls: 'nvidia' },
   { value: 'AMD', label: 'AMD', cls: 'amd' },
   { value: 'Intel', label: 'Intel', cls: 'intel' },
+]
+
+const priceOptions = [
+  { value: '', label: '全部' },
+  { value: '0-1000', label: '0~1k' },
+  { value: '1000-2000', label: '1k~2k' },
+  { value: '2000-3000', label: '2k~3k' },
+  { value: '3000-4000', label: '3k~4k' },
+  { value: '4000-5000', label: '4k~5k' },
+  { value: '5000+', label: '5k+' },
 ]
 </script>
 
@@ -161,7 +192,7 @@ const brandOptions = [
 }
 
 .price-slider {
-  width: 120px;
+  width: 140px;
   height: 4px;
   accent-color: $accent-blue;
   cursor: pointer;
@@ -170,7 +201,7 @@ const brandOptions = [
 .slider-val {
   font-size: 12px;
   color: $accent-blue;
-  min-width: 60px;
+  min-width: 80px;
   white-space: nowrap;
 }
 
@@ -188,12 +219,7 @@ const brandOptions = [
 }
 
 .avg-change-unit { font-size: 14px; font-weight: 600; color: $text-secondary; }
-
-.avg-change-label {
-  font-size: 13px;
-  color: $text-muted;
-  margin-left: 4px;
-}
+.avg-change-label { font-size: 13px; color: $text-muted; margin-left: 4px; }
 
 .avg-change-sub {
   font-size: 12px;
@@ -207,6 +233,6 @@ const brandOptions = [
 
 @media (max-width: 768px) {
   .filters { gap: 12px; }
-  .price-slider { width: 80px; }
+  .price-slider { width: 100px; }
 }
 </style>

@@ -83,6 +83,25 @@ const displayMonths = computed(() => {
 
 const gpus = computed(() => {
   let list = [...props.allGpus]
+  if (props.brandFilter) list = list.filter(g => g.brand === props.brandFilter)
+  if (props.priceRange) {
+    list = list.filter(g => {
+      const p = g.prices[props.latestMonth] || 0
+      if (props.priceRange === '0-1000') return p < 1000
+      if (props.priceRange === '1000-2000') return p >= 1000 && p < 2000
+      if (props.priceRange === '2000-3000') return p >= 2000 && p < 3000
+      if (props.priceRange === '3000-4000') return p >= 3000 && p < 4000
+      if (props.priceRange === '4000-5000') return p >= 4000 && p < 5000
+      if (props.priceRange === '5000+') return p >= 5000
+      const m = props.priceRange.match(/^custom:(\d+)-(\d+)$/)
+      if (m) {
+        const min = parseInt(m[1]) || 0
+        const max = parseInt(m[2]) || 0
+        return (min === 0 || p >= min) && (max === 0 || p <= max)
+      }
+      return true
+    })
+  }
   if (props.searchText) {
     const kw = props.searchText.toLowerCase()
     list = list.filter(g => g.name.toLowerCase().includes(kw))
