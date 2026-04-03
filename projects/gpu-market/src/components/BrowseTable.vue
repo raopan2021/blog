@@ -1,9 +1,7 @@
 <template>
   <div class="card">
     <div class="card-header">
-      <div class="header-left">
-        <span class="card-count">{{ gpus.length }} 张</span>
-      </div>
+      <span class="card-count">{{ gpus.length }} 张</span>
       <div class="view-toggle">
         <button
           v-for="s in sortOptions"

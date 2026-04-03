@@ -10,8 +10,8 @@
       <div class="filter-group">
         <span class="filter-label">价格:</span>
         <button v-for="p in priceOptions" :key="p.value" class="filter-btn"
-          :class="{ active: priceRange === p.value && !isCustom }" @click="applyPreset(p.value)">{{ p.label }}</button>
-        <div class="price-slider-wrap" v-if="isCustom">
+          :class="{ active: isActivePreset }" @click="applyPreset(p.value)">{{ p.label }}</button>
+        <div class="price-slider-wrap">
           <div class="ep-slider">
             <div class="ep-slider__track">
               <div class="ep-slider__runway"></div>
@@ -72,8 +72,6 @@ const props = defineProps({
 
 const emit = defineEmits(['brandChange', 'priceChange', 'searchChange'])
 
-const isCustom = computed(() => props.priceRange && props.priceRange.startsWith('custom:'))
-
 const sliderMin = ref(0)
 const sliderMax = ref(10000)
 const hoverMin = ref(false)
@@ -92,24 +90,54 @@ const sliderLabel = computed(() => {
   return `${sliderMin.value} ~ ${sliderMax.value}元`
 })
 
+const isActivePreset = computed(() => {
+  if (!props.priceRange) return true // default all
+  return priceRangeToPreset(props.priceRange) !== null
+})
+
+function priceRangeToPreset(range) {
+  if (!range || range === '') return ''
+  if (range === '0-1000') return 1000
+  if (range === '1000-2000') return 2000
+  if (range === '2000-3000') return 3000
+  if (range === '3000-4000') return 4000
+  if (range === '4000-5000') return 5000
+  if (range === '5000+') return 6000
+  return null // custom
+}
+
 function applyPreset(value) {
+  const presetMap = {
+    '': [0, 10000],
+    '0-1000': [0, 1000],
+    '1000-2000': [1000, 2000],
+    '2000-3000': [2000, 3000],
+    '3000-4000': [3000, 4000],
+    '4000-5000': [4000, 5000],
+    '5000+': [5000, 10000],
+  }
+  const [min, max] = presetMap[value] || [0, 10000]
+  sliderMin.value = min
+  sliderMax.value = max
   emit('priceChange', value)
 }
 
 function onMinChange(val) {
   const min = parseInt(val)
   sliderMin.value = Math.min(min, sliderMax.value - 100)
-  emit('priceChange', `custom:${sliderMin.value}-${sliderMax.value}`)
+  const max = sliderMax.value >= 10000 ? '' : sliderMax.value
+  emit('priceChange', `custom:${sliderMin.value}-${max || 10000}`)
 }
 
 function onMaxChange(val) {
   const max = parseInt(val)
   sliderMax.value = Math.max(max, sliderMin.value + 100)
-  emit('priceChange', `custom:${sliderMin.value}-${sliderMax.value}`)
+  const maxVal = sliderMax.value >= 10000 ? '' : sliderMax.value
+  emit('priceChange', `custom:${sliderMin.value}-${maxVal || 10000}`)
 }
 
 watch(() => props.priceRange, (val) => {
-  if (!val || !val.startsWith('custom:')) {
+  if (!val || val === '') {
     sliderMin.value = 0
     sliderMax.value = 10000
   } else {
@@ -117,6 +145,8 @@ watch(() => props.priceRange, (val) => {
     if (m) {
       sliderMin.value = parseInt(m[1])
       sliderMax.value = parseInt(m[2])
+    } else {
+      applyPreset(val)
     }
   }
 }, { immediate: true })
