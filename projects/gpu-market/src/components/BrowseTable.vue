@@ -40,7 +40,11 @@
             <td style="color:#94a3b8">{{ gpu.tdp }}W</td>
             <td style="color:#fbbf24">{{ gpu.score.toLocaleString() }}</td>
             <td style="color:#a78bfa">{{ gpu.performance_pct }}%</td>
-            <td v-for="month in displayMonths" :key="month" class="price">{{ fmtPrice(gpu.prices[month]) }}</td>
+            <td v-for="month in displayMonths" :key="month"
+              :class="priceCellClass(gpu, month)"
+              :style="priceCellStyle(gpu, month)">
+              {{ priceCellText(gpu, month) }}
+            </td>
             <td :class="costPerfClass(gpu)">{{ costPerfValue(gpu) }}</td>
             <td style="color:#22d3ee">{{ gpu.efficiency || '-' }}</td>
             <td v-html="renderStars(gpu.stars)"></td>
@@ -107,7 +111,50 @@ const gpus = computed(() => {
   return list
 })
 
-function fmtPrice(v) { return v ? '¥' + v.toLocaleString() : '-' }
+function fmtPrice(v) { return v ? v.toLocaleString() : '-' }
+
+function getMonthPrice(gpu, month) { return gpu.prices[month] || 0 }
+
+function priceCellClass(gpu, month) {
+  const priceValues = displayMonths.value.map(m => gpu.prices[m] || 0).filter(p => p > 0)
+  const currentPrice = getMonthPrice(gpu, month)
+  if (currentPrice === 0) return ''
+  const maxPrice = Math.max(...priceValues)
+  const minPrice = Math.min(...priceValues)
+  if (currentPrice === maxPrice && maxPrice !== minPrice) return 'price-high'
+  if (currentPrice === minPrice && maxPrice !== minPrice) return 'price-low'
+  return ''
+}
+
+function priceCellStyle(gpu, month) {
+  // Latest month vs previous month: red if up, green if down
+  const latestMonth = props.latestMonth
+  const idx = displayMonths.value.indexOf(month)
+  if (month === latestMonth && idx > 0) {
+    const prevMonth = displayMonths.value[idx - 1]
+    const curr = getMonthPrice(gpu, month)
+    const prev = getMonthPrice(gpu, prevMonth)
+    if (prev > 0 && curr > prev) return { color: '#ef4444' }
+    if (prev > 0 && curr < prev) return { color: '#22c55e' }
+  }
+  return { color: '#94a3b8' }
+}
+
+function priceCellText(gpu, month) {
+  const price = getMonthPrice(gpu, month)
+  if (!price) return '-'
+  const latestMonth = props.latestMonth
+  const idx = displayMonths.value.indexOf(month)
+  let text = price.toLocaleString()
+  // Add emoji for current month vs previous
+  if (month === latestMonth && idx > 0) {
+    const prevMonth = displayMonths.value[idx - 1]
+    const prev = getMonthPrice(gpu, prevMonth)
+    if (prev > 0 && price > prev) text += ' ▲'
+    else if (prev > 0 && price < prev) text += ' ▼'
+  }
+  return text
+}
 
 function costPerfValue(gpu) {
   const price = gpu.prices[props.latestMonth]
@@ -191,4 +238,7 @@ th[title] { cursor: help; }
   &:hover { color: #fff; border-color: #3b82f6; }
   &.active { background: #1e40af; border-color: #3b82f6; color: #fff; }
 }
+
+.price-high { color: #ef4444; font-weight: 600; }
+.price-low { color: #22c55e; font-weight: 600; }
 </style>
