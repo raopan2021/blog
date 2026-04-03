@@ -27,10 +27,16 @@
                 </div>
               </div>
             </div>
-            <input type="range" class="ep-range-input" min="0" max="10000" step="100"
-              :value="sliderMin" @input="onMinChange($event.target.value)" />
-            <input type="range" class="ep-range-input" min="0" max="10000" step="100"
-              :value="sliderMax" @input="onMaxChange($event.target.value)" />
+            <!-- 右把手在下层(z3)，左把手拖动时禁用 -->
+            <input type="range" class="ep-range-input right" :class="{ 'dragging-active': dragging !== 'min' }"
+              min="0" max="10000" step="100"
+              :value="sliderMax" @input="onMaxChange($event.target.value)"
+              @mousedown="dragging = 'max'" @mouseup="dragging = ''" @touchstart="dragging = 'max'" @touchend="dragging = ''" />
+            <!-- 左把手在上层(z4)，只在拖动左把手时启用 -->
+            <input type="range" class="ep-range-input left" :class="{ 'dragging-active': dragging === 'min' }"
+              min="0" max="10000" step="100"
+              :value="sliderMin" @input="onMinChange($event.target.value)"
+              @mousedown="dragging = 'min'" @mouseup="dragging = ''" @touchstart="dragging = 'min'" @touchend="dragging = ''" />
           </div>
           <span class="slider-label">{{ sliderLabel }}</span>
         </div>
@@ -76,6 +82,7 @@ const sliderMin = ref(0)
 const sliderMax = ref(10000)
 const hoverMin = ref(false)
 const hoverMax = ref(false)
+const dragging = ref('') // 'min' | 'max' | ''
 
 const minPercent = computed(() => (sliderMin.value / 10000) * 100)
 const maxPercent = computed(() => (sliderMax.value / 10000) * 100)
@@ -339,9 +346,20 @@ const priceOptions = [
   width: 100%;
   height: 100%;
   opacity: 0;
-  z-index: 3;
   cursor: pointer;
   margin: 0;
+
+  // 右把手在下层(z3)，正常时可拖动
+  &.right { z-index: 3; }
+
+  // 左把手在上层(z4)，正常时禁用（事件透传给右把手）
+  &.left {
+    z-index: 4;
+    pointer-events: none;
+  }
+
+  &.left.dragging-active { pointer-events: auto; }
+  &.right.dragging-active { pointer-events: none; }
 
   &::-webkit-slider-thumb {
     width: 20px;
