@@ -12,13 +12,27 @@
         <button v-for="p in priceOptions" :key="p.value" class="filter-btn"
           :class="{ active: priceRange === p.value && !isCustom }" @click="applyPreset(p.value)">{{ p.label }}</button>
         <div class="price-slider-wrap" v-if="isCustom">
-          <input type="range" class="price-range" min="0" max="10000" step="100"
-            :value="sliderMin" @input="onMinChange($event.target.value)" />
-          <span class="range-val">{{ sliderMin === 0 ? '最低' : sliderMin + '元' }}</span>
-          <span class="filter-label">~</span>
-          <input type="range" class="price-range" min="0" max="10000" step="100"
-            :value="sliderMax" @input="onMaxChange($event.target.value)" />
-          <span class="range-val">{{ sliderMax >= 10000 ? '最高' : sliderMax + '元' }}</span>
+          <div class="ep-slider">
+            <div class="ep-slider__track">
+              <div class="ep-slider__runway"></div>
+              <div class="ep-slider__bar" :style="barStyle"></div>
+              <div class="ep-slider__button-wrap" :style="{ left: minPercent + '%' }">
+                <div class="ep-slider__button" @mouseenter="hoverMin = true" @mouseleave="hoverMin = false">
+                  <div class="ep-slider__tooltip" v-if="hoverMin">{{ sliderMin === 0 ? '最低' : sliderMin + '元' }}</div>
+                </div>
+              </div>
+              <div class="ep-slider__button-wrap" :style="{ left: maxPercent + '%' }">
+                <div class="ep-slider__button" @mouseenter="hoverMax = true" @mouseleave="hoverMax = false">
+                  <div class="ep-slider__tooltip" v-if="hoverMax">{{ sliderMax >= 10000 ? '最高' : sliderMax + '元' }}</div>
+                </div>
+              </div>
+            </div>
+            <input type="range" class="ep-range-input" min="0" max="10000" step="100"
+              :value="sliderMin" @input="onMinChange($event.target.value)" />
+            <input type="range" class="ep-range-input" min="0" max="10000" step="100"
+              :value="sliderMax" @input="onMaxChange($event.target.value)" />
+          </div>
+          <span class="slider-label">{{ sliderLabel }}</span>
         </div>
       </div>
 
@@ -62,6 +76,21 @@ const isCustom = computed(() => props.priceRange && props.priceRange.startsWith(
 
 const sliderMin = ref(0)
 const sliderMax = ref(10000)
+const hoverMin = ref(false)
+const hoverMax = ref(false)
+
+const minPercent = computed(() => (sliderMin.value / 10000) * 100)
+const maxPercent = computed(() => (sliderMax.value / 10000) * 100)
+
+const barStyle = computed(() => ({
+  left: minPercent.value + '%',
+  width: (maxPercent.value - minPercent.value) + '%',
+}))
+
+const sliderLabel = computed(() => {
+  if (sliderMax.value >= 10000) return `${sliderMin.value}元+`
+  return `${sliderMin.value} ~ ${sliderMax.value}元`
+})
 
 function applyPreset(value) {
   emit('priceChange', value)
@@ -181,21 +210,114 @@ const priceOptions = [
 .price-slider-wrap {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
 }
 
-.price-range {
-  width: 100px;
-  height: 4px;
-  accent-color: #60a5fa;
-  cursor: pointer;
-}
-
-.range-val {
+.slider-label {
   font-size: 12px;
   color: #60a5fa;
-  min-width: 45px;
+  min-width: 90px;
   text-align: center;
+}
+
+.ep-slider {
+  position: relative;
+  height: 20px;
+  width: 180px;
+}
+
+.ep-slider__track {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 6px;
+  transform: translateY(-50%);
+  z-index: 1;
+}
+
+.ep-slider__runway {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 6px;
+  background: #2d3748;
+  border-radius: 3px;
+}
+
+.ep-slider__bar {
+  position: absolute;
+  top: 0;
+  height: 6px;
+  background: #3b82f6;
+  border-radius: 3px;
+}
+
+.ep-slider__button-wrap {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+}
+
+.ep-slider__button {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid #3b82f6;
+  cursor: grab;
+  transition: transform 0.15s, box-shadow 0.15s;
+  position: relative;
+
+  &:hover {
+    transform: scale(1.15);
+    box-shadow: 0 0 0 4px rgba(#3b82f6, 0.2);
+  }
+}
+
+.ep-slider__tooltip {
+  position: absolute;
+  bottom: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: #1a1f2e;
+  border: 1px solid #3b82f6;
+  color: #e2e8f0;
+  font-size: 11px;
+  padding: 3px 8px;
+  border-radius: 4px;
+  white-space: nowrap;
+  pointer-events: none;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 4px solid transparent;
+    border-top-color: #3b82f6;
+  }
+}
+
+.ep-range-input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  z-index: 3;
+  cursor: pointer;
+  margin: 0;
+
+  &::-webkit-slider-thumb {
+    width: 20px;
+    height: 20px;
+    cursor: grab;
+  }
 }
 
 .avg-change-inner {
