@@ -12,31 +12,31 @@
         <button v-for="p in priceOptions" :key="p.value" class="filter-btn"
           :class="{ active: priceRange === p.value }" @click="applyPreset(p.value)">{{ p.label }}</button>
         <div class="price-slider-wrap">
-          <div class="ep-slider">
-            <div class="ep-slider__track">
+          <div class="ep-slider" ref="sliderRef">
+            <div class="ep-slider__track" @click="onTrackClick">
               <div class="ep-slider__runway"></div>
               <div class="ep-slider__bar" :class="{ active: isCustomActive }" :style="barStyle"></div>
-              <div class="ep-slider__button-wrap" :style="{ left: minPercent + '%' }">
-                <div class="ep-slider__button" @mouseenter="hoverMin = true" @mouseleave="hoverMin = false">
-                  <div class="ep-slider__tooltip" v-if="hoverMin">{{ sliderMin === 0 ? '最低' : sliderMin + '元' }}</div>
-                </div>
-              </div>
-              <div class="ep-slider__button-wrap" :style="{ left: maxPercent + '%' }">
-                <div class="ep-slider__button" @mouseenter="hoverMax = true" @mouseleave="hoverMax = false">
-                  <div class="ep-slider__tooltip" v-if="hoverMax">{{ sliderMax >= 10000 ? '最高' : sliderMax + '元' }}</div>
-                </div>
+            </div>
+            <div
+              class="ep-slider__button-wrap"
+              :style="{ left: minPercent + '%' }"
+              @mousedown.prevent="startDrag('min', $event)"
+              @touchstart.prevent="startDrag('min', $event)"
+            >
+              <div class="ep-slider__button" :class="{ dragging: dragging === 'min' }">
+                <div class="ep-slider__tooltip" v-if="hoverMin || dragging === 'min'">{{ sliderMin === 0 ? '最低' : sliderMin + '元' }}</div>
               </div>
             </div>
-            <!-- 右把手在下层(z3)，左拖动时禁用 -->
-            <input type="range" class="ep-range-input right" :class="{ 'dragging-active': dragging === 'min' }"
-              min="0" max="10000" step="100"
-              :value="sliderMax" @input="onMaxChange($event.target.value)"
-              @mousedown="dragging = 'max'" @mouseup="dragging = ''" @touchstart="dragging = 'max'" @touchend="dragging = ''" />
-            <!-- 左把手在上层(z4)，只在拖左把手时启用 -->
-            <input type="range" class="ep-range-input left" :class="{ 'dragging-active': dragging !== 'min' }"
-              min="0" max="10000" step="100"
-              :value="sliderMin" @input="onMinChange($event.target.value)"
-              @mousedown="dragging = 'min'" @mouseup="dragging = ''" @touchstart="dragging = 'min'" @touchend="dragging = ''" />
+            <div
+              class="ep-slider__button-wrap"
+              :style="{ left: maxPercent + '%' }"
+              @mousedown.prevent="startDrag('max', $event)"
+              @touchstart.prevent="startDrag('max', $event)"
+            >
+              <div class="ep-slider__button" :class="{ dragging: dragging === 'max' }">
+                <div class="ep-slider__tooltip" v-if="hoverMax || dragging === 'max'">{{ sliderMax >= 10000 ? '最高' : sliderMax + '元' }}</div>
+              </div>
+            </div>
           </div>
           <span class="slider-label">{{ sliderLabel }}</span>
         </div>
@@ -83,6 +83,62 @@ const sliderMax = ref(10000)
 const hoverMin = ref(false)
 const hoverMax = ref(false)
 const dragging = ref('') // 'min' | 'max' | ''
+const sliderRef = ref(null)
+
+function getPercent(clientX) {
+  const track = sliderRef.value?.querySelector('.ep-slider__track')
+  if (!track) return 0
+  const rect = track.getBoundingClientRect()
+  const x = clientX - rect.left
+  return Math.max(0, Math.min(1, x / rect.width))
+}
+
+function startDrag(which, event) {
+  dragging.value = which
+  document.addEventListener('mousemove', onDrag)
+  document.addEventListener('mouseup', stopDrag)
+  document.addEventListener('touchmove', onDrag)
+  document.addEventListener('touchend', stopDrag)
+}
+
+function onDrag(event) {
+  const clientX = event.touches ? event.touches[0].clientX : event.clientX
+  const percent = getPercent(clientX)
+  const val = Math.round(percent * 10000 / 100) * 100
+
+  if (dragging.value === 'min') {
+    const min = Math.min(val, sliderMax.value - 100)
+    sliderMin.value = Math.max(0, min)
+    emit('priceChange', `custom:${sliderMin.value}-${sliderMax.value >= 10000 ? 10000 : sliderMax.value}`)
+  } else if (dragging.value === 'max') {
+    const max = Math.max(val, sliderMin.value + 100)
+    sliderMax.value = Math.min(10000, max)
+    emit('priceChange', `custom:${sliderMin.value}-${sliderMax.value >= 10000 ? 10000 : sliderMax.value}`)
+  }
+}
+
+function stopDrag() {
+  dragging.value = ''
+  document.removeEventListener('mousemove', onDrag)
+  document.removeEventListener('mouseup', stopDrag)
+  document.removeEventListener('touchmove', onDrag)
+  document.removeEventListener('touchend', stopDrag)
+}
+
+function onTrackClick(event) {
+  const clientX = event.clientX
+  const percent = getPercent(clientX)
+  const val = Math.round(percent * 10000 / 100) * 100
+  // Move nearest handle
+  const dMin = Math.abs(val - sliderMin.value)
+  const dMax = Math.abs(val - sliderMax.value)
+  if (dMin < dMax) {
+    sliderMin.value = Math.min(val, sliderMax.value - 100)
+  } else {
+    sliderMax.value = Math.max(val, sliderMin.value + 100)
+  }
+  emit('priceChange', `custom:${sliderMin.value}-${sliderMax.value >= 10000 ? 10000 : sliderMax.value}`)
+}
 
 const minPercent = computed(() => (sliderMin.value / 10000) * 100)
 const maxPercent = computed(() => (sliderMax.value / 10000) * 100)
@@ -121,20 +177,6 @@ function applyPreset(value) {
   sliderMin.value = min
   sliderMax.value = max
   emit('priceChange', value)
-}
-
-function onMinChange(val) {
-  const min = parseInt(val)
-  sliderMin.value = Math.min(min, sliderMax.value - 100)
-  const max = sliderMax.value >= 10000 ? '' : sliderMax.value
-  emit('priceChange', `custom:${sliderMin.value}-${max || 10000}`)
-}
-
-function onMaxChange(val) {
-  const max = parseInt(val)
-  sliderMax.value = Math.max(max, sliderMin.value + 100)
-  const maxVal = sliderMax.value >= 10000 ? '' : sliderMax.value
-  emit('priceChange', `custom:${sliderMin.value}-${maxVal || 10000}`)
 }
 
 watch(() => props.priceRange, (val) => {
@@ -295,6 +337,7 @@ const priceOptions = [
   top: 50%;
   transform: translate(-50%, -50%);
   z-index: 2;
+  cursor: grab;
 }
 
 .ep-slider__button {
@@ -303,14 +346,17 @@ const priceOptions = [
   border-radius: 50%;
   background: #fff;
   border: 2px solid #4b5563;
-  cursor: grab;
-  transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s;
+  transition: border-color 0.15s, box-shadow 0.15s;
   position: relative;
 
-  &:hover {
-    transform: scale(1.15);
-    box-shadow: 0 0 0 4px rgba(#3b82f6, 0.2);
+  &.dragging {
     border-color: #3b82f6;
+    cursor: grabbing;
+  }
+
+  &:hover {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 4px rgba(#3b82f6, 0.2);
   }
 }
 
@@ -336,38 +382,6 @@ const priceOptions = [
     transform: translateX(-50%);
     border: 4px solid transparent;
     border-top-color: #3b82f6;
-  }
-}
-
-.ep-range-input {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-  cursor: pointer;
-  margin: 0;
-
-  // 右把手在下层(z3)，正常时可拖动
-  &.right { z-index: 3; }
-
-  // 左把手在上层(z4)，正常时禁用（事件透传给右把手）
-  &.left {
-    z-index: 4;
-    pointer-events: none;
-  }
-
-  // 左把手：只在拖左把手时启用，其他时候禁用（平时被右把手盖住，不需要事件）
-  &.left.dragging-active { pointer-events: auto; }
-
-  // 右把手：只在拖右把手时启用，其他时候禁用（让左把手事件透传）
-  &.right.dragging-active { pointer-events: auto; }
-
-  &::-webkit-slider-thumb {
-    width: 20px;
-    height: 20px;
-    cursor: grab;
   }
 }
 
