@@ -119,7 +119,7 @@ function priceCellClass(gpu, month) {
   const priceValues = displayMonths.value
     .map(m => gpu.prices[m])
     .filter(p => p && p > 0)
-  if (priceValues.length < 2) return ''
+  if (priceValues.length < 2) return 'price-default'
   const maxPrice = Math.max(...priceValues)
   const minPrice = Math.min(...priceValues)
   const current = gpu.prices[month]
@@ -129,14 +129,25 @@ function priceCellClass(gpu, month) {
 }
 
 function priceCellStyle(gpu, month) {
-  const cls = priceCellClass(gpu, month)
-  if (cls) return {} // CSS handles color for high/low, default gray below
-  return { color: '#94a3b8' }
+  return {}
 }
 
 function priceCellText(gpu, month) {
   const price = gpu.prices[month]
-  return price ? price.toLocaleString() : '-'
+  if (!price) return '-'
+  const idx = displayMonths.value.indexOf(month)
+  let text = price.toLocaleString()
+  // Compare with previous month in display order
+  if (idx > 0) {
+    const prevMonth = displayMonths.value[idx - 1]
+    const prevPrice = gpu.prices[prevMonth]
+    if (prevPrice && prevPrice > 0 && price > prevPrice) {
+      text += ' ▲'
+    } else if (prevPrice && prevPrice > 0 && price < prevPrice) {
+      text += ' ▼'
+    }
+  }
+  return text
 }
 
 function costPerfValue(gpu) {
