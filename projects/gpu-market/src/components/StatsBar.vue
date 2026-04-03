@@ -10,12 +10,12 @@
       <div class="filter-group">
         <span class="filter-label">价格:</span>
         <button v-for="p in priceOptions" :key="p.value" class="filter-btn"
-          :class="{ active: isActivePreset }" @click="applyPreset(p.value)">{{ p.label }}</button>
+          :class="{ active: priceRange === p.value }" @click="applyPreset(p.value)">{{ p.label }}</button>
         <div class="price-slider-wrap">
           <div class="ep-slider">
             <div class="ep-slider__track">
               <div class="ep-slider__runway"></div>
-              <div class="ep-slider__bar" :class="{ active: isFiltered }" :style="barStyle"></div>
+              <div class="ep-slider__bar" :class="{ active: isCustomActive }" :style="barStyle"></div>
               <div class="ep-slider__button-wrap" :style="{ left: minPercent + '%' }">
                 <div class="ep-slider__button" @mouseenter="hoverMin = true" @mouseleave="hoverMin = false">
                   <div class="ep-slider__tooltip" v-if="hoverMin">{{ sliderMin === 0 ? '最低' : sliderMin + '元' }}</div>
@@ -93,20 +93,12 @@ const sliderLabel = computed(() => {
 const isFiltered = computed(() => sliderMin.value > 0 || sliderMax.value < 10000)
 
 const isActivePreset = computed(() => {
-  if (!props.priceRange) return true // default all
-  return priceRangeToPreset(props.priceRange) !== null
+  return props.priceRange === '' // only "all" is active when no filter
 })
 
-function priceRangeToPreset(range) {
-  if (!range || range === '') return ''
-  if (range === '0-1000') return 1000
-  if (range === '1000-2000') return 2000
-  if (range === '2000-3000') return 3000
-  if (range === '3000-4000') return 4000
-  if (range === '4000-5000') return 5000
-  if (range === '5000+') return 6000
-  return null // custom
-}
+const isCustomActive = computed(() => {
+  return props.priceRange.startsWith('custom')
+})
 
 function applyPreset(value) {
   const presetMap = {
