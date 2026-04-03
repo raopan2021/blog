@@ -193,11 +193,11 @@ const sortedGpus = computed(() => {
   const list = [...gpus.value]
   const asc = sortOrder.value === 'asc' ? 1 : -1
   if (rankSort.value === 'score') {
-    list.sort((a, b) => asc * (b.score - a.score))
+    list.sort((a, b) => (b.score - a.score) * asc)
   } else if (rankSort.value === 'price') {
-    list.sort((a, b) => asc * ((b.prices[props.latestMonth] || 0) - (a.prices[props.latestMonth] || 0)))
+    list.sort((a, b) => ((b.prices[props.latestMonth] || 0) - (a.prices[props.latestMonth] || 0)) * asc)
   } else if (rankSort.value === 'efficiency') {
-    list.sort((a, b) => asc * ((b.efficiency || 0) - (a.efficiency || 0)))
+    list.sort((a, b) => ((b.efficiency || 0) - (a.efficiency || 0)) * asc)
   }
   return list
 })
