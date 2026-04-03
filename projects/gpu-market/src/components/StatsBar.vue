@@ -27,13 +27,13 @@
                 </div>
               </div>
             </div>
-            <!-- 右把手在下层(z3)，左把手拖动时禁用 -->
-            <input type="range" class="ep-range-input right" :class="{ 'dragging-active': dragging !== 'min' }"
+            <!-- 右把手在下层(z3)，左拖动时禁用 -->
+            <input type="range" class="ep-range-input right" :class="{ 'dragging-active': dragging === 'min' }"
               min="0" max="10000" step="100"
               :value="sliderMax" @input="onMaxChange($event.target.value)"
               @mousedown="dragging = 'max'" @mouseup="dragging = ''" @touchstart="dragging = 'max'" @touchend="dragging = ''" />
-            <!-- 左把手在上层(z4)，只在拖动左把手时启用 -->
-            <input type="range" class="ep-range-input left" :class="{ 'dragging-active': dragging === 'min' }"
+            <!-- 左把手在上层(z4)，只在拖左把手时启用 -->
+            <input type="range" class="ep-range-input left" :class="{ 'dragging-active': dragging !== 'min' }"
               min="0" max="10000" step="100"
               :value="sliderMin" @input="onMinChange($event.target.value)"
               @mousedown="dragging = 'min'" @mouseup="dragging = ''" @touchstart="dragging = 'min'" @touchend="dragging = ''" />
@@ -358,8 +358,11 @@ const priceOptions = [
     pointer-events: none;
   }
 
+  // 左把手：只在拖左把手时启用，其他时候禁用（平时被右把手盖住，不需要事件）
   &.left.dragging-active { pointer-events: auto; }
-  &.right.dragging-active { pointer-events: none; }
+
+  // 右把手：只在拖右把手时启用，其他时候禁用（让左把手事件透传）
+  &.right.dragging-active { pointer-events: auto; }
 
   &::-webkit-slider-thumb {
     width: 20px;
