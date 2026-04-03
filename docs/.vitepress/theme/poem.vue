@@ -3,7 +3,6 @@ import { useData, useRoute } from 'vitepress'
 import VPDocAside from 'vitepress/dist/client/theme-default/components/VPDocAside.vue'
 import VPDocFooter from 'vitepress/dist/client/theme-default/components/VPDocFooter.vue'
 import { computed } from 'vue'
-
 import { ElBacktop } from 'element-plus'
 
 const { theme } = useData()

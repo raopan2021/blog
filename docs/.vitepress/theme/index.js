@@ -4,10 +4,8 @@ import DefaultTheme from 'vitepress/theme'
 import { h, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { ID_INJECTION_KEY, ZINDEX_INJECTION_KEY } from 'element-plus'
 
-// import AdComponent from './AdComponent.vue'
 import Layout from './Layout.vue'
 import Poem from './poem.vue' // 自定义的markdowm布局
-import FullscreenLayout from './FullscreenLayout.vue'
 
 // import elementplus from "element-plus"
 // import "element-plus/dist/index.css";
@@ -34,7 +32,6 @@ export default {
 		app.provide(ZINDEX_INJECTION_KEY, { current: 0 })
 
 		app.component('poem', Poem)
-		app.component('fullscreenLayout', FullscreenLayout)
 	},
 
 	// 文字渐入效果
