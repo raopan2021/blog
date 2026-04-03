@@ -10,6 +10,18 @@ const pkg = require('vitepress/package.json')
 const config = defineConfig({
 	vite: {
 		plugins: [],
+		build: {
+			rollupOptions: {
+				output: {
+					manualChunks(id) {
+						if (id.includes('node_modules/element-plus')) {
+							return 'element-plus'
+						}
+					},
+				},
+			},
+			chunkSizeWarningLimit: 2000,
+		},
 		css: {
 			preprocessorOptions: {
 				scss: {
