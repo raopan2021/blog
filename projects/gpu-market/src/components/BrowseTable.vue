@@ -262,6 +262,6 @@ th[title] { cursor: help; }
 .price-default { color: #94a3b8; }
 .price-high { color: #ef4444; font-weight: 600; }
 .price-low { color: #22c55e; font-weight: 600; }
-.trend-up { color: #22c55e !important; }
-.trend-down { color: #ef4444 !important; }
+.trend-up { color: #ef4444 !important; }
+.trend-down { color: #22c55e !important; }
 </style>
