@@ -48,8 +48,8 @@
             <td style="color:#a78bfa">{{ gpu.performance_pct }}%</td>
             <td v-for="month in displayMonths" :key="month"
               :class="priceCellClass(gpu, month)"
-              :style="priceCellStyle(gpu, month)">
-              {{ priceCellText(gpu, month) }}
+              :style="priceCellStyle(gpu, month)"
+              v-html="priceCellText(gpu, month)">
             </td>
             <td :class="costPerfClass(gpu)">{{ costPerfValue(gpu) }}</td>
             <td style="color:#22d3ee">{{ gpu.efficiency || '-' }}</td>
@@ -157,9 +157,9 @@ function priceCellText(gpu, month) {
     const prevMonth = displayMonths.value[idx - 1]
     const prevPrice = gpu.prices[prevMonth]
     if (prevPrice && prevPrice > 0 && price > prevPrice) {
-      text += ' ▲'
+      text += ' <span class="trend-up">▲</span>'
     } else if (prevPrice && prevPrice > 0 && price < prevPrice) {
-      text += ' ▼'
+      text += ' <span class="trend-down">▼</span>'
     }
   }
   return text
@@ -262,4 +262,6 @@ th[title] { cursor: help; }
 .price-default { color: #94a3b8; }
 .price-high { color: #ef4444; font-weight: 600; }
 .price-low { color: #22c55e; font-weight: 600; }
+.trend-up { color: #ef4444 !important; }
+.trend-down { color: #22c55e !important; }
 </style>
