@@ -12,16 +12,13 @@
         <button v-for="p in priceOptions" :key="p.value" class="filter-btn"
           :class="{ active: priceRange === p.value && !isCustom }" @click="applyPreset(p.value)">{{ p.label }}</button>
         <div class="price-slider-wrap" v-if="isCustom">
-          <el-slider
-            v-model="sliderRange"
-            :min="0"
-            :max="10000"
-            :step="100"
-            range
-            :format-tooltip="formatTooltip"
-            @change="onSliderChange"
-          />
-          <span class="slider-val">{{ sliderLabel }}</span>
+          <input type="range" class="price-range" min="0" max="10000" step="100"
+            :value="sliderMin" @input="onMinChange($event.target.value)" />
+          <span class="range-val">{{ sliderMin === 0 ? '最低' : sliderMin + '元' }}</span>
+          <span class="filter-label">~</span>
+          <input type="range" class="price-range" min="0" max="10000" step="100"
+            :value="sliderMax" @input="onMaxChange($event.target.value)" />
+          <span class="range-val">{{ sliderMax >= 10000 ? '最高' : sliderMax + '元' }}</span>
         </div>
       </div>
 
@@ -63,34 +60,34 @@ const emit = defineEmits(['brandChange', 'priceChange', 'searchChange'])
 
 const isCustom = computed(() => props.priceRange && props.priceRange.startsWith('custom:'))
 
-const sliderRange = ref([0, 10000])
-
-function formatTooltip(v) {
-  return v >= 10000 ? `${v}元+` : `${v}元`
-}
-
-const sliderLabel = computed(() => {
-  const [min, max] = sliderRange.value
-  if (max >= 10000) return `${min}元+`
-  return `${min} ~ ${max}元`
-})
+const sliderMin = ref(0)
+const sliderMax = ref(10000)
 
 function applyPreset(value) {
   emit('priceChange', value)
 }
 
-function onSliderChange(val) {
-  const [min, max] = val
-  emit('priceChange', `custom:${min}-${max}`)
+function onMinChange(val) {
+  const min = parseInt(val)
+  sliderMin.value = Math.min(min, sliderMax.value - 100)
+  emit('priceChange', `custom:${sliderMin.value}-${sliderMax.value}`)
+}
+
+function onMaxChange(val) {
+  const max = parseInt(val)
+  sliderMax.value = Math.max(max, sliderMin.value + 100)
+  emit('priceChange', `custom:${sliderMin.value}-${sliderMax.value}`)
 }
 
 watch(() => props.priceRange, (val) => {
   if (!val || !val.startsWith('custom:')) {
-    sliderRange.value = [0, 10000]
+    sliderMin.value = 0
+    sliderMax.value = 10000
   } else {
     const m = val.match(/^custom:(\d+)-(\d+)$/)
     if (m) {
-      sliderRange.value = [parseInt(m[1]), parseInt(m[2])]
+      sliderMin.value = parseInt(m[1])
+      sliderMax.value = parseInt(m[2])
     }
   }
 }, { immediate: true })
@@ -187,18 +184,18 @@ const priceOptions = [
   gap: 8px;
 }
 
-.price-slider {
-  width: 140px;
+.price-range {
+  width: 100px;
   height: 4px;
-  accent-color: $accent-blue;
+  accent-color: #60a5fa;
   cursor: pointer;
 }
 
-.slider-val {
+.range-val {
   font-size: 12px;
-  color: $accent-blue;
-  min-width: 80px;
-  white-space: nowrap;
+  color: #60a5fa;
+  min-width: 45px;
+  text-align: center;
 }
 
 .avg-change-inner {
