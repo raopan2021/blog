@@ -115,7 +115,7 @@ function costPerfValue(gpu) {
   const price = gpu.prices[props.latestMonth]
   if (!price) return '-'
   const cp = gpu.score / price
-  return cp.toFixed(1)
+  return cp.toFixed(2)
 }
 
 function costPerfClass(gpu) {
