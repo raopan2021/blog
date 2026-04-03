@@ -12,8 +12,15 @@
         <button v-for="p in priceOptions" :key="p.value" class="filter-btn"
           :class="{ active: priceRange === p.value && !isCustom }" @click="applyPreset(p.value)">{{ p.label }}</button>
         <div class="price-slider-wrap" v-if="isCustom">
-          <input type="range" class="price-slider" min="0" max="10000" step="100"
-            :value="sliderVal" @input="updateSlider($event.target.value)" />
+          <el-slider
+            v-model="sliderRange"
+            :min="0"
+            :max="10000"
+            :step="100"
+            range
+            :format-tooltip="formatTooltip"
+            @change="onSliderChange"
+          />
           <span class="slider-val">{{ sliderLabel }}</span>
         </div>
       </div>
@@ -56,45 +63,34 @@ const emit = defineEmits(['brandChange', 'priceChange', 'searchChange'])
 
 const isCustom = computed(() => props.priceRange && props.priceRange.startsWith('custom:'))
 
-const sliderMin = ref(0)
-const sliderMax = ref(10000)
+const sliderRange = ref([0, 10000])
+
+function formatTooltip(v) {
+  return v >= 10000 ? `${v}元+` : `${v}元`
+}
 
 const sliderLabel = computed(() => {
-  if (sliderMax.value >= 10000) return `${sliderMin.value}元+`
-  return `${sliderMin.value} ~ ${sliderMax.value}元`
+  const [min, max] = sliderRange.value
+  if (max >= 10000) return `${min}元+`
+  return `${min} ~ ${max}元`
 })
 
 function applyPreset(value) {
   emit('priceChange', value)
 }
 
-function updateSlider(val) {
-  const v = parseInt(val)
-  if (v < 500) {
-    sliderMin.value = 0
-    sliderMax.value = 500
-  } else if (v < 2000) {
-    sliderMin.value = 500
-    sliderMax.value = 2000
-  } else if (v < 5000) {
-    sliderMin.value = 2000
-    sliderMax.value = 5000
-  } else {
-    sliderMin.value = 5000
-    sliderMax.value = 10000
-  }
-  emit('priceChange', `custom:${sliderMin.value}-${sliderMax.value}`)
+function onSliderChange(val) {
+  const [min, max] = val
+  emit('priceChange', `custom:${min}-${max}`)
 }
 
 watch(() => props.priceRange, (val) => {
   if (!val || !val.startsWith('custom:')) {
-    sliderMin.value = 0
-    sliderMax.value = 10000
+    sliderRange.value = [0, 10000]
   } else {
     const m = val.match(/^custom:(\d+)-(\d+)$/)
     if (m) {
-      sliderMin.value = parseInt(m[1])
-      sliderMax.value = parseInt(m[2])
+      sliderRange.value = [parseInt(m[1]), parseInt(m[2])]
     }
   }
 }, { immediate: true })
