@@ -6,3 +6,11 @@ docs/.vitepress/dist
 node_modules
 
 test
+
+# projects build artifacts
+projects/*/dist/
+projects/*/node_modules/
+projects/*/.map
+projects/*/*.map
+projects/*/package-lock.json
+projects/*/pnpm-lock.yaml
