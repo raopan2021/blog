@@ -18,7 +18,7 @@ export function PLCSidebar(): DefaultTheme.SidebarItem[] {
 		},
 		{
 			text: '西门子系列',
-			collapsed: false,
+			collapsed: true,
 			base: '/plc/西门子/',
 			items: [
 				{ text: 'S7-200 快速入门', link: 'S7-200快速入门' },
@@ -29,7 +29,7 @@ export function PLCSidebar(): DefaultTheme.SidebarItem[] {
 		},
 		{
 			text: '三菱系列',
-			collapsed: false,
+			collapsed: true,
 			base: '/plc/三菱/',
 			items: [
 				{ text: 'FX5U 快速入门', link: 'FX5U快速入门' },
@@ -38,7 +38,7 @@ export function PLCSidebar(): DefaultTheme.SidebarItem[] {
 		},
 		{
 			text: 'ABB 系列',
-			collapsed: false,
+			collapsed: true,
 			base: '/plc/ABB/',
 			items: [
 				{ text: 'ABB PLC 快速入门', link: 'ABB-PLC快速入门' },
@@ -46,7 +46,7 @@ export function PLCSidebar(): DefaultTheme.SidebarItem[] {
 		},
 		{
 			text: '专题实战',
-			collapsed: false,
+			collapsed: true,
 			base: '/plc/专题/',
 			items: [
 				{ text: '高速计数器与编码器', link: '高速计数器与编码器' },

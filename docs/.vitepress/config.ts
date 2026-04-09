@@ -34,7 +34,7 @@ const config = defineConfig({
 	lang: 'zh-CN',
 	// 网站标题，左上角以及meta标题
 	title: 'FrontEnd',
-	description: '我的blog',
+	description: '前端技术博客，专注 Vue、Vite、JavaScript 等前端技术栈分享',
 	cleanUrls: true,
 	sitemap: {
 		hostname: 'https://raopan2021.github.io/blog/',
@@ -48,9 +48,9 @@ const config = defineConfig({
 		['link', { rel: 'icon', type: 'image/png', href: '/vitepress-logo-mini.png' }],
 		['meta', { name: 'theme-color', content: '#5f67ee' }],
 		['meta', { name: 'og:type', content: 'website' }],
-		['meta', { name: 'og:locale', content: 'en' }],
-		['meta', { name: 'og:site_name', content: 'VitePress' }],
-		['meta', { name: 'og:image', content: 'https://vitepress.dev/vitepress-og.jpg' }],
+		['meta', { name: 'og:locale', content: 'zh-CN' }],
+		['meta', { name: 'og:site_name', content: '前端修仙录' }],
+		['meta', { name: 'og:image', content: 'https://raw.githubusercontent.com/raopan2021/blog/main/docs/.vitepress/public/avatar.png' }],
 		['script', { 'src': 'https://cdn.usefathom.com/script.js', 'data-site': 'AZBRSFGG', 'data-spa': 'auto', 'defer': '' }],
 	],
 	// markdown配置

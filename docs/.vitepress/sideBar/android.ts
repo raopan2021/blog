@@ -22,7 +22,7 @@ export function AndroidSidebar(): DefaultTheme.SidebarItem[] {
 				},
 				{
 					text: '第二阶段：进阶',
-					collapsed: false,
+					collapsed: true,
 					base: '/android/',
 					items: [
 						{ text: '06 持久化', link: '06-持久化' },
@@ -33,7 +33,7 @@ export function AndroidSidebar(): DefaultTheme.SidebarItem[] {
 				},
 				{
 					text: '第三阶段：实战',
-					collapsed: false,
+					collapsed: true,
 					base: '/android/',
 					items: [
 						{ text: '10 实战：账户管理', link: '10-实战账户管理' },
@@ -44,7 +44,7 @@ export function AndroidSidebar(): DefaultTheme.SidebarItem[] {
 				},
 				{
 					text: '📋 项目研发笔记',
-					collapsed: false,
+					collapsed: true,
 					base: '/android/',
 					items: [
 						{ text: '项目研发笔记', link: '项目研发笔记' },

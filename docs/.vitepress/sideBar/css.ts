@@ -30,7 +30,7 @@ export function CssSidebar(): DefaultTheme.SidebarItem[] {
 				},
 				{
 					text: 'css属性',
-					collapsed: false,
+					collapsed: true,
 					base: '/css/',
 					items: [
 						{ text: 'list-style', link: 'list-style' },
@@ -42,7 +42,7 @@ export function CssSidebar(): DefaultTheme.SidebarItem[] {
 				},
 				{
 					text: '特效',
-					collapsed: false,
+					collapsed: true,
 					base: '/css/',
 					items: [
 						{ text: '文字特效', link: 'textColor' },
@@ -57,7 +57,7 @@ export function CssSidebar(): DefaultTheme.SidebarItem[] {
 				},
 				{
 					text: '进阶技巧',
-					collapsed: false,
+					collapsed: true,
 					base: '/css/',
 					items: [
 						{ text: 'CSS3 新特性', link: 'css3新特性' },

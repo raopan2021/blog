@@ -10,7 +10,6 @@
 
 ## 激活
 
-idea激活工具，[点击下载](/JetBrain.zip)
 
 ## 无法新建java1.8版本的spring项目
 

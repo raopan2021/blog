@@ -44,7 +44,7 @@ export function JsSidebar(): DefaultTheme.SidebarItem[] {
 				},
 				{
 					text: 'ES6',
-					collapsed: false,
+					collapsed: true,
 					base: 'js/ES6/',
 					items: [
 						{ text: '首页', link: 'index' },
@@ -56,7 +56,7 @@ export function JsSidebar(): DefaultTheme.SidebarItem[] {
 				},
 				{
 					text: '字符串',
-					collapsed: false,
+					collapsed: true,
 					base: 'js/字符串/',
 					items: [
 						{ text: '字符串常用的方法', link: '字符串常用的方法' },
@@ -65,7 +65,7 @@ export function JsSidebar(): DefaultTheme.SidebarItem[] {
 				},
 				{
 					text: '数组',
-					collapsed: false,
+					collapsed: true,
 					base: 'js/数组/',
 					items: [
 						{ text: '数组常用方法', link: '数组常用方法' },
@@ -87,7 +87,7 @@ export function JsSidebar(): DefaultTheme.SidebarItem[] {
 				},
 				{
 					text: '对象',
-					collapsed: false,
+					collapsed: true,
 					base: 'js/对象/',
 					items: [
 						{ text: '浅拷贝与深拷贝', link: '浅拷贝与深拷贝' },
@@ -100,7 +100,7 @@ export function JsSidebar(): DefaultTheme.SidebarItem[] {
 				},
 				{
 					text: '函数',
-					collapsed: false,
+					collapsed: true,
 					base: 'js/函数/',
 					items: [
 						{ text: '闭包', link: '闭包' },
@@ -131,7 +131,6 @@ export function JsSidebar(): DefaultTheme.SidebarItem[] {
 
 				// {
 				// 	text: 'js专题',
-				// 	collapsed: false,
 				// 	base: 'js/专题/',
 				// 	items: [
 				// { text: '头疼的类型转换(上)', link: '头疼的类型转换(上)' },
@@ -140,7 +139,7 @@ export function JsSidebar(): DefaultTheme.SidebarItem[] {
 				// },
 				{
 					text: 'js深入',
-					collapsed: false,
+					collapsed: true,
 					base: 'js/深入/',
 					items: [
 						{ text: '01_深入JavaScript运行原理', link: '01_深入JavaScript运行原理' },
@@ -175,7 +174,7 @@ export function JsSidebar(): DefaultTheme.SidebarItem[] {
 
 				{
 					text: 'js组件',
-					collapsed: false,
+					collapsed: true,
 					base: 'js/组件/',
 					items: [
 						{ text: 'highLight代码高亮组件', link: 'highLight代码高亮组件' },

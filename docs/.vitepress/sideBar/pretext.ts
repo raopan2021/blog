@@ -9,7 +9,7 @@ export function PretextSidebar(): DefaultTheme.SidebarItem[] {
 			items: [
 				{
 					text: '介绍',
-					collapsed: false,
+					collapsed: true,
 					base: '/pretext/介绍/',
 					items: [
 						{ text: '使用方法', link: '使用方法' },
@@ -18,7 +18,7 @@ export function PretextSidebar(): DefaultTheme.SidebarItem[] {
 				},
 				{
 					text: 'Demo 演示',
-					collapsed: false,
+					collapsed: true,
 					base: '/pretext/demo/',
 					items: [
 						{ text: 'The Editorial Engine', link: 'demo1-editorial-engine' },

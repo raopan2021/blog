@@ -39,7 +39,7 @@ export const side = {
   '/css/': { base: '/css/', items: CssSidebar() },
   '/engineering/': { base: '/engineering/', items: EngineeringSidebar() },
   '/h5/': { base: '/h5/', items: H5Sidebar() },
-  '/java/': { base: '/java/基础/', items: JavaSidebar() },
+  '/java/': { base: '/java/', items: JavaSidebar() },
   '/python/': { base: '/python/', items: PythonSidebar() },
   '/js/': { base: '/js/', items: JsSidebar() },
   '/markdown/': { base: '/markdown/', items: MarkdownSidebar() },
