@@ -36,6 +36,9 @@ const config = defineConfig({
 	title: 'FrontEnd',
 	description: '我的blog',
 	cleanUrls: true,
+	sitemap: {
+		hostname: 'https://raopan2021.github.io/blog/',
+	},
 	// 是否忽略死链
 	ignoreDeadLinks: true,
 	// 最后更新于 开关
