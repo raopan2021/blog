@@ -35,6 +35,17 @@
 - [渲染流程](./principle/render)
 - [通信机制](./principle/communication)
 
+### 常见问题
+- [React Native 常见问题与解决方案](./qa)
+
+### 面试题
+- [React Native 核心面试题](./interview)
+
+### 常用库
+- [React Native 常用库](./libraries)
+
+---
+
 ### 构建与发布
 - [发布流程](./build/publish)
 - [iOS 发布](./build/publish-ios)
