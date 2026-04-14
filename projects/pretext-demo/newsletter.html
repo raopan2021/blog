@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pretext Demo - 新闻订阅阅读器</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', 'PingFang SC', sans-serif; background: #f5f5f7; min-height: 100vh; }
+    .header { background: white; border-bottom: 1px solid #e5e5e7; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; height: 56px; position: sticky; top: 0; z-index: 100; }
+    .logo { font-size: 18px; font-weight: 800; color: #1a1a2e; display: flex; align-items: center; gap: 8px; }
+    .logo span { color: #5f67ee; }
+    .header-right { display: flex; align-items: center; gap: 16px; }
+    .header-right input { background: #f5f5f7; border: none; border-radius: 10px; padding: 8px 14px; width: 200px; font-size: 13px; outline: none; transition: width 0.2s; }
+    .header-right input:focus { width: 260px; background: #eeeeff; }
+    .subscribe-btn { background: #5f67ee; color: white; border: none; border-radius: 10px; padding: 8px 18px; font-size: 13px; font-weight: 600; cursor: pointer; }
+    .subscribe-btn:hover { background: #4a54d4; }
+    .content { max-width: 900px; margin: 40px auto; padding: 0 20px; }
+    .article-card { background: white; border-radius: 20px; margin-bottom: 24px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.05); cursor: pointer; transition: box-shadow 0.2s; }
+    .article-card:hover { box-shadow: 0 8px 32px rgba(0,0,0,0.1); }
+    .article-img { height: 220px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; align-items: center; justify-content: center; font-size: 48px; color: white; }
+    .article-body { padding: 24px; }
+    .article-meta { display: flex; gap: 12px; margin-bottom: 12px; }
+    .article-tag { font-size: 11px; padding: 3px 10px; border-radius: 20px; font-weight: 600; }
+    .article-time { font-size: 12px; color: #999; line-height: 22px; }
+    .article-title { font-size: 20px; font-weight: 800; color: #1a1a2e; margin-bottom: 10px; line-height: 1.4; }
+    .article-desc { font-size: 14px; color: #666; line-height: 1.8; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+    .article-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 16px; padding-top: 16px; border-top: 1px solid #f0f0f0; }
+    .article-author { display: flex; align-items: center; gap: 8px; }
+    .author-av { width: 28px; height: 28px; border-radius: 50%; background: linear-gradient(135deg, #5f67ee, #a855f7); display: flex; align-items: center; justify-content: center; color: white; font-size: 12px; font-weight: 700; }
+    .author-name { font-size: 13px; color: #333; font-weight: 600; }
+    .read-time { font-size: 12px; color: #999; }
+    .height-badge { font-size: 11px; color: #5f67ee; background: #5f67ee10; padding: 3px 8px; border-radius: 8px; }
+    .cols-toggle { display: flex; gap: 6px; margin-bottom: 20px; justify-content: flex-end; }
+    .cols-toggle button { padding: 6px 12px; border: 1px solid #ddd; background: white; border-radius: 8px; cursor: pointer; font-size: 12px; color: #666; transition: all 0.2s; }
+    .cols-toggle button.active { background: #5f67ee; color: white; border-color: #5f67ee; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="logo">📰 <span>Pretext</span>Reader</div>
+    <div class="header-right">
+      <input type="text" placeholder="搜索文章...">
+      <button class="subscribe-btn">订阅</button>
+    </div>
+  </div>
+
+  <div class="content" id="content">
+    <div class="cols-toggle">
+      <button class="active" onclick="setCols(1, this)">单列</button>
+      <button onclick="setCols(2, this)">双列</button>
+    </div>
+    <div id="feed"></div>
+  </div>
+
+  <script type="module">
+    import { prepare, layout } from 'https://cdn.jsdelivr.net/npm/@chenglou/pretext@0.0.3/dist/layout.js'
+
+    const articles = [
+      {
+        tag: '技术', tagColor: '#5f67ee', tagBg: '#eef0ff',
+        title: 'CSS Container Queries 终于来了：真正的响应式组件时代',
+        desc: 'Container Queries 是 CSS 工作组多年努力的结晶，它允许开发者基于容器自身的尺寸而不是视口（viewport）来定义样式。这解决了长期以来响应式设计中的一个核心矛盾：组件在不同上下文中需要表现不同，但 CSS 只能基于视口宽度来调整。想象一个卡片组件，在侧边栏窄时显示紧凑样式，在主内容区宽时显示展开样式——这在以前需要 JavaScript 配合ResizeObserver，现在纯 CSS 就能优雅实现。',
+        author: '前端周刊', time: '2小时前', minutes: 8
+      },
+      {
+        tag: '产品', tagColor: '#2ecc71', tagBg: '#e8f8f0',
+        title: 'AI 编程助手现状：Copilot、Cursor 和国产新势力',
+        desc: 'GitHub Copilot 掀起了 AI 辅助编程的浪潮，Cursor 带来了全新的一体化 IDE 体验，而国内的通义灵码、文心快码也在快速崛起。本文深入对比了这些工具在代码补全、上下文理解、多文件重构、Bug 修复等场景的能力差异，以及各自在中文开发环境中的本土化表现。',
+        author: '产品深潭', time: '5小时前', minutes: 12
+      },
+      {
+        tag: '设计', tagColor: '#9b59b6', tagBg: '#f3e8ff',
+        title: '2026 年 UI 设计趋势：从极简主义到"有温度的功能主义"',
+        desc: '经历了数年的极简主义潮流后，设计界开始反思：过度追求简洁是否牺牲了产品的个性与温度？今年的趋势报告显示，越来越多的产品开始拥抱"有温度的功能主义"——保留必要的复杂性，用细节和微交互传递品牌个性。毛玻璃、渐变、动效正在回归，但以一种更克制、更目的导向的方式。',
+        author: '设计便利店', time: '昨天', minutes: 6
+      },
+      {
+        tag: '工程化', tagColor: '#e67e22', tagBg: '#fef5e7',
+        title: 'Turbopack 一年后的表现：它真的超越 Vite 了吗？',
+        desc: 'Turbopack 作为 Webpack 继任者发布已满一年。Vite 则凭借 Rollup + esbuild 的混合方案持续获得社区青睐。本文通过实际项目测试，对比了两者在大型 monorepo 项目、冷启动速度、热更新、HMR 稳定性、打包体积等关键指标上的表现。结果出人意料：在某些场景下，两者差距并不像宣传中那么大。',
+        author: '工程实践', time: '2天前', minutes: 15
+      },
+      {
+        tag: '随想', tagColor: '#1abc9c', tagBg: '#e8faf8',
+        title: '写技术博客的第三年：我的内容创作方法论',
+        desc: '从 2023 年开始认真写博客，到现在已经积累了 60 多篇文章。这个过程让我对"什么是好的技术内容"有了更深的理解。我认为好的技术文章应该像一篇推理小说：提出问题 → 逐步深入 → 给出答案，而不是平铺直叙的知识罗列。同时，持续输出也是最好的学习方式——教是最好的学。',
+        author: '独立博客', time: '3天前', minutes: 7
+      },
+    ]
+
+    let cols = 1
+    let font = '14px Inter, "PingFang SC", sans-serif'
+    let lineH = 24
+
+    function getDescHeight(text, width) {
+      const prepared = prepare(text, font)
+      const { height } = layout(prepared, width - 48, lineH)
+      return Math.min(height, lineH * 3) // 最多3行高度
+    }
+
+    function render() {
+      const feed = document.getElementById('feed')
+      feed.innerHTML = ''
+      feed.style.display = cols === 1 ? 'flex' : 'grid'
+      feed.style.gridTemplateColumns = cols === 2 ? '1fr 1fr' : 'unset'
+      feed.style.gap = cols === 2 ? '20px' : 'unset'
+      feed.style.flexDirection = 'unset'
+
+      const cardW = cols === 1 ? 900 : (feed.clientWidth / 2 - 10)
+      const emojis = ['🚀', '🤖', '🎨', '⚡', '💡']
+
+      articles.forEach((article, i) => {
+        const descH = getDescHeight(article.desc, cardW)
+        const card = document.createElement('div')
+        card.className = 'article-card'
+        card.style.cssText = cols === 2 ? `margin-bottom:0` : ''
+
+        card.innerHTML = `
+          <div class="article-img">${emojis[i]}</div>
+          <div class="article-body">
+            <div class="article-meta">
+              <span class="article-tag" style="background:${article.tagBg};color:${article.tagColor}">${article.tag}</span>
+              <span class="article-time">${article.time}</span>
+            </div>
+            <div class="article-title">${article.title}</div>
+            <div class="article-desc">${article.desc}</div>
+            <div class="article-footer">
+              <div class="article-author">
+                <div class="author-av">${article.author[0]}</div>
+                <span class="author-name">${article.author}</span>
+              </div>
+              <div style="display:flex;gap:8px;align-items:center">
+                <span class="height-badge">📐 ${Math.round(descH)}px</span>
+                <span class="read-time">${article.minutes} 分钟阅读</span>
+              </div>
+            </div>
+          </div>
+        `
+        feed.appendChild(card)
+      })
+    }
+
+    window.setCols = (n, btn) => {
+      cols = n
+      document.querySelectorAll('.cols-toggle button').forEach(b => b.classList.remove('active'))
+      btn.classList.add('active')
+      render()
+    }
+
+    let resizeTimer
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimer)
+      resizeTimer = setTimeout(render, 80)
+    })
+
+    document.fonts.ready.then(render)
+  </script>
+</body>
+</html>

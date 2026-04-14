@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pretext Demo - 文本测量与布局</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', 'PingFang SC', sans-serif; background: #f5f5f5; padding: 20px; }
+    .demo-section { background: white; border-radius: 12px; padding: 24px; margin-bottom: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    h2 { font-size: 18px; color: #333; margin-bottom: 16px; }
+    h3 { font-size: 14px; color: #666; margin-bottom: 12px; }
+
+    /* Demo 1: Textarea 自动高度 */
+    .auto-textarea {
+      width: 100%;
+      min-height: 80px;
+      padding: 12px;
+      font: 16px Inter, sans-serif;
+      line-height: 24px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      resize: none;
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
+    .auto-textarea:focus { border-color: #5f67ee; outline: none; }
+
+    .info { font-size: 13px; color: #888; margin-top: 8px; }
+
+    /* Demo 2: Canvas 渲染 */
+    #render-canvas { border: 1px solid #ddd; border-radius: 8px; background: white; }
+
+    /* Demo 3: 虚拟列表 */
+    .virtual-list {
+      height: 400px;
+      overflow-y: auto;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      position: relative;
+    }
+    .virtual-list-inner { position: relative; }
+    .list-item {
+      position: absolute;
+      left: 0;
+      padding: 12px 16px;
+      font-size: 14px;
+      line-height: 22px;
+      color: #333;
+      border-bottom: 1px solid #eee;
+      background: white;
+      transition: background 0.15s;
+    }
+    .list-item:hover { background: #f8f8ff; }
+    .list-item .index { color: #5f67ee; font-weight: 600; margin-right: 8px; }
+
+    /* Demo 4: 文本环绕 */
+    #float-canvas { border: 1px solid #ddd; border-radius: 8px; background: white; }
+  </style>
+</head>
+<body>
+
+  <!-- Demo 1: Textarea 自动高度 -->
+  <div class="demo-section">
+    <h2>📝 Demo 1: Textarea 自动高度</h2>
+    <p class="info">输入文字，textarea 会自动调整高度（零 DOM 回流）</p>
+    <textarea class="auto-textarea" id="auto-textarea" placeholder="在这里输入文字...">这是一段初始文本。
+输入时，textarea 会自动调整高度，无需任何 DOM 测量！
+
+支持多行：
+- 中文
+- English
+- Emoji 🚀
+- 混合内容</textarea>
+    <p class="info" id="textarea-info"></p>
+  </div>
+
+  <!-- Demo 2: Canvas 渲染 -->
+  <div class="demo-section">
+    <h2>🎨 Demo 2: Canvas 文本渲染</h2>
+    <p class="info">不通过 DOM，直接在 Canvas 上渲染多行文本</p>
+    <canvas id="render-canvas" width="600" height="200"></canvas>
+  </div>
+
+  <!-- Demo 3: 虚拟列表 -->
+  <div class="demo-section">
+    <h2>📋 Demo 3: 精准高度虚拟列表</h2>
+    <p class="info">每行高度由文本真实长度决定，滚动条完全准确</p>
+    <div class="virtual-list" id="virtual-list">
+      <div class="virtual-list-inner" id="virtual-list-inner"></div>
+    </div>
+    <p class="info" id="list-info"></p>
+  </div>
+
+  <!-- Demo 4: 文本环绕 -->
+  <div class="demo-section">
+    <h2>🖼️ Demo 4: 文本环绕浮动元素</h2>
+    <p class="info">文字自动绕着左侧图片流动，Canvas 实现</p>
+    <canvas id="float-canvas" width="600" height="300"></canvas>
+  </div>
+
+  <script type="module">
+    import { prepare, layout, prepareWithSegments, layoutWithLines, layoutNextLine } from 'https://cdn.jsdelivr.net/npm/@chenglou/pretext@0.0.3/dist/layout.js'
+
+    // ==================== Demo 1: Auto Textarea ====================
+    const textarea = document.getElementById('auto-textarea')
+    const infoEl = document.getElementById('textarea-info')
+
+    function getFont(el) {
+      const s = getComputedStyle(el)
+      return `${s.fontSize} ${s.fontFamily}`
+    }
+
+    let textareaPrepared = null
+    let lastText = ''
+
+    function updateTextarea() {
+      const value = textarea.value
+      const width = textarea.clientWidth - 24 // 减去 padding
+      const font = getFont(textarea)
+      const style = getComputedStyle(textarea)
+      const lineHeight = parseFloat(style.lineHeight) || 24
+
+      // 文本变了 → 重新 prepare
+      if (value !== lastText) {
+        lastText = value
+        textareaPrepared = prepare(value, font, { whiteSpace: 'pre-wrap' })
+      }
+
+      const { height, lineCount } = layout(textareaPrepared, width, lineHeight)
+      textarea.style.height = Math.max(height + 24, 80) + 'px'
+
+      infoEl.textContent = `字体: ${font} | 宽度: ${width}px | 行数: ${lineCount} | 高度: ${height}px`
+    }
+
+    textarea.addEventListener('input', updateTextarea)
+    window.addEventListener('resize', updateTextarea)
+
+    // 等待字体加载
+    document.fonts.ready.then(() => {
+      textareaPrepared = prepare(textarea.value, getFont(textarea), { whiteSpace: 'pre-wrap' })
+      updateTextarea()
+    })
+
+    // ==================== Demo 2: Canvas 渲染 ====================
+    const canvas = document.getElementById('render-canvas')
+    const ctx = canvas.getContext('2d')
+
+    function renderCanvas() {
+      const text = `Canvas 文本渲染演示
+
+Pretext 让 Canvas 渲染多行文本变得简单：
+- 不需要 DOM 元素
+- 不触发布局回流
+- 支持混合语言：中文 Hello English 🚀
+- 支持所有 Unicode 字符`
+
+      const font = '18px Inter, "PingFang SC", sans-serif'
+      const lineHeight = 28
+      const maxWidth = canvas.width - 40
+
+      const prepared = prepareWithSegments(text, font)
+      const { lines } = layoutWithLines(prepared, maxWidth, lineHeight)
+
+      canvas.height = lines.length * lineHeight + 40
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height)
+      ctx.font = font
+      ctx.fillStyle = '#333'
+      ctx.textBaseline = 'top'
+
+      lines.forEach((line, i) => {
+        ctx.fillText(line.text, 20, 20 + i * lineHeight)
+      })
+    }
+
+    document.fonts.ready.then(renderCanvas)
+
+    // ==================== Demo 3: 虚拟列表 ====================
+    const listContainer = document.getElementById('virtual-list')
+    const listInner = document.getElementById('virtual-list-inner')
+    const listInfo = document.getElementById('list-info')
+
+    const listItems = Array.from({ length: 100 }, (_, i) => ({
+      id: i,
+      text: `这是第 ${i + 1} 条数据，内容长度不一，短的只有几个字，长的可以是一段完整的段落介绍，包含中文English混合内容，甚至 emoji 🚀`
+        .slice(0, 50 + (i % 50) * 3)
+    }))
+
+    const listFont = '14px Inter, "PingFang SC", sans-serif'
+    const listLineHeight = 22
+
+    const listPrepared = new Map()
+
+    function getListHeight(id, width) {
+      if (!listPrepared.has(id)) {
+        const item = listItems.find(d => d.id === id)
+        listPrepared.set(id, prepare(item.text, listFont))
+      }
+      const { height } = layout(listPrepared.get(id), width, listLineHeight)
+      return height + 24 // padding
+    }
+
+    function renderList() {
+      const width = listContainer.clientWidth
+      const scrollTop = listContainer.scrollTop
+      const viewportH = listContainer.clientHeight
+
+      // 计算总高度
+      let totalH = 0
+      const offsets = []
+      for (const item of listItems) {
+        offsets.push(totalH)
+        totalH += getListHeight(item.id, width)
+      }
+      listInner.style.height = totalH + 'px'
+
+      // 找可视区域
+      let start = 0, end = listItems.length - 1
+      for (let i = 0; i < offsets.length; i++) {
+        if (offsets[i] + getListHeight(listItems[i].id, width) > scrollTop) {
+          start = Math.max(0, i - 1)
+          break
+        }
+      }
+      for (let i = start; i < offsets.length; i++) {
+        if (offsets[i] > scrollTop + viewportH) {
+          end = Math.min(listItems.length - 1, i + 1)
+          break
+        }
+      }
+
+      // 清除旧项
+      listInner.innerHTML = ''
+
+      // 渲染可视项
+      for (let i = start; i <= end; i++) {
+        const item = listItems[i]
+        const y = offsets[i]
+        const h = getListHeight(item.id, width)
+
+        const div = document.createElement('div')
+        div.className = 'list-item'
+        div.style.top = y + 'px'
+        div.style.width = width + 'px'
+        div.style.height = h + 'px'
+        div.innerHTML = `<span class="index">#${item.id}</span>${item.text}`
+        listInner.appendChild(div)
+      }
+
+      listInfo.textContent = `总 ${listItems.length} 条 | 总高度 ${totalH}px | 可视 ${end - start + 1} 条 | 滚动位置 ${scrollTop}px`
+    }
+
+    listContainer.addEventListener('scroll', renderList)
+    window.addEventListener('resize', renderList)
+
+    document.fonts.ready.then(() => {
+      // 预处理所有项
+      listItems.forEach(item => {
+        listPrepared.set(item.id, prepare(item.text, listFont))
+      })
+      renderList()
+    })
+
+    // ==================== Demo 4: 文本环绕 ====================
+    const floatCanvas = document.getElementById('float-canvas')
+    const floatCtx = floatCanvas.getContext('2d')
+
+    function renderFloat() {
+      const text = `文本环绕演示
+
+这是一段很长的文本，会自动绕着左边的图片流动。图片占据了左侧 120x120 的区域，在图片下方的文字会使用完整的宽度。
+
+Pretext 实现了精确的文本测量和流式布局：
+- 可以动态计算每一行的宽度
+- 图片下方的行自动变宽
+- 不需要任何 DOM 测量或布局回流
+
+这个技术在很多场景下都很有用：
+1. 图文混排的文章
+2. 数据报表（文字绕着图表）
+3. 可变宽度的响应式布局
+
+支持混合内容：Hello 你好 🚀 🎨 📊`
+
+      const font = '15px Inter, "PingFang SC", sans-serif'
+      const lineHeight = 24
+      const maxWidth = floatCanvas.width - 40
+
+      const floatBox = { width: 120, height: 120 }
+      const floatBottom = 130
+
+      const prepared = prepareWithSegments(text, font)
+
+      floatCtx.clearRect(0, 0, floatCanvas.width, floatCanvas.height)
+
+      // 画浮动框（模拟图片）
+      floatCtx.fillStyle = '#e8e8ff'
+      floatCtx.fillRect(20, 20, floatBox.width, floatBox.height)
+      floatCtx.fillStyle = '#5f67ee'
+      floatCtx.font = '13px Inter'
+      floatCtx.fillText('120×120', 40, 75)
+      floatCtx.fillText('Float Box', 40, 95)
+
+      // 流式渲染文字
+      floatCtx.font = font
+      floatCtx.fillStyle = '#333'
+      floatCtx.textBaseline = 'top'
+
+      let cursor = { segmentIndex: 0, graphemeIndex: 0 }
+      let y = 20
+
+      while (true) {
+        const inFloatZone = y < floatBottom
+        const leftMargin = inFloatZone ? floatBox.width + 20 : 20
+        const availWidth = maxWidth - leftMargin + 20
+
+        if (availWidth <= 0) break
+
+        const line = layoutNextLine(prepared, cursor, availWidth)
+        if (!line) break
+
+        floatCtx.fillText(line.text, leftMargin, y)
+        cursor = line.end.cursor
+        y += lineHeight
+      }
+    }
+
+    document.fonts.ready.then(renderFloat)
+
+    console.log('✅ Pretext Demo loaded')
+  </script>
+</body>
+</html>
