@@ -14,6 +14,7 @@ import { JsSidebar } from './js.ts'
 import { LinuxSidebar } from './linux.ts'
 import { MarkdownSidebar } from './markdown.ts'
 import { DockerSidebar } from './docker.ts'
+import { BISidebar } from './bi.ts'
 import { MicroSidebar } from './micro.ts'
 import { MysqlSidebar } from './mysql.ts'
 import { NetworkSidebar } from './network.ts'
@@ -51,6 +52,7 @@ export const side = {
   '/linux/': { base: '/linux/', items: LinuxSidebar() },
   '/docker/': { base: '/docker/', items: DockerSidebar() },
   '/ai/': { base: '/ai/', items: AISidebar() },
+  '/bi/': { base: '/bi/', items: BISidebar() },
   '/react/': { base: '/react/', items: ReactSidebar() },
   '/reg/': { base: '/reg/', items: RegSidebar() },
   '/svg/': { base: '/svg/', items: SvgSidebar() },
@@ -100,6 +102,15 @@ export function nav(): DefaultTheme.NavItem[] {
         { text: 'Linux', link: '/linux/', activeMatch: '/linux/' },
         { text: 'Docker', link: '/docker/', activeMatch: '/docker/' },
         { text: '计算机网络', link: '/network/', activeMatch: '/network/' },
+      ],
+    },
+    {
+      text: 'BI 数据分析',
+      items: [
+        { text: 'BI 简介', link: '/bi/', activeMatch: '/bi/' },
+        { text: '帆软 FineReport', link: '/bi/帆软/', activeMatch: '/bi/帆软/' },
+        { text: '永洪 BI', link: '/bi/永洪/', activeMatch: '/bi/永洪/' },
+        { text: 'BI 项目 Demo', link: '/bi/demo/帆软报表', activeMatch: '/bi/demo/' },
       ],
     },
     {
