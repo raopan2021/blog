@@ -264,7 +264,7 @@ class MyModule: NSObject {
 
 ### 15. Android Hermes 启用后 API 不兼容
 
-```gradle
+```java
 // android/app/build.gradle
 project.ext.react = [
     enableHermes: true  // 确保为 true

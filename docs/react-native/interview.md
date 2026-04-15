@@ -176,7 +176,7 @@ Facebook 优化的 JS 引擎：
 - **优化 GC**: 更少的内存占用
 - **缩小体积**: 比 JSC 更小
 
-```gradle
+```java
 // android/app/build.gradle
 project.ext.react = [
     enableHermes: true  // 默认开启

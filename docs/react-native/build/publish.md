@@ -97,7 +97,7 @@ keytool -genkey -v -keystore my-release-key.keystore \
 
 ### 3.2 配置签名
 
-```gradle
+```java
 // android/app/build.gradle
 android {
   signingConfigs {

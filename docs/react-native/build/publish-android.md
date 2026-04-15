@@ -25,7 +25,7 @@ keytool -genkey -v -keystore my-release-key.keystore \
 
 ### 2.2 配置 gradle
 
-```gradle
+```java
 // android/app/build.gradle
 
 android {
@@ -59,7 +59,7 @@ keyAlias=my-key-alias
 keyPassword=your-key-password
 ```
 
-```gradle
+```java
 // 在 build.gradle 中读取
 def keystoreProperties = new Properties()
 def keystorePropertiesFile = rootProject.file('keystore.properties')

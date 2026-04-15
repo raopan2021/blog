@@ -76,7 +76,7 @@ Facebook 优化的 JavaScript 引擎：
 - **优化 GC**：减少内存碎片和 GC 停顿
 - **体积小**：比 JSC 小约 30%
 
-```gradle
+```java
 // android/app/build.gradle
 project.ext.react = [
     enableHermes: true  // 默认开启
@@ -101,7 +101,7 @@ Native 层
 
 ## 六、New Architecture 开启
 
-```gradle
+```java
 // android/gradle.properties
 newArchEnabled=true  // 改为 true 开启新架构
 ```
