@@ -69,7 +69,7 @@ export function ReactNativeSidebar(): DefaultTheme.SidebarItem[] {
 		},
 		{
 			text: '常用库',
-			collapsed: true,
+			collapsed: false,
 			items: [
 				{ text: 'React Native 常用库', link: '/libraries' },
 			]
