@@ -105,7 +105,7 @@ export function nav(): DefaultTheme.NavItem[] {
       ],
     },
     {
-      text: 'BI 数据分析',
+      text: 'BI',
       items: [
         { text: 'BI 简介', link: '/bi/', activeMatch: '/bi/' },
         { text: '帆软 FineReport', link: '/bi/帆软/', activeMatch: '/bi/帆软/' },
@@ -114,7 +114,7 @@ export function nav(): DefaultTheme.NavItem[] {
       ],
     },
     {
-      text: 'PLC 工业自动化',
+      text: 'PLC',
       items: [
         { text: '基础入门', link: '/plc/基础入门/认识PLC', activeMatch: '/plc/基础入门/' },
         { text: '西门子系列', link: '/plc/西门子/S7-1200快速入门', activeMatch: '/plc/西门子/' },
