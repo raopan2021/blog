@@ -2,6 +2,7 @@ import { type DefaultTheme } from 'vitepress'
 
 export function ReactNativeSidebar(): DefaultTheme.SidebarItem[] {
 	return [
+				{ text: 'React Native', link: '/index' },
 		{
 			text: '基础入门',
 			collapsed: false,
