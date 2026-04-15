@@ -24,6 +24,7 @@ import { PlanSidebar } from './plan.ts'
 import { PoemSidebar } from './poem.ts'
 import { PythonSidebar } from './python.ts'
 import { ReactSidebar } from './react.ts'
+import { ReactNativeSidebar } from './react-native.ts'
 import { RegSidebar } from './reg.ts'
 import { SvgSidebar } from './svg.ts'
 import { ThreeSidebar } from './three.ts'
@@ -54,6 +55,7 @@ export const side = {
   '/ai/': { base: '/ai/', items: AISidebar() },
   '/bi/': { base: '/bi/', items: BISidebar() },
   '/react/': { base: '/react/', items: ReactSidebar() },
+  '/react-native/': { base: '/react-native/', items: ReactNativeSidebar() },
   '/reg/': { base: '/reg/', items: RegSidebar() },
   '/svg/': { base: '/svg/', items: SvgSidebar() },
   '/three/': { base: '/three/', items: ThreeSidebar() },
@@ -89,6 +91,7 @@ export function nav(): DefaultTheme.NavItem[] {
       text: '移动开发',
       items: [
         { text: 'Android 开发笔记', link: '/android/', activeMatch: '/android/' },
+        { text: 'React Native', link: '/react-native/', activeMatch: '/react-native/' },
       ],
     },
     {
