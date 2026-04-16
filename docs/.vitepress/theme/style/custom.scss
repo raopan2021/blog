@@ -13,14 +13,13 @@ code {
 }
 
 /* =============================================
-   Hero 文字彩虹渐变动画 - 通过 CSS 变量注入
+   Hero 文字彩虹渐变动画 - 直接覆盖 background 属性
    ============================================= */
 
-/* Light 模式 - 彩虹渐变 */
-.VPHome .VPHero .name,
-.VPHome .VPHero .clip {
-	--vp-home-hero-name-color: transparent;
-	--vp-home-hero-name-background: linear-gradient(
+/* Light 模式 */
+.VPHome .VPHero .clip,
+.VPHome .VPHero .name {
+	background: linear-gradient(
 		135deg,
 		#bd34fe 0%,
 		#41d1ff 20%,
@@ -29,13 +28,19 @@ code {
 		#ff6b6b 80%,
 		#bd34fe 100%
 	) !important;
+	background-size: 400% 400% !important;
+	-webkit-background-clip: text !important;
+	background-clip: text !important;
+	-webkit-text-fill-color: transparent !important;
+	color: transparent !important;
+	animation: rainbowFlow 5s linear infinite !important;
+	background-position: 0% 50% !important;
 }
 
-/* Dark 模式 - 颜色更亮的彩虹渐变 */
-.dark.VPHome .VPHero .name,
-.dark.VPHome .VPHero .clip {
-	--vp-home-hero-name-color: transparent;
-	--vp-home-hero-name-background: linear-gradient(
+/* Dark 模式 */
+.dark .VPHome .VPHero .clip,
+.dark .VPHome .VPHero .name {
+	background: linear-gradient(
 		135deg,
 		#e879f9 0%,
 		#67e8f9 20%,
@@ -46,7 +51,7 @@ code {
 	) !important;
 }
 
-/* 彩虹流动动画关键帧 */
+/* 彩虹流动动画 */
 @keyframes rainbowFlow {
 	0% {
 		background-position: 0% 50%;
@@ -58,13 +63,17 @@ code {
 
 /* Hero 文字副标题微光动画 */
 .VPHome .VPHero .text {
-	animation: textShimmer 4s ease infinite;
+	animation: textShimmer 4s ease infinite !important;
 	background: linear-gradient(90deg, #41d1ff, #bd34fe, #ffd93d) !important;
 	background-size: 200% 200% !important;
 	-webkit-background-clip: text !important;
 	background-clip: text !important;
 	-webkit-text-fill-color: transparent !important;
 	color: transparent !important;
+}
+
+.dark .VPHome .VPHero .text {
+	background: linear-gradient(90deg, #67e8f9, #e879f9, #fde047) !important;
 }
 
 @keyframes textShimmer {
@@ -74,11 +83,6 @@ code {
 	100% {
 		background-position: 200% 50%;
 	}
-}
-
-/* 副标题 dark 模式 */
-.dark.VPHome .VPHero .text {
-	background: linear-gradient(90deg, #67e8f9, #e879f9, #fde047) !important;
 }
 
 /* =============================================
