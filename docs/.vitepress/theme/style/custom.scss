@@ -7,30 +7,201 @@
 	--vp-font-family-mono: 'LXGW WenKai Lite', ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
 }
 
-/* 标题颜色 */
-:root {
-	--vp-home-hero-name-color: transparent;
-	--vp-home-hero-name-background: -webkit-linear-gradient(120deg, #bd34fe, #41d1ff);
-}
-
-/* Mono font (optional) */
 pre,
 code {
 	font-family: 'LXGW WenKai Mono Lite', sans-serif;
 }
 
-/**
-* Component: Home
-* -------------------------------------------------------------------------- */
-.VPHomeHero .name,
-.VPHomeHero .image {
-	background-image: none;
-	transition: background-image 0.8s;
+/* =============================================
+   Hero 文字彩虹渐变动画
+   ============================================= */
+.VPHome .VPHomeHero .name {
+	font-size: 4rem !important;
+	font-weight: 900 !important;
+	background: linear-gradient(
+		135deg,
+		#bd34fe 0%,
+		#41d1ff 25%,
+		#6bcb77 50%,
+		#ffd93d 75%,
+		#ff6b6b 100%
+	) !important;
+	background-size: 300% 300% !important;
+	-webkit-background-clip: text !important;
+	background-clip: text !important;
+	-webkit-text-fill-color: transparent !important;
+	color: transparent !important;
+	animation: rainbowFlow 6s ease infinite !important;
+	line-height: 1.2 !important;
 }
 
+.VPHome .VPHomeHero .text {
+	font-size: 2rem !important;
+	background: linear-gradient(90deg, #41d1ff, #bd34fe, #ffd93d) !important;
+	background-size: 200% 200% !important;
+	-webkit-background-clip: text !important;
+	background-clip: text !important;
+	-webkit-text-fill-color: transparent !important;
+	color: transparent !important;
+	animation: textShimmer 4s ease infinite !important;
+}
+
+.VPHome .VPHomeHero .tagline {
+	font-size: 1.1rem !important;
+	color: #666 !important;
+	letter-spacing: 0.05em !important;
+}
+
+.dark .VPHome .VPHomeHero .tagline {
+	color: #aaa !important;
+}
+
+/* Hero 背景光晕 */
+.VPHome .VPHero {
+	background: radial-gradient(
+		ellipse at 50% 0%,
+		rgba(189, 52, 254, 0.08) 0%,
+		transparent 60%
+	) !important;
+}
+
+.dark .VPHome .VPHero {
+	background: radial-gradient(
+		ellipse at 50% 0%,
+		rgba(75, 0, 130, 0.15) 0%,
+		transparent 60%
+	) !important;
+}
+
+/* 彩虹流动动画 */
+@keyframes rainbowFlow {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
+/* 文字微光动画 */
+@keyframes textShimmer {
+	0% {
+		background-position: 0% 50%;
+	}
+	100% {
+		background-position: 200% 50%;
+	}
+}
+
+/* =============================================
+   Hero 操作按钮
+   ============================================= */
+.VPHome .VPHero .actions .VPButton {
+	border-radius: 50px !important;
+	font-weight: 600 !important;
+	letter-spacing: 0.05em !important;
+	transition: all 0.3s ease !important;
+	position: relative !important;
+	overflow: hidden !important;
+}
+
+.VPHome .VPHero .actions .VPButton::before {
+	content: '' !important;
+	position: absolute !important;
+	top: 0 !important;
+	left: -100% !important;
+	width: 100% !important;
+	height: 100% !important;
+	background: linear-gradient(
+		90deg,
+		transparent,
+		rgba(255, 255, 255, 0.2),
+		transparent
+	) !important;
+	transition: left 0.5s ease !important;
+}
+
+.VPHome .VPHero .actions .VPButton:hover::before {
+	left: 100% !important;
+}
+
+.VPHome .VPHero .actions .VPButton.brand {
+	background: linear-gradient(135deg, #bd34fe, #41d1ff) !important;
+	border: none !important;
+	box-shadow: 0 4px 20px rgba(189, 52, 254, 0.3) !important;
+}
+
+.VPHome .VPHero .actions .VPButton:hover {
+	transform: translateY(-2px) !important;
+	box-shadow: 0 8px 30px rgba(189, 52, 254, 0.4) !important;
+}
+
+/* =============================================
+   Feature Card 悬浮效果
+   ============================================= */
+.VPHome .VPFeatures .VPFeature {
+	border-radius: 16px !important;
+	transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+	position: relative !important;
+	overflow: hidden !important;
+	border: 1px solid rgba(0, 0, 0, 0.06) !important;
+}
+
+.VPHome .VPFeatures .VPFeature::before {
+	content: '' !important;
+	position: absolute !important;
+	top: 0 !important;
+	left: 0 !important;
+	right: 0 !important;
+	height: 2px !important;
+	background: linear-gradient(90deg, #bd34fe, #41d1ff, #6bcb77) !important;
+	transform: scaleX(0) !important;
+	transition: transform 0.4s ease !important;
+}
+
+.VPHome .VPFeatures .VPFeature:hover::before {
+	transform: scaleX(1) !important;
+}
+
+.VPHome .VPFeatures .VPFeature:hover {
+	transform: translateY(-8px) scale(1.02) !important;
+	box-shadow:
+		0 20px 40px rgba(189, 52, 254, 0.15),
+		0 0 0 1px rgba(189, 52, 254, 0.1) !important;
+}
+
+.dark .VPHome .VPFeatures .VPFeature {
+	border: 1px solid rgba(255, 255, 255, 0.06) !important;
+}
+
+.dark .VPHome .VPFeatures .VPFeature:hover {
+	box-shadow:
+		0 20px 40px rgba(189, 52, 254, 0.3),
+		0 0 0 1px rgba(189, 52, 254, 0.2) !important;
+}
+
+/* =============================================
+   其他
+   ============================================= */
+.vp-doc code {
+	font-family: 'DM Mono', Consolas, 'Courier New', monospace;
+	font-size: 15px !important;
+}
+
+.line-numbers-wrapper {
+	font-size: 15px !important;
+}
+
+.dark .Layout .VPFeature {
+	background: transparent !important;
+	border: 1px solid rgba(255, 255, 255, 0.06) !important;
+}
+
+/* 图片背景 */
 :root {
-	--vp-home-hero-name-color: transparent;
-	--vp-home-hero-name-background: -webkit-linear-gradient(120deg, #bd34fe 30%, #41d1ff);
 	--vp-home-hero-image-background-image: linear-gradient(to right bottom, #bd34fe, #47caff);
 	--vp-home-hero-image-filter: blur(70px);
 }
@@ -49,18 +220,4 @@ code {
 	:root {
 		--vp-home-hero-image-filter: blur(100px);
 	}
-}
-
-.dark .Layout .VPFeature {
-	background: transparent;
-	border: 1px solid #ffffff50;
-}
-
-.vp-doc code {
-	font-family: 'DM Mono', Consolas, 'Courier New', monospace;
-	font-size: 15px !important;
-}
-
-.line-numbers-wrapper {
-	font-size: 15px !important;
 }
