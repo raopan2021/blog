@@ -15,27 +15,29 @@ code {
 /* =============================================
    Hero 文字彩虹渐变动画
    ============================================= */
-.VPHome .VPHomeHero .name {
+.VPContent.is-home .VPHome.VPHomeHero .name.name {
 	font-size: 4rem !important;
 	font-weight: 900 !important;
 	background: linear-gradient(
 		135deg,
 		#bd34fe 0%,
-		#41d1ff 25%,
-		#6bcb77 50%,
-		#ffd93d 75%,
-		#ff6b6b 100%
+		#41d1ff 20%,
+		#6bcb77 40%,
+		#ffd93d 60%,
+		#ff6b6b 80%,
+		#bd34fe 100%
 	) !important;
-	background-size: 300% 300% !important;
+	background-size: 400% 400% !important;
 	-webkit-background-clip: text !important;
 	background-clip: text !important;
 	-webkit-text-fill-color: transparent !important;
 	color: transparent !important;
-	animation: rainbowFlow 6s ease infinite !important;
+	animation: rainbowFlow 5s linear infinite !important;
 	line-height: 1.2 !important;
+	background-position: 0% 50% !important;
 }
 
-.VPHome .VPHomeHero .text {
+.VPContent.is-home .VPHome.VPHomeHero .text.text {
 	font-size: 2rem !important;
 	background: linear-gradient(90deg, #41d1ff, #bd34fe, #ffd93d) !important;
 	background-size: 200% 200% !important;
