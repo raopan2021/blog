@@ -131,6 +131,7 @@ export function nav(): DefaultTheme.NavItem[] {
       items: [
         { text: '算法', link: '/algorithm/', activeMatch: '/algorithm/' },
         { text: 'AI 大模型', link: '/ai/', activeMatch: '/ai/' },
+        { text: 'OpenClaw', link: '/ai/openclaw-skills', activeMatch: '/ai/openclaw-skills' },
         { text: '正则表达式', link: '/reg/', activeMatch: '/reg/' },
         { text: '诗词', link: '/poem/', activeMatch: '/poem/' },
         { text: '学习计划', link: '/plan/', activeMatch: '/plan/' },
