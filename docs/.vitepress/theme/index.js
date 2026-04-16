@@ -5,6 +5,7 @@ import { h, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { ID_INJECTION_KEY, ZINDEX_INJECTION_KEY } from 'element-plus'
 
 import Layout from './Layout.vue'
+import ThreeParticles from './components/ThreeParticles.vue'
 import Poem from './poem.vue' // 自定义的markdowm布局
 
 import './style/animate-min.scss'
@@ -30,6 +31,8 @@ export default {
 		// Fix ElementPlus SSR ID injection warning
 		app.provide(ID_INJECTION_KEY, { prefix: 100, current: 0 })
 		app.provide(ZINDEX_INJECTION_KEY, { current: 0 })
+
+		app.component('ThreeParticles', ThreeParticles)
 
 		app.component('poem', Poem)
 	},

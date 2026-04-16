@@ -15,7 +15,8 @@
 	},
 	"dependencies": {
 		"lxgw-wenkai-lite-webfont": "^1.7.0",
-		"medium-zoom": "^1.1.0"
+		"medium-zoom": "^1.1.0",
+		"three": "^0.183.2"
 	},
 	"devDependencies": {
 		"@types/node": "^25.5.0",

@@ -2,12 +2,17 @@
 layout: home
 
 title: 饶盼的blog
-titleTemplate: 边学边记录（菜就多练） 
+titleTemplate: 边学边记录（菜就多练）
+
+head:
+  - - link
+    - rel: stylesheet
+      href: https://cdn.jsdelivr.net/npm/lxgw-wenkai-lite-webfont@1.7.0/style.min.css
 
 hero:
-  name: 饶盼 raopan
-  text: 我的技术 blog
-  tagline: 边学边记录（菜就多练） 
+  name: ""
+  text: ""
+  tagline: ""
   actions:
     - theme: brand
       text: GitHub
@@ -184,4 +189,207 @@ features:
 
 ---
 
-<!-- iconfont https://www.iconfont.cn/?spm=a313x.search_index.i3.d4d0a486a.586b3a81T19Bxt -->
+<ThreeParticles />
+
+<style>
+/* ========== Hero 文字动态渐变 ========== */
+.VPHero .hero-info {
+  position: relative;
+  z-index: 10;
+}
+
+/* 名字彩色渐变动画 */
+.VPHero .name {
+  font-size: 4rem !important;
+  font-weight: 900 !important;
+  background: linear-gradient(
+    135deg,
+    #bd34fe 0%,
+    #41d1ff 25%,
+    #6bcb77 50%,
+    #ffd93d 75%,
+    #ff6b6b 100%
+  ) !important;
+  background-size: 300% 300% !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  animation: gradientFlow 6s ease infinite !important;
+  line-height: 1.2 !important;
+}
+
+.VPHero .text {
+  font-size: 2rem !important;
+  background: linear-gradient(90deg, #41d1ff, #bd34fe, #ffd93d) !important;
+  background-size: 200% 200% !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  animation: textShimmer 4s ease infinite !important;
+}
+
+.VPHero .tagline {
+  font-size: 1.1rem !important;
+  color: #888 !important;
+  letter-spacing: 0.05em !important;
+  animation: fadeSlideUp 1s ease-out !important;
+}
+
+/* 打字机光标效果 */
+.VPHero .tagline::after {
+  content: '|';
+  animation: blink 1s step-end infinite;
+  color: #bd34fe;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@keyframes gradientFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes textShimmer {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+@keyframes fadeSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ========== Hero 操作按钮 ========== */
+.VPHero .actions {
+  position: relative;
+  z-index: 10;
+}
+
+.VPHero .actions .VPButton {
+  border-radius: 50px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.05em !important;
+  transition: all 0.3s ease !important;
+  position: relative;
+  overflow: hidden !important;
+}
+
+.VPHero .actions .VPButton::before {
+  content: '' !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: -100% !important;
+  width: 100% !important;
+  height: 100% !important;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  ) !important;
+  transition: left 0.5s ease !important;
+}
+
+.VPHero .actions .VPButton:hover::before {
+  left: 100% !important;
+}
+
+.VPHero .actions .VPButton.brand {
+  background: linear-gradient(135deg, #bd34fe, #41d1ff) !important;
+  border: none !important;
+  box-shadow: 0 4px 20px rgba(189, 52, 254, 0.3) !important;
+}
+
+.VPHero .actions .VPButton:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 30px rgba(189, 52, 254, 0.4) !important;
+}
+
+/* ========== Feature Card 悬浮效果 ========== */
+.VPFeatures .VPFeature {
+  border-radius: 16px !important;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+.VPFeatures .VPFeature::before {
+  content: '' !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  height: 2px !important;
+  background: linear-gradient(90deg, #bd34fe, #41d1ff, #6bcb77) !important;
+  transform: scaleX(0) !important;
+  transition: transform 0.4s ease !important;
+}
+
+.VPFeatures .VPFeature:hover::before {
+  transform: scaleX(1) !important;
+}
+
+.VPFeatures .VPFeature:hover {
+  transform: translateY(-8px) scale(1.02) !important;
+  box-shadow:
+    0 20px 40px rgba(189, 52, 254, 0.15),
+    0 0 0 1px rgba(189, 52, 254, 0.1) !important;
+}
+
+.dark .VPFeatures .VPFeature:hover {
+  box-shadow:
+    0 20px 40px rgba(189, 52, 254, 0.3),
+    0 0 0 1px rgba(189, 52, 254, 0.2) !important;
+}
+
+/* 暗色模式 Feature 更强发光 */
+.dark .VPFeatures .VPFeature {
+  border: 1px solid rgba(255, 255, 255, 0.06) !important;
+}
+
+/* ========== Hero 背景暗色适配 ========== */
+.dark .VPHero {
+  background: radial-gradient(
+    ellipse at 50% 0%,
+    rgba(75, 0, 130, 0.15) 0%,
+    transparent 60%
+  ) !important;
+}
+
+.VPHero {
+  background: radial-gradient(
+    ellipse at 50% 0%,
+    rgba(189, 52, 254, 0.08) 0%,
+    transparent 60%
+  ) !important;
+}
+
+/* ========== 分类标题装饰 ========== */
+.VPFeatures .title {
+  font-weight: 700 !important;
+}
+
+/* ========== 鼠标跟随光晕效果 ========== */
+.VPHero .container {
+  position: relative;
+}
+
+/* ========== 暗色 Hero 文字 ========== */
+.dark .VPHero .tagline {
+  color: #aaa !important;
+}
+
+.VPHero .tagline {
+  color: #666 !important;
+}
+</style>
