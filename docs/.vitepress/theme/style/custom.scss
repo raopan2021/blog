@@ -1,22 +1,22 @@
 @import url('https://cdn.jsdelivr.net/npm/lxgw-wenkai-lite-webfont@1.7.0/style.min.css');
 
 :root {
-	--vp-font-family-base:
-		'LXGW WenKai Lite', 'Inter var experimental', 'Inter var', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans',
-		'Helvetica Neue', sans-serif;
-	--vp-font-family-mono: 'LXGW WenKai Lite', ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+  --vp-font-family-base:
+    'LXGW WenKai Lite', 'Inter var experimental', 'Inter var', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans',
+    'Helvetica Neue', sans-serif;
+  --vp-font-family-mono: 'LXGW WenKai Lite', ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
 }
 
 /* 标题颜色 */
 :root {
-	--vp-home-hero-name-color: transparent;
-	--vp-home-hero-name-background: -webkit-linear-gradient(120deg, #bd34fe, #41d1ff);
+  --vp-home-hero-name-color: transparent;
+  --vp-home-hero-name-background: -webkit-linear-gradient(120deg, #bd34fe, #41d1ff);
 }
 
 /* Mono font (optional) */
 pre,
 code {
-	font-family: 'LXGW WenKai Mono Lite', sans-serif;
+  font-family: 'LXGW WenKai Mono Lite', sans-serif;
 }
 
 /**
@@ -24,66 +24,76 @@ code {
 * -------------------------------------------------------------------------- */
 .VPHomeHero .name,
 .VPHomeHero .image {
-	background-image: none;
-	transition: background-image 0.8s;
+  background-image: none;
+  transition: background-image 0.8s;
 }
 
 :root {
-	--vp-home-hero-name-color: transparent;
-	--vp-home-hero-name-background: -webkit-linear-gradient(120deg, #bd34fe 30%, #41d1ff);
-	--vp-home-hero-image-background-image: linear-gradient(to right bottom, #bd34fe, #47caff);
-	--vp-home-hero-image-filter: blur(70px);
+  --vp-home-hero-name-color: transparent;
+  --vp-home-hero-name-background: -webkit-linear-gradient(120deg, #bd34fe 30%, #41d1ff);
+  --vp-home-hero-image-background-image: linear-gradient(to right bottom, #bd34fe, #47caff);
+  --vp-home-hero-image-filter: blur(70px);
 }
 
 .dark {
-	--vp-home-hero-image-background-image: linear-gradient(-45deg, #bd34fe 50%, #4c09b9 50%);
+  --vp-home-hero-image-background-image: linear-gradient(-45deg, #bd34fe 50%, #4c09b9 50%);
 }
 
 @media (min-width: 640px) {
-	:root {
-		--vp-home-hero-image-filter: blur(80px);
-	}
+  :root {
+    --vp-home-hero-image-filter: blur(80px);
+  }
 }
 
 @media (min-width: 960px) {
-	:root {
-		--vp-home-hero-image-filter: blur(100px);
-	}
+  :root {
+    --vp-home-hero-image-filter: blur(100px);
+  }
 }
 
 .dark .Layout .VPFeature {
-	background: transparent;
-	border: 1px solid #ffffff50;
+  background: transparent;
+  border: 1px solid #ffffff50;
 }
 
 /* 滚动条样式 - dark 模式 */
 .dark {
-	--scrollbar-color: #4a4a4a #1e1e1e;
+  --scrollbar-color: #4a4a4a #1e1e1e;
 
-	&::-webkit-scrollbar {
-		width: 10px;
-		height: 10px;
-	}
+  &::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
 
-	&::-webkit-scrollbar-track {
-		background: #1e1e1e;
-	}
+  &::-webkit-scrollbar-thumb {
+    background: #4a4a4a;
+    border-radius: 5px;
 
-	&::-webkit-scrollbar-thumb {
-		background: #4a4a4a;
-		border-radius: 5px;
+    &:hover {
+      background: #5a5a5a;
+    }
+  }
 
-		&:hover {
-			background: #5a5a5a;
-		}
-	}
+  pre::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  pre::-webkit-scrollbar-thumb {
+    background: #4a4a4a;
+    border-radius: 5px;
+
+    &:hover {
+      background: #5a5a5a;
+    }
+  }
 }
 
 .vp-doc code {
-	font-family: 'DM Mono', Consolas, 'Courier New', monospace;
-	font-size: 15px !important;
+  font-family: 'DM Mono', Consolas, 'Courier New', monospace;
+  font-size: 15px !important;
 }
 
 .line-numbers-wrapper {
-	font-size: 15px !important;
+  font-size: 15px !important;
 }
