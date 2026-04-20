@@ -56,6 +56,29 @@ code {
 	border: 1px solid #ffffff50;
 }
 
+/* 滚动条样式 - dark 模式 */
+.dark {
+	--scrollbar-color: #4a4a4a #1e1e1e;
+
+	&::-webkit-scrollbar {
+		width: 10px;
+		height: 10px;
+	}
+
+	&::-webkit-scrollbar-track {
+		background: #1e1e1e;
+	}
+
+	&::-webkit-scrollbar-thumb {
+		background: #4a4a4a;
+		border-radius: 5px;
+
+		&:hover {
+			background: #5a5a5a;
+		}
+	}
+}
+
 .vp-doc code {
 	font-family: 'DM Mono', Consolas, 'Courier New', monospace;
 	font-size: 15px !important;
