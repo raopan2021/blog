@@ -140,8 +140,8 @@ export function nav(): DefaultTheme.NavItem[] {
       ],
     },
     {
-      text: '友链',
-      items: [{ text: 'VitePress', link: 'https://vitepress.dev/zh' }],
+      text: '',
+      component: 'RainbowAnimationSwitcher',
     },
   ]
 }
