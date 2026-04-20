@@ -2,17 +2,12 @@
 layout: home
 
 title: 饶盼的blog
-titleTemplate: 边学边记录（菜就多练）
-
-head:
-  - - link
-    - rel: stylesheet
-      href: https://cdn.jsdelivr.net/npm/lxgw-wenkai-lite-webfont@1.7.0/style.min.css
+titleTemplate: 边学边记录（菜就多练） 
 
 hero:
   name: 饶盼 raopan
   text: 我的技术 blog
-  tagline: 边学边记录（菜就多练）
+  tagline: 边学边记录（菜就多练） 
   actions:
     - theme: brand
       text: GitHub
@@ -189,4 +184,4 @@ features:
 
 ---
 
-<ThreeParticles />
+<!-- iconfont https://www.iconfont.cn/?spm=a313x.search_index.i3.d4d0a486a.586b3a81T19Bxt -->

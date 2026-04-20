@@ -5,7 +5,6 @@ import { h, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { ID_INJECTION_KEY, ZINDEX_INJECTION_KEY } from 'element-plus'
 
 import Layout from './Layout.vue'
-import ThreeParticles from './components/ThreeParticles.vue'
 import Poem from './poem.vue' // 自定义的markdowm布局
 
 import './style/animate-min.scss'
@@ -25,54 +24,6 @@ import './style/zoom.scss'
 
 const observers = [] // 用于存储所有观察者 -> 收集起来主要是为了当路由变化时效果之前的观察者。
 
-// ============================================================
-// 彩虹渐变英雄文字 - 直接注入 style 到 head
-// ============================================================
-function injectHeroStyles() {
-  const styleId = 'hero-rainbow-styles'
-  if (document.getElementById(styleId)) return
-  const style = document.createElement('style')
-  style.id = styleId
-  style.textContent = `
-    .VPHome .VPHero .clip,
-    .VPHome .VPHero .name {
-      background: linear-gradient(135deg, #bd34fe 0%, #41d1ff 20%, #6bcb77 40%, #ffd93d 60%, #ff6b6b 80%, #bd34fe 100%) !important;
-      background-size: 400% 400% !important;
-      -webkit-background-clip: text !important;
-      background-clip: text !important;
-      -webkit-text-fill-color: transparent !important;
-      color: transparent !important;
-      background-position: 0% 50% !important;
-      animation: rainbowFlow 5s linear infinite !important;
-    }
-    .VPHome .VPHero .text {
-      background: linear-gradient(90deg, #41d1ff, #bd34fe, #ffd93d) !important;
-      background-size: 200% 200% !important;
-      -webkit-background-clip: text !important;
-      background-clip: text !important;
-      -webkit-text-fill-color: transparent !important;
-      color: transparent !important;
-      animation: textShimmer 4s ease infinite !important;
-    }
-    .dark .VPHome .VPHero .clip,
-    .dark .VPHome .VPHero .name {
-      background: linear-gradient(135deg, #e879f9 0%, #67e8f9 20%, #86efac 40%, #fde047 60%, #fca5a5 80%, #e879f9 100%) !important;
-    }
-    .dark .VPHome .VPHero .text {
-      background: linear-gradient(90deg, #67e8f9, #e879f9, #fde047) !important;
-    }
-    @keyframes rainbowFlow {
-      0% { background-position: 0% 50%; }
-      100% { background-position: 400% 50%; }
-    }
-    @keyframes textShimmer {
-      0% { background-position: 0% 50%; }
-      100% { background-position: 200% 50%; }
-    }
-  `
-  document.head.appendChild(style)
-}
-
 export default {
 	...DefaultTheme,
 	enhanceApp: ({ app, router, siteData }) => {
@@ -80,15 +31,7 @@ export default {
 		app.provide(ID_INJECTION_KEY, { prefix: 100, current: 0 })
 		app.provide(ZINDEX_INJECTION_KEY, { current: 0 })
 
-		app.component('ThreeParticles', ThreeParticles)
-
 		app.component('poem', Poem)
-
-		// 注入彩虹英雄文字样式
-		if (typeof window !== 'undefined') {
-			injectHeroStyles()
-			router.onAfterRouteChange = () => injectHeroStyles()
-		}
 	},
 
 	// 文字渐入效果
