@@ -56,45 +56,30 @@ code {
   border: 1px solid #ffffff50;
 }
 
+.vp-doc code {
+  font-family: 'DM Mono', Consolas, 'Courier New', monospace;
+  font-size: 15px !important;
+}
+
+.line-numbers-wrapper {
+  font-size: 15px !important;
+}
+
 /* 滚动条样式 - dark 模式 */
 .dark {
   --scrollbar-color: #4a4a4a #1e1e1e;
 
-  &::-webkit-scrollbar {
-    width: 10px;
-    height: 10px;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background: #4a4a4a;
-    border-radius: 5px;
-
-    &:hover {
-      background: #5a5a5a;
-    }
-  }
-
+  &::-webkit-scrollbar,
   // code代码的滚动条
-  pre::-webkit-scrollbar {
-    width: 10px;
-    height: 10px;
-  }
-
-  pre::-webkit-scrollbar-thumb {
-    background: #4a4a4a;
-    border-radius: 5px;
-
-    &:hover {
-      background: #5a5a5a;
-    }
-  }
-
+  pre::-webkit-scrollbar, 
   // 左侧边栏的滚动条
   .VPSidebar::-webkit-scrollbar {
     width: 10px;
     height: 10px;
   }
 
+  &::-webkit-scrollbar-thumb,
+  pre::-webkit-scrollbar-thumb,
   .VPSidebar::-webkit-scrollbar-thumb {
     background: #4a4a4a;
     border-radius: 5px;
@@ -103,13 +88,4 @@ code {
       background: #5a5a5a;
     }
   }
-}
-
-.vp-doc code {
-  font-family: 'DM Mono', Consolas, 'Courier New', monospace;
-  font-size: 15px !important;
-}
-
-.line-numbers-wrapper {
-  font-size: 15px !important;
 }
