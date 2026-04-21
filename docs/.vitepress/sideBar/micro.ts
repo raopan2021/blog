@@ -80,11 +80,16 @@ export function MicroSidebar(): DefaultTheme.SidebarItem[] {
 			base: '/micro/',
 			items: [
 				{ text: 'Garfish 特点', link: 'garfish#garfish-特点' },
+				{ text: '安装依赖', link: 'garfish#安装依赖' },
 				{ text: '主应用构建', link: 'garfish#主应用构建' },
 				{ text: '子应用构建', link: 'garfish#子应用构建' },
 				{ text: '通信机制', link: 'garfish#通信机制' },
+				{ text: '预加载配置', link: 'garfish#预加载配置' },
 				{ text: '路由隔离', link: 'garfish#路由隔离' },
+				{ text: 'CSS 隔离', link: 'garfish#css-隔离' },
+				{ text: '生命周期', link: 'garfish#生命周期' },
 				{ text: '常见问题', link: 'garfish#常见问题' },
+				{ text: '与 Qiankun 对比', link: 'garfish#与-qiankun-对比' },
 				{ text: '部署', link: 'garfish#部署' },
 			]
 		},
