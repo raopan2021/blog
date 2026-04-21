@@ -3,7 +3,6 @@ import { nextTick, provide } from 'vue'
 import { useData } from 'vitepress'
 import DefaultTheme from 'vitepress/theme'
 const { Layout } = DefaultTheme
-import { ElBacktop } from 'element-plus'
 
 const { isDark } = useData()
 
@@ -33,9 +32,7 @@ provide('toggle-appearance', async ({ clientX: x, clientY: y }: MouseEvent) => {
   document.documentElement.animate(
     { clipPath: isDark.value ? clipPath.reverse() : clipPath },
     {
-      duration: 500,
-      easing: 'ease',
-      fill: 'forwards',
+      duration: 500, easing: 'ease', fill: 'forwards',
       pseudoElement: `::view-transition-${isDark.value ? 'old' : 'new'}(root)`
     }
   )
@@ -43,11 +40,7 @@ provide('toggle-appearance', async ({ clientX: x, clientY: y }: MouseEvent) => {
 </script>
 
 <template>
-  <Layout>
-    <template #doc-after>
-      <el-backtop :right="100" :bottom="100" />
-    </template>
-  </Layout>
+  <Layout />
 </template>
 
 <style>

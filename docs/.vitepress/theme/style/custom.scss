@@ -88,6 +88,21 @@ code {
       background: #5a5a5a;
     }
   }
+
+  // 左侧边栏的滚动条
+  .VPSidebar::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  .VPSidebar::-webkit-scrollbar-thumb {
+    background: #4a4a4a;
+    border-radius: 5px;
+
+    &:hover {
+      background: #5a5a5a;
+    }
+  }
 }
 
 .vp-doc code {
