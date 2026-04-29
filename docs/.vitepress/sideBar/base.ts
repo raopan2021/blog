@@ -13,6 +13,7 @@ export function BaseSidebar(): DefaultTheme.SidebarItem[] {
 				{ text: 'pnpm', link: 'pnpm' },
 				{ text: 'Vite 项目体积优化', link: 'Vite项目体积优化' },
 				{ text: 'axios 封装', link: 'axios/index' },
+				{ text: '百度埋点', link: '百度埋点' },
 			],
 		},
 	]
