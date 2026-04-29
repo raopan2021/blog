@@ -8,7 +8,8 @@ import Layout from './Layout.vue'
 import Poem from './poem.vue' // 自定义的markdowm布局
 import RainbowAnimationSwitcher from './components/RainbowAnimationSwitcher.vue'
 
-import './style/animate-min.scss'
+import 'virtual:uno.css'
+
 import 'element-plus/theme-chalk/base.css'
 import 'element-plus/theme-chalk/el-checkbox.css'
 import 'element-plus/theme-chalk/el-checkbox-button.css'
@@ -19,10 +20,12 @@ import 'element-plus/theme-chalk/el-radio-group.css'
 import 'element-plus/theme-chalk/el-slider.css'
 import 'element-plus/theme-chalk/el-input-number.css'
 import 'element-plus/theme-chalk/el-text.css'
+
 import './style/custom.scss'
 import './style/poem.scss'
 import './style/zoom.scss'
 import './style/rainbow.scss'
+import './style/animate-min.scss'
 
 const observers: IntersectionObserver[] = [] // 用于存储所有观察者 -> 收集起来主要是为了当路由变化时效果之前的观察者。
 

@@ -45,6 +45,7 @@ export function CssSidebar(): DefaultTheme.SidebarItem[] {
 					collapsed: true,
 					base: '/css/',
 					items: [
+						{ text: 'UnoCSS 彩虹主题', link: '特效/unocss-rainbow' },
 						{ text: '文字特效', link: 'textColor' },
 						{ text: 'verticalCenter 垂直居中', link: 'verticalCenter' },
 						{ text: 'colorfulShadow 彩色阴影', link: 'colorfulShadow' },

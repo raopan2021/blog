@@ -7,9 +7,22 @@ import { nav, side } from './sideBar/_index.ts'
 const require = createRequire(import.meta.url)
 const pkg = require('vitepress/package.json')
 
+// 手动导入 unocss 的设置
+import UnoCSS from 'unocss/vite'
+import { fileURLToPath } from 'node:url'
+import { resolve } from 'node:path'
+const __dirname = fileURLToPath(new URL('.', import.meta.url))
+const configFile = resolve(__dirname, 'uno.config.ts')
+
+// vitepress logo ，作为社交链接图标使用
+import { readFileSync } from 'node:fs'
+const vitepressLogoMini = readFileSync(resolve(__dirname, '../public/vitepress-logo-mini.svg'), 'utf-8')
+
 const config = defineConfig({
   vite: {
-    plugins: [],
+    plugins: [
+      UnoCSS({ configFile }),
+    ],
     build: {
       rollupOptions: {
         output: {
@@ -39,13 +52,12 @@ const config = defineConfig({
   sitemap: {
     hostname: 'https://raopan2021.github.io/blog/',
   },
-  // 是否忽略死链
-  ignoreDeadLinks: true,
-  // 最后更新于 开关
-  lastUpdated: true,
+  ignoreDeadLinks: true, // 是否忽略死链
+  lastUpdated: true, // 最后更新于 开关
+  lazyLoading: true, // 启用图片懒加载
   head: [
-    // ['link', { rel: 'icon', type: 'image/svg+xml', href: '/vitepress-logo-mini.svg' }],
-    ['link', { rel: 'icon', type: 'image/png', href: '/vitepress-logo-mini.png' }],
+    ['link', { rel: 'icon', type: 'image/svg+xml', href: '/blog/vitepress-logo-mini.svg' }],
+    ['link', { rel: 'icon', type: 'image/png', href: '/blog/vitepress-logo-mini.png' }],
     ['meta', { name: 'theme-color', content: '#5f67ee' }],
     ['meta', { name: 'og:type', content: 'website' }],
     ['meta', { name: 'og:locale', content: 'zh-CN' }],
@@ -92,6 +104,7 @@ const config = defineConfig({
     // 社交媒体跳转
     socialLinks: [
       { icon: 'github', link: 'https://github.com/raopan2021/blog' },
+      { icon: { svg: vitepressLogoMini }, link: 'https://vitepress.dev/zh/guide/what-is-vitepress' },
     ],
     // 每个页面页脚的编辑此页  :path  为当前路由
     editLink: {

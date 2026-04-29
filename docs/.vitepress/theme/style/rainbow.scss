@@ -1,3 +1,24 @@
+// 彩虹主题根变量 - 开启彩虹模式时的默认颜色
+:root,
+html:not(.rainbow) {
+  // 品牌色变量：VitePress 主题的颜色系统
+  --vp-c-brand-1: #00a98e; // 主色
+  --vp-c-brand-light: #4ad1b4; // 浅色
+  --vp-c-brand-lighter: #78fadc; // 更浅色
+  --vp-c-brand-dark: #008269; // 深色
+  --vp-c-brand-darker: #005d47; // 更深色
+  --vp-c-brand-next: #009ff7; // 下一个主题色
+}
+
+:root {
+  // 彩虹动画：20秒一周期的线性渐变循环
+  animation: rainbow 20s linear infinite;
+}
+
+:root:not(.rainbow) {
+  animation: none !important;
+}
+
 @keyframes rainbow {
   0% {
     --vp-c-brand-1: #00a98e;
@@ -647,35 +668,4 @@
     --vp-c-brand-darker: #005d47;
     --vp-c-brand-next: #009ff7;
   }
-}
-
-:root {
-  --vp-c-brand-1: #00a98e;
-  --vp-c-brand-light: #4ad1b4;
-  --vp-c-brand-lighter: #78fadc;
-  --vp-c-brand-dark: #008269;
-  --vp-c-brand-darker: #005d47;
-  --vp-c-brand-next: #009ff7;
-  animation: rainbow 20s linear infinite;
-
-  // 顶部 nav 的 switch
-  .VPSwitch .RainbowSwitcherCheck {
-    background-color: var(--vp-c-brand-lighter);
-  }
-
-  // 首页的 title
-  .VPHero .text,
-  .VPFeatures .title {
-    color: var(--vp-c-brand-lighter);
-  }
-}
-
-html:not(.rainbow) {
-  --vp-c-brand-1: #00a98e;
-  --vp-c-brand-light: #4ad1b4;
-  --vp-c-brand-lighter: #78fadc;
-  --vp-c-brand-dark: #008269;
-  --vp-c-brand-darker: #005d47;
-  --vp-c-brand-next: #009ff7;
-  animation: none !important;
 }

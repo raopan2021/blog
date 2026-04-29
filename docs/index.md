@@ -2,12 +2,12 @@
 layout: home
 
 title: 饶盼的blog
-titleTemplate: 边学边记录（菜就多练） 
+titleTemplate: 边学边记录（菜就多练）
 
 hero:
   name: 饶盼 raopan
   text: 我的技术 blog
-  tagline: 边学边记录（菜就多练） 
+  tagline: 边学边记录（菜就多练）
   actions:
     - theme: brand
       text: GitHub
@@ -16,8 +16,8 @@ hero:
       text: Gitee
       link: https://gitee.com/raopan2021/
   image:
-      src: /mainView/logo.svg
-      alt: VitePress
+    src: /mainView/logo.svg
+    alt: VitePress
 
 features:
   # ===== 前端 =====
@@ -181,7 +181,14 @@ features:
     title: 学习计划
     details: 阶段性学习计划
     link: /plan/
-
 ---
 
 <!-- iconfont https://www.iconfont.cn/?spm=a313x.search_index.i3.d4d0a486a.586b3a81T19Bxt -->
+
+<style lang="scss">
+/* 首页的 title */
+.VPHero .text,
+.VPFeatures .title {
+  color: var(--vp-c-brand-lighter);
+}
+</style>

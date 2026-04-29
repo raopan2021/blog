@@ -71,7 +71,8 @@ code {
 
   &::-webkit-scrollbar,
   // code代码的滚动条
-  pre::-webkit-scrollbar, 
+  pre::-webkit-scrollbar,
+  .vp-code-group .blocks::-webkit-scrollbar,
   // 左侧边栏的滚动条
   .VPSidebar::-webkit-scrollbar {
     width: 10px;
@@ -80,6 +81,7 @@ code {
 
   &::-webkit-scrollbar-thumb,
   pre::-webkit-scrollbar-thumb,
+  .vp-code-group .blocks::-webkit-scrollbar-thumb,
   .VPSidebar::-webkit-scrollbar-thumb {
     background: #4a4a4a;
     border-radius: 5px;
