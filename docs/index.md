@@ -183,10 +183,8 @@ features:
     link: /plan/
 ---
 
-<!-- iconfont https://www.iconfont.cn/?spm=a313x.search_index.i3.d4d0a486a.586b3a81T19Bxt -->
-
 <style lang="scss">
-/* 首页的 title */
+.VPNavBarTitle span,
 .VPHero .text,
 .VPFeatures .title {
   color: var(--vp-c-brand-lighter);
