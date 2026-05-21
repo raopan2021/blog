@@ -102,6 +102,12 @@ features:
     details: 前端微服务化方案
     link: /micro/
 
+  - icon:
+      src: /mainView/map.svg
+    title: 地图组件
+    details: 腾讯地图组件（tlbs-map-vue）使用经验总结
+    link: /map/tenxun
+
   # ===== 移动开发 =====
   - icon:
       src: /mainView/android.svg

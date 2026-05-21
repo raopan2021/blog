@@ -5,32 +5,33 @@ import { AISidebar } from './ai.ts'
 import { AlgorithmSidebar } from './algorithms.ts'
 import { AndroidSidebar } from './android.ts'
 import { BaseSidebar } from './base.ts'
+import { BISidebar } from './bi.ts'
 import { CliSidebar } from './cli.ts'
 import { CssSidebar } from './css.ts'
+import { DockerSidebar } from './docker.ts'
 import { EngineeringSidebar } from './engineering.ts'
 import { H5Sidebar } from './h5.ts'
 import { JavaSidebar } from './java.ts'
 import { JsSidebar } from './js.ts'
 import { LinuxSidebar } from './linux.ts'
+import { MapSidebar } from './map.ts'
 import { MarkdownSidebar } from './markdown.ts'
-import { DockerSidebar } from './docker.ts'
-import { BISidebar } from './bi.ts'
 import { MicroSidebar } from './micro.ts'
 import { MysqlSidebar } from './mysql.ts'
 import { NetworkSidebar } from './network.ts'
 import { NodeSidebar } from './node.ts'
-import { PLCSidebar } from './plc.ts'
 import { PlanSidebar } from './plan.ts'
+import { PLCSidebar } from './plc.ts'
 import { PoemSidebar } from './poem.ts'
+import { PretextSidebar } from './pretext.ts'
 import { PythonSidebar } from './python.ts'
-import { ReactSidebar } from './react.ts'
 import { ReactNativeSidebar } from './react-native.ts'
+import { ReactSidebar } from './react.ts'
 import { RegSidebar } from './reg.ts'
 import { SvgSidebar } from './svg.ts'
 import { ThreeSidebar } from './three.ts'
-import { PretextSidebar } from './pretext.ts'
-import { VueSidebar } from './vue.ts'
 import { ViteSidebar } from './vite.ts'
+import { VueSidebar } from './vue.ts'
 
 export const side = {
   '/algorithm/': { base: '/algorithm/', items: AlgorithmSidebar() },
@@ -61,6 +62,7 @@ export const side = {
   '/three/': { base: '/three/', items: ThreeSidebar() },
   '/vite/': { base: '/vite/', items: ViteSidebar() },
   '/vue/': { base: '/vue/', items: VueSidebar() },
+  '/map/': { base: '/map/', items: MapSidebar() },
   '/poem/': { base: '/poem/', items: PoemSidebar() },
   '/plan/': { base: '/plan/', items: PlanSidebar() },
   '/pretext/': { base: '/pretext/', items: PretextSidebar() },
@@ -85,6 +87,7 @@ export function nav(): DefaultTheme.NavItem[] {
         { text: '工程化', link: '/engineering/', activeMatch: '/engineering/' },
         { text: '脚手架', link: '/cli/', activeMatch: '/cli/' },
         { text: '微前端', link: '/micro/', activeMatch: '/micro/' },
+        { text: '地图组件', link: '/map/tenxun', activeMatch: '/map/' },
       ],
     },
     {
