@@ -20,12 +20,20 @@ hero:
     alt: VitePress
 
 features:
+  # <!-- iconfont https://www.iconfont.cn/?spm=a313x.search_index.i3.d4d0a486a.586b3a81T19Bxt -->
+
   # ===== 前端 =====
   - icon:
       src: /mainView/frontend.svg
     title: 前端配置
     details: 新PC环境相关配置、收藏
     link: /base/
+
+  - icon:
+      src: /mainView/git.svg
+    title: Git
+    details: Git 基础
+    link: /git/
 
   - icon:
       src: /mainView/h5.svg

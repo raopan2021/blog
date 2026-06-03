@@ -8,7 +8,6 @@ export function BaseSidebar(): DefaultTheme.SidebarItem[] {
 			base: '/base/',
 			items: [
 				{ text: '首页', link: 'index' },
-				{ text: 'git', link: 'git' },
 				{ text: 'nvm', link: 'nvm' },
 				{ text: 'pnpm', link: 'pnpm' },
 				{ text: 'Vite 项目体积优化', link: 'Vite项目体积优化' },

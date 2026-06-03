@@ -10,6 +10,7 @@ import { CliSidebar } from './cli.ts'
 import { CssSidebar } from './css.ts'
 import { DockerSidebar } from './docker.ts'
 import { EngineeringSidebar } from './engineering.ts'
+import { GitSidebar } from './git.ts'
 import { H5Sidebar } from './h5.ts'
 import { JavaSidebar } from './java.ts'
 import { JsSidebar } from './js.ts'
@@ -41,6 +42,7 @@ export const side = {
   '/cli/': { base: '/cli/', items: CliSidebar() },
   '/css/': { base: '/css/', items: CssSidebar() },
   '/engineering/': { base: '/engineering/', items: EngineeringSidebar() },
+  '/git/': { base: '/git/', items: GitSidebar() },
   '/h5/': { base: '/h5/', items: H5Sidebar() },
   '/java/': { base: '/java/', items: JavaSidebar() },
   '/python/': { base: '/python/', items: PythonSidebar() },
